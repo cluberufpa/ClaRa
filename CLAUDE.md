@@ -23,10 +23,15 @@ ClaRa/
     anova_um_fator.png          figura gerada pelo próprio roteiro (ggsave)
     teste_t_dois_grupos.R       teste t de Welch (ToothGrowth, dose 0,5)
     teste_t_dois_grupos.png
+    anova_bagres.R              o analise.R do anova-bagres-gabarito
+                                (EAPACadernos) reescrito em ClaRa, mesmas
+                                seções; o que falta à ClaRa aparece como
+                                "Ainda sem ClaRa"
+    anova_bagres.png
   dados_treino/                 dados para testar e estudar as funções
     preparar_dados_treino.R     gera todos os CSVs desta pasta
-    real_*.csv                  dados reais, exportados do pacote EAPADados
-    sint_*.csv                  dados sintéticos, cada um com uma situação
+    real_*.rds / real_*.csv     dados reais, exportados do pacote EAPADados
+    sint_*.rds / sint_*.csv     dados sintéticos, cada um com uma situação
   README.md                     a ClaRa para quem abre o repositório (mapa das perguntas)
   docs/                         histórico e ideias, nunca código
     concepcao_inicial_2026-09.md  primeira concepção da ClaRa (ver abaixo)
@@ -39,7 +44,11 @@ Para testar tudo, a partir da raiz do projeto:
 ```
 Rscript -e 'source("exemplos/anova_um_fator.R", echo = TRUE)'
 Rscript -e 'source("exemplos/teste_t_dois_grupos.R", echo = TRUE)'
+Rscript -e 'source("exemplos/anova_bagres.R", echo = TRUE)'
 ```
+
+`anova_bagres.R` é o termômetro da migração para a CatalyseR: cada função
+nova da ClaRa deve substituir um bloco "Ainda sem ClaRa" dele.
 
 O R desta máquina está em `C:\R\R-4.6.1` (`C:/R/R-4.6.1/bin/Rscript.exe`).
 No Git Bash, um `-e` com várias linhas derruba o Rscript: grave o teste num
@@ -56,8 +65,24 @@ regenerar os dados reais de `dados_treino/`.
 
 `dados_treino/` foi autorizada pelo professor em outubro de 2026, como
 exceção à regra 1 de crescimento. Guarda só dados para testar e estudar a
-ClaRa, nunca dados de pesquisa. Leia com `read.csv("dados_treino/...csv")`.
-Para regenerar: `Rscript dados_treino/preparar_dados_treino.R`.
+ClaRa, nunca dados de pesquisa. Para regenerar:
+`Rscript dados_treino/preparar_dados_treino.R`.
+
+Cada base existe em dois formatos, com o mesmo conteúdo:
+- **`.rds`, a base pronta** (leia com `readRDS()`): grupos como fator, na
+  ordem natural (baixa, media, alta), identificações (`id_...`) como texto.
+  É o formato preferido, igual ao que o projeto da CatalyseR lê
+  (`dados/processados/base_compartilhada.rds`).
+- **`.csv`, como uma planilha** (leia com `read.csv()`): abre no Excel, mas
+  perde os tipos; os grupos voltam como texto e a ClaRa os ordena em ordem
+  alfabética (alta, baixa, media).
+
+Decisão de outubro de 2026 para os roteiros: a seção 2 lê o `.rds`; a seção 3
+mostra, em dplyr, a receita que fez a base a partir da planilha e confere
+com `all.equal()` que ela ainda dá a mesma base. Assim o roteiro analisa a
+base certa sem esconder o preparo (ver `exemplos/anova_bagres.R`). O
+`all.equal()` substitui, só com R base, o `catalyser_conferir_base()` do
+EAPACaderno.
 
 | Arquivo | Situação que provoca |
 |---|---|

@@ -5,11 +5,24 @@
 # tratar bem. Servem para testar e estudar as funções, não para pesquisa.
 # Rode a partir da raiz do projeto:
 #   Rscript dados_treino/preparar_dados_treino.R
+#
+# Cada base sai em dois formatos:
+#   .rds  a base pronta, com os tipos certos e os grupos na ordem natural
+#         (baixa, media, alta), como a base que a CatalyseR prepara;
+#   .csv  a mesma tabela em texto, como uma planilha: abre no Excel, mas
+#         perde os tipos e põe os grupos em ordem alfabética ao ser lida.
 
 library(dplyr)
 
-# Grava uma tabela em CSV (ponto decimal, UTF-8) dentro desta pasta.
+# Grava uma tabela em .rds e .csv. Antes, as colunas de texto viram fator,
+# com os grupos na ordem em que aparecem na tabela; identificações (id_...)
+# continuam texto.
 gravar <- function(tabela, nome) {
+  tabela <- tabela |>
+    mutate(across(where(is.character) & !starts_with("id_"),
+                  \(x) factor(x, levels = unique(na.omit(x))))) |>
+    as.data.frame()
+  saveRDS(tabela, file.path("dados_treino", paste0(nome, ".rds")))
   write.csv(tabela,
             file.path("dados_treino", paste0(nome, ".csv")),
             row.names    = FALSE,
