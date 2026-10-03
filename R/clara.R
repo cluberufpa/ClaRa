@@ -12,9 +12,13 @@
 #
 #      source(here::here("R", "clara.R"), encoding = "UTF-8")
 #
+#  Como a ClaRa se organiza: cada pergunta da pesquisa tem dois verbos
+#  próprios (a análise e o gráfico); dois verbos servem para qualquer
+#  análise (medir o efeito e escrever os resultados).
+#
 #  Seções deste arquivo (Ctrl+Shift+O no RStudio mostra o sumário):
-#    1. Comparar médias ........... comparar_medias() e suas receitas
-#    2. Depois da comparação ...... medir_efeito(), grafico_medias()
+#    1. Comparar médias ........... comparar_medias(), grafico_medias()
+#    2. Para qualquer análise ..... medir_efeito(), escrever_resultados()
 #    3. Exibição no console ....... como o resultado aparece ao ser impresso
 #    4. Ajuda ..................... ajuda()
 #    5. Motor das receitas ........ peças internas; o aluno não precisa abrir
@@ -26,6 +30,11 @@
 
 
 # 1. Comparar médias -----------------------------------------------------------
+#
+# Pergunta: a média da resposta difere entre os grupos?
+# Dois verbos: comparar_medias() faz a análise; grafico_medias() a desenha.
+# A ClaRa escolhe o teste: teste t (de Welch ou de Student) com dois grupos,
+# ANOVA com três ou mais.
 
 # comparar_medias() ------------------------------------------------------------
 #
@@ -53,6 +62,7 @@
 # Devolve uma lista. Cada parte se abre com $:
 #   resultado$resumo        n, média, DP, EP, IC e letra de cada grupo
 #   resultado$pressupostos  testes dos pressupostos, com uma leitura de cada um
+#   resultado$amostra       observações no total, usadas e excluídas
 #   resultado$dados         as observações usadas na análise
 # Com três ou mais grupos (ANOVA):
 #   resultado$anova         a tabela da ANOVA
@@ -148,6 +158,13 @@ dados_analise <- <<DADOS>> |>
   mutate(<<GRUPOS>> = factor(<<GRUPOS>>)) |>
   droplevels()
 
+# Quantas observações havia, quantas entraram e quantas ficaram de fora.
+amostra <- tibble(
+  total     = nrow(<<DADOS>>),
+  usadas    = nrow(dados_analise),
+  excluidas = total - usadas
+)
+
 # 2. Resumo de cada grupo: tamanho, centro e dispersão da resposta.
 resumo <- dados_analise |>
   group_by(<<GRUPOS>>) |>
@@ -215,6 +232,7 @@ list(
   pressupostos = pressupostos,
   pares        = pares,
   modelo       = modelo,
+  amostra      = amostra,
   dados        = dados_analise
 )"
 
@@ -226,6 +244,13 @@ dados_analise <- <<DADOS>> |>
   filter(!is.na(<<RESPOSTA>>), !is.na(<<GRUPOS>>)) |>
   mutate(<<GRUPOS>> = factor(<<GRUPOS>>)) |>
   droplevels()
+
+# Quantas observações havia, quantas entraram e quantas ficaram de fora.
+amostra <- tibble(
+  total     = nrow(<<DADOS>>),
+  usadas    = nrow(dados_analise),
+  excluidas = total - usadas
+)
 
 # 2. Resumo de cada grupo: tamanho, centro e dispersão da resposta.
 resumo <- dados_analise |>
@@ -274,6 +299,7 @@ list(
   resumo       = resumo,
   teste        = teste,
   pressupostos = pressupostos,
+  amostra      = amostra,
   dados        = dados_analise
 )"
 
@@ -340,12 +366,146 @@ pacotes_medias <- list(
 )
 
 
+# grafico_medias() -------------------------------------------------------------
+#
+# Pergunta: como mostrar a comparação numa só figura?
+#
+# A barra clara vai do zero até a média; cada ponto colorido é uma
+# observação; o losango é a média do grupo, com "média ± DP" ao lado; a haste
+# é o intervalo de confiança da média; as letras, todas na mesma altura, vêm
+# do Tukey (ou do teste t, com dois grupos).
+#
+# Argumentos:
+#   resultado ........... o que comparar_medias() devolveu
+#   rotulo_resposta ..... texto do eixo y; sem ele, vai o nome da coluna
+#   rotulo_grupos ....... texto do eixo x; sem ele, vai o nome da coluna
+#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
+#
+# Devolve um gráfico do ggplot2. Por isso dá para continuar com +:
+#   resultado |>
+#     grafico_medias() +
+#     theme(axis.text = element_text(size = 14))
+#
+# Exemplo:
+#   resultado |>
+#     grafico_medias(rotulo_resposta = "Peso seco (g)",
+#                    rotulo_grupos   = "Tratamento")
+#
+grafico_medias <- function(resultado,
+                           rotulo_resposta = NULL,
+                           rotulo_grupos   = NULL,
+                           mostrar_codigo  = FALSE) {
 
-# 2. Depois da comparação ------------------------------------------------------
+  # Guardamos o nome do resultado, como o aluno o chamou.
+  nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # Sem rótulo informado, os eixos mostram o próprio nome da coluna.
+  rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
+  rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
+
+  # A receita do gráfico, camada por camada.
+  receita <- "
+# As observações e as médias de cada grupo.
+pontos <- <<RESULTADO>>$dados
+
+# O rótulo \"média ± DP\" de cada grupo, com vírgula decimal.
+medias <- <<RESULTADO>>$resumo |>
+  mutate(
+    media_dp = paste(
+      formatC(media, format = \"f\", digits = 2, decimal.mark = \",\"),
+      \"±\",
+      formatC(dp, format = \"f\", digits = 2, decimal.mark = \",\")
+    )
+  )
+
+# Todas as letras na mesma altura, acima do ponto ou do IC mais alto.
+altura_letras <- max(pontos$<<RESPOSTA>>, medias$ic_sup)
+
+# Barra até a média, pontos, IC, losango, rótulo e letras, nesta ordem.
+ggplot(medias, aes(x = <<GRUPOS>>)) +
+  geom_col(
+    aes(y = media, fill = <<GRUPOS>>),
+    width = 0.3, alpha = 0.25
+  ) +
+  geom_point(
+    data     = pontos,
+    aes(y = <<RESPOSTA>>, colour = <<GRUPOS>>),
+    position = position_jitter(width = 0.08, height = 0, seed = 1),
+    size     = 2.2,
+    alpha    = 0.7
+  ) +
+  geom_errorbar(
+    aes(ymin = ic_inf, ymax = ic_sup),
+    width = 0.08, linewidth = 0.8, colour = \"#0F3B5F\"
+  ) +
+  geom_point(aes(y = media), shape = 18, size = 4.4, colour = \"#0F3B5F\") +
+  geom_text(
+    aes(y = media, label = media_dp),
+    nudge_x = 0.06, hjust = 0,
+    size = 3.6, fontface = \"bold\", colour = \"#0F3B5F\"
+  ) +
+  geom_text(
+    aes(label = letra),
+    y = altura_letras, vjust = -0.6,
+    size = 6, fontface = \"bold\", colour = \"#0F3B5F\"
+  ) +
+  scale_colour_manual(values = cores_ocean, guide = \"none\") +
+  scale_fill_manual(values = cores_ocean, guide = \"none\") +
+  scale_x_discrete(expand = expansion(add = c(0.6, 0.9))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    title = paste(
+      \"Pontos: observações; losango: média; rótulo: média ± DP;\",
+      \"hastes: IC <<NIVEL>>% da média.\\nLetras iguais: sem diferença significativa.\"
+    ),
+    x = \"<<ROTULO_GRUPOS>>\",
+    y = \"<<ROTULO_RESPOSTA>>\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    plot.title          = element_text(size = 10, colour = \"grey30\"),
+    plot.title.position = \"plot\"
+  )"
+
+  # Trocamos os marcadores pelos nomes desta análise.
+  receita <- preencher_receita(receita, list(
+    RESULTADO       = nome_resultado,
+    RESPOSTA        = resultado$nomes$resposta,
+    GRUPOS          = resultado$nomes$grupos,
+    ROTULO_RESPOSTA = rotulo_resposta,
+    ROTULO_GRUPOS   = rotulo_grupos,
+    NIVEL           = resultado$nomes$confianca * 100
+  ))
+
+  # Uma cor para cada grupo, mesmo quando há mais grupos que cores na paleta.
+  quantos_grupos <- nrow(resultado$resumo)
+  cores <- grDevices::colorRampPalette(cores_ocean)(max(quantos_grupos, 8))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(resultado, cores),
+                                      c(nome_resultado, "cores_ocean")),
+    pacotes        = c("dplyr", "ggplot2"),
+    mostrar_codigo = mostrar_codigo
+  )
+}
+
+# A paleta Ocean Gradient, ampliada para oito grupos.
+cores_ocean <- c("#0F3B5F", "#2E7D8F", "#62B6B7", "#E89B3C",
+                 "#E76F51", "#6A4C93", "#1B998B", "#B23A48")
+
+
+
+# 2. Para qualquer análise -----------------------------------------------------
+#
+# Estas funções agem sobre o resultado de qualquer análise da ClaRa. Cada
+# uma olha qual análise o resultado guarda e usa a receita daquela análise.
+# Uma análise nova não cria funções aqui: só acrescenta receitas às listas.
 
 # medir_efeito() ---------------------------------------------------------------
 #
-# Pergunta: a diferença entre os grupos é grande ou pequena?
+# Pergunta: o efeito encontrado é grande ou pequeno?
 #
 # O p-valor diz se há evidência de diferença; o tamanho de efeito diz quanto
 # ela pesa. A medida depende da análise feita em comparar_medias():
@@ -439,133 +599,365 @@ tibble(
   ))"
 
 
-# grafico_medias() -------------------------------------------------------------
+# escrever_resultados() --------------------------------------------------------
 #
-# Pergunta: como mostrar a comparação numa só figura?
+# Pergunta: como contar o resultado em frases, para o relatório?
 #
-# A barra clara vai do zero até a média; cada ponto colorido é uma
-# observação; o losango é a média do grupo, com "média ± DP" ao lado; a haste
-# é o intervalo de confiança da média; as letras, todas na mesma altura, vêm
-# do Tukey (ou do teste t, com dois grupos).
+# Escreve as frases de um relatório a partir do resultado: a amostra, o
+# teste, o tamanho de efeito, as comparações entre pares (ANOVA), os
+# pressupostos, um alerta sobre o que pede cuidado e, quando muda a leitura,
+# o poder do teste. Os números e as conclusões vêm do resultado: se os dados
+# mudam, as frases mudam junto.
+#
+# É uma função só para todas as análises. Ela olha qual análise o resultado
+# guarda (ANOVA ou teste t) e escolhe a receita daquela análise. Por isso,
+# com mostrar_codigo = TRUE, aparece só o código da análise que você fez,
+# nunca o das outras. Quando a ClaRa ganhar uma análise nova, a função
+# continua a mesma: só a lista de receitas cresce.
 #
 # Argumentos:
 #   resultado ........... o que comparar_medias() devolveu
-#   rotulo_resposta ..... texto do eixo y; sem ele, vai o nome da coluna
-#   rotulo_grupos ....... texto do eixo x; sem ele, vai o nome da coluna
-#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
+#   rotulo_resposta ..... como chamar a resposta no texto (ex.: "Peso (g)")
+#   rotulo_grupos ....... como chamar os grupos no texto (ex.: "Tipo de Ração")
+#   mostrar_codigo ...... TRUE imprime o código R antes das frases
 #
-# Devolve um gráfico do ggplot2. Por isso dá para continuar com +:
-#   resultado |>
-#     grafico_medias() +
-#     theme(axis.text = element_text(size = 14))
+# Devolve uma lista de frases. Cada parte se abre com $:
+#   textos$amostra, textos$teste, textos$efeito, textos$pressupostos,
+#   textos$alerta, textos$poder (vazio quando não se aplica), textos$sintese
+#   e, na ANOVA, textos$comparacoes.
+# No Quarto, a frase entra no meio do parágrafo com `r textos$teste`.
 #
 # Exemplo:
-#   resultado |>
-#     grafico_medias(rotulo_resposta = "Peso seco (g)",
-#                    rotulo_grupos   = "Tratamento")
+#   textos <- resultado |>
+#     escrever_resultados(rotulo_resposta = "Peso seco (g)",
+#                         rotulo_grupos   = "Tratamento")
 #
-grafico_medias <- function(resultado,
-                           rotulo_resposta = NULL,
-                           rotulo_grupos   = NULL,
-                           mostrar_codigo  = FALSE) {
+escrever_resultados <- function(resultado,
+                                rotulo_resposta = NULL,
+                                rotulo_grupos   = NULL,
+                                mostrar_codigo  = FALSE) {
 
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
 
-  # Sem rótulo informado, os eixos mostram o próprio nome da coluna.
+  # Sem rótulo informado, o texto usa o próprio nome da coluna.
   rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
   rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
 
-  # A receita do gráfico, camada por camada.
-  receita <- "
-# As observações e as médias de cada grupo.
-pontos <- <<RESULTADO>>$dados
-
-# O rótulo \"média ± DP\" de cada grupo, com vírgula decimal.
-medias <- <<RESULTADO>>$resumo |>
-  mutate(
-    media_dp = paste(
-      formatC(media, format = \"f\", digits = 2, decimal.mark = \",\"),
-      \"±\",
-      formatC(dp, format = \"f\", digits = 2, decimal.mark = \",\")
-    )
-  )
-
-# Todas as letras na mesma altura, acima do ponto ou do IC mais alto.
-altura_letras <- max(pontos$<<RESPOSTA>>, medias$ic_sup)
-
-# Barra até a média, pontos, IC, losango, rótulo e letras, nesta ordem.
-ggplot(medias, aes(x = <<GRUPOS>>)) +
-  geom_col(
-    aes(y = media, fill = <<GRUPOS>>),
-    width = 0.3, alpha = 0.25
-  ) +
-  geom_point(
-    data     = pontos,
-    aes(y = <<RESPOSTA>>, colour = <<GRUPOS>>),
-    position = position_jitter(width = 0.08, height = 0, seed = 1),
-    size     = 2.2,
-    alpha    = 0.7
-  ) +
-  geom_errorbar(
-    aes(ymin = ic_inf, ymax = ic_sup),
-    width = 0.08, linewidth = 0.8, colour = \"#0F3B5F\"
-  ) +
-  geom_point(aes(y = media), shape = 18, size = 4.4, colour = \"#0F3B5F\") +
-  geom_text(
-    aes(y = media, label = media_dp),
-    nudge_x = 0.06, hjust = 0,
-    size = 3.6, fontface = \"bold\", colour = \"#0F3B5F\"
-  ) +
-  geom_text(
-    aes(label = letra),
-    y = altura_letras, vjust = -0.6,
-    size = 6, fontface = \"bold\", colour = \"#0F3B5F\"
-  ) +
-  scale_colour_manual(values = cores_ocean, guide = \"none\") +
-  scale_fill_manual(values = cores_ocean, guide = \"none\") +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
-  labs(
-    title = paste(
-      \"Pontos: observações; losango: média; rótulo: média ± DP;\",
-      \"hastes: IC <<NIVEL>>% da média.\\nLetras iguais: sem diferença significativa.\"
-    ),
-    x = \"<<ROTULO_GRUPOS>>\",
-    y = \"<<ROTULO_RESPOSTA>>\"
-  ) +
-  theme_classic(base_size = 12) +
-  theme(
-    plot.title          = element_text(size = 10, colour = \"grey30\"),
-    plot.title.position = \"plot\"
-  )"
-
-  # Trocamos os marcadores pelos nomes desta análise.
-  receita <- preencher_receita(receita, list(
-    RESULTADO       = nome_resultado,
-    RESPOSTA        = resultado$nomes$resposta,
-    GRUPOS          = resultado$nomes$grupos,
-    ROTULO_RESPOSTA = rotulo_resposta,
-    ROTULO_GRUPOS   = rotulo_grupos,
-    NIVEL           = resultado$nomes$confianca * 100
+  # Trocamos os marcadores da receita da análise feita pelos nomes dela.
+  receita <- preencher_receita(receitas_textos[[resultado$nomes$analise]], list(
+    RESULTADO         = nome_resultado,
+    RESPOSTA          = resultado$nomes$resposta,
+    GRUPOS            = resultado$nomes$grupos,
+    ROTULO_RESPOSTA   = rotulo_resposta,
+    ROTULO_GRUPOS     = rotulo_grupos,
+    ALFA              = 1 - resultado$nomes$confianca,
+    NIVEL             = resultado$nomes$confianca * 100,
+    VARIANCIAS_IGUAIS = resultado$nomes$variancias_iguais,
+    NOME_T            = dplyr::case_when(resultado$nomes$variancias_iguais ~ "de Student",
+                                         .default = "de Welch")
   ))
 
-  # Uma cor para cada grupo, mesmo quando há mais grupos que cores na paleta.
-  quantos_grupos <- nrow(resultado$resumo)
-  cores <- grDevices::colorRampPalette(cores_ocean)(max(quantos_grupos, 8))
-
   # Rodamos a receita, mostrando o código antes, se o aluno pediu.
-  executar_receita(
+  textos <- executar_receita(
     receita        = receita,
-    objetos        = rlang::set_names(list(resultado, cores),
-                                      c(nome_resultado, "cores_ocean")),
-    pacotes        = c("dplyr", "ggplot2"),
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
+    pacotes        = c("dplyr", "stringr", "effectsize", "pwr"),
     mostrar_codigo = mostrar_codigo
   )
+
+  # Damos às frases uma etiqueta, para o console saber como exibi-las.
+  structure(textos, class = "clara_textos")
 }
 
-# A paleta Ocean Gradient, ampliada para oito grupos.
-cores_ocean <- c("#0F3B5F", "#2E7D8F", "#62B6B7", "#E89B3C",
-                 "#E76F51", "#6A4C93", "#1B998B", "#B23A48")
+# As receitas de escrever_resultados(), uma para cada análise.
+receitas_textos <- list()
+
+# ANOVA: amostra, F, η² e ω², Tukey, pressupostos, alerta, poder e síntese.
+receitas_textos$anova <- "
+# 1. Números com vírgula decimal, e o p como se escreve em texto científico.
+com_virgula <- function(x, casas = 2) {
+  formatC(x, format = \"f\", digits = casas, decimal.mark = \",\")
+}
+texto_p <- function(p) {
+  case_when(p < 0.001 ~ \"p < 0,001\",
+            .default  = paste(\"p =\", com_virgula(p, 3)))
+}
+
+# 2. As peças do resultado que as frases usam.
+alfa         <- <<ALFA>>
+amostra      <- <<RESULTADO>>$amostra
+resumo       <- <<RESULTADO>>$resumo
+linha_f      <- <<RESULTADO>>$anova[1, ]
+gl_residuos  <- <<RESULTADO>>$anova$gl[2]
+pares        <- <<RESULTADO>>$pares
+pressupostos <- <<RESULTADO>>$pressupostos
+
+# 3. A amostra: quantas observações entraram e quantas ficaram de fora.
+excluidas <- case_when(
+  amostra$excluidas == 0 ~ \"nenhuma foi excluída\",
+  amostra$excluidas == 1 ~ \"1 foi excluída por não ter resposta ou grupo\",
+  .default = paste(amostra$excluidas,
+                   \"foram excluídas por não terem resposta ou grupo\")
+)
+texto_amostra <- str_glue(
+  \"Após o preparo, havia {amostra$total} observações. A análise usou \",
+  \"{amostra$usadas} delas, em {nrow(resumo)} grupos; {excluidas}.\"
+)
+
+# 4. A ANOVA numa frase, com a conclusão escrita conforme o p.
+evidencia <- case_when(
+  linha_f$p <  alfa ~ \"houve evidência de diferença entre as médias\",
+  linha_f$p >= alfa ~ \"não houve evidência de diferença entre as médias\"
+)
+texto_teste <- str_glue(
+  \"Em <<ROTULO_RESPOSTA>>, {evidencia} dos grupos de <<ROTULO_GRUPOS>> \",
+  \"(F({linha_f$gl}, {gl_residuos}) = {com_virgula(linha_f$f)}; {texto_p(linha_f$p)}).\"
+)
+
+# 5. Tamanho de efeito, com a leitura de Cohen.
+eta2   <- eta_squared(<<RESULTADO>>$modelo, partial = FALSE)$Eta2
+omega2 <- omega_squared(<<RESULTADO>>$modelo, partial = FALSE)$Omega2
+classe <- case_when(
+  eta2 < 0.01 ~ \"muito pequeno\",
+  eta2 < 0.06 ~ \"pequeno\",
+  eta2 < 0.14 ~ \"médio\",
+  .default    = \"grande\"
+)
+texto_efeito <- str_glue(
+  \"O tamanho de efeito foi {classe} pela convenção de Cohen \",
+  \"(η² = {com_virgula(eta2, 3)}; ω² = {com_virgula(omega2, 3)}), \",
+  \"uma referência estatística, não biológica.\"
+)
+
+# 6. Tukey: quais pares de grupos diferiram.
+diferentes <- pares |>
+  filter(p_ajustado < alfa) |>
+  mutate(frase = paste0(str_replace(comparacao, \"-\", \" e \"),
+                        \" (\", texto_p(p_ajustado), \")\"))
+texto_comparacoes <- case_when(
+  linha_f$p >= alfa ~
+    \"Como a ANOVA não indicou diferença global, as comparações de Tukey servem só para descrição.\",
+  nrow(diferentes) == 0 ~
+    \"Pelo teste de Tukey, nenhum par de grupos diferiu ao nível adotado, apesar da diferença global indicada pela ANOVA.\",
+  nrow(diferentes) == 1 ~
+    paste0(\"Pelo teste de Tukey, só diferiram \", diferentes$frase[1],
+           \". Grupos que compartilham uma letra não diferiram entre si.\"),
+  .default =
+    paste0(\"Pelo teste de Tukey, diferiram os pares \",
+           paste(diferentes$frase, collapse = \"; \"),
+           \". Grupos que compartilham uma letra não diferiram entre si.\")
+)
+
+# 7. Pressupostos: o que cada teste mostrou, sem transformar p alto em prova.
+frases <- pressupostos |>
+  mutate(
+    avaliacao = case_when(p >= alfa ~ \"sem evidência contra o pressuposto\",
+                          .default  = \"o teste rejeitou o pressuposto\"),
+    frase = str_glue(\"{pressuposto}, pelo {teste} (estatística = \",
+                     \"{com_virgula(estatistica, 3)}; {texto_p(p)}): {avaliacao}.\")
+  )
+texto_pressupostos <- paste(
+  paste(frases$frase, collapse = \" \"),
+  \"Esses testes não comprovam os pressupostos; os gráficos dos resíduos e o delineamento completam a avaliação.\"
+)
+
+# 8. Alerta: o que pede cuidado antes de concluir. Com todos os grupos
+#    grandes (regra prática: 30 ou mais), a ANOVA é pouco sensível a
+#    desvios moderados da normalidade.
+p_levene  <- pressupostos$p[pressupostos$teste == \"Levene\"]
+p_shapiro <- pressupostos$p[pressupostos$teste == \"Shapiro-Wilk\"]
+razao_dp  <- max(resumo$dp) / min(resumo$dp)
+texto_alerta <- case_when(
+  any(p_levene < alfa) ~
+    paste0(\"As variâncias diferiram entre os grupos (o maior desvio padrão é \",
+           com_virgula(razao_dp, 1), \" vezes o menor). Antes de concluir, \",
+           \"compare com um método que não suponha variâncias iguais, como a ANOVA de Welch.\"),
+  any(p_shapiro < alfa) & min(resumo$n) >= 30 ~
+    paste0(\"Os resíduos se afastaram da normalidade, mas com todos os grupos grandes \",
+           \"(30 ou mais observações) a ANOVA é pouco sensível a esse desvio. Confira no \",
+           \"gráfico Q-Q se não há assimetria forte ou valores extremos.\"),
+  any(p_shapiro < alfa) ~
+    paste0(\"Os resíduos se afastaram da normalidade. Avalie o tamanho do desvio \",
+           \"no gráfico Q-Q e, se for preciso, uma alternativa como o teste de Kruskal-Wallis.\"),
+  .default =
+    \"Os testes formais não detectaram os desvios examinados, mas os gráficos e o delineamento continuam necessários.\"
+)
+
+# 9. Poder do teste: só entra no texto quando muda a leitura, isto é, sem
+#    evidência e com poder abaixo de 80%. pwr.anova.test() supõe grupos do
+#    mesmo tamanho; usamos o n médio por grupo.
+poder <- pwr.anova.test(
+  k         = nrow(resumo),
+  n         = mean(resumo$n),
+  f         = sqrt(eta2 / (1 - eta2)),
+  sig.level = alfa
+)$power
+texto_poder <- case_when(
+  linha_f$p >= alfa & poder < 0.80 ~
+    paste0(\"A ausência de evidência não deve ser lida como ausência de efeito: \",
+           \"para o tamanho de efeito observado, o poder do teste foi de apenas \",
+           com_virgula(100 * poder, 0), \"%. Uma amostra maior daria mais segurança à conclusão.\"),
+  .default = \"\"
+)
+
+# 10. Síntese: o resultado principal numa frase só.
+texto_sintese <- str_glue(
+  \"Na amostra de {amostra$usadas} observações em {nrow(resumo)} grupos, {evidencia} \",
+  \"(F({linha_f$gl}, {gl_residuos}) = {com_virgula(linha_f$f)}; {texto_p(linha_f$p)}; \",
+  \"η² = {com_virgula(eta2, 3)}). A interpretação deve considerar os pressupostos e o delineamento.\"
+)
+
+# 11. Todas as frases, numa lista com partes nomeadas.
+list(
+  amostra      = texto_amostra,
+  teste        = texto_teste,
+  efeito       = texto_efeito,
+  comparacoes  = texto_comparacoes,
+  pressupostos = texto_pressupostos,
+  alerta       = texto_alerta,
+  poder        = texto_poder,
+  sintese      = texto_sintese
+) |>
+  lapply(as.character)"
+
+# Teste t: amostra, t com a diferença e o IC, d e g, pressupostos, alerta,
+# poder e síntese.
+receitas_textos$teste_t <- "
+# 1. Números com vírgula decimal, e o p como se escreve em texto científico.
+com_virgula <- function(x, casas = 2) {
+  formatC(x, format = \"f\", digits = casas, decimal.mark = \",\")
+}
+texto_p <- function(p) {
+  case_when(p < 0.001 ~ \"p < 0,001\",
+            .default  = paste(\"p =\", com_virgula(p, 3)))
+}
+
+# 2. As peças do resultado que as frases usam.
+alfa         <- <<ALFA>>
+amostra      <- <<RESULTADO>>$amostra
+resumo       <- <<RESULTADO>>$resumo
+teste        <- <<RESULTADO>>$teste
+pressupostos <- <<RESULTADO>>$pressupostos
+grupos       <- levels(<<RESULTADO>>$dados$<<GRUPOS>>)
+
+# 3. A amostra: quantas observações entraram e quantas ficaram de fora.
+excluidas <- case_when(
+  amostra$excluidas == 0 ~ \"nenhuma foi excluída\",
+  amostra$excluidas == 1 ~ \"1 foi excluída por não ter resposta ou grupo\",
+  .default = paste(amostra$excluidas,
+                   \"foram excluídas por não terem resposta ou grupo\")
+)
+texto_amostra <- str_glue(
+  \"Após o preparo, havia {amostra$total} observações. A análise usou \",
+  \"{amostra$usadas} delas, em {nrow(resumo)} grupos; {excluidas}.\"
+)
+
+# 4. O teste t numa frase, com a diferença entre as médias e seu intervalo.
+#    Os graus de liberdade só levam casas decimais quando não são inteiros.
+evidencia <- case_when(
+  teste$p <  alfa ~ \"houve evidência de diferença entre as médias\",
+  teste$p >= alfa ~ \"não houve evidência de diferença entre as médias\"
+)
+casas_gl <- case_when(teste$gl == round(teste$gl) ~ 0, .default = 2)
+texto_teste <- str_glue(
+  \"Em <<ROTULO_RESPOSTA>>, {evidencia} de {grupos[1]} e {grupos[2]} \",
+  \"pelo teste t <<NOME_T>> (t({com_virgula(teste$gl, casas_gl)}) = \",
+  \"{com_virgula(teste$t)}; {texto_p(teste$p)}). A média de {grupos[1]} \",
+  \"menos a de {grupos[2]} foi {com_virgula(teste$diferenca)}, com IC <<NIVEL>>% \",
+  \"de {com_virgula(teste$ic_inf)} a {com_virgula(teste$ic_sup)}.\"
+)
+
+# 5. Tamanho de efeito, com a leitura de Cohen. pooled_sd segue o teste:
+#    TRUE junta os DPs dos grupos (Student); FALSE não junta (Welch).
+d <- cohens_d(<<RESPOSTA>> ~ <<GRUPOS>>,
+              data      = <<RESULTADO>>$dados,
+              pooled_sd = <<VARIANCIAS_IGUAIS>>)$Cohens_d
+g <- hedges_g(<<RESPOSTA>> ~ <<GRUPOS>>,
+              data      = <<RESULTADO>>$dados,
+              pooled_sd = <<VARIANCIAS_IGUAIS>>)$Hedges_g
+classe <- case_when(
+  abs(d) < 0.2 ~ \"muito pequeno\",
+  abs(d) < 0.5 ~ \"pequeno\",
+  abs(d) < 0.8 ~ \"médio\",
+  .default     = \"grande\"
+)
+texto_efeito <- str_glue(
+  \"O tamanho de efeito foi {classe} pela convenção de Cohen \",
+  \"(d = {com_virgula(d)}; g = {com_virgula(g)}), \",
+  \"uma referência estatística, não biológica.\"
+)
+
+# 6. Pressupostos: o que cada teste mostrou, sem transformar p alto em prova.
+frases <- pressupostos |>
+  mutate(
+    avaliacao = case_when(p >= alfa ~ \"sem evidência contra o pressuposto\",
+                          .default  = \"o teste rejeitou o pressuposto\"),
+    frase = str_glue(\"{pressuposto}, pelo {teste} (estatística = \",
+                     \"{com_virgula(estatistica, 3)}; {texto_p(p)}): {avaliacao}.\")
+  )
+texto_pressupostos <- paste(
+  paste(frases$frase, collapse = \" \"),
+  \"Esses testes não comprovam os pressupostos; os gráficos e o delineamento completam a avaliação.\"
+)
+
+# 7. Alerta: o que pede cuidado antes de concluir. Com os dois grupos
+#    grandes (regra prática: 30 ou mais), o teste t é pouco sensível a
+#    desvios moderados da normalidade.
+p_levene  <- pressupostos$p[pressupostos$teste == \"Levene\"]
+p_shapiro <- pressupostos$p[pressupostos$teste == \"Shapiro-Wilk\"]
+razao_dp  <- max(resumo$dp) / min(resumo$dp)
+texto_alerta <- case_when(
+  any(p_levene < alfa) ~
+    paste0(\"As variâncias diferiram entre os grupos (o maior desvio padrão é \",
+           com_virgula(razao_dp, 1), \" vezes o menor). Prefira o teste t de Welch, \",
+           \"que não supõe variâncias iguais (variancias_iguais = FALSE).\"),
+  any(p_shapiro < alfa) & min(resumo$n) >= 30 ~
+    paste0(\"A resposta se afastou da normalidade, mas com os dois grupos grandes \",
+           \"(30 ou mais observações) o teste t é pouco sensível a esse desvio. Confira \",
+           \"nos gráficos se não há assimetria forte ou valores extremos.\"),
+  any(p_shapiro < alfa) ~
+    paste0(\"A resposta se afastou da normalidade em pelo menos um grupo. Avalie o \",
+           \"tamanho do desvio nos gráficos e, se for preciso, uma alternativa como o \",
+           \"teste de Mann-Whitney.\"),
+  .default =
+    \"Os testes formais não detectaram os desvios examinados, mas os gráficos e o delineamento continuam necessários.\"
+)
+
+# 8. Poder do teste: só entra no texto quando muda a leitura, isto é, sem
+#    evidência e com poder abaixo de 80%.
+poder <- pwr.t2n.test(
+  n1        = resumo$n[1],
+  n2        = resumo$n[2],
+  d         = abs(d),
+  sig.level = alfa
+)$power
+texto_poder <- case_when(
+  teste$p >= alfa & poder < 0.80 ~
+    paste0(\"A ausência de evidência não deve ser lida como ausência de efeito: \",
+           \"para o tamanho de efeito observado, o poder do teste foi de apenas \",
+           com_virgula(100 * poder, 0), \"%. Uma amostra maior daria mais segurança à conclusão.\"),
+  .default = \"\"
+)
+
+# 9. Síntese: o resultado principal numa frase só.
+texto_sintese <- str_glue(
+  \"Na amostra de {amostra$usadas} observações em dois grupos, {evidencia} \",
+  \"(t({com_virgula(teste$gl, casas_gl)}) = {com_virgula(teste$t)}; {texto_p(teste$p)}; \",
+  \"d = {com_virgula(d)}). A interpretação deve considerar os pressupostos e o delineamento.\"
+)
+
+# 10. Todas as frases, numa lista com partes nomeadas.
+list(
+  amostra      = texto_amostra,
+  teste        = texto_teste,
+  efeito       = texto_efeito,
+  pressupostos = texto_pressupostos,
+  alerta       = texto_alerta,
+  poder        = texto_poder,
+  sintese      = texto_sintese
+) |>
+  lapply(as.character)"
 
 
 
@@ -578,7 +970,14 @@ print.clara_medias <- function(x, ...) {
 
   # Título e tamanho da amostra.
   cat("\nComparação de médias:", x$nomes$resposta, "por", x$nomes$grupos, "\n")
-  cat(nrow(x$dados), "observações em", nrow(x$resumo), "grupos\n")
+  cat(nrow(x$dados), "observações em", nrow(x$resumo), "grupos")
+
+  # Avisamos quando linhas ficaram de fora por falta de resposta ou grupo.
+  if (x$amostra$excluidas > 0) {
+    cat(" (", x$amostra$excluidas, " de ", x$amostra$total,
+        " excluídas por falta de resposta ou grupo)", sep = "")
+  }
+  cat("\n")
 
   # Resumo dos grupos, com as letras.
   cat("\n# Resumo dos grupos\n")
@@ -611,7 +1010,7 @@ imprimir_anova <- function(x) {
   print(x$pares)
 
   # Um lembrete das partes que podem ser abertas com $.
-  cat("\nPartes do resultado: $resumo $anova $pressupostos $pares $modelo $dados\n")
+  cat("\nPartes do resultado: $resumo $anova $pressupostos $pares $modelo $amostra $dados\n")
 }
 
 # A parte do relatório do teste t: t, diferença com IC e pressupostos.
@@ -654,7 +1053,27 @@ imprimir_teste_t <- function(x) {
   ), "\n", sep = "")
 
   # Um lembrete das partes que podem ser abertas com $.
-  cat("\nPartes do resultado: $resumo $teste $pressupostos $dados\n")
+  cat("\nPartes do resultado: $resumo $teste $pressupostos $amostra $dados\n")
+}
+
+# As frases de escrever_resultados(), uma parte por bloco, na largura da tela.
+print.clara_textos <- function(x, ...) {
+
+  # Título.
+  cat("\nTextos para o relatório\n=======================\n")
+
+  # Cada frase com o nome da parte; partes vazias (como $poder) não aparecem.
+  for (parte in names(x)) {
+    if (nzchar(x[[parte]])) {
+      cat("\n$", parte, "\n", sep = "")
+      cat(strwrap(x[[parte]], width = 76), sep = "\n")
+    }
+  }
+
+  # Como levar uma frase para o Quarto.
+  cat("\nNo Quarto, use dentro do texto: `r textos$teste` (troque textos pelo nome do seu objeto).\n")
+
+  invisible(x)
 }
 
 # A conclusão da comparação, escrita conforme o p-valor.
@@ -693,7 +1112,8 @@ ajuda <- function(funcao) {
   inicios <- grep("^# [a-z_]+\\(\\) -+$", linhas)
   funcoes <- sub("^# ([a-z_]+)\\(\\) -+$", "\\1", linhas[inicios])
 
-  # Sem nome de função, mostramos a lista de todas, com a pergunta de cada uma.
+  # Sem nome de função, mostramos a lista de todas, agrupadas pela seção do
+  # arquivo, com a pergunta de cada uma.
   if (missing(funcao)) {
     return(listar_funcoes(linhas, inicios, funcoes))
   }
@@ -718,15 +1138,31 @@ ajuda <- function(funcao) {
   invisible(nome)
 }
 
-# Lista as funções da ClaRa, cada uma com a pergunta que responde.
+# Lista as funções da ClaRa, cada uma com a pergunta que responde, agrupadas
+# pela seção do arquivo onde moram (como "Comparar médias").
 listar_funcoes <- function(linhas, inicios, funcoes) {
   perguntas <- vapply(inicios, function(inicio) {
     texto <- bloco_de_comentarios(linhas, inicio)
     sub("^Pergunta: ", "", grep("^Pergunta: ", texto, value = TRUE)[1])
   }, character(1))
 
+  # A seção de cada função é o último título "# N. Nome ----" antes dela.
+  titulos <- grep("^# [0-9]+\\. .+ -{4,}$", linhas)
+  secoes  <- vapply(inicios, function(inicio) {
+    sub("^# [0-9]+\\. (.+?) -{4,}$", "\\1", linhas[max(titulos[titulos < inicio])])
+  }, character(1))
+
+  nomes   <- paste0(funcoes, "()")
+  largura <- max(nchar(nomes))
+
   cat("\nFunções da ClaRa\n================\n")
-  cat(sprintf("  %-18s %s", paste0(funcoes, "()"), perguntas), sep = "\n")
+  for (secao in unique(secoes)) {
+    cat("\n", secao, "\n", sep = "")
+    escolhidas <- secoes == secao
+    cat(paste0("  ", formatC(nomes[escolhidas], width = -largura), "  ",
+               perguntas[escolhidas]),
+        sep = "\n")
+  }
   cat("\nPara saber mais sobre uma delas: ajuda(comparar_medias)\n\n")
 
   invisible(funcoes)

@@ -10,6 +10,12 @@ Use `comparar_medias()` em `R/clara.R` como modelo vivo.
 
 ## Passo a passo
 
+0. **Veja onde a função mora** (CLAUDE.md, "Como a ClaRa se organiza"). Cada
+   pergunta tem dois verbos (análise e gráfico), numa seção própria do
+   `clara.R`. Uma variação da mesma pergunta vira argumento, não função. Uma
+   função para qualquer análise já existe? Então a análise nova só acrescenta
+   receitas a `receitas_efeito` e `receitas_textos`.
+
 1. **Comece pela pergunta da pesquisa.** O nome da função é um verbo em
    português que responde a ela (`relacionar_variaveis`, `comparar_proporcoes`).
    Escreva o cabeçalho no formato do CLAUDE.md (seção "Ajuda"): linha de
@@ -84,6 +90,10 @@ Use `comparar_medias()` em `R/clara.R` como modelo vivo.
 
 8. **Teste antes de entregar** com `Rscript`:
    - o exemplo roda do início ao fim;
+   - a função roda com os arquivos de `dados_treino/` que provocam as
+     situações dela (a tabela no CLAUDE.md diz o que cada arquivo provoca);
+     se faltar uma situação, acrescente um sintético em
+     `preparar_dados_treino.R`;
    - `mostrar_codigo = TRUE` imprime uma receita que, copiada e colada numa
      sessão limpa (com os pacotes carregados), dá o mesmo resultado;
    - funciona com e sem aspas nos nomes das colunas e com o pipe;

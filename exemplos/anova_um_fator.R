@@ -42,3 +42,12 @@ ggsave("exemplos/anova_um_fator.png",
        dpi    = 300,
        bg     = "white")
 
+# 7. Escrever os resultados ------------------------------------------------
+# As frases saem do resultado: se os dados mudam, o texto muda junto.
+# No Quarto, cada frase entra no parágrafo com `r textos$teste`.
+textos <- resultado |>
+  escrever_resultados(rotulo_resposta = "Peso seco (g)",
+                      rotulo_grupos   = "Tratamento")
+
+textos
+

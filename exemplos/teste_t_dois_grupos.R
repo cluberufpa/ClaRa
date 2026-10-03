@@ -69,7 +69,16 @@ dentes |>
                   grupos            = fonte,
                   variancias_iguais = TRUE)
 
-# 9. Pedir ajuda -----------------------------------------------------------
+# 9. Escrever os resultados ------------------------------------------------
+# As frases saem do resultado: se os dados mudam, o texto muda junto.
+# No Quarto, cada frase entra no parágrafo com `r textos$teste`.
+textos <- resultado |>
+  escrever_resultados(rotulo_resposta = "Comprimento dos odontoblastos",
+                      rotulo_grupos   = "Fonte de vitamina C")
+
+textos
+
+# 10. Pedir ajuda ----------------------------------------------------------
 # ajuda() lista as funções da ClaRa; ajuda(nome) explica uma delas.
 ajuda()
 ajuda(comparar_medias)
