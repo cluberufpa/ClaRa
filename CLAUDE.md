@@ -14,6 +14,7 @@ mensagens de erro e documentação.
 ```
 ClaRa/
   CLAUDE.md                     este arquivo
+  LICENSE                       MIT, clubeR e Evaldo Martins da Silva
   ClaRa.Rproj
   R/                            só as funções
     clara.R                     todas as funções da ClaRa, em seções
@@ -211,7 +212,10 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 4. **Não transformar em pacote por antecipação.** `source()` basta até existir
    um motivo concreto, como a CatalyseR precisar de `library(clara)` no
    projeto exportado.
-5. **Versionar com git.**
+5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
+   (privado, ramo `main`). Nesta pasta os commits saem como
+   `clubeR <cluber.ufpa@gmail.com>`; o push usa a credencial do cluberufpa
+   guardada no Windows (Git Credential Manager).
 
 ## Em espera
 
