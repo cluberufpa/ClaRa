@@ -25,8 +25,7 @@ ClaRa/
     teste_t_dois_grupos.png
     anova_bagres.R              o analise.R do anova-bagres-gabarito
                                 (EAPACadernos) reescrito em ClaRa, mesmas
-                                seções; o que falta à ClaRa aparece como
-                                "Ainda sem ClaRa"
+                                seções, sem nenhum bloco em R comum
     anova_bagres.png
   dados_treino/                 dados para testar e estudar as funções
     preparar_dados_treino.R     gera todos os CSVs desta pasta
@@ -47,8 +46,10 @@ Rscript -e 'source("exemplos/teste_t_dois_grupos.R", echo = TRUE)'
 Rscript -e 'source("exemplos/anova_bagres.R", echo = TRUE)'
 ```
 
-`anova_bagres.R` é o termômetro da migração para a CatalyseR: cada função
-nova da ClaRa deve substituir um bloco "Ainda sem ClaRa" dele.
+`anova_bagres.R` é o modelo da migração para a CatalyseR: o analise.R da
+ANOVA de um fator inteiro em ClaRa. Ao migrar outra análise do EAPACadernos,
+faça o mesmo: reescreva o roteiro em `exemplos/`, marque como "Ainda sem
+ClaRa" o que faltar e crie as funções até não sobrar nenhum bloco marcado.
 
 O R desta máquina está em `C:\R\R-4.6.1` (`C:/R/R-4.6.1/bin/Rscript.exe`).
 No Git Bash, um `-e` com várias linhas derruba o Rscript: grave o teste num
@@ -100,14 +101,16 @@ EAPACaderno.
 
 ## Como a ClaRa se organiza
 
-**Cada pergunta da pesquisa tem dois verbos próprios (a análise e o gráfico);
-dois verbos servem para qualquer análise (`medir_efeito()` e
-`escrever_resultados()`).** O aluno faz a pergunta; a ClaRa escolhe o teste.
-O README traz a tabela completa, para quem abre o repositório.
+**Cada pergunta da pesquisa tem a sua análise e os seus gráficos, um nome
+para cada figura; quatro verbos servem para qualquer análise
+(`medir_efeito()`, `escrever_resultados()`, `grafico_residuos()` e
+`grafico_qq()`).** O
+aluno faz a pergunta; a ClaRa escolhe o teste. O README traz a tabela
+completa, para quem abre o repositório.
 
-| Pergunta | Análise | Gráfico | Testes por trás |
+| Pergunta | Análise | Gráficos | Testes por trás |
 |---|---|---|---|
-| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()` | t de Welch ou Student; ANOVA e Tukey; depois t pareado e ANOVA de Welch, como argumentos |
+| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | t de Welch ou Student; ANOVA e Tukey; depois t pareado e ANOVA de Welch, como argumentos |
 | A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()` | Mann-Whitney; Kruskal-Wallis |
 | Uma variável acompanha a outra? | `relacionar_variaveis()` | a definir | regressão linear |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | a definir | qui-quadrado ou teste de proporções |
@@ -115,12 +118,19 @@ O README traz a tabela completa, para quem abre o repositório.
 Regras que saem desse desenho:
 - Uma variação da mesma pergunta entra como **argumento** do verbo
   (`variancias_iguais`, `pareado_por`), nunca como função nova.
+- **Uma função, uma figura** (decisão do professor, outubro de 2026): uma
+  mesma função não entrega figuras diferentes conforme um argumento `tipo`.
+  Cada figura tem o seu nome: `grafico_medias()` (principal),
+  `grafico_boxplot()` (exploração) e `grafico_pares()` (diferença de cada
+  par). Já um argumento que muda a análise, sem mudar a natureza do que sai
+  (`variancias_iguais`), continua sendo argumento.
 - Um teste que responde a **outra pergunta** ganha verbo próprio. Mann-Whitney
   e Kruskal-Wallis não comparam médias; por isso vão para
   `comparar_medianas()` (nome aprovado pelo professor: conceito fácil de
   ensinar), e não para dentro de `comparar_medias()`.
 - Análise nova não cria funções em "Para qualquer análise": só acrescenta
-  receitas a `receitas_efeito` e `receitas_textos`.
+  receitas a `receitas_efeito`, `receitas_textos`, `receitas_residuos` e
+  `receitas_qq`.
 - No `clara.R`, cada pergunta é uma seção (`# 1. Comparar médias ----`), e
   "Para qualquer análise" é a seção 2. A `ajuda()` agrupa a lista de funções
   por esses títulos de seção, então uma seção nova aparece sozinha.
@@ -147,7 +157,61 @@ textos <- resultado |>
   escrever_resultados(rotulo_resposta = "Peso seco (g)",
                       rotulo_grupos   = "Tratamento")
 textos$teste                    # no Quarto: `r textos$teste`
+
+resultado |>
+  grafico_boxplot()             # exploração: caixas e observações
+resultado |>
+  grafico_pares()               # diferença de cada par, com IC
+
+resultado |>
+  grafico_residuos()            # resíduos contra ajustados
+resultado |>
+  grafico_qq()                  # Q-Q dos resíduos
 ```
+
+`grafico_residuos()` e `grafico_qq()` têm poucos parâmetros (só
+`rotulo_grupos`, no de resíduos) e deixam o ggplot2 à vista em
+`mostrar_codigo = TRUE`, para quem já conhece a sintaxe ajustar o que
+quiser. As receitas são montadas de trechos (`trechos_diagnostico`: preparo
+dos resíduos por análise e desenho por gráfico) em
+`receitas_residuos[[analise]]` e `receitas_qq[[analise]]`. Na ANOVA, o Q-Q usa os resíduos
+padronizados do modelo; no teste t, um painel por grupo (resíduo =
+observação menos a média do grupo), como o Shapiro em cada grupo.
+
+**Quantos parâmetros** (decisão do professor, outubro de 2026): os gráficos
+de conferência (`grafico_boxplot()`, `grafico_pares()`, `grafico_residuos()`,
+`grafico_qq()`) ficam com poucos parâmetros. O `grafico_medias()` é a figura
+que vai para o artigo ou a tese e tem mais: `titulo`, `explicacao`, `haste`
+(`"ic"`, `"ep"`, `"dp"`), `mostrar_barras`, `mostrar_pontos`,
+`mostrar_media_dp`, `casas`, `angulo_rotulo`, `mostrar_letras`, `cores`
+(`"ocean"`, `"cinza"` ou um vetor) e `tamanho_texto`. A receita dele é
+montada de trechos (`trechos_grafico_medias`) e traz só as camadas pedidas:
+o código mostrado continua sendo exatamente o que rodou. Com os valores
+padrão, a figura é a mesma de antes. A explicação do topo vai em
+`subtitle` e cita só as partes que aparecem; o `titulo` vai em `title`.
+
+Rótulo "média ± DP" com muitos grupos: com barras e mais de 6 grupos, ele
+fica em pé (90°), descendo da base da haste por dentro da barra, sem invadir
+a coluna vizinha. Sem barras fica deitado, porque em pé sairia cortado
+embaixo (o eixo não começa no zero); nesse caso, com muitos grupos, a ajuda
+recomenda `mostrar_media_dp = FALSE`. 45° funciona, mas raspa os pontos.
+
+Cada gráfico das médias tem a sua receita: `trechos_grafico_medias`,
+`receita_grafico_boxplot` e `receita_grafico_pares`. As paletas ficam em
+`paletas_clara` (`ocean`, `cinza`); `trecho_de_cores()` escreve o trecho de
+cores da receita para qualquer vetor, e o objeto na receita se chama `cores`. `grafico_pares()` usa
+`resultado$pares` (Tukey) na ANOVA e `resultado$teste` no teste t; o título
+explica o ponto, a haste e a linha tracejada da diferença zero. Com muitos
+grupos (10 grupos = 45 pares), salve a figura mais alta. Quando entrar
+`comparar_medianas()`, o boxplot e os pares podem servir às medianas também,
+com uma receita a mais (Dunn no lugar do Tukey).
+
+Toda receita de gráfico com cores começa com um trecho de cores
+(`trecho_de_cores()`), que define `cores` (estendidas com
+`colorRampPalette()` quando há mais grupos que cores) no próprio código
+mostrado.
+Assim a receita copiada roda sem a ClaRa; antes, `grafico_medias()` passava
+a paleta por fora e a cópia falhava numa sessão limpa.
 
 `escrever_resultados()` é uma função só para todas as análises: como
 `medir_efeito()`, ela escolhe a receita pela análise feita
@@ -262,7 +326,7 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   p acima da significância é "sem evidência contra o pressuposto", nunca
   prova de que ele vale.
 - Identidade visual **Ocean Gradient**: NAVY #0F3B5F, TEAL #2E7D8F,
-  SEAFOAM #62B6B7, AMBER #E89B3C, CORAL #E76F51; `cores_ocean` tem 8 cores
+  SEAFOAM #62B6B7, AMBER #E89B3C, CORAL #E76F51; `paletas_clara$ocean` tem 8 cores
   e se estende com `colorRampPalette()` quando há mais grupos.
 
 ## Limitações conhecidas
@@ -276,8 +340,9 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 - Com mais de 5000 observações, o `shapiro.test()` para com erro em inglês.
   O EAPACaderno trata isso (registra NA e deixa a leitura para o Q-Q); a
   ClaRa ainda não.
-- `grafico_medias()` com muitos grupos (10, por exemplo): os rótulos
-  "média ± DP" se sobrepõem.
+- `grafico_medias()` com muitos grupos e `mostrar_barras = FALSE`: o rótulo
+  "média ± DP" fica deitado e pode tocar a coluna vizinha (em pé, sairia
+  cortado). Saída: `mostrar_media_dp = FALSE`.
 
 ## Decisões em aberto
 
@@ -304,6 +369,9 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    todo resultado sem evidência e pouco acrescenta. Alternativas: dizer o n
    por grupo necessário para detectar um efeito de interesse definido pelo
    pesquisador, ou retirar a frase. Decidir com o professor.
+7. ~~`grafico_diagnostico(tipo = ...)`~~: separado em `grafico_residuos()` e
+   `grafico_qq()`, pela regra "uma função, uma figura" (outubro de 2026, a
+   pedido do professor, para avaliar como fica).
 
 ## Regras de crescimento
 
@@ -329,8 +397,9 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
      efeito e de textos da ANOVA e do teste t;
    - `R/clara_medianas.R`, `R/clara_regressao.R`...: o mesmo para cada
      pergunta nova;
-   - `R/clara_qualquer_analise.R`: `medir_efeito()` e
-     `escrever_resultados()`, só as funções (as receitas moram no arquivo
+   - `R/clara_qualquer_analise.R`: `medir_efeito()`,
+     `escrever_resultados()`, `grafico_residuos()` e `grafico_qq()`, só as
+     funções (as receitas moram no arquivo
      de cada pergunta, que as acrescenta às listas:
      `receitas_efeito$regressao <- ...`);
    - `R/clara_motor.R`: peças internas, exibição no console e `ajuda()`.
@@ -359,13 +428,10 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   como `pareado_por = individuo`;
 - ANOVA de Welch como comparação quando o Levene rejeitar a igualdade das
   variâncias;
-- gráficos de diagnóstico (resíduos x ajustados, Q-Q): `grafico_diagnostico()`;
 - `comparar_medianas()` e `grafico_medianas()`: Mann-Whitney (2 grupos) e
   Kruskal-Wallis (3 ou mais), com Dunn para os pares; o alerta de
   `escrever_resultados()` já sugere esses testes quando a normalidade falha
   com grupos pequenos;
-- do EAPACaderno ainda sem ClaRa: boxplot de exploração e gráfico de
-  floresta das diferenças do Tukey;
 - `rotulo_resposta` e `rotulo_grupos` informados uma vez só, em
   `comparar_medias()`, em vez de repetidos no gráfico e nos textos;
 - próximas análises: `relacionar_variaveis()` (regressão) e
@@ -381,10 +447,21 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   ClaRa, copiando `R/clara.R` para o projeto exportado como já faz com o
   `funcoes.R` (só pacotes do CRAN). Mapa do analise.R do EAPACaderno (ANOVA):
   seções 4 a 7 → `comparar_medias()` e `medir_efeito()`; 9.2 →
-  `grafico_medias()`; 10 → `escrever_resultados()`. Ficam fora da ClaRa:
-  leitura e preparo (2, 3), tabelas flextable (8), salvar cópias (11, 12).
-  Faltam: 9.1, 9.3, 9.4 e 9.5 (gráficos). Os QMDs precisarão ler
+  `grafico_medias()`; 9.1 → `grafico_boxplot()`; 9.3 e 9.4 →
+  `grafico_residuos()` e `grafico_qq()`; 9.5 → `grafico_pares()`; 10 →
+  `escrever_resultados()`. Ficam fora da ClaRa: leitura e preparo (2, 3),
+  tabelas flextable (8), salvar cópias (11, 12). A análise do roteiro está
+  toda coberta: `exemplos/anova_bagres.R` não tem mais blocos "Ainda sem
+  ClaRa" (462 linhas de código no original, 42 em ClaRa). Os QMDs precisarão ler
   `resultado$...` e `textos$...` no lugar dos objetos soltos atuais.
+- **Na migração, a conferência da base usa `all.equal()`** (aprovado pelo
+  professor em outubro de 2026). O analise.R exportado lê a base pronta
+  (`readRDS("dados/processados/base_compartilhada.rds")`), mostra em dplyr a
+  receita que a CatalyseR registrou e confere com
+  `all.equal(base_da_receita, base_pronta)`: `TRUE` confirma; senão, o R diz
+  o que mudou. Isso substitui o `catalyser_conferir_base()` e tira do projeto
+  exportado a dependência do pacote catalyser (GitHub), deixando-o só com
+  pacotes do CRAN. Modelo pronto: seções 2 e 3 de `exemplos/anova_bagres.R`.
 
 ## A concepção inicial (docs/concepcao_inicial_2026-09.md)
 

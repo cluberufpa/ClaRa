@@ -69,7 +69,12 @@ dentes |>
                   grupos            = fonte,
                   variancias_iguais = TRUE)
 
-# 9. Escrever os resultados ------------------------------------------------
+# 9. Olhar os resíduos -----------------------------------------------------
+# No teste t, o Q-Q tem um painel por grupo, como o Shapiro em cada grupo.
+resultado |>
+  grafico_qq()
+
+# 10. Escrever os resultados -----------------------------------------------
 # As frases saem do resultado: se os dados mudam, o texto muda junto.
 # No Quarto, cada frase entra no parágrafo com `r textos$teste`.
 textos <- resultado |>
@@ -78,7 +83,7 @@ textos <- resultado |>
 
 textos
 
-# 10. Pedir ajuda ----------------------------------------------------------
+# 11. Pedir ajuda ----------------------------------------------------------
 # ajuda() lista as funções da ClaRa; ajuda(nome) explica uma delas.
 ajuda()
 ajuda(comparar_medias)

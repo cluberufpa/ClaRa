@@ -11,10 +11,16 @@ Use `comparar_medias()` em `R/clara.R` como modelo vivo.
 ## Passo a passo
 
 0. **Veja onde a função mora** (CLAUDE.md, "Como a ClaRa se organiza"). Cada
-   pergunta tem dois verbos (análise e gráfico), numa seção própria do
-   `clara.R`. Uma variação da mesma pergunta vira argumento, não função. Uma
+   pergunta tem a sua análise e os seus gráficos, numa seção própria do
+   `clara.R`. Uma variação da mesma análise vira argumento, não função; mas
+   cada figura diferente tem o seu nome (uma função, uma figura: nada de
+   `tipo` escolhendo figuras). Uma
    função para qualquer análise já existe? Então a análise nova só acrescenta
-   receitas a `receitas_efeito` e `receitas_textos`.
+   receitas a `receitas_efeito`, `receitas_textos`, `receitas_residuos` e
+   `receitas_qq`.
+   Receitas de gráfico com cores começam com `trecho_cores` (ou
+   `trecho_de_cores(vetor)`), para rodarem copiadas. Gráficos de conferência
+   têm poucos parâmetros; a figura de publicação (`grafico_medias()`) tem mais.
 
 1. **Comece pela pergunta da pesquisa.** O nome da função é um verbo em
    português que responde a ela (`relacionar_variaveis`, `comparar_proporcoes`).

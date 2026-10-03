@@ -14,6 +14,7 @@ resultado <- peixes |>
 resultado                                  # um pequeno relatório no console
 resultado |> medir_efeito()                # a diferença é grande ou pequena?
 resultado |> grafico_medias()              # a comparação numa figura
+resultado |> grafico_qq()                  # os resíduos, num gráfico Q-Q
 textos <- resultado |> escrever_resultados()   # frases para o relatório
 
 ajuda()                                    # a lista de funções
@@ -22,14 +23,14 @@ ajuda(comparar_medias)                     # o que uma função faz e como usá-
 
 ## Como a ClaRa se organiza
 
-**Cada pergunta da pesquisa tem dois verbos próprios: a análise e o
-gráfico. Dois verbos servem para qualquer análise: medir o efeito e
-escrever os resultados.** Você não precisa saber o nome do teste: a ClaRa
+**Cada pergunta da pesquisa tem a sua análise e os seus gráficos, com um
+nome para cada figura. Quatro verbos servem para qualquer análise: medir o
+efeito, escrever os resultados e olhar os resíduos em dois gráficos.** Você não precisa saber o nome do teste: a ClaRa
 escolhe o teste certo para a pergunta e diz no relatório qual usou.
 
 | Pergunta da pesquisa | Análise | Gráfico | Testes por trás | Situação |
 |---|---|---|---|---|
-| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()` | teste t de Welch ou de Student (2 grupos); ANOVA com Tukey (3 ou mais) | pronta |
+| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | teste t de Welch ou de Student (2 grupos); ANOVA com Tukey (3 ou mais) | pronta |
 | A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()` | Mann-Whitney (2 grupos); Kruskal-Wallis (3 ou mais) | planejada |
 | Uma variável acompanha a outra? | `relacionar_variaveis()` | ainda sem nome | regressão linear | planejada |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | ainda sem nome | qui-quadrado ou teste de proporções | planejada |
@@ -38,10 +39,13 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 |---|---|
 | `medir_efeito()` | diz se o efeito é grande ou pequeno (η², ω², d de Cohen...) |
 | `escrever_resultados()` | escreve as frases do relatório, que mudam junto com os dados |
+| `grafico_residuos()` | resíduos contra ajustados: as variâncias dos grupos são parecidas? |
+| `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? |
 | `ajuda()` | lista as funções ou explica uma delas |
 
 Uma análise nova não cria funções novas em "Para qualquer análise": ela só
-ensina a `medir_efeito()` e a `escrever_resultados()` a falar dela. Por isso a
+ensina a `medir_efeito()`, a `escrever_resultados()`, a `grafico_residuos()`
+e a `grafico_qq()` a falar dela. Por isso a
 lista de funções continua curta, mesmo com muitas análises.
 
 ## Ver o R por trás

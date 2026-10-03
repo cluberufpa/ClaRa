@@ -4,8 +4,7 @@
 # Dados: bagres alimentados com quatro rações iso-proteicas (EAPADados).
 #
 # É o analise.R do caderno anova-bagres-gabarito (EAPACadernos) reescrito
-# em ClaRa, na mesma ordem de seções. Onde a ClaRa ainda não tem função,
-# o R comum aparece marcado com "Ainda sem ClaRa".
+# em ClaRa, na mesma ordem de seções.
 #
 # Rode as seções em ordem (Ctrl+Enter; sumário: Ctrl+Shift+O).
 # Para entender uma função: ajuda(comparar_medias).
@@ -15,7 +14,7 @@
 # 1. Preparar o ambiente ---------------------------------------------------
 library(dplyr)
 library(ggplot2)
-source("R/clara.R", encoding = "UTF-8")
+source("R/clara.R", encoding = "UTF-8")  # Carrega funções
 
 # 2. Ler os dados ----------------------------------------------------------
 # A base já preparada, em .rds: guarda os tipos e a ordem dos grupos.
@@ -30,7 +29,7 @@ glimpse(bagres)
 # perde os tipos: racao volta como texto e precisa virar fator, com os
 # grupos na ordem que queremos ver nas tabelas e nos gráficos.
 bagres_planilha <- read.csv("dados_treino/real_bagre_racoes.csv", encoding = "UTF-8") |>
-  mutate(racao = factor(racao, levels = c("A", "B", "C", "D")))
+                   mutate(racao = factor(racao, levels = c("A", "B", "C", "D")))
 
 # A receita ainda dá a mesma base? TRUE confirma; senão, o R diz o que mudou.
 all.equal(bagres_planilha, bagres)
@@ -56,12 +55,9 @@ resultado$pares
 # 9. Gráficos --------------------------------------------------------------
 
 # 9.1 Exploração: caixas com as observações por cima.
-# Ainda sem ClaRa (em espera).
-ggplot(resultado$dados, aes(x = racao, y = peso_g)) +
-  geom_boxplot(width = 0.5, outlier.shape = NA, colour = "grey50") +
-  geom_jitter(width = 0.1, height = 0, size = 1.5, alpha = 0.5) +
-  labs(x = "Tipo de Ração", y = "Peso (g)") +
-  theme_classic(base_size = 12)
+resultado |>
+  grafico_boxplot(rotulo_resposta = "Peso (g)",
+                  rotulo_grupos   = "Tipo de Ração")
 
 # 9.2 Figura principal: barras, pontos, média ± DP, IC e letras.
 grafico_barras <- resultado |>
@@ -70,36 +66,19 @@ grafico_barras <- resultado |>
 
 grafico_barras
 
-# 9.3 e 9.4 Resíduos e Q-Q.
-# Ainda sem ClaRa (em espera: grafico_diagnostico()).
-diagnostico <- tibble(
-  ajustado    = fitted(resultado$modelo),
-  residuo     = residuals(resultado$modelo),
-  padronizado = rstandard(resultado$modelo)
-)
+# 9.3 Resíduos contra ajustados: faixas de alturas parecidas, variâncias parecidas.
+resultado |>
+  grafico_residuos(rotulo_grupos = "Tipo de Ração")
 
-ggplot(diagnostico, aes(x = ajustado, y = residuo)) +
-  geom_hline(yintercept = 0, linetype = "dashed", colour = "grey40") +
-  geom_jitter(width = 0.02, height = 0, alpha = 0.7, colour = "#2E7D8F") +
-  labs(x = "Valores ajustados (médias dos grupos)", y = "Resíduos") +
-  theme_classic(base_size = 12)
+# 9.4 Q-Q: pontos perto da reta, resíduos compatíveis com a normal.
+resultado |>
+  grafico_qq()
 
-ggplot(diagnostico, aes(sample = padronizado)) +
-  stat_qq(colour = "#2E7D8F", alpha = 0.7) +
-  stat_qq_line(colour = "#E76F51") +
-  labs(x = "Quantis teóricos", y = "Resíduos padronizados") +
-  theme_classic(base_size = 12)
-
-# 9.5 Diferenças entre pares (floresta do Tukey).
-# Ainda sem ClaRa (em espera).
-ggplot(resultado$pares, aes(x = diferenca, y = comparacao)) +
-  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60") +
-  geom_errorbar(aes(xmin = ic_inf, xmax = ic_sup),
-                width = 0.2, linewidth = 0.8, colour = "#2E7D8F",
-                orientation = "y") +
-  geom_point(size = 3, colour = "#0F3B5F") +
-  labs(x = "Diferença de médias de Peso (g), IC 95% (Tukey)", y = NULL) +
-  theme_classic(base_size = 12)
+# 9.5 Diferenças entre pares: haste que cruza a linha tracejada (zero),
+#     sem diferença entre os dois grupos.
+resultado |>
+  grafico_pares(rotulo_resposta = "Peso (g)",
+                rotulo_grupos   = "Tipo de Ração")
 
 # 10. Textos para o relatório ----------------------------------------------
 # No Quarto, cada frase entra no parágrafo com `r textos$teste`.

@@ -12,13 +12,16 @@
 #
 #      source(here::here("R", "clara.R"), encoding = "UTF-8")
 #
-#  Como a ClaRa se organiza: cada pergunta da pesquisa tem dois verbos
-#  próprios (a análise e o gráfico); dois verbos servem para qualquer
-#  análise (medir o efeito e escrever os resultados).
+#  Como a ClaRa se organiza: cada pergunta da pesquisa tem a sua análise e
+#  os seus gráficos (um nome para cada figura); quatro verbos servem para
+#  qualquer análise (medir o efeito, escrever os resultados e olhar os
+#  resíduos em dois gráficos).
 #
 #  Seções deste arquivo (Ctrl+Shift+O no RStudio mostra o sumário):
-#    1. Comparar médias ........... comparar_medias(), grafico_medias()
-#    2. Para qualquer análise ..... medir_efeito(), escrever_resultados()
+#    1. Comparar médias ........... comparar_medias(), grafico_medias(),
+#                                   grafico_boxplot(), grafico_pares()
+#    2. Para qualquer análise ..... medir_efeito(), escrever_resultados(),
+#                                   grafico_residuos(), grafico_qq()
 #    3. Exibição no console ....... como o resultado aparece ao ser impresso
 #    4. Ajuda ..................... ajuda()
 #    5. Motor das receitas ........ peças internas; o aluno não precisa abrir
@@ -32,7 +35,9 @@
 # 1. Comparar médias -----------------------------------------------------------
 #
 # Pergunta: a média da resposta difere entre os grupos?
-# Dois verbos: comparar_medias() faz a análise; grafico_medias() a desenha.
+# comparar_medias() faz a análise; três gráficos a mostram, cada um com o
+# seu nome: grafico_medias() (a figura principal), grafico_boxplot() (a
+# exploração) e grafico_pares() (a diferença de cada par).
 # A ClaRa escolhe o teste: teste t (de Welch ou de Student) com dois grupos,
 # ANOVA com três ou mais.
 
@@ -370,15 +375,41 @@ pacotes_medias <- list(
 #
 # Pergunta: como mostrar a comparação numa só figura?
 #
-# A barra clara vai do zero até a média; cada ponto colorido é uma
-# observação; o losango é a média do grupo, com "média ± DP" ao lado; a haste
-# é o intervalo de confiança da média; as letras, todas na mesma altura, vêm
-# do Tukey (ou do teste t, com dois grupos).
+# A figura principal, a que vai para o relatório, o artigo ou a tese. Por
+# padrão: a barra clara vai do zero até a média; cada ponto colorido é uma
+# observação; o losango é a média do grupo, com "média ± DP" ao lado; a
+# haste é o intervalo de confiança da média; as letras, todas na mesma
+# altura, vêm do Tukey (ou do teste t, com dois grupos). Cada parte pode ser
+# ligada ou desligada, e a receita mostrada traz só as partes pedidas.
 #
 # Argumentos:
 #   resultado ........... o que comparar_medias() devolveu
 #   rotulo_resposta ..... texto do eixo y; sem ele, vai o nome da coluna
 #   rotulo_grupos ....... texto do eixo x; sem ele, vai o nome da coluna
+#   titulo .............. título da figura (padrão: sem título)
+#   explicacao .......... TRUE (padrão) escreve no topo o que cada elemento
+#                         mostra; FALSE tira, para a explicação ir para a
+#                         legenda do artigo
+#   haste ............... o que a haste mostra: "ic" (padrão, intervalo de
+#                         confiança da média), "ep" (média ± erro padrão) ou
+#                         "dp" (média ± desvio padrão)
+#   mostrar_barras ...... TRUE (padrão) desenha a barra clara até a média
+#   mostrar_pontos ...... TRUE (padrão) desenha cada observação
+#   mostrar_media_dp .... TRUE (padrão) escreve "média ± DP" ao lado do losango
+#   casas ............... casas decimais do rótulo média ± DP (padrão 2)
+#   angulo_rotulo ....... ângulo do rótulo média ± DP, em graus. Sem ele: 0
+#                         (deitado, ao lado do losango) até 6 grupos e 90
+#                         com mais: em pé, descendo da base da haste por
+#                         dentro da barra, sem invadir a coluna vizinha.
+#                         Sem barras, fica deitado: em pé, sairia cortado
+#                         embaixo. Com muitos grupos e sem barras, prefira
+#                         mostrar_media_dp = FALSE
+#   mostrar_letras ...... TRUE (padrão) escreve as letras das comparações
+#   cores ............... "ocean" (padrão), "cinza" (para impressão em preto e
+#                         branco) ou um vetor de cores, como
+#                         c("darkgreen", "orange")
+#   tamanho_texto ....... tamanho base do texto (padrão 12); o rótulo, as
+#                         letras e a explicação acompanham
 #   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
 #
 # Devolve um gráfico do ggplot2. Por isso dá para continuar com +:
@@ -390,11 +421,257 @@ pacotes_medias <- list(
 #   resultado |>
 #     grafico_medias(rotulo_resposta = "Peso seco (g)",
 #                    rotulo_grupos   = "Tratamento")
+#   resultado |>
+#     grafico_medias(rotulo_resposta = "Peso seco (g)",
+#                    explicacao      = FALSE,
+#                    haste           = "ep",
+#                    cores           = "cinza")
 #
 grafico_medias <- function(resultado,
-                           rotulo_resposta = NULL,
-                           rotulo_grupos   = NULL,
-                           mostrar_codigo  = FALSE) {
+                           rotulo_resposta  = NULL,
+                           rotulo_grupos    = NULL,
+                           titulo           = NULL,
+                           explicacao       = TRUE,
+                           haste            = "ic",
+                           mostrar_barras   = TRUE,
+                           mostrar_pontos   = TRUE,
+                           mostrar_media_dp = TRUE,
+                           casas            = 2,
+                           angulo_rotulo    = NULL,
+                           mostrar_letras   = TRUE,
+                           cores            = "ocean",
+                           tamanho_texto    = 12,
+                           mostrar_codigo   = FALSE) {
+
+  # Guardamos o nome do resultado, como o aluno o chamou.
+  nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # Conferimos as escolhas antes de desenhar.
+  conferir_opcao(haste, c("ic", "ep", "dp"), "haste")
+  conferir_sim_ou_nao(explicacao,       "explicacao")
+  conferir_sim_ou_nao(mostrar_barras,   "mostrar_barras")
+  conferir_sim_ou_nao(mostrar_pontos,   "mostrar_pontos")
+  conferir_sim_ou_nao(mostrar_media_dp, "mostrar_media_dp")
+  conferir_sim_ou_nao(mostrar_letras,   "mostrar_letras")
+  vetor_cores <- escolher_cores(cores)
+
+  # Sem rótulo informado, os eixos mostram o próprio nome da coluna.
+  rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
+  rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
+
+  # Com muitos grupos, o rótulo fica em pé, para não invadir a coluna vizinha.
+  # Deitado, o rótulo fica ao lado do losango; inclinado, desce a partir da
+  # base da haste, por dentro da barra.
+  angulo_rotulo <- ou_entao(angulo_rotulo,
+                            dplyr::case_when(mostrar_barras & nrow(resultado$resumo) > 6 ~ 90,
+                                             .default = 0))
+  deitado <- angulo_rotulo == 0
+
+  # Os limites da haste e o nome dela na explicação.
+  limites <- list(
+    ic = c("ic_inf",     "ic_sup",     paste0("IC ", resultado$nomes$confianca * 100, "% da média")),
+    ep = c("media - ep", "media + ep", "média ± EP"),
+    dp = c("media - dp", "media + dp", "média ± DP")
+  )[[haste]]
+
+  # A explicação do topo cita só as partes que aparecem na figura.
+  partes <- c(if (mostrar_pontos) "pontos: observações",
+              "losango: média",
+              if (mostrar_media_dp) "rótulo: média ± DP",
+              paste("hastes:", limites[3]))
+  texto_explicacao <- paste0(paste(partes, collapse = "; "), ".",
+                             if (mostrar_letras) "\\nLetras iguais: sem diferença significativa.")
+  texto_explicacao <- paste0(toupper(substr(texto_explicacao, 1, 1)),
+                             substring(texto_explicacao, 2))
+
+  # O preparo: só os objetos que as camadas pedidas vão usar.
+  t <- trechos_grafico_medias
+  preparo <- c(
+    if (mostrar_barras || mostrar_pontos) trecho_de_cores(vetor_cores),
+    if (mostrar_pontos) t$pontos,
+    t$medias,
+    if (mostrar_media_dp) t$media_dp,
+    if (mostrar_letras && mostrar_pontos) t$altura_com_pontos,
+    if (mostrar_letras && !mostrar_pontos) t$altura_sem_pontos
+  )
+
+  # Os textos da figura: título, explicação e eixos.
+  linhas_labs <- c(
+    if (!is.null(titulo)) "    title    = \"<<TITULO>>\",",
+    if (explicacao) "    subtitle = \"<<EXPLICACAO>>\",",
+    "    x        = \"<<ROTULO_GRUPOS>>\",",
+    "    y        = \"<<ROTULO_RESPOSTA>>\""
+  )
+
+  # As camadas pedidas, na ordem em que se empilham, ligadas por +.
+  camadas <- c(
+    t$base,
+    if (mostrar_barras) t$barras,
+    if (mostrar_pontos) t$pontos_camada,
+    t$haste,
+    t$media,
+    if (mostrar_media_dp) t$rotulo,
+    if (mostrar_letras) t$letras,
+    if (mostrar_pontos) t$escala_cor,
+    if (mostrar_barras) t$escala_preenchimento,
+    t$escala_x,
+    t$escala_y,
+    paste(c("  labs(", linhas_labs, "  )"), collapse = "\n"),
+    t$tema
+  )
+  receita <- paste(c(trimws(preparo),
+                     paste0("# A figura, camada por camada.\n",
+                            paste(camadas, collapse = " +\n"))),
+                   collapse = "\n\n")
+
+  # Trocamos os marcadores pelos nomes e pelas escolhas desta figura.
+  receita <- preencher_receita(receita, list(
+    RESULTADO          = nome_resultado,
+    RESPOSTA           = resultado$nomes$resposta,
+    GRUPOS             = resultado$nomes$grupos,
+    ROTULO_RESPOSTA    = rotulo_resposta,
+    ROTULO_GRUPOS      = rotulo_grupos,
+    TITULO             = ou_entao(titulo, ""),
+    EXPLICACAO         = texto_explicacao,
+    NOME_HASTE         = limites[3],
+    HASTE_INF          = limites[1],
+    HASTE_SUP          = limites[2],
+    CASAS              = casas,
+    ANGULO             = angulo_rotulo,
+    Y_ROTULO           = dplyr::case_when(deitado ~ "media", .default = "haste_inf"),
+    NUDGE_ROTULO       = dplyr::case_when(deitado ~ 0.06,    .default = 0.12),
+    HJUST              = dplyr::case_when(deitado ~ 0,       .default = 1.1),
+    TAMANHO            = tamanho_texto,
+    TAMANHO_ROTULO     = round(3.6 * tamanho_texto / 12, 1),
+    TAMANHO_LETRAS     = round(6 * tamanho_texto / 12, 1),
+    TAMANHO_EXPLICACAO = round(10 * tamanho_texto / 12, 1),
+    FOLGA_BAIXO        = dplyr::case_when(mostrar_barras ~ 0, .default = 0.05)
+  ))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
+    pacotes        = c("dplyr", "ggplot2"),
+    mostrar_codigo = mostrar_codigo
+  )
+}
+
+# Os trechos da receita de grafico_medias(). A função escolhe os que a
+# figura pedida usa e os junta, na ordem, numa receita só.
+trechos_grafico_medias <- list()
+
+# Preparo: as observações de cada grupo.
+trechos_grafico_medias$pontos <- "
+# As observações de cada grupo.
+pontos <- <<RESULTADO>>$dados"
+
+# Preparo: as médias, com os limites da haste.
+trechos_grafico_medias$medias <- "
+# As médias de cada grupo, com os limites da haste (<<NOME_HASTE>>).
+medias <- <<RESULTADO>>$resumo |>
+  mutate(
+    haste_inf = <<HASTE_INF>>,
+    haste_sup = <<HASTE_SUP>>
+  )"
+
+# Preparo: o rótulo média ± DP.
+trechos_grafico_medias$media_dp <- "
+# O rótulo \"média ± DP\" de cada grupo, com vírgula decimal.
+medias <- medias |>
+  mutate(
+    media_dp = paste(
+      formatC(media, format = \"f\", digits = <<CASAS>>, decimal.mark = \",\"),
+      \"±\",
+      formatC(dp, format = \"f\", digits = <<CASAS>>, decimal.mark = \",\")
+    )
+  )"
+
+# Preparo: a altura das letras, com e sem os pontos na figura.
+trechos_grafico_medias$altura_com_pontos <- "
+# Todas as letras na mesma altura, acima do ponto ou da haste mais alta.
+altura_letras <- max(pontos$<<RESPOSTA>>, medias$haste_sup)"
+
+trechos_grafico_medias$altura_sem_pontos <- "
+# Todas as letras na mesma altura, acima da haste mais alta.
+altura_letras <- max(medias$haste_sup)"
+
+# Camadas da figura, uma por trecho.
+trechos_grafico_medias$base <- "ggplot(medias, aes(x = <<GRUPOS>>))"
+
+trechos_grafico_medias$barras <- "  geom_col(
+    aes(y = media, fill = <<GRUPOS>>),
+    width = 0.3, alpha = 0.25
+  )"
+
+trechos_grafico_medias$pontos_camada <- "  geom_point(
+    data     = pontos,
+    aes(y = <<RESPOSTA>>, colour = <<GRUPOS>>),
+    position = position_jitter(width = 0.08, height = 0, seed = 1),
+    size     = 2.2,
+    alpha    = 0.7
+  )"
+
+trechos_grafico_medias$haste <- "  geom_errorbar(
+    aes(ymin = haste_inf, ymax = haste_sup),
+    width = 0.08, linewidth = 0.8, colour = \"#0F3B5F\"
+  )"
+
+trechos_grafico_medias$media <- "  geom_point(aes(y = media), shape = 18, size = 4.4, colour = \"#0F3B5F\")"
+
+trechos_grafico_medias$rotulo <- "  geom_text(
+    aes(y = <<Y_ROTULO>>, label = media_dp),
+    nudge_x = <<NUDGE_ROTULO>>, angle = <<ANGULO>>, hjust = <<HJUST>>, vjust = 0.5,
+    size = <<TAMANHO_ROTULO>>, fontface = \"bold\", colour = \"#0F3B5F\"
+  )"
+
+trechos_grafico_medias$letras <- "  geom_text(
+    aes(label = letra),
+    y = altura_letras, vjust = -0.6,
+    size = <<TAMANHO_LETRAS>>, fontface = \"bold\", colour = \"#0F3B5F\"
+  )"
+
+trechos_grafico_medias$escala_cor <- "  scale_colour_manual(values = cores, guide = \"none\")"
+
+trechos_grafico_medias$escala_preenchimento <- "  scale_fill_manual(values = cores, guide = \"none\")"
+
+trechos_grafico_medias$escala_x <- "  scale_x_discrete(expand = expansion(add = c(0.6, 0.9)))"
+
+trechos_grafico_medias$escala_y <- "  scale_y_continuous(expand = expansion(mult = c(<<FOLGA_BAIXO>>, 0.15)))"
+
+trechos_grafico_medias$tema <- "  theme_classic(base_size = <<TAMANHO>>) +
+  theme(
+    plot.title          = element_text(colour = \"#0F3B5F\"),
+    plot.subtitle       = element_text(size = <<TAMANHO_EXPLICACAO>>, colour = \"grey30\"),
+    plot.title.position = \"plot\"
+  )"
+
+# grafico_boxplot() ------------------------------------------------------------
+#
+# Pergunta: como se distribuem as observações em cada grupo?
+#
+# A figura da exploração, para olhar os dados antes de concluir. A caixa
+# mostra a mediana e a metade central dos dados; os pontos são as
+# observações. Caixas de alturas muito diferentes sugerem variâncias
+# diferentes; pontos muito afastados merecem uma conferência na planilha.
+#
+# Argumentos:
+#   resultado ........... o que comparar_medias() devolveu
+#   rotulo_resposta ..... texto do eixo y; sem ele, vai o nome da coluna
+#   rotulo_grupos ....... texto do eixo x; sem ele, vai o nome da coluna
+#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
+#
+# Devolve um gráfico do ggplot2; ajustes extras entram com +.
+#
+# Exemplo:
+#   resultado |>
+#     grafico_boxplot(rotulo_resposta = "Peso (g)",
+#                     rotulo_grupos   = "Tipo de Ração")
+#
+grafico_boxplot <- function(resultado,
+                            rotulo_resposta = NULL,
+                            rotulo_grupos   = NULL,
+                            mostrar_codigo  = FALSE) {
 
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
@@ -403,97 +680,165 @@ grafico_medias <- function(resultado,
   rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
   rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
 
-  # A receita do gráfico, camada por camada.
-  receita <- "
-# As observações e as médias de cada grupo.
-pontos <- <<RESULTADO>>$dados
-
-# O rótulo \"média ± DP\" de cada grupo, com vírgula decimal.
-medias <- <<RESULTADO>>$resumo |>
-  mutate(
-    media_dp = paste(
-      formatC(media, format = \"f\", digits = 2, decimal.mark = \",\"),
-      \"±\",
-      formatC(dp, format = \"f\", digits = 2, decimal.mark = \",\")
-    )
-  )
-
-# Todas as letras na mesma altura, acima do ponto ou do IC mais alto.
-altura_letras <- max(pontos$<<RESPOSTA>>, medias$ic_sup)
-
-# Barra até a média, pontos, IC, losango, rótulo e letras, nesta ordem.
-ggplot(medias, aes(x = <<GRUPOS>>)) +
-  geom_col(
-    aes(y = media, fill = <<GRUPOS>>),
-    width = 0.3, alpha = 0.25
-  ) +
-  geom_point(
-    data     = pontos,
-    aes(y = <<RESPOSTA>>, colour = <<GRUPOS>>),
-    position = position_jitter(width = 0.08, height = 0, seed = 1),
-    size     = 2.2,
-    alpha    = 0.7
-  ) +
-  geom_errorbar(
-    aes(ymin = ic_inf, ymax = ic_sup),
-    width = 0.08, linewidth = 0.8, colour = \"#0F3B5F\"
-  ) +
-  geom_point(aes(y = media), shape = 18, size = 4.4, colour = \"#0F3B5F\") +
-  geom_text(
-    aes(y = media, label = media_dp),
-    nudge_x = 0.06, hjust = 0,
-    size = 3.6, fontface = \"bold\", colour = \"#0F3B5F\"
-  ) +
-  geom_text(
-    aes(label = letra),
-    y = altura_letras, vjust = -0.6,
-    size = 6, fontface = \"bold\", colour = \"#0F3B5F\"
-  ) +
-  scale_colour_manual(values = cores_ocean, guide = \"none\") +
-  scale_fill_manual(values = cores_ocean, guide = \"none\") +
-  scale_x_discrete(expand = expansion(add = c(0.6, 0.9))) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
-  labs(
-    title = paste(
-      \"Pontos: observações; losango: média; rótulo: média ± DP;\",
-      \"hastes: IC <<NIVEL>>% da média.\\nLetras iguais: sem diferença significativa.\"
-    ),
-    x = \"<<ROTULO_GRUPOS>>\",
-    y = \"<<ROTULO_RESPOSTA>>\"
-  ) +
-  theme_classic(base_size = 12) +
-  theme(
-    plot.title          = element_text(size = 10, colour = \"grey30\"),
-    plot.title.position = \"plot\"
-  )"
-
   # Trocamos os marcadores pelos nomes desta análise.
-  receita <- preencher_receita(receita, list(
+  receita <- preencher_receita(receita_grafico_boxplot, list(
     RESULTADO       = nome_resultado,
     RESPOSTA        = resultado$nomes$resposta,
     GRUPOS          = resultado$nomes$grupos,
     ROTULO_RESPOSTA = rotulo_resposta,
-    ROTULO_GRUPOS   = rotulo_grupos,
-    NIVEL           = resultado$nomes$confianca * 100
+    ROTULO_GRUPOS   = rotulo_grupos
   ))
-
-  # Uma cor para cada grupo, mesmo quando há mais grupos que cores na paleta.
-  quantos_grupos <- nrow(resultado$resumo)
-  cores <- grDevices::colorRampPalette(cores_ocean)(max(quantos_grupos, 8))
 
   # Rodamos a receita, mostrando o código antes, se o aluno pediu.
   executar_receita(
     receita        = receita,
-    objetos        = rlang::set_names(list(resultado, cores),
-                                      c(nome_resultado, "cores_ocean")),
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
     pacotes        = c("dplyr", "ggplot2"),
     mostrar_codigo = mostrar_codigo
   )
 }
 
-# A paleta Ocean Gradient, ampliada para oito grupos.
-cores_ocean <- c("#0F3B5F", "#2E7D8F", "#62B6B7", "#E89B3C",
-                 "#E76F51", "#6A4C93", "#1B998B", "#B23A48")
+# A receita de grafico_boxplot(): caixas com as observações por cima.
+receita_grafico_boxplot <- "
+# Caixas com as observações por cima: mediana, metade central dos dados e
+# cada observação de cada grupo.
+ggplot(<<RESULTADO>>$dados, aes(x = <<GRUPOS>>, y = <<RESPOSTA>>)) +
+  geom_boxplot(width = 0.5, outlier.shape = NA, colour = \"grey50\") +
+  geom_point(
+    position = position_jitter(width = 0.05, height = 0, seed = 1),
+    size     = 1.5,
+    alpha    = 0.5
+  ) +
+  labs(
+    title = paste(\"Caixa: mediana e metade central dos dados; pontos: as observações.\",
+                  \"Confira se as caixas têm alturas parecidas e se há pontos muito afastados.\",
+                  sep = \"\\n\"),
+    x     = \"<<ROTULO_GRUPOS>>\",
+    y     = \"<<ROTULO_RESPOSTA>>\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(plot.title = element_text(size = 10, colour = \"grey30\"),
+        plot.title.position = \"plot\")"
+
+# grafico_pares() --------------------------------------------------------------
+#
+# Pergunta: quais pares de grupos diferem, e por quanto?
+#
+# Cada linha compara dois grupos: o ponto é a diferença entre as médias e a
+# haste, o seu intervalo de confiança. A linha tracejada vertical marca a
+# diferença zero: haste que cruza a linha, sem diferença entre os dois
+# grupos; haste toda de um lado, diferença. Em "B-A", a diferença é a média
+# de B menos a média de A. Na ANOVA, os pares e os intervalos vêm do Tukey;
+# no teste t, há um par só, com o intervalo do próprio teste.
+#
+# Argumentos:
+#   resultado ........... o que comparar_medias() devolveu
+#   rotulo_resposta ..... a resposta no texto do eixo x; sem ele, vai o nome da coluna
+#   rotulo_grupos ....... os grupos no texto do eixo y; sem ele, vai o nome da coluna
+#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
+#
+# Devolve um gráfico do ggplot2; ajustes extras entram com +. Com muitos
+# grupos (10 grupos dão 45 pares), salve a figura mais alta.
+#
+# Exemplo:
+#   resultado |>
+#     grafico_pares(rotulo_resposta = "Peso (g)",
+#                   rotulo_grupos   = "Tipo de Ração")
+#
+grafico_pares <- function(resultado,
+                          rotulo_resposta = NULL,
+                          rotulo_grupos   = NULL,
+                          mostrar_codigo  = FALSE) {
+
+  # Guardamos o nome do resultado, como o aluno o chamou.
+  nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # Sem rótulo informado, os eixos mostram o próprio nome da coluna.
+  rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
+  rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
+
+  # Na ANOVA, os pares vêm do Tukey; no teste t, do próprio teste.
+  anova <- resultado$nomes$analise == "anova"
+  parte_pares <- dplyr::case_when(anova ~ "pares", .default = "teste")
+  metodo <- dplyr::case_when(
+    anova                             ~ "Tukey",
+    resultado$nomes$variancias_iguais ~ "teste t de Student",
+    .default                          = "teste t de Welch"
+  )
+
+  # Trocamos os marcadores pelos nomes desta análise.
+  receita <- preencher_receita(receita_grafico_pares, list(
+    RESULTADO       = nome_resultado,
+    ROTULO_RESPOSTA = rotulo_resposta,
+    ROTULO_GRUPOS   = rotulo_grupos,
+    NIVEL           = resultado$nomes$confianca * 100,
+    PARTE_PARES     = parte_pares,
+    METODO          = metodo
+  ))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
+    pacotes        = c("dplyr", "ggplot2"),
+    mostrar_codigo = mostrar_codigo
+  )
+}
+
+# A receita de grafico_pares(): a diferença de cada par, com o IC.
+receita_grafico_pares <- "
+# As comparações entre pares, na ordem da tabela, de cima para baixo.
+# Em \"B-A\", a diferença é a média de B menos a média de A.
+pares <- <<RESULTADO>>$<<PARTE_PARES>> |>
+  mutate(comparacao = factor(comparacao, levels = rev(comparacao)))
+
+# Ponto: a diferença; haste: o IC; linha tracejada: a diferença zero.
+ggplot(pares, aes(x = diferenca, y = comparacao)) +
+  geom_vline(xintercept = 0, linetype = \"dashed\", colour = \"grey60\") +
+  geom_errorbar(
+    aes(xmin = ic_inf, xmax = ic_sup),
+    width = 0.2, linewidth = 0.8, colour = \"#2E7D8F\", orientation = \"y\"
+  ) +
+  geom_point(size = 3, colour = \"#0F3B5F\") +
+  labs(
+    title = paste(\"Ponto: diferença entre as médias do par; haste: IC <<NIVEL>>% (<<METODO>>).\",
+                  \"Linha tracejada: diferença zero. Haste que cruza a linha: sem diferença entre os dois grupos.\",
+                  sep = \"\\n\"),
+    x     = \"Diferença entre as médias de <<ROTULO_RESPOSTA>>\",
+    y     = \"Pares de <<ROTULO_GRUPOS>>\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(plot.title = element_text(size = 10, colour = \"grey30\"),
+        plot.title.position = \"plot\")"
+
+# As paletas que o aluno escolhe pelo nome: a Ocean Gradient (oito cores) e
+# uma em cinza, para revistas impressas em preto e branco.
+paletas_clara <- list(
+  ocean = c("#0F3B5F", "#2E7D8F", "#62B6B7", "#E89B3C",
+            "#E76F51", "#6A4C93", "#1B998B", "#B23A48"),
+  cinza = c("grey25", "grey70")
+)
+
+# Escreve um vetor de cores como código R, quatro por linha.
+escrever_vetor <- function(valores) {
+  textos <- paste0("\"", valores, "\"")
+  linhas <- split(textos, ceiling(seq_along(textos) / 4))
+  paste0("c(", paste(vapply(linhas, paste, character(1), collapse = ", "),
+                     collapse = ",\n           "), ")")
+}
+
+# O trecho de cores que abre as receitas de gráfico. Com mais grupos que
+# cores, colorRampPalette() cria cores intermediárias. Fica dentro da receita
+# para o código mostrado rodar sozinho, sem a ClaRa.
+trecho_de_cores <- function(vetor) {
+  paste0("
+# Cores: uma para cada grupo (intermediárias, se houver mais grupos que cores).
+cores <- ", escrever_vetor(vetor), "
+cores <- colorRampPalette(cores)(max(length(cores), nlevels(<<RESULTADO>>$dados$<<GRUPOS>>)))")
+}
+
+# O trecho com a paleta Ocean, usado pelos gráficos de diagnóstico.
+trecho_cores <- trecho_de_cores(paletas_clara$ocean)
 
 
 
@@ -961,6 +1306,199 @@ list(
 
 
 
+# grafico_residuos() -----------------------------------------------------------
+#
+# Pergunta: as variâncias dos grupos são parecidas?
+#
+# Resíduos contra os valores ajustados (as médias dos grupos): cada grupo
+# forma uma faixa vertical. Faixas de alturas parecidas indicam variâncias
+# parecidas; uma faixa muito mais alta que as outras pede cautela. O gráfico
+# completa o teste de Levene: o teste dá um p, o gráfico mostra qual grupo
+# se afasta e quanto.
+#
+# Argumentos:
+#   resultado ........... o que comparar_medias() devolveu
+#   rotulo_grupos ....... nome dos grupos na legenda; sem ele, vai o da coluna
+#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
+#
+# Devolve um gráfico do ggplot2; ajustes extras entram com +.
+#
+# Exemplo:
+#   resultado |>
+#     grafico_residuos(rotulo_grupos = "Tipo de Ração")
+#
+grafico_residuos <- function(resultado,
+                             rotulo_grupos  = NULL,
+                             mostrar_codigo = FALSE) {
+
+  # Guardamos o nome do resultado, como o aluno o chamou.
+  nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # Sem rótulo informado, a legenda mostra o próprio nome da coluna.
+  rotulo_grupos <- ou_entao(rotulo_grupos, resultado$nomes$grupos)
+
+  # Trocamos os marcadores da receita da análise feita.
+  receita <- preencher_receita(receitas_residuos[[resultado$nomes$analise]], list(
+    RESULTADO     = nome_resultado,
+    RESPOSTA      = resultado$nomes$resposta,
+    GRUPOS        = resultado$nomes$grupos,
+    ROTULO_GRUPOS = rotulo_grupos
+  ))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
+    pacotes        = c("dplyr", "ggplot2"),
+    mostrar_codigo = mostrar_codigo
+  )
+}
+
+
+# grafico_qq() -----------------------------------------------------------------
+#
+# Pergunta: os resíduos são compatíveis com a distribuição normal?
+#
+# Gráfico Q-Q: os resíduos contra os quantis da distribuição normal. Pontos
+# perto da reta indicam resíduos compatíveis com a normal; caudas que se
+# afastam indicam assimetria ou valores extremos. Na ANOVA, usa os resíduos
+# padronizados do modelo; no teste t, há um painel por grupo, como o
+# Shapiro-Wilk em cada grupo. O gráfico completa o Shapiro-Wilk: o teste dá
+# um p, o gráfico mostra onde está o desvio e de que tamanho ele é.
+#
+# Argumentos:
+#   resultado ........... o que comparar_medias() devolveu
+#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
+#
+# Devolve um gráfico do ggplot2; ajustes extras entram com +.
+#
+# Exemplo:
+#   resultado |>
+#     grafico_qq()
+#
+grafico_qq <- function(resultado,
+                       mostrar_codigo = FALSE) {
+
+  # Guardamos o nome do resultado, como o aluno o chamou.
+  nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # Trocamos os marcadores da receita da análise feita.
+  receita <- preencher_receita(receitas_qq[[resultado$nomes$analise]], list(
+    RESULTADO = nome_resultado,
+    RESPOSTA  = resultado$nomes$resposta,
+    GRUPOS    = resultado$nomes$grupos
+  ))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
+    pacotes        = c("dplyr", "ggplot2"),
+    mostrar_codigo = mostrar_codigo
+  )
+}
+
+# Os trechos das receitas de grafico_residuos() e grafico_qq(): o preparo
+# dos resíduos depende da análise; o desenho, do gráfico.
+trechos_diagnostico <- list()
+
+# ANOVA: os resíduos vêm do modelo.
+trechos_diagnostico$preparo_anova <- "
+# Resíduos e valores ajustados do modelo, ao lado de cada observação.
+diagnostico <- <<RESULTADO>>$dados |>
+  mutate(
+    ajustado    = fitted(<<RESULTADO>>$modelo),
+    residuo     = residuals(<<RESULTADO>>$modelo),
+    padronizado = rstandard(<<RESULTADO>>$modelo)
+  )"
+
+# Teste t: o resíduo é a distância de cada observação até a média do grupo.
+trechos_diagnostico$preparo_teste_t <- "
+# Resíduo: o quanto cada observação se afasta da média do seu grupo.
+diagnostico <- <<RESULTADO>>$dados |>
+  group_by(<<GRUPOS>>) |>
+  mutate(
+    ajustado = mean(<<RESPOSTA>>),
+    residuo  = <<RESPOSTA>> - ajustado
+  ) |>
+  ungroup()"
+
+# Resíduos contra ajustados: o mesmo gráfico para as duas análises.
+trechos_diagnostico$residuos <- "
+# Resíduos contra os ajustados: uma faixa vertical por grupo.
+ggplot(diagnostico, aes(x = ajustado, y = residuo, colour = <<GRUPOS>>)) +
+  geom_hline(yintercept = 0, linetype = \"dashed\", colour = \"grey40\") +
+  geom_point(size = 2.2, alpha = 0.7) +
+  scale_colour_manual(values = cores) +
+  labs(
+    title  = \"Faixas de alturas parecidas indicam variâncias parecidas entre os grupos.\",
+    x      = \"Valores ajustados (médias dos grupos)\",
+    y      = \"Resíduos\",
+    colour = \"<<ROTULO_GRUPOS>>\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(plot.title = element_text(size = 10, colour = \"grey30\"),
+        plot.title.position = \"plot\")"
+
+# Q-Q da ANOVA: todos os resíduos padronizados juntos.
+trechos_diagnostico$qq_anova <- "
+# Q-Q: os resíduos padronizados contra os quantis da distribuição normal.
+ggplot(diagnostico, aes(sample = padronizado)) +
+  stat_qq(size = 2.2, alpha = 0.7, colour = \"#2E7D8F\") +
+  stat_qq_line(colour = \"#E76F51\") +
+  labs(
+    title = paste(\"Pontos perto da reta: resíduos compatíveis com a normal.\",
+                  \"Caudas que se afastam indicam assimetria ou valores extremos.\",
+                  sep = \"\\n\"),
+    x     = \"Quantis teóricos\",
+    y     = \"Resíduos padronizados\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(plot.title = element_text(size = 10, colour = \"grey30\"),
+        plot.title.position = \"plot\")"
+
+# Q-Q do teste t: um painel por grupo, como o Shapiro-Wilk em cada grupo.
+trechos_diagnostico$qq_teste_t <- "
+# Q-Q em cada grupo: os resíduos contra os quantis da distribuição normal.
+ggplot(diagnostico, aes(sample = residuo, colour = <<GRUPOS>>)) +
+  stat_qq(size = 2.2, alpha = 0.7) +
+  stat_qq_line() +
+  facet_wrap(vars(<<GRUPOS>>)) +
+  scale_colour_manual(values = cores, guide = \"none\") +
+  labs(
+    title = paste(\"Pontos perto da reta: resíduos compatíveis com a normal.\",
+                  \"Caudas que se afastam indicam assimetria ou valores extremos.\",
+                  sep = \"\\n\"),
+    x     = \"Quantis teóricos\",
+    y     = \"Resíduos (observação menos a média do grupo)\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(plot.title = element_text(size = 10, colour = \"grey30\"),
+        plot.title.position = \"plot\",
+        strip.background = element_blank(),
+        panel.spacing = unit(1.5, \"lines\"))"
+
+# As receitas de grafico_residuos(), montadas com os trechos, uma por análise.
+receitas_residuos <- list(
+  anova   = paste(trimws(c(trecho_cores,
+                           trechos_diagnostico$preparo_anova,
+                           trechos_diagnostico$residuos)), collapse = "\n\n"),
+  teste_t = paste(trimws(c(trecho_cores,
+                           trechos_diagnostico$preparo_teste_t,
+                           trechos_diagnostico$residuos)), collapse = "\n\n")
+)
+
+# As receitas de grafico_qq(), montadas com os trechos, uma por análise.
+receitas_qq <- list(
+  anova   = paste(trimws(c(trechos_diagnostico$preparo_anova,
+                           trechos_diagnostico$qq_anova)), collapse = "\n\n"),
+  teste_t = paste(trimws(c(trecho_cores,
+                           trechos_diagnostico$preparo_teste_t,
+                           trechos_diagnostico$qq_teste_t)), collapse = "\n\n")
+)
+
+
+
 # 3. Exibição no console -------------------------------------------------------
 #
 # Ao digitar o nome do resultado no console, o R chama esta função.
@@ -1218,6 +1756,28 @@ conferir_sim_ou_nao <- function(valor, nome_argumento) {
   if (!isTRUE(valor) && !isFALSE(valor)) {
     stop(nome_argumento, " aceita só TRUE ou FALSE.", call. = FALSE)
   }
+}
+
+# Confere se um argumento de escolha recebeu uma das opções aceitas.
+conferir_opcao <- function(valor, opcoes, nome_argumento) {
+  if (!is.character(valor) || length(valor) != 1 || !is.element(valor, opcoes)) {
+    stop(nome_argumento, " aceita só: ",
+         paste0("\"", opcoes, "\"", collapse = " ou "), ".", call. = FALSE)
+  }
+}
+
+# Transforma a escolha de cores num vetor: o nome de uma paleta da ClaRa
+# ("ocean", "cinza") ou um vetor de cores que o R reconheça.
+escolher_cores <- function(cores) {
+  e_paleta  <- is.character(cores) && length(cores) == 1 &&
+    is.element(cores, names(paletas_clara))
+  sao_cores <- is.character(cores) &&
+    !inherits(try(grDevices::col2rgb(cores), silent = TRUE), "try-error")
+  if (!e_paleta && !sao_cores) {
+    stop("cores aceita \"ocean\", \"cinza\" ou um vetor de cores, ",
+         "como c(\"darkgreen\", \"orange\").", call. = FALSE)
+  }
+  if (e_paleta) paletas_clara[[cores]] else cores
 }
 
 # Descobre o nome do objeto que o aluno passou (plantas, resultado...).
