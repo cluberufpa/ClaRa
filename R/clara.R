@@ -13,12 +13,14 @@
 #      source(here::here("R", "clara.R"), encoding = "UTF-8")
 #
 #  Seções deste arquivo (Ctrl+Shift+O no RStudio mostra o sumário):
-#    1. Comparar médias ........... comparar_medias()
+#    1. Comparar médias ........... comparar_medias() e suas receitas
 #    2. Depois da comparação ...... medir_efeito(), grafico_medias()
 #    3. Exibição no console ....... como o resultado aparece ao ser impresso
-#    4. Motor das receitas ........ peças internas; o aluno não precisa abrir
+#    4. Ajuda ..................... ajuda()
+#    5. Motor das receitas ........ peças internas; o aluno não precisa abrir
 #
 #  As colunas podem ser escritas sem aspas (peso_g) ou com aspas ("peso_g").
+#  Para ver a lista de funções: ajuda(). Para uma delas: ajuda(comparar_medias).
 # =============================================================================
 
 
@@ -29,16 +31,35 @@
 #
 # Pergunta: a média da resposta difere entre os grupos?
 #
-# Faz a análise completa da ANOVA de um fator, na ordem em que a estudamos:
-# resumo dos grupos, ANOVA, pressupostos, comparações de Tukey e letras.
+# A ClaRa escolhe o teste pelo número de grupos com dados:
+#   dois grupos ........ teste t: de Welch (padrão, não supõe variâncias
+#                        iguais) ou de Student (com variancias_iguais = TRUE);
+#   três ou mais ....... ANOVA de um fator, com Tukey.
+# Em qualquer caso, faz a análise na ordem em que a estudamos: resumo dos
+# grupos, teste, pressupostos e letras.
+#
+# Argumentos:
+#   dados ............... a tabela, com uma linha por observação
+#   resposta ............ a coluna numérica medida (peso, comprimento...)
+#   grupos .............. a coluna que diz o grupo de cada observação
+#   confianca ........... nível de confiança dos intervalos (padrão 0.95);
+#                         a significância dos testes é 1 - confianca
+#   variancias_iguais ... só com dois grupos. FALSE (padrão): teste de Welch.
+#                         TRUE: teste de Student, que supõe variâncias
+#                         iguais; use quando a exploração dos dados já
+#                         mostrou dispersões parecidas nos dois grupos
+#   mostrar_codigo ...... TRUE imprime o código R antes do resultado
 #
 # Devolve uma lista. Cada parte se abre com $:
 #   resultado$resumo        n, média, DP, EP, IC e letra de cada grupo
+#   resultado$pressupostos  testes dos pressupostos, com uma leitura de cada um
+#   resultado$dados         as observações usadas na análise
+# Com três ou mais grupos (ANOVA):
 #   resultado$anova         a tabela da ANOVA
-#   resultado$pressupostos  Shapiro-Wilk e Levene, com uma leitura de cada um
 #   resultado$pares         todas as comparações de Tukey
 #   resultado$modelo        o modelo aov(), para quem quiser ir além
-#   resultado$dados         as observações usadas na análise
+# Com dois grupos (teste t):
+#   resultado$teste         diferença das médias, IC, t, gl e p
 #
 # Exemplo:
 #   resultado <- plantas |>
@@ -47,8 +68,9 @@
 comparar_medias <- function(dados,
                             resposta,
                             grupos,
-                            confianca      = 0.95,
-                            mostrar_codigo = FALSE) {
+                            confianca         = 0.95,
+                            variancias_iguais = FALSE,
+                            mostrar_codigo    = FALSE) {
 
   # Guardamos o nome da tabela que o aluno usou (plantas, por exemplo).
   nome_dados <- nome_do_objeto(substitute(dados), padrao = "dados")
@@ -57,15 +79,74 @@ comparar_medias <- function(dados,
   coluna_resposta <- rlang::as_name(rlang::ensym(resposta))
   coluna_grupos   <- rlang::as_name(rlang::ensym(grupos))
 
-  # Antes de calcular, conferimos se as colunas existem e servem para a ANOVA.
+  # Antes de calcular, conferimos se as colunas existem e servem para comparar.
   conferir_colunas(dados, coluna_resposta, coluna_grupos)
+  conferir_sim_ou_nao(variancias_iguais, "variancias_iguais")
 
-  # A receita completa, com marcadores <<...>> que recebem os nomes acima.
-  receita <- "
+  # Contamos os grupos que têm resposta: dois pedem o teste t; mais, a ANOVA.
+  quantos_grupos <- dplyr::n_distinct(
+    dados[[coluna_grupos]][!is.na(dados[[coluna_resposta]])],
+    na.rm = TRUE
+  )
+  analise <- dplyr::case_when(quantos_grupos == 2 ~ "teste_t",
+                              .default            = "anova")
+
+  # No teste t, as variâncias decidem entre Welch e Student.
+  variante <- dplyr::case_when(variancias_iguais ~ "student",
+                               .default          = "welch")
+
+  # Trocamos os marcadores da receita escolhida pelos nomes desta análise.
+  # Os trechos da variante vêm primeiro, porque também têm marcadores.
+  receita <- preencher_receita(receitas_medias[[analise]], c(
+    variantes_teste_t[[variante]],
+    list(
+      DADOS             = nome_dados,
+      RESPOSTA          = coluna_resposta,
+      GRUPOS            = coluna_grupos,
+      CONFIANCA         = confianca,
+      ALFA              = 1 - confianca,
+      QUANTIL           = 1 - (1 - confianca) / 2,
+      VARIANCIAS_IGUAIS = variancias_iguais
+    )
+  ))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  resultado <- executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(dados), nome_dados),
+    pacotes        = pacotes_medias[[analise]],
+    mostrar_codigo = mostrar_codigo
+  )
+
+  # Anotamos no resultado o que foi analisado; as outras funções vão precisar.
+  resultado$nomes <- list(
+    dados             = nome_dados,
+    resposta          = coluna_resposta,
+    grupos            = coluna_grupos,
+    confianca         = confianca,
+    analise           = analise,
+    variancias_iguais = variancias_iguais
+  )
+
+  # Damos ao resultado uma etiqueta, para o console saber como exibi-lo.
+  structure(resultado, class = "clara_medias")
+}
+
+
+# As receitas de comparar_medias() ---------------------------------------------
+#
+# Uma receita para cada caso. comparar_medias() escolhe uma e a preenche.
+
+receitas_medias <- list()
+
+# Três ou mais grupos: ANOVA de um fator, pressupostos, Tukey e letras.
+receitas_medias$anova <- "
 # 1. As observações da análise: só as linhas com resposta e grupo.
+#    O droplevels() tira da lista os grupos que ficaram sem dados.
 dados_analise <- <<DADOS>> |>
   filter(!is.na(<<RESPOSTA>>), !is.na(<<GRUPOS>>)) |>
-  mutate(<<GRUPOS>> = factor(<<GRUPOS>>))
+  mutate(<<GRUPOS>> = factor(<<GRUPOS>>)) |>
+  droplevels()
 
 # 2. Resumo de cada grupo: tamanho, centro e dispersão da resposta.
 resumo <- dados_analise |>
@@ -137,35 +218,126 @@ list(
   dados        = dados_analise
 )"
 
-  # Trocamos os marcadores pelos nomes desta análise.
-  receita <- preencher_receita(receita, list(
-    DADOS     = nome_dados,
-    RESPOSTA  = coluna_resposta,
-    GRUPOS    = coluna_grupos,
-    CONFIANCA = confianca,
-    ALFA      = 1 - confianca,
-    QUANTIL   = 1 - (1 - confianca) / 2
+# Dois grupos: teste t de Welch, normalidade em cada grupo e letras.
+receitas_medias$teste_t <- "
+# 1. As observações da análise: só as linhas com resposta e grupo.
+#    O droplevels() tira da lista os grupos que ficaram sem dados.
+dados_analise <- <<DADOS>> |>
+  filter(!is.na(<<RESPOSTA>>), !is.na(<<GRUPOS>>)) |>
+  mutate(<<GRUPOS>> = factor(<<GRUPOS>>)) |>
+  droplevels()
+
+# 2. Resumo de cada grupo: tamanho, centro e dispersão da resposta.
+resumo <- dados_analise |>
+  group_by(<<GRUPOS>>) |>
+  summarise(
+    n      = n(),
+    media  = mean(<<RESPOSTA>>),
+    dp     = sd(<<RESPOSTA>>),
+    ep     = dp / sqrt(n),
+    ic_inf = media - qt(<<QUANTIL>>, df = n - 1) * ep,
+    ic_sup = media + qt(<<QUANTIL>>, df = n - 1) * ep
+  )
+
+# 3. <<TITULO_T>>
+#    A diferença é a média do primeiro grupo menos a do segundo.
+teste_t <- t.test(<<RESPOSTA>> ~ <<GRUPOS>>,
+                  data       = dados_analise,
+                  var.equal  = <<VARIANCIAS_IGUAIS>>,
+                  conf.level = <<CONFIANCA>>)
+
+teste <- teste_t |>
+  tidy() |>
+  transmute(
+    comparacao = paste(levels(dados_analise$<<GRUPOS>>), collapse = \"-\"),
+    diferenca  = estimate,
+    ic_inf     = conf.low,
+    ic_sup     = conf.high,
+    t          = statistic,
+    gl         = parameter,
+    p          = p.value
+  )
+
+<<PRESSUPOSTOS_T>>
+
+# 5. Letras, como no Tukey: grupos com a mesma letra não diferiram.
+#    Havendo diferença, a maior média leva \"a\".
+resumo <- resumo |>
+  mutate(letra = case_when(
+    teste$p >= <<ALFA>>     ~ \"a\",
+    media == max(media) ~ \"a\",
+    .default            = \"b\"
   ))
 
-  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
-  resultado <- executar_receita(
-    receita        = receita,
-    objetos        = rlang::set_names(list(dados), nome_dados),
-    pacotes        = c("dplyr", "broom", "car", "multcompView"),
-    mostrar_codigo = mostrar_codigo
+# 6. Tudo junto, numa lista com partes nomeadas.
+list(
+  resumo       = resumo,
+  teste        = teste,
+  pressupostos = pressupostos,
+  dados        = dados_analise
+)"
+
+# O que muda na receita do teste t entre Welch e Student: o título do
+# passo 3 e os pressupostos (o Student supõe variâncias iguais e confere
+# isso com o Levene; o Welch não precisa).
+variantes_teste_t <- list()
+
+variantes_teste_t$welch <- list(
+  TITULO_T = "Teste t de Welch: compara as duas médias sem supor variâncias iguais.",
+  PRESSUPOSTOS_T = "
+# 4. Pressuposto: normalidade da resposta dentro de cada grupo.
+#    O teste de Welch não exige variâncias iguais; por isso não há Levene.
+pressupostos <- dados_analise |>
+  group_by(<<GRUPOS>>) |>
+  reframe(tidy(shapiro.test(<<RESPOSTA>>))) |>
+  transmute(
+    pressuposto = paste(\"Normalidade no grupo\", <<GRUPOS>>),
+    teste       = \"Shapiro-Wilk\",
+    estatistica = statistic,
+    p           = p.value
+  ) |>
+  mutate(leitura = case_when(
+    p >= <<ALFA>> ~ \"sem evidência contra o pressuposto\",
+    p <  <<ALFA>> ~ \"pressuposto rejeitado: interpretar com cautela\"
+  ))"
+)
+
+variantes_teste_t$student <- list(
+  TITULO_T = "Teste t de Student: compara as duas médias supondo variâncias iguais.",
+  PRESSUPOSTOS_T = "
+# 4. Pressupostos: normalidade em cada grupo e igualdade das variâncias,
+#    que o teste de Student supõe.
+normalidade <- dados_analise |>
+  group_by(<<GRUPOS>>) |>
+  reframe(tidy(shapiro.test(<<RESPOSTA>>))) |>
+  transmute(
+    pressuposto = paste(\"Normalidade no grupo\", <<GRUPOS>>),
+    teste       = \"Shapiro-Wilk\",
+    estatistica = statistic,
+    p           = p.value
   )
 
-  # Anotamos no resultado o que foi analisado; as outras funções vão precisar.
-  resultado$nomes <- list(
-    dados     = nome_dados,
-    resposta  = coluna_resposta,
-    grupos    = coluna_grupos,
-    confianca = confianca
+variancias <- leveneTest(<<RESPOSTA>> ~ <<GRUPOS>>, data = dados_analise) |>
+  tidy() |>
+  transmute(
+    pressuposto = \"Homogeneidade das variâncias\",
+    teste       = \"Levene\",
+    estatistica = statistic,
+    p           = p.value
   )
 
-  # Damos ao resultado uma etiqueta, para o console saber como exibi-lo.
-  structure(resultado, class = "clara_medias")
-}
+pressupostos <- bind_rows(normalidade, variancias) |>
+  mutate(leitura = case_when(
+    p >= <<ALFA>> ~ \"sem evidência contra o pressuposto\",
+    p <  <<ALFA>> ~ \"pressuposto rejeitado: interpretar com cautela\"
+  ))"
+)
+
+# Os pacotes que cada receita usa.
+pacotes_medias <- list(
+  anova   = c("dplyr", "broom", "car", "multcompView"),
+  teste_t = c("dplyr", "broom", "car")
+)
 
 
 
@@ -176,9 +348,20 @@ list(
 # Pergunta: a diferença entre os grupos é grande ou pequena?
 #
 # O p-valor diz se há evidência de diferença; o tamanho de efeito diz quanto
-# da variação da resposta acompanha os grupos. η² é essa fração; ω² corrige
-# o exagero do η² em amostras pequenas. A leitura segue a convenção de Cohen,
-# uma referência estatística, não biológica.
+# ela pesa. A medida depende da análise feita em comparar_medias():
+#   ANOVA ....... η² é a fração da variação da resposta que acompanha os
+#                 grupos; ω² corrige o exagero do η² em amostras pequenas.
+#   teste t ..... d de Cohen é a diferença das médias medida em desvios
+#                 padrão; g de Hedges corrige o exagero do d em amostras
+#                 pequenas. O sinal segue a ordem da comparação.
+# A leitura segue a convenção de Cohen, uma referência estatística, não
+# biológica.
+#
+# Argumentos:
+#   resultado ........... o que comparar_medias() devolveu
+#   mostrar_codigo ...... TRUE imprime o código R antes do resultado
+#
+# Devolve uma tabela: medida, valor, intervalo de confiança e leitura.
 #
 # Exemplo:  resultado |> medir_efeito()
 #
@@ -188,8 +371,29 @@ medir_efeito <- function(resultado,
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
 
-  # A receita: η² e ω² com intervalo de confiança, e a leitura de Cohen.
-  receita <- "
+  # Trocamos os marcadores da receita da análise feita pelos nomes dela.
+  receita <- preencher_receita(receitas_efeito[[resultado$nomes$analise]], list(
+    RESULTADO         = nome_resultado,
+    RESPOSTA          = resultado$nomes$resposta,
+    GRUPOS            = resultado$nomes$grupos,
+    CONFIANCA         = resultado$nomes$confianca,
+    VARIANCIAS_IGUAIS = resultado$nomes$variancias_iguais
+  ))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
+    pacotes        = c("dplyr", "effectsize"),
+    mostrar_codigo = mostrar_codigo
+  )
+}
+
+# As receitas de medir_efeito(), uma para cada análise.
+receitas_efeito <- list()
+
+# ANOVA: η² e ω² com intervalo de confiança, e a leitura de Cohen.
+receitas_efeito$anova <- "
 # Tamanho de efeito da ANOVA, com intervalo de confiança.
 eta   <- eta_squared(<<RESULTADO>>$modelo, partial = FALSE, ci = <<CONFIANCA>>)
 omega <- omega_squared(<<RESULTADO>>$modelo, partial = FALSE, ci = <<CONFIANCA>>)
@@ -207,28 +411,53 @@ tibble(
     .default     = \"grande\"
   ))"
 
-  # Trocamos os marcadores pelos nomes desta análise.
-  receita <- preencher_receita(receita, list(
-    RESULTADO = nome_resultado,
-    CONFIANCA = resultado$nomes$confianca
-  ))
+# Teste t: d de Cohen e g de Hedges com intervalo, e a leitura de Cohen.
+receitas_efeito$teste_t <- "
+# Tamanho de efeito do teste t, com intervalo de confiança.
+# pooled_sd = TRUE junta os DPs dos grupos, como o Student; FALSE não junta,
+# como o Welch.
+d <- cohens_d(<<RESPOSTA>> ~ <<GRUPOS>>,
+              data      = <<RESULTADO>>$dados,
+              pooled_sd = <<VARIANCIAS_IGUAIS>>,
+              ci        = <<CONFIANCA>>)
+g <- hedges_g(<<RESPOSTA>> ~ <<GRUPOS>>,
+              data      = <<RESULTADO>>$dados,
+              pooled_sd = <<VARIANCIAS_IGUAIS>>,
+              ci        = <<CONFIANCA>>)
 
-  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
-  executar_receita(
-    receita        = receita,
-    objetos        = rlang::set_names(list(resultado), nome_resultado),
-    pacotes        = c("dplyr", "effectsize"),
-    mostrar_codigo = mostrar_codigo
-  )
-}
+tibble(
+  medida = c(\"d de Cohen\", \"g de Hedges\"),
+  valor  = c(d$Cohens_d, g$Hedges_g),
+  ic_inf = c(d$CI_low, g$CI_low),
+  ic_sup = c(d$CI_high, g$CI_high)
+) |>
+  mutate(leitura = case_when(
+    abs(valor) < 0.2 ~ \"muito pequeno\",
+    abs(valor) < 0.5 ~ \"pequeno\",
+    abs(valor) < 0.8 ~ \"médio\",
+    .default         = \"grande\"
+  ))"
 
 
 # grafico_medias() -------------------------------------------------------------
 #
 # Pergunta: como mostrar a comparação numa só figura?
 #
-# Cada ponto colorido é uma observação; o losango é a média do grupo; a haste
-# é o intervalo de confiança da média; a letra vem do Tukey.
+# A barra clara vai do zero até a média; cada ponto colorido é uma
+# observação; o losango é a média do grupo, com "média ± DP" ao lado; a haste
+# é o intervalo de confiança da média; as letras, todas na mesma altura, vêm
+# do Tukey (ou do teste t, com dois grupos).
+#
+# Argumentos:
+#   resultado ........... o que comparar_medias() devolveu
+#   rotulo_resposta ..... texto do eixo y; sem ele, vai o nome da coluna
+#   rotulo_grupos ....... texto do eixo x; sem ele, vai o nome da coluna
+#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
+#
+# Devolve um gráfico do ggplot2. Por isso dá para continuar com +:
+#   resultado |>
+#     grafico_medias() +
+#     theme(axis.text = element_text(size = 14))
 #
 # Exemplo:
 #   resultado |>
@@ -249,37 +478,66 @@ grafico_medias <- function(resultado,
 
   # A receita do gráfico, camada por camada.
   receita <- "
-# A letra fica acima do que estiver mais alto: o IC ou o maior ponto do grupo.
+# As observações e as médias de cada grupo.
 pontos <- <<RESULTADO>>$dados
 
-posicao_letras <- pontos |>
-  group_by(<<GRUPOS>>) |>
-  summarise(ponto_mais_alto = max(<<RESPOSTA>>))
-
+# O rótulo \"média ± DP\" de cada grupo, com vírgula decimal.
 medias <- <<RESULTADO>>$resumo |>
-  left_join(posicao_letras, by = \"<<GRUPOS>>\") |>
-  mutate(altura_letra = pmax(ic_sup, ponto_mais_alto))
+  mutate(
+    media_dp = paste(
+      formatC(media, format = \"f\", digits = 2, decimal.mark = \",\"),
+      \"±\",
+      formatC(dp, format = \"f\", digits = 2, decimal.mark = \",\")
+    )
+  )
 
-# Pontos das observações, média, intervalo de confiança e letras.
+# Todas as letras na mesma altura, acima do ponto ou do IC mais alto.
+altura_letras <- max(pontos$<<RESPOSTA>>, medias$ic_sup)
+
+# Barra até a média, pontos, IC, losango, rótulo e letras, nesta ordem.
 ggplot(medias, aes(x = <<GRUPOS>>)) +
-  geom_jitter(
-    data = pontos,
+  geom_col(
+    aes(y = media, fill = <<GRUPOS>>),
+    width = 0.3, alpha = 0.25
+  ) +
+  geom_point(
+    data     = pontos,
     aes(y = <<RESPOSTA>>, colour = <<GRUPOS>>),
-    width = 0.10, size = 2.2, alpha = 0.7
+    position = position_jitter(width = 0.08, height = 0, seed = 1),
+    size     = 2.2,
+    alpha    = 0.7
   ) +
   geom_errorbar(
     aes(ymin = ic_inf, ymax = ic_sup),
-    width = 0.15, linewidth = 0.8, colour = \"#0F3B5F\"
+    width = 0.08, linewidth = 0.8, colour = \"#0F3B5F\"
   ) +
   geom_point(aes(y = media), shape = 18, size = 4.4, colour = \"#0F3B5F\") +
   geom_text(
-    aes(y = altura_letra, label = letra),
-    vjust = -0.9, fontface = \"bold\", size = 4
+    aes(y = media, label = media_dp),
+    nudge_x = 0.06, hjust = 0,
+    size = 3.6, fontface = \"bold\", colour = \"#0F3B5F\"
+  ) +
+  geom_text(
+    aes(label = letra),
+    y = altura_letras, vjust = -0.6,
+    size = 6, fontface = \"bold\", colour = \"#0F3B5F\"
   ) +
   scale_colour_manual(values = cores_ocean, guide = \"none\") +
-  scale_y_continuous(expand = expansion(mult = c(0.05, 0.12))) +
-  labs(x = \"<<ROTULO_GRUPOS>>\", y = \"<<ROTULO_RESPOSTA>>\") +
-  theme_classic(base_size = 12)"
+  scale_fill_manual(values = cores_ocean, guide = \"none\") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    title = paste(
+      \"Pontos: observações; losango: média; rótulo: média ± DP;\",
+      \"hastes: IC <<NIVEL>>% da média.\\nLetras iguais: sem diferença significativa.\"
+    ),
+    x = \"<<ROTULO_GRUPOS>>\",
+    y = \"<<ROTULO_RESPOSTA>>\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    plot.title          = element_text(size = 10, colour = \"grey30\"),
+    plot.title.position = \"plot\"
+  )"
 
   # Trocamos os marcadores pelos nomes desta análise.
   receita <- preencher_receita(receita, list(
@@ -287,7 +545,8 @@ ggplot(medias, aes(x = <<GRUPOS>>)) +
     RESPOSTA        = resultado$nomes$resposta,
     GRUPOS          = resultado$nomes$grupos,
     ROTULO_RESPOSTA = rotulo_resposta,
-    ROTULO_GRUPOS   = rotulo_grupos
+    ROTULO_GRUPOS   = rotulo_grupos,
+    NIVEL           = resultado$nomes$confianca * 100
   ))
 
   # Uma cor para cada grupo, mesmo quando há mais grupos que cores na paleta.
@@ -317,29 +576,31 @@ cores_ocean <- c("#0F3B5F", "#2E7D8F", "#62B6B7", "#E89B3C",
 
 print.clara_medias <- function(x, ...) {
 
-  # Separamos as peças que o relatório vai usar.
-  nomes   <- x$nomes
-  linha_f <- x$anova[1, ]
-  alfa    <- 1 - nomes$confianca
-
-  # A conclusão da ANOVA, escrita conforme o p-valor.
-  conclusao <- dplyr::case_when(
-    linha_f$p <  alfa ~ "há evidência de diferença entre as médias dos grupos.",
-    linha_f$p >= alfa ~ "não há evidência de diferença entre as médias dos grupos."
-  )
-
   # Título e tamanho da amostra.
-  cat("\nComparação de médias:", nomes$resposta, "por", nomes$grupos, "\n")
+  cat("\nComparação de médias:", x$nomes$resposta, "por", x$nomes$grupos, "\n")
   cat(nrow(x$dados), "observações em", nrow(x$resumo), "grupos\n")
 
-  # Resumo dos grupos, com as letras do Tukey.
+  # Resumo dos grupos, com as letras.
   cat("\n# Resumo dos grupos\n")
   print(x$resumo)
+
+  # O restante depende do teste que a ClaRa escolheu.
+  if (x$nomes$analise == "teste_t") imprimir_teste_t(x) else imprimir_anova(x)
+
+  invisible(x)
+}
+
+# A parte do relatório da ANOVA: F, pressupostos e Tukey.
+imprimir_anova <- function(x) {
+
+  # A linha do fator na tabela da ANOVA.
+  linha_f <- x$anova[1, ]
 
   # O resultado da ANOVA numa frase.
   cat("\n# ANOVA\n")
   cat("F(", linha_f$gl, ", ", x$anova$gl[2], ") = ", numero(linha_f$f), "; ",
-      escrever_p(linha_f$p), ": ", conclusao, "\n", sep = "")
+      escrever_p(linha_f$p), ": ",
+      concluir_medias(linha_f$p, x$nomes$confianca), "\n", sep = "")
 
   # Os pressupostos, com a leitura de cada teste.
   cat("\n# Pressupostos\n")
@@ -351,22 +612,151 @@ print.clara_medias <- function(x, ...) {
 
   # Um lembrete das partes que podem ser abertas com $.
   cat("\nPartes do resultado: $resumo $anova $pressupostos $pares $modelo $dados\n")
+}
 
-  invisible(x)
+# A parte do relatório do teste t: t, diferença com IC e pressupostos.
+imprimir_teste_t <- function(x) {
+
+  # A única linha da tabela do teste, e qual dos dois testes t rodou.
+  teste <- x$teste
+  nome_teste <- dplyr::case_when(x$nomes$variancias_iguais ~ "Student",
+                                 .default                  = "Welch")
+
+  # Por que não há ANOVA, e o resultado do teste numa frase.
+  cat("\n# Teste t de ", nome_teste, "\n", sep = "")
+  cat("Com dois grupos, a ClaRa usa o teste t no lugar da ANOVA.\n")
+
+  # Os graus de liberdade só levam casas decimais quando não são inteiros (Welch).
+  casas_gl <- dplyr::case_when(teste$gl == round(teste$gl) ~ 0, .default = 2)
+  cat("t(", numero(teste$gl, casas_gl), ") = ", numero(teste$t), "; ",
+      escrever_p(teste$p), ": ",
+      concluir_medias(teste$p, x$nomes$confianca), "\n", sep = "")
+
+  # A diferença entre as médias, com o intervalo de confiança.
+  cat("Diferença ", teste$comparacao, ": ", numero(teste$diferenca),
+      " (IC ", x$nomes$confianca * 100, "%: ", numero(teste$ic_inf),
+      " a ", numero(teste$ic_sup), ")\n", sep = "")
+
+  # Os pressupostos, com a leitura de cada teste.
+  cat("\n# Pressupostos\n")
+  print(x$pressupostos)
+
+  # Um lembrete sobre as variâncias, conforme o teste e o que o Levene mostrou.
+  levene_rejeitou <- any(x$pressupostos$teste == "Levene" &
+                           x$pressupostos$p < 1 - x$nomes$confianca)
+  cat(dplyr::case_when(
+    !x$nomes$variancias_iguais ~
+      "O teste de Welch não exige variâncias iguais; por isso não há Levene.",
+    levene_rejeitou ~
+      "O Levene rejeitou a igualdade das variâncias: prefira o Welch (variancias_iguais = FALSE).",
+    .default =
+      "O teste de Student supõe variâncias iguais; o Levene não mostrou evidência contra."
+  ), "\n", sep = "")
+
+  # Um lembrete das partes que podem ser abertas com $.
+  cat("\nPartes do resultado: $resumo $teste $pressupostos $dados\n")
+}
+
+# A conclusão da comparação, escrita conforme o p-valor.
+concluir_medias <- function(p, confianca) {
+  dplyr::case_when(
+    p <  1 - confianca ~ "há evidência de diferença entre as médias dos grupos.",
+    p >= 1 - confianca ~ "não há evidência de diferença entre as médias dos grupos."
+  )
 }
 
 
 
-# 4. Motor das receitas ---------------------------------------------------------
+# 4. Ajuda ---------------------------------------------------------------------
+
+# ajuda() ----------------------------------------------------------------------
+#
+# Pergunta: o que faz uma função da ClaRa e como usá-la?
+#
+# Mostra no console o cabeçalho da função, o mesmo que está escrito acima
+# dela neste arquivo: a pergunta, o que faz, os argumentos, o que devolve e
+# um exemplo. Sem nome de função, lista todas as funções da ClaRa.
+#
+# Argumentos:
+#   funcao .............. o nome da função, com ou sem aspas
+#
+# Exemplo:
+#   ajuda()
+#   ajuda(comparar_medias)
+#
+ajuda <- function(funcao) {
+
+  # Lemos este arquivo, onde cada função tem seu cabeçalho de ajuda.
+  linhas <- readLines(arquivo_clara, encoding = "UTF-8")
+
+  # Cada cabeçalho começa com uma linha como "# comparar_medias() ------".
+  inicios <- grep("^# [a-z_]+\\(\\) -+$", linhas)
+  funcoes <- sub("^# ([a-z_]+)\\(\\) -+$", "\\1", linhas[inicios])
+
+  # Sem nome de função, mostramos a lista de todas, com a pergunta de cada uma.
+  if (missing(funcao)) {
+    return(listar_funcoes(linhas, inicios, funcoes))
+  }
+
+  # O nome que o aluno pediu, escrito com ou sem aspas.
+  nome <- rlang::as_name(rlang::ensym(funcao))
+
+  # Se não for uma função da ClaRa, dizemos quais existem.
+  if (!is.element(nome, funcoes)) {
+    stop("Não há ajuda da ClaRa para ", nome, ". As funções da ClaRa são: ",
+         toString(funcoes), ".", call. = FALSE)
+  }
+
+  # O cabeçalho é o bloco de comentários logo abaixo da linha de título.
+  texto <- bloco_de_comentarios(linhas, inicios[funcoes == nome])
+
+  # Mostramos o título e o cabeçalho, sem os # do começo das linhas.
+  cat("\n", nome, "()\n", strrep("=", nchar(nome) + 2), "\n", sep = "")
+  cat(texto, sep = "\n")
+  cat("\n")
+
+  invisible(nome)
+}
+
+# Lista as funções da ClaRa, cada uma com a pergunta que responde.
+listar_funcoes <- function(linhas, inicios, funcoes) {
+  perguntas <- vapply(inicios, function(inicio) {
+    texto <- bloco_de_comentarios(linhas, inicio)
+    sub("^Pergunta: ", "", grep("^Pergunta: ", texto, value = TRUE)[1])
+  }, character(1))
+
+  cat("\nFunções da ClaRa\n================\n")
+  cat(sprintf("  %-18s %s", paste0(funcoes, "()"), perguntas), sep = "\n")
+  cat("\nPara saber mais sobre uma delas: ajuda(comparar_medias)\n\n")
+
+  invisible(funcoes)
+}
+
+# Devolve o bloco de comentários que vem logo depois da linha de título,
+# sem o "# " do começo e sem linhas vazias nas pontas.
+bloco_de_comentarios <- function(linhas, inicio) {
+  depois  <- linhas[(inicio + 1):length(linhas)]
+  tamanho <- match(FALSE, startsWith(depois, "#")) - 1
+  texto   <- sub("^# ?", "", depois[seq_len(tamanho)])
+  preenchidas <- which(nzchar(texto))
+  texto[min(preenchidas):max(preenchidas)]
+}
+
+
+
+# 5. Motor das receitas ---------------------------------------------------------
 #
 # Peças internas usadas pelas funções acima: conferir colunas, descobrir
 # nomes, preencher a receita, mostrá-la e rodá-la.
 
-# Confere, antes da análise, se as colunas existem e servem para a ANOVA.
+# Confere, antes da análise, se as colunas existem e servem para comparar.
 conferir_colunas <- function(dados, coluna_resposta, coluna_grupos) {
   colunas_que_faltam <- setdiff(c(coluna_resposta, coluna_grupos), names(dados))
   nomes_com_simbolos <- make.names(c(coluna_resposta, coluna_grupos)) !=
     c(coluna_resposta, coluna_grupos)
+  grupos_com_resposta <- as.character(
+    dados[[coluna_grupos]][!is.na(dados[[coluna_resposta]])]
+  )
 
   problema <- dplyr::case_when(
     length(colunas_que_faltam) > 0 ~
@@ -379,10 +769,19 @@ conferir_colunas <- function(dados, coluna_resposta, coluna_grupos) {
       "Há hífen no nome de um grupo; ele atrapalha as letras do Tukey. Renomeie os grupos.",
     dplyr::n_distinct(dados[[coluna_grupos]], na.rm = TRUE) < 2 ~
       "A comparação precisa de pelo menos dois grupos com dados.",
+    any(table(grupos_com_resposta) < 3) ~
+      "Cada grupo precisa de pelo menos 3 observações com resposta.",
     .default = "nenhum"
   )
 
   if (problema != "nenhum") stop(problema, call. = FALSE)
+}
+
+# Confere se um argumento de sim ou não recebeu TRUE ou FALSE.
+conferir_sim_ou_nao <- function(valor, nome_argumento) {
+  if (!isTRUE(valor) && !isFALSE(valor)) {
+    stop(nome_argumento, " aceita só TRUE ou FALSE.", call. = FALSE)
+  }
 }
 
 # Descobre o nome do objeto que o aluno passou (plantas, resultado...).
@@ -394,7 +793,7 @@ nome_do_objeto <- function(expressao, padrao) {
 # Troca cada marcador <<NOME>> da receita pelo valor correspondente.
 preencher_receita <- function(receita, valores) {
   for (marcador in names(valores)) {
-    receita <- gsub(paste0("<<", marcador, ">>"), valores[[marcador]],
+    receita <- gsub(paste0("<<", marcador, ">>"), trimws(valores[[marcador]]),
                     receita, fixed = TRUE)
   }
   trimws(receita)
@@ -435,3 +834,15 @@ escrever_p <- function(p) {
     .default  = paste("p =", numero(p, 3))
   )
 }
+
+# Descobre o caminho deste arquivo durante o source(). O source() mais
+# recente é o que está lendo a ClaRa, mesmo quando um roteiro chama outro.
+caminho_da_clara <- function() {
+  for (quadro in rev(sys.frames())) {
+    if (is.character(quadro$ofile)) return(normalizePath(quadro$ofile))
+  }
+  "R/clara.R"
+}
+
+# O caminho fica guardado; ajuda() lê os cabeçalhos das funções dele.
+arquivo_clara <- caminho_da_clara()

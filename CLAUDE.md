@@ -20,6 +20,8 @@ ClaRa/
   exemplos/                     um roteiro por análise, com as figuras que ele gera
     anova_um_fator.R            ANOVA de um fator (PlantGrowth renomeado)
     anova_um_fator.png          figura gerada pelo próprio roteiro (ggsave)
+    teste_t_dois_grupos.R       teste t de Welch (ToothGrowth, dose 0,5)
+    teste_t_dois_grupos.png
   docs/                         histórico e ideias, nunca código
     concepcao_inicial_2026-09.md  primeira concepção da ClaRa (ver abaixo)
   .claude/skills/clara-nova-funcao/SKILL.md
@@ -30,7 +32,12 @@ Para testar tudo, a partir da raiz do projeto:
 
 ```
 Rscript -e 'source("exemplos/anova_um_fator.R", echo = TRUE)'
+Rscript -e 'source("exemplos/teste_t_dois_grupos.R", echo = TRUE)'
 ```
+
+O R desta máquina está em `C:\R\R-4.6.1` (`C:/R/R-4.6.1/bin/Rscript.exe`).
+No Git Bash, um `-e` com várias linhas derruba o Rscript: grave o teste num
+arquivo `.R` e rode o arquivo.
 
 Os roteiros de `exemplos/` rodam sempre a partir da raiz: carregam as funções
 com `source("R/clara.R")` e gravam suas figuras em `exemplos/`.
@@ -52,6 +59,54 @@ resultado |>
   grafico_medias(rotulo_resposta = "Peso seco (g)",
                  rotulo_grupos   = "Tratamento")
 ```
+
+`comparar_medias()` escolhe o teste pelo número de grupos com dados (uma só
+pergunta; a ClaRa escolhe o teste):
+
+| Grupos | Teste | Partes próprias | `medir_efeito()` |
+|---|---|---|---|
+| 2 | t de Welch (padrão) ou de Student (`variancias_iguais = TRUE`, com Levene) | `$teste` | d de Cohen e g de Hedges (`pooled_sd` segue `variancias_iguais`) |
+| 3 ou mais | ANOVA, Shapiro dos resíduos, Levene, Tukey | `$anova`, `$pares`, `$modelo` | η² e ω² |
+
+As duas devolvem `$resumo` (com `letra`), `$pressupostos` e `$dados`, por isso
+`grafico_medias()` serve para as duas sem mudança. As receitas ficam em
+`receitas_medias` e `receitas_efeito` (listas com `anova` e `teste_t`), e a
+análise escolhida fica anotada em `resultado$nomes$analise`. O que muda entre
+Welch e Student (título do passo 3 e bloco de pressupostos) mora em
+`variantes_teste_t`; esses trechos entram primeiro no `preencher_receita()`,
+porque também têm marcadores.
+
+`variancias_iguais = TRUE` é escolha do aluno, pensada para quando a
+exploração dos dados (menu Explorar e Visualizar da CatalyseR) já mostrou
+dispersões parecidas. A ClaRa nunca troca de teste olhando o Levene; se o
+Levene rejeitar, o relatório recomenda voltar ao Welch.
+
+### Ajuda
+
+`ajuda()` lista as funções; `ajuda(comparar_medias)` imprime o cabeçalho
+da função, lido do próprio `clara.R` (o caminho fica em `arquivo_clara`,
+descoberto no `source()`). Por isso toda função do aluno precisa de um
+cabeçalho no formato:
+
+```
+# nome_da_funcao() -------------------------------------------------------
+#
+# Pergunta: ...?
+#
+# O que faz.
+#
+# Argumentos:
+#   argumento ........... o que é
+#
+# Devolve ...
+#
+# Exemplo:
+#   ...
+#
+```
+
+A linha de título (`# nome() ----`) é só para funções do aluno: é ela que a
+`ajuda()` procura. Peças internas levam um comentário comum.
 
 ## A ideia central: a receita
 
@@ -126,8 +181,20 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 1. Intervalo de η² e ω²: o effectsize usa intervalo unilateral por padrão, e o
    limite superior sai sempre 1. Manter, mostrar só o limite inferior ou usar
    `alternative = "two.sided"`?
-2. Rótulo "média ± DP" no gráfico (existe na figura do EAPACaderno): foi
-   retirado na v0.1; pode voltar como opção `mostrar_media_dp = TRUE`.
+2. ~~Rótulo "média ± DP" no gráfico~~: resolvido em outubro de 2026, a pedido
+   do professor. O gráfico agora tem barra transparente até a média, o rótulo
+   "média ± DP" ao lado do losango, letras todas na mesma altura, explicação
+   no título e jitter com semente (a figura não muda a cada execução).
+   `grafico_medias()` devolve um ggplot: ajustes extras entram com `+`.
+3. ~~t de Student como opção~~: resolvido com `variancias_iguais = TRUE`.
+   Em aberto: com três ou mais grupos o argumento ainda não tem efeito (a
+   ANOVA clássica já supõe variâncias iguais). Quando a ANOVA de Welch
+   entrar, `variancias_iguais = FALSE` deve passar a valer também ali, o
+   que muda o padrão da ANOVA. Decidir com o professor.
+4. Mínimo de 3 observações por grupo (exigido pelo Shapiro em cada grupo):
+   vale hoje também para a ANOVA, que tecnicamente aceitaria 2.
+5. Letras com dois grupos: imitam o Tukey ("a"/"a" sem diferença; "a" para a
+   maior média e "b" com diferença). Manter ou não mostrar letras no teste t?
 
 ## Regras de crescimento
 
@@ -148,8 +215,8 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 
 ## Em espera
 
-- `comparar_medias()` com dois grupos fazer o teste t automaticamente (uma só
-  pergunta; a ClaRa escolhe o teste);
+- teste t pareado (antes e depois no mesmo animal): pede outro argumento,
+  como `pareado_por = individuo`;
 - ANOVA de Welch como comparação quando o Levene rejeitar a igualdade das
   variâncias;
 - gráficos de diagnóstico (resíduos x ajustados, Q-Q);

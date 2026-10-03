@@ -41,3 +41,4 @@ ggsave("exemplos/anova_um_fator.png",
        height = 4.6,
        dpi    = 300,
        bg     = "white")
+

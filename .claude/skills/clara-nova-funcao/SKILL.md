@@ -12,7 +12,10 @@ Use `comparar_medias()` em `R/clara.R` como modelo vivo.
 
 1. **Comece pela pergunta da pesquisa.** O nome da função é um verbo em
    português que responde a ela (`relacionar_variaveis`, `comparar_proporcoes`).
-   Escreva no cabeçalho: Pergunta, o que a função faz, o que devolve, Exemplo.
+   Escreva o cabeçalho no formato do CLAUDE.md (seção "Ajuda"): linha de
+   título `# nome() ----`, Pergunta, o que a função faz, Argumentos, o que
+   devolve, Exemplo. Esse cabeçalho é o que `ajuda(nome)` mostra ao aluno;
+   confira com `ajuda()` que a função aparece na lista.
 
 2. **Escreva primeiro a receita, como R comum que um aluno digitaria.**
    Pipe `|>`, verbos do dplyr, `case_when()`, `tidy()` depois de testes
