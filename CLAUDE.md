@@ -182,8 +182,13 @@ observação menos a média do grupo), como o Shapiro em cada grupo.
 de conferência (`grafico_boxplot()`, `grafico_pares()`, `grafico_residuos()`,
 `grafico_qq()`) ficam com poucos parâmetros. O `grafico_medias()` é a figura
 que vai para o artigo ou a tese e tem mais: `titulo`, `explicacao`, `haste`
-(`"ic"`, `"ep"`, `"dp"`), `mostrar_barras`, `mostrar_pontos`,
-`mostrar_media_dp`, `casas`, `angulo_rotulo`, `mostrar_letras`, `cores`
+(`"ic"`, `"ep"`, `"dp"`), `mostrar_barras`, `largura_barras` (0 a 1, padrão
+0.3; o rótulo em pé acompanha a borda), `mostrar_pontos`,
+`mostrar_media_dp`, `casas`, `angulo_rotulo`, `altura_rotulo` (fração da
+coluna onde fica o rótulo em pé, padrão 0.5), `mostrar_letras`, `fonte`
+(`"sans"`, Arial no Windows, ou `"serif"`, Times New Roman, para todos os
+textos, inclusive rótulo e letras; o `family` só entra na receita com
+`"serif"`), `cores`
 (`"ocean"`, `"cinza"` ou um vetor) e `tamanho_texto`. A receita dele é
 montada de trechos (`trechos_grafico_medias`) e traz só as camadas pedidas:
 o código mostrado continua sendo exatamente o que rodou. Com os valores
@@ -191,8 +196,16 @@ padrão, a figura é a mesma de antes. A explicação do topo vai em
 `subtitle` e cita só as partes que aparecem; o `titulo` vai em `title`.
 
 Rótulo "média ± DP" com muitos grupos: com barras e mais de 6 grupos, ele
-fica em pé (90°), descendo da base da haste por dentro da barra, sem invadir
-a coluna vizinha. Sem barras fica deitado, porque em pé sairia cortado
+fica em pé **dentro da barra**, centrado no meio da altura dela
+(`y = media * altura_rotulo`, padrão 0.5, `nudge_x = 0`), lido de cima para
+baixo (`angle = -90`),
+como pediu o professor. O meio da barra está livre (pontos e losango ficam
+perto da média) e o rótulo não invade a coluna vizinha nem encosta nas
+letras. Qualquer ângulo diferente de 0, com barras, segue a mesma posição
+(`angulo_rotulo = 90` lê de baixo para cima). Sem barras, o rótulo em pé
+fica ao lado do losango, na altura da média. Com mais de 8 grupos, `grafico_medias()` dá um aviso
+(`warning`) sugerindo mostrar as médias numa tabela (`resultado$resumo`) e
+usar `mostrar_media_dp = FALSE`. Sem barras fica deitado, porque em pé sairia cortado
 embaixo (o eixo não começa no zero); nesse caso, com muitos grupos, a ajuda
 recomenda `mostrar_media_dp = FALSE`. 45° funciona, mas raspa os pontos.
 
@@ -245,9 +258,14 @@ Levene rejeitar, o relatório recomenda voltar ao Welch.
 
 ### Ajuda
 
-`ajuda()` lista as funções; `ajuda(comparar_medias)` imprime o cabeçalho
+`ajuda()` lista as funções; `ajuda(comparar_medias)` mostra o cabeçalho
 da função, lido do próprio `clara.R` (o caminho fica em `arquivo_clara`,
-descoberto no `source()`). Por isso toda função do aluno precisa de um
+descoberto no `source()`). No RStudio, a ajuda abre como página HTML no
+painel **Viewer** (`getOption("viewer")`); fora dele, ou com
+`onde = "console"`, sai no console. O painel **Help** só mostra
+documentação `.Rd` de pacotes: fica para quando a ClaRa virar pacote
+(regra 4). `pagina_de_ajuda()` monta o HTML (texto num bloco de largura
+fixa, rótulos de bloco em negrito, cores Ocean). Por isso toda função do aluno precisa de um
 cabeçalho no formato:
 
 ```
@@ -313,6 +331,13 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   Alternativas: `setdiff()`, `is.element()`, `case_when()`, ou uma função
   com nome em português (como `ou_entao()` no lugar de `%||%`).
 - `case_when()` em vez de `if / else if` encadeados.
+- **Argumentos de escolha listam as opções no padrão**, com a primeira
+  valendo quando o aluno não escolhe: `haste = c("ic", "ep", "dp")`,
+  `cores = c("ocean", "cinza")`. Assim o Tab do RStudio mostra as opções
+  (como em `cor(method = ...)`). Na função, `escolher_opcao()` devolve a
+  escolhida ou dá mensagem amigável. O Tab também lista os nomes dos
+  argumentos dentro de `funcao(`, porque o RStudio lê a definição da função
+  depois do `source()`.
 - **Uma frase explicativa acima de cada linha** nas funções do aluno,
   principalmente na função principal. Funções claras pedem comentários
   curtos; não repetir o óbvio.

@@ -392,24 +392,37 @@ pacotes_medias <- list(
 #                         legenda do artigo
 #   haste ............... o que a haste mostra: "ic" (padrão, intervalo de
 #                         confiança da média), "ep" (média ± erro padrão) ou
-#                         "dp" (média ± desvio padrão)
+#                         "dp" (média ± desvio padrão). No RStudio, digite
+#                         haste = e aperte Tab para ver as opções
 #   mostrar_barras ...... TRUE (padrão) desenha a barra clara até a média
+#   largura_barras ...... largura das barras, de 0 a 1 (padrão 0.3; 1 encosta
+#                         uma barra na outra); o rótulo em pé acompanha
 #   mostrar_pontos ...... TRUE (padrão) desenha cada observação
 #   mostrar_media_dp .... TRUE (padrão) escreve "média ± DP" ao lado do losango
 #   casas ............... casas decimais do rótulo média ± DP (padrão 2)
 #   angulo_rotulo ....... ângulo do rótulo média ± DP, em graus. Sem ele: 0
-#                         (deitado, ao lado do losango) até 6 grupos e 90
-#                         com mais: em pé, descendo da base da haste por
-#                         dentro da barra, sem invadir a coluna vizinha.
+#                         (deitado, ao lado do losango) até 6 grupos e -90
+#                         com mais: em pé, dentro da barra, no meio da
+#                         altura dela, lido de cima para baixo, sem invadir
+#                         a coluna vizinha (90 lê de baixo para cima). Com
+#                         mais de 8 grupos, a função avisa e sugere mostrar
+#                         as médias numa tabela.
+#   altura_rotulo ....... altura do rótulo em pé dentro da coluna, como
+#                         fração da altura dela: 0.5 (padrão) no meio, 0.2
+#                         perto da base, 0.8 perto do topo (com haste
+#                         longa, valores altos encostam nela)
 #                         Sem barras, fica deitado: em pé, sairia cortado
 #                         embaixo. Com muitos grupos e sem barras, prefira
 #                         mostrar_media_dp = FALSE
 #   mostrar_letras ...... TRUE (padrão) escreve as letras das comparações
 #   cores ............... "ocean" (padrão), "cinza" (para impressão em preto e
 #                         branco) ou um vetor de cores, como
-#                         c("darkgreen", "orange")
+#                         c("darkgreen", "orange"); Tab mostra as paletas
 #   tamanho_texto ....... tamanho base do texto (padrão 12); o rótulo, as
 #                         letras e a explicação acompanham
+#   fonte ............... "sans" (padrão; Arial no Windows) ou "serif"
+#                         (Times New Roman no Windows), para todos os textos
+#                         da figura, inclusive o rótulo e as letras
 #   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
 #
 # Devolve um gráfico do ggplot2. Por isso dá para continuar com +:
@@ -432,22 +445,30 @@ grafico_medias <- function(resultado,
                            rotulo_grupos    = NULL,
                            titulo           = NULL,
                            explicacao       = TRUE,
-                           haste            = "ic",
+                           haste            = c("ic", "ep", "dp"),
                            mostrar_barras   = TRUE,
+                           largura_barras   = 0.3,
                            mostrar_pontos   = TRUE,
                            mostrar_media_dp = TRUE,
                            casas            = 2,
                            angulo_rotulo    = NULL,
+                           altura_rotulo    = 0.5,
                            mostrar_letras   = TRUE,
-                           cores            = "ocean",
+                           cores            = c("ocean", "cinza"),
                            tamanho_texto    = 12,
+                           fonte            = c("sans", "serif"),
                            mostrar_codigo   = FALSE) {
 
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
 
-  # Conferimos as escolhas antes de desenhar.
-  conferir_opcao(haste, c("ic", "ep", "dp"), "haste")
+  # Conferimos as escolhas antes de desenhar. Nas opções listadas no padrão
+  # (que o Tab do RStudio mostra), sem escolha vale a primeira.
+  haste <- escolher_opcao(haste, c("ic", "ep", "dp"), "haste")
+  fonte <- escolher_opcao(fonte, c("sans", "serif"), "fonte")
+  if (identical(cores, c("ocean", "cinza"))) cores <- "ocean"
+  conferir_fracao(largura_barras, "largura_barras")
+  conferir_fracao(altura_rotulo,  "altura_rotulo")
   conferir_sim_ou_nao(explicacao,       "explicacao")
   conferir_sim_ou_nao(mostrar_barras,   "mostrar_barras")
   conferir_sim_ou_nao(mostrar_pontos,   "mostrar_pontos")
@@ -459,13 +480,24 @@ grafico_medias <- function(resultado,
   rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
   rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
 
+  # Com mais de 8 grupos, a figura fica carregada: avisamos e sugerimos tabela.
+  quantos_grupos <- nrow(resultado$resumo)
+  if (quantos_grupos > 8) {
+    warning("Com ", quantos_grupos, " grupos, a figura fica carregada e os rótulos ",
+            "ficam pequenos e apertados. Considere mostrar as médias numa tabela ",
+            "(resultado$resumo) e usar mostrar_media_dp = FALSE na figura.",
+            call. = FALSE)
+  }
+
   # Com muitos grupos, o rótulo fica em pé, para não invadir a coluna vizinha.
-  # Deitado, o rótulo fica ao lado do losango; inclinado, desce a partir da
-  # base da haste, por dentro da barra.
+  # Deitado, fica ao lado do losango. Em pé, fica dentro da barra, no meio da
+  # altura dela, lido de cima para baixo (-90 graus); sem barras, fica ao
+  # lado do losango, na altura da média.
   angulo_rotulo <- ou_entao(angulo_rotulo,
-                            dplyr::case_when(mostrar_barras & nrow(resultado$resumo) > 6 ~ 90,
+                            dplyr::case_when(mostrar_barras & quantos_grupos > 6 ~ -90,
                                              .default = 0))
-  deitado <- angulo_rotulo == 0
+  deitado      <- angulo_rotulo == 0
+  dentro_barra <- !deitado & mostrar_barras
 
   # Os limites da haste e o nome dela na explicação.
   limites <- list(
@@ -538,10 +570,18 @@ grafico_medias <- function(resultado,
     HASTE_SUP          = limites[2],
     CASAS              = casas,
     ANGULO             = angulo_rotulo,
-    Y_ROTULO           = dplyr::case_when(deitado ~ "media", .default = "haste_inf"),
-    NUDGE_ROTULO       = dplyr::case_when(deitado ~ 0.06,    .default = 0.12),
-    HJUST              = dplyr::case_when(deitado ~ 0,       .default = 1.1),
+    Y_ROTULO           = dplyr::case_when(dentro_barra ~ paste("media *", altura_rotulo),
+                                          .default     = "media"),
+    LARGURA            = largura_barras,
+    NUDGE_ROTULO       = dplyr::case_when(deitado      ~ 0.06,
+                                          dentro_barra ~ 0,
+                                          .default     = 0.2),
+    HJUST              = dplyr::case_when(deitado ~ 0, .default = 0.5),
     TAMANHO            = tamanho_texto,
+    FAMILIA_TEXTO      = dplyr::case_when(fonte == "serif" ~ ", family = \"serif\"",
+                                          .default         = ""),
+    FAMILIA_TEMA       = dplyr::case_when(fonte == "serif" ~ ", base_family = \"serif\"",
+                                          .default         = ""),
     TAMANHO_ROTULO     = round(3.6 * tamanho_texto / 12, 1),
     TAMANHO_LETRAS     = round(6 * tamanho_texto / 12, 1),
     TAMANHO_EXPLICACAO = round(10 * tamanho_texto / 12, 1),
@@ -601,7 +641,7 @@ trechos_grafico_medias$base <- "ggplot(medias, aes(x = <<GRUPOS>>))"
 
 trechos_grafico_medias$barras <- "  geom_col(
     aes(y = media, fill = <<GRUPOS>>),
-    width = 0.3, alpha = 0.25
+    width = <<LARGURA>>, alpha = 0.25
   )"
 
 trechos_grafico_medias$pontos_camada <- "  geom_point(
@@ -622,13 +662,13 @@ trechos_grafico_medias$media <- "  geom_point(aes(y = media), shape = 18, size =
 trechos_grafico_medias$rotulo <- "  geom_text(
     aes(y = <<Y_ROTULO>>, label = media_dp),
     nudge_x = <<NUDGE_ROTULO>>, angle = <<ANGULO>>, hjust = <<HJUST>>, vjust = 0.5,
-    size = <<TAMANHO_ROTULO>>, fontface = \"bold\", colour = \"#0F3B5F\"
+    size = <<TAMANHO_ROTULO>>, fontface = \"bold\", colour = \"#0F3B5F\"<<FAMILIA_TEXTO>>
   )"
 
 trechos_grafico_medias$letras <- "  geom_text(
     aes(label = letra),
     y = altura_letras, vjust = -0.6,
-    size = <<TAMANHO_LETRAS>>, fontface = \"bold\", colour = \"#0F3B5F\"
+    size = <<TAMANHO_LETRAS>>, fontface = \"bold\", colour = \"#0F3B5F\"<<FAMILIA_TEXTO>>
   )"
 
 trechos_grafico_medias$escala_cor <- "  scale_colour_manual(values = cores, guide = \"none\")"
@@ -639,7 +679,7 @@ trechos_grafico_medias$escala_x <- "  scale_x_discrete(expand = expansion(add = 
 
 trechos_grafico_medias$escala_y <- "  scale_y_continuous(expand = expansion(mult = c(<<FOLGA_BAIXO>>, 0.15)))"
 
-trechos_grafico_medias$tema <- "  theme_classic(base_size = <<TAMANHO>>) +
+trechos_grafico_medias$tema <- "  theme_classic(base_size = <<TAMANHO>><<FAMILIA_TEMA>>) +
   theme(
     plot.title          = element_text(colour = \"#0F3B5F\"),
     plot.subtitle       = element_text(size = <<TAMANHO_EXPLICACAO>>, colour = \"grey30\"),
@@ -1630,18 +1670,28 @@ concluir_medias <- function(p, confianca) {
 #
 # Pergunta: o que faz uma função da ClaRa e como usá-la?
 #
-# Mostra no console o cabeçalho da função, o mesmo que está escrito acima
-# dela neste arquivo: a pergunta, o que faz, os argumentos, o que devolve e
-# um exemplo. Sem nome de função, lista todas as funções da ClaRa.
+# Mostra o cabeçalho da função, o mesmo que está escrito acima dela neste
+# arquivo: a pergunta, o que faz, os argumentos, o que devolve e um exemplo.
+# Sem nome de função, lista todas as funções da ClaRa. No RStudio, a ajuda
+# abre como página no painel Viewer; fora dele, aparece no console. (O
+# painel Help do RStudio só mostra ajuda de pacotes, e a ClaRa ainda não é
+# um pacote.)
 #
 # Argumentos:
 #   funcao .............. o nome da função, com ou sem aspas
+#   onde ................ "viewer" (padrão: painel Viewer do RStudio) ou
+#                         "console"
 #
 # Exemplo:
 #   ajuda()
 #   ajuda(comparar_medias)
+#   ajuda(grafico_medias, onde = "console")
 #
-ajuda <- function(funcao) {
+ajuda <- function(funcao,
+                  onde = c("viewer", "console")) {
+
+  # Onde mostrar: no painel Viewer do RStudio (padrão) ou no console.
+  onde <- escolher_opcao(onde, c("viewer", "console"), "onde")
 
   # Lemos este arquivo, onde cada função tem seu cabeçalho de ajuda.
   linhas <- readLines(arquivo_clara, encoding = "UTF-8")
@@ -1653,7 +1703,8 @@ ajuda <- function(funcao) {
   # Sem nome de função, mostramos a lista de todas, agrupadas pela seção do
   # arquivo, com a pergunta de cada uma.
   if (missing(funcao)) {
-    return(listar_funcoes(linhas, inicios, funcoes))
+    mostrar_ajuda("Funções da ClaRa", listar_funcoes(linhas, inicios, funcoes), onde)
+    return(invisible(funcoes))
   }
 
   # O nome que o aluno pediu, escrito com ou sem aspas.
@@ -1669,15 +1720,52 @@ ajuda <- function(funcao) {
   texto <- bloco_de_comentarios(linhas, inicios[funcoes == nome])
 
   # Mostramos o título e o cabeçalho, sem os # do começo das linhas.
-  cat("\n", nome, "()\n", strrep("=", nchar(nome) + 2), "\n", sep = "")
-  cat(texto, sep = "\n")
-  cat("\n")
+  mostrar_ajuda(paste0(nome, "()"), texto, onde)
 
   invisible(nome)
 }
 
+# Mostra uma ajuda: no RStudio, como página no painel Viewer; fora dele (ou
+# com onde = "console"), como texto no console.
+mostrar_ajuda <- function(titulo, linhas, onde) {
+  visualizador <- getOption("viewer")
+  if (onde == "viewer" && is.function(visualizador)) {
+    pagina <- tempfile("ajuda_clara_", fileext = ".html")
+    writeLines(enc2utf8(pagina_de_ajuda(titulo, linhas)), pagina, useBytes = TRUE)
+    visualizador(pagina)
+    cat("A ajuda de ", titulo, " abriu no painel Viewer. ",
+        "Para vê-la aqui: ajuda(..., onde = \"console\").\n", sep = "")
+  } else {
+    cat("\n", titulo, "\n", strrep("=", nchar(titulo)), "\n", sep = "")
+    cat(linhas, sep = "\n")
+    cat("\n")
+  }
+}
+
+# Monta a página HTML da ajuda, com as cores da ClaRa. O texto vai num bloco
+# de largura fixa, para manter alinhadas as listas de argumentos.
+pagina_de_ajuda <- function(titulo, linhas) {
+  escapar <- function(x) gsub(">", "&gt;", gsub("<", "&lt;", gsub("&", "&amp;", x, fixed = TRUE), fixed = TRUE), fixed = TRUE)
+  corpo <- escapar(linhas)
+  # Rótulos de bloco (Pergunta:, Argumentos:, Exemplo: ...) em negrito.
+  corpo <- sub("^([A-ZÁÉÍÓÚ][A-Za-zçãõáéíóú ]*:)", "<b>\\1</b>", corpo)
+  c("<!DOCTYPE html>",
+    "<html lang=\"pt-BR\"><head><meta charset=\"utf-8\">",
+    paste0("<title>", escapar(titulo), "</title>"),
+    "<style>",
+    "body { font-family: Arial, sans-serif; margin: 16px; color: #1d2b36; }",
+    "h1 { color: #0F3B5F; font-size: 20px; border-bottom: 2px solid #62B6B7; padding-bottom: 4px; }",
+    "pre { font-family: Consolas, 'Courier New', monospace; font-size: 13px; line-height: 1.45; white-space: pre-wrap; }",
+    "b { color: #2E7D8F; }",
+    "</style></head><body>",
+    paste0("<h1>", escapar(titulo), "</h1>"),
+    "<pre>", corpo, "</pre>",
+    "</body></html>")
+}
+
 # Lista as funções da ClaRa, cada uma com a pergunta que responde, agrupadas
-# pela seção do arquivo onde moram (como "Comparar médias").
+# pela seção do arquivo onde moram (como "Comparar médias"). Devolve as
+# linhas do texto, para mostrar_ajuda() exibir.
 listar_funcoes <- function(linhas, inicios, funcoes) {
   perguntas <- vapply(inicios, function(inicio) {
     texto <- bloco_de_comentarios(linhas, inicio)
@@ -1693,17 +1781,14 @@ listar_funcoes <- function(linhas, inicios, funcoes) {
   nomes   <- paste0(funcoes, "()")
   largura <- max(nchar(nomes))
 
-  cat("\nFunções da ClaRa\n================\n")
-  for (secao in unique(secoes)) {
-    cat("\n", secao, "\n", sep = "")
+  # Um bloco por seção: o nome da seção e as suas funções, alinhadas.
+  blocos <- lapply(unique(secoes), function(secao) {
     escolhidas <- secoes == secao
-    cat(paste0("  ", formatC(nomes[escolhidas], width = -largura), "  ",
-               perguntas[escolhidas]),
-        sep = "\n")
-  }
-  cat("\nPara saber mais sobre uma delas: ajuda(comparar_medias)\n\n")
-
-  invisible(funcoes)
+    c("", paste0(secao, ":"),
+      paste0("  ", formatC(nomes[escolhidas], width = -largura), "  ",
+             perguntas[escolhidas]))
+  })
+  c(unlist(blocos), "", "Para saber mais sobre uma delas: ajuda(comparar_medias)")
 }
 
 # Devolve o bloco de comentários que vem logo depois da linha de título,
@@ -1758,11 +1843,23 @@ conferir_sim_ou_nao <- function(valor, nome_argumento) {
   }
 }
 
-# Confere se um argumento de escolha recebeu uma das opções aceitas.
-conferir_opcao <- function(valor, opcoes, nome_argumento) {
+# Devolve a opção escolhida num argumento de escolha. O padrão do argumento
+# lista todas as opções (assim o Tab do RStudio as mostra); se o aluno não
+# escolheu, vale a primeira. Uma opção que não existe vira mensagem amigável.
+escolher_opcao <- function(valor, opcoes, nome_argumento) {
+  if (identical(valor, opcoes)) return(opcoes[1])
   if (!is.character(valor) || length(valor) != 1 || !is.element(valor, opcoes)) {
     stop(nome_argumento, " aceita só: ",
          paste0("\"", opcoes, "\"", collapse = " ou "), ".", call. = FALSE)
+  }
+  valor
+}
+
+# Confere se um argumento recebeu uma fração: um número maior que 0 e até 1.
+conferir_fracao <- function(valor, nome_argumento) {
+  if (!is.numeric(valor) || length(valor) != 1 || valor <= 0 || valor > 1) {
+    stop(nome_argumento, " aceita um número maior que 0 e até 1, como 0.3 ou 0.6.",
+         call. = FALSE)
   }
 }
 

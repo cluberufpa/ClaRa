@@ -86,7 +86,12 @@ Use `comparar_medias()` em `R/clara.R` como modelo vivo.
    conclusão (vírgula decimal via `numero()` e `escrever_p()`) e a lista das
    partes abertas com `$`.
 
-6. **Conferências amigáveis**: problemas de entrada viram `stop()` com
+6. **Argumentos de escolha** listam as opções no padrão
+   (`haste = c("ic", "ep", "dp")`), para o Tab do RStudio mostrá-las; dentro
+   da função, `escolher_opcao()` devolve a escolhida (a primeira, se o aluno
+   não escolheu).
+
+   **Conferências amigáveis**: problemas de entrada viram `stop()` com
    mensagem em português que diz o que fazer, decididos por `case_when()`
    (veja `conferir_colunas()`).
 
