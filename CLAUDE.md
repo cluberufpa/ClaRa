@@ -37,7 +37,8 @@ ClaRa/
     preparar_dados_treino.R     gera todos os CSVs desta pasta
     real_*.rds / real_*.csv     dados reais, exportados do pacote EAPADados
     sint_*.rds / sint_*.csv     dados sintéticos, cada um com uma situação
-  README.md                     a ClaRa para quem abre o repositório (mapa das perguntas)
+  README.md                     a ClaRa para quem abre o repositório (mapa das
+                                perguntas e a gramática da ClaRa)
   docs/                         histórico e ideias, nunca código
     concepcao_inicial_2026-09.md  primeira concepção da ClaRa (ver abaixo)
   .claude/skills/clara-nova-funcao/SKILL.md
@@ -151,11 +152,14 @@ Regras que saem desse desenho:
   e temperatura). Ainda é pergunta sobre médias, com interação: pode ser
   `comparar_medias(grupos = c(racao, temperatura))` ou um verbo próprio.
 
-## Como o aluno usa (v0.3)
+## Como o aluno usa (v0.7)
 
 ```r
 resultado <- plantas |>
-  comparar_medias(resposta = peso, grupos = tratamento)
+  comparar_medias(resposta        = peso,
+                  grupos          = tratamento,
+                  rotulo_resposta = "Peso seco (g)",
+                  rotulo_grupos   = "Tratamento")
 
 resultado                       # imprime um pequeno relatório no console
 
@@ -163,12 +167,10 @@ resultado |>
   medir_efeito()
 
 resultado |>
-  grafico_medias(rotulo_resposta = "Peso seco (g)",
-                 rotulo_grupos   = "Tratamento")
+  grafico_medias()              # os rótulos vêm do resultado
 
 textos <- resultado |>
-  escrever_resultados(rotulo_resposta = "Peso seco (g)",
-                      rotulo_grupos   = "Tratamento")
+  escrever_resultados()
 textos$teste                    # no Quarto: `r textos$teste`
 
 resultado |>
@@ -181,6 +183,38 @@ resultado |>
 resultado |>
   grafico_qq()                  # Q-Q dos resíduos
 ```
+
+**O resultado carrega o contexto** (v0.7, outubro de 2026): `rotulo_resposta`
+e `rotulo_grupos` são informados uma vez, no verbo de pergunta
+(`comparar_medias()`, `comparar_medianas()`), e ficam em
+`resultado$nomes$rotulo_resposta` e `$rotulo_grupos` (sem eles, o nome da
+coluna). Gráficos e `escrever_resultados()` usam esses rótulos quando o
+aluno não informa outros; um rótulo dado no gráfico vale só para ele. O
+título do `print` também usa os rótulos. As linhas do roteiro passam a
+depender umas das outras, como num programa.
+
+**A gramática da ClaRa** está no README: substantivos (a base, o
+resultado), verbos de pergunta, verbos sobre o resultado e modificadores
+(argumentos), ligados por três regras (frase começa por substantivo e segue
+pelo pipe; o resultado lembra a análise; o mesmo verbo serve a qualquer
+análise). Uma função nova da ClaRa deve caber nessa gramática.
+
+**Um modificador por linha**, com `=` alinhado, mesmo que o roteiro fique
+mais longo (preferência do professor, outubro de 2026). Escolhas que
+importam para a conclusão aparecem escritas mesmo quando são o padrão
+(`variancias_iguais = FALSE`), para o roteiro registrar a decisão. Fora das
+análises (ler, preparar, repetir), o roteiro volta ao R comum, com código
+fácil de ler: a ClaRa é de altíssimo nível e não substitui o R.
+
+**O que vai para o artigo leva mais detalhe** (decisão do professor,
+outubro de 2026). Nos roteiros, duas chamadas são as mais longas: a do
+verbo de pergunta, porque o resultado alimenta tudo o que vem depois
+(tabelas, poder, gráficos), e a da figura principal, porque ela vai para o
+artigo. Nelas, todos os argumentos aparecem escritos, inclusive os padrões
+(`confianca = 0.95`, `haste = "ic"`, `cores = "ocean"`...), com as opções
+num comentário ao lado (`# "ic", "ep" ou "dp"`). Vale para toda tabela ou
+figura principal de publicação. Os gráficos de conferência (boxplot,
+resíduos, Q-Q, pares) e os textos ficam curtos: `resultado |> grafico_qq()`.
 
 `grafico_residuos()` e `grafico_qq()` têm poucos parâmetros (só
 `rotulo_grupos`, no de resíduos) e deixam o ggplot2 à vista em
@@ -227,7 +261,10 @@ Cada gráfico das médias tem a sua receita: `trechos_grafico_medias`,
 `paletas_clara` (`ocean`, `cinza`); `trecho_de_cores()` escreve o trecho de
 cores da receita para qualquer vetor, e o objeto na receita se chama `cores`. `grafico_pares()` usa
 `resultado$pares` (Tukey) na ANOVA e `resultado$teste` no teste t; o título
-explica o ponto, a haste e a linha tracejada da diferença zero. Com muitos
+explica o ponto, a haste e a linha tracejada da diferença zero. Os eixos
+usam o rótulo do aluno sem preposição grudada ("Tipo de Ração";
+"Diferença entre as médias, Peso (g)"): os marcadores B-A já dizem que
+cada linha é um par. Com muitos
 grupos (10 grupos = 45 pares), salve a figura mais alta. O boxplot já
 serve às medianas (só usa `$dados`); os pares ainda não (ver "Em espera").
 
@@ -525,8 +562,17 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 - poder para as medianas (`$poder` sai vazio);
 - o alerta de `escrever_resultados()` nas médias poderia citar
   `comparar_medianas()` pelo nome, agora que ela existe;
-- `rotulo_resposta` e `rotulo_grupos` informados uma vez só, em
-  `comparar_medias()`, em vez de repetidos no gráfico e nos textos;
+- comparar com um controle (aprovado em outubro de 2026, a implementar):
+  dois argumentos em `comparar_medias()` e `comparar_medianas()`,
+  `comparacao = c("todos_os_pares", "contra_controle")` e `controle = "A"`.
+  Médias: Tukey ou Dunnett (`multcomp`, CRAN: `glht(mcp(... = "Dunnett"))`);
+  medianas: Dunn em todos os pares ou só contra o controle (Holm sobre
+  k - 1 comparações). Letras, não asterisco: o controle leva "a"; quem não
+  difere dele, "a"; quem difere, "b". `$pares` com k - 1 linhas;
+  `grafico_pares()` só com as diferenças contra o controle;
+  `escrever_resultados()` diz "a ração B diferiu do controle (A)". Com dois
+  grupos, `comparacao` não muda o teste e `controle` define o sentido da
+  diferença (tratamento menos controle);
 - próximas análises: `relacionar_variaveis()` (regressão) e
   `comparar_proporcoes()`.
 
@@ -546,6 +592,15 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   toda coberta: `exemplos/anova_bagres.R` não tem mais blocos "Ainda sem
   ClaRa" (462 linhas de código no original, 42 em ClaRa). Os QMDs precisarão ler
   `resultado$...` e `textos$...` no lugar dos objetos soltos atuais.
+- **No exportador, as escolhas aparecem escritas**: os argumentos da
+  chamada são o registro do que o aluno escolheu nos menus da CatalyseR
+  (`comparacao = "contra_controle"`, `controle = "A"`), e as escolhas
+  principais vão escritas mesmo quando são o padrão
+  (`comparacao = "todos_os_pares"`, `variancias_iguais = FALSE`).
+- Com `all.equal()` no lugar do `catalyser_conferir_base()` e a base lida do
+  `.rds`, o analise.R exportado não precisa mais dos blocos que conferem a
+  instalação do catalyser e do EAPADados (observação do professor, outubro
+  de 2026). A mudança é no exportador da CatalyseR, não aqui.
 - **Na migração, a conferência da base usa `all.equal()`** (aprovado pelo
   professor em outubro de 2026). O analise.R exportado lê a base pronta
   (`readRDS("dados/processados/base_compartilhada.rds")`), mostra em dplyr a

@@ -20,8 +20,13 @@ glimpse(capturas)
 
 # 3. Comparar as medianas --------------------------------------------------
 # Com três grupos, a ClaRa usa o Kruskal-Wallis e, para os pares, o Dunn.
+# Os rótulos ficam guardados no resultado: gráficos e textos já os usam.
 resultado <- capturas |>
-  comparar_medianas(resposta = cpue_kg, grupos = petrecho)
+  comparar_medianas(resposta        = cpue_kg,
+                    grupos          = petrecho,
+                    rotulo_resposta = "CPUE (kg)",
+                    rotulo_grupos   = "Petrecho",
+                    confianca       = 0.95)
 
 resultado
 
@@ -29,8 +34,7 @@ resultado
 # Pontos muito acima dos outros, em todos os petrechos: a CPUE é assimétrica.
 # Caixas de alturas parecidas: dispersão parecida, como o Fligner-Killeen.
 grafico_caixas <- resultado |>
-  grafico_boxplot(rotulo_resposta = "CPUE (kg)",
-                  rotulo_grupos   = "Petrecho")
+  grafico_boxplot()
 
 grafico_caixas
 
@@ -39,9 +43,15 @@ resultado |>
   medir_efeito()
 
 # 6. Mostrar a comparação num gráfico --------------------------------------
+# A figura que vai para o artigo: todas as escolhas escritas, com as opções
+# ao lado. Um título, se a revista pedir, entra com titulo = "...".
 grafico_principal <- resultado |>
-  grafico_medianas(rotulo_resposta = "CPUE (kg)",
-                   rotulo_grupos   = "Petrecho")
+  grafico_medianas(explicacao     = TRUE,           # FALSE tira a explicação do topo
+                   mostrar_pontos = TRUE,
+                   mostrar_letras = TRUE,
+                   cores          = "ocean",        # "ocean", "cinza" ou um vetor
+                   tamanho_texto  = 12,
+                   fonte          = "sans")         # "sans" (Arial) ou "serif" (Times)
 
 grafico_principal
 
@@ -56,8 +66,7 @@ capturas |>
 # As frases saem do resultado: se os dados mudam, o texto muda junto.
 # No Quarto, cada frase entra no parágrafo com `r textos$teste`.
 textos <- resultado |>
-  escrever_resultados(rotulo_resposta = "CPUE (kg)",
-                      rotulo_grupos   = "Petrecho")
+  escrever_resultados()
 
 textos
 

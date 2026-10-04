@@ -36,8 +36,13 @@ all.equal(bagres_planilha, bagres)
 
 # 4 a 7. Comparar as médias ------------------------------------------------
 # Resumo, ANOVA, pressupostos, Tukey e letras, numa função só.
+# Os rótulos ficam guardados no resultado: gráficos e textos já os usam.
 resultado <- bagres |>
-  comparar_medias(resposta = peso_g, grupos = racao)
+  comparar_medias(resposta        = peso_g,
+                  grupos          = racao,
+                  rotulo_resposta = "Peso (g)",
+                  rotulo_grupos   = "Tipo de Ração",
+                  confianca       = 0.95)
 
 resultado
 
@@ -58,23 +63,33 @@ resultado$pares
 
 # 9.1 Exploração: caixas com as observações por cima.
 grafico_caixas <- resultado |>
-  grafico_boxplot(rotulo_resposta = "Peso (g)",
-                  rotulo_grupos   = "Tipo de Ração")
+  grafico_boxplot()
 
 grafico_caixas
 
 # 9.2 Figura principal: barras, pontos, média ± DP, IC e letras.
+# A figura que vai para o artigo: todas as escolhas escritas, com as opções
+# ao lado. Um título, se a revista pedir, entra com titulo = "...".
 grafico_barras <- resultado |>
-  grafico_medias(rotulo_resposta = "Peso (g)",
-                 rotulo_grupos   = "Tipo de Ração",
-                 angulo_rotulo = -90,
-                 altura_rotulo = 0.5)
+  grafico_medias(explicacao       = TRUE,           # FALSE tira a explicação do topo
+                 haste            = "ic",           # "ic", "ep" ou "dp"
+                 mostrar_barras   = TRUE,
+                 largura_barras   = 0.3,            # de 0 a 1
+                 mostrar_pontos   = TRUE,
+                 mostrar_media_dp = TRUE,
+                 casas            = 2,              # casas decimais do rótulo
+                 angulo_rotulo    = -90,            # 0 deitado; -90 ou 90 em pé
+                 altura_rotulo    = 0.5,            # fração da barra
+                 mostrar_letras   = TRUE,
+                 cores            = "ocean",        # "ocean", "cinza" ou um vetor
+                 tamanho_texto    = 12,
+                 fonte            = "sans")         # "sans" (Arial) ou "serif" (Times)
 
 grafico_barras
 
 # 9.3 Resíduos contra ajustados: faixas de alturas parecidas, variâncias parecidas.
 grafico_ajustados <- resultado |>
-  grafico_residuos(rotulo_grupos = "Tipo de Ração")
+  grafico_residuos()
 
 grafico_ajustados
 
@@ -87,16 +102,14 @@ grafico_normal
 # 9.5 Diferenças entre pares: haste que cruza a linha tracejada (zero),
 #     sem diferença entre os dois grupos.
 grafico_diferencas <- resultado |>
-  grafico_pares(rotulo_resposta = "Peso (g)",
-                rotulo_grupos   = "Tipo de Ração")
+  grafico_pares()
 
 grafico_diferencas
 
 # 10. Textos para o relatório ----------------------------------------------
 # No Quarto, cada frase entra no parágrafo com `r textos$teste`.
 textos <- resultado |>
-  escrever_resultados(rotulo_resposta = "Peso (g)",
-                      rotulo_grupos   = "Tipo de Ração")
+  escrever_resultados()
 
 textos
 

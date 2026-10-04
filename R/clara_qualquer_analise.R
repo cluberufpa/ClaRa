@@ -88,8 +88,10 @@ receitas_efeito <- list()
 # Argumentos:
 #   resultado ........... o que comparar_medias() ou comparar_medianas()
 #                         devolveu
-#   rotulo_resposta ..... como chamar a resposta no texto (ex.: "Peso (g)")
-#   rotulo_grupos ....... como chamar os grupos no texto (ex.: "Tipo de Ração")
+#   rotulo_resposta ..... como chamar a resposta no texto (ex.: "Peso (g)");
+#                         sem ele, vai o da análise
+#   rotulo_grupos ....... como chamar os grupos no texto (ex.: "Tipo de Ração");
+#                         sem ele, vai o da análise
 #   mostrar_codigo ...... TRUE imprime o código R antes das frases
 #
 # Devolve uma lista de frases. Cada parte se abre com $:
@@ -111,9 +113,9 @@ escrever_resultados <- function(resultado,
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
 
-  # Sem rótulo informado, o texto usa o próprio nome da coluna.
-  rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
-  rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
+  # Sem rótulo informado aqui, valem os que a análise guardou.
+  rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$rotulo_resposta)
+  rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$rotulo_grupos)
 
   # Trocamos os marcadores da receita da análise feita pelos nomes dela.
   receita <- preencher_receita(escolher_receita(receitas_textos, resultado, "escrever_resultados"), list(
@@ -158,7 +160,7 @@ receitas_textos <- list()
 #
 # Argumentos:
 #   resultado ........... o que comparar_medias() devolveu
-#   rotulo_grupos ....... nome dos grupos na legenda; sem ele, vai o da coluna
+#   rotulo_grupos ....... nome dos grupos na legenda; sem ele, vai o da análise
 #   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
 #
 # Devolve um gráfico do ggplot2; ajustes extras entram com +.
@@ -174,8 +176,8 @@ grafico_residuos <- function(resultado,
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
 
-  # Sem rótulo informado, a legenda mostra o próprio nome da coluna.
-  rotulo_grupos <- ou_entao(rotulo_grupos, resultado$nomes$grupos)
+  # Sem rótulo informado aqui, vale o que a análise guardou.
+  rotulo_grupos <- ou_entao(rotulo_grupos, resultado$nomes$rotulo_grupos)
 
   # Trocamos os marcadores da receita da análise feita.
   receita <- preencher_receita(escolher_receita(receitas_residuos, resultado, "grafico_residuos"), list(

@@ -40,6 +40,12 @@
 #   dados ............... a tabela, com uma linha por observação
 #   resposta ............ a coluna numérica medida (peso, comprimento...)
 #   grupos .............. a coluna que diz o grupo de cada observação
+#   rotulo_resposta ..... como chamar a resposta nos gráficos e nos textos
+#                         (ex.: "Peso (g)"); sem ele, vai o nome da coluna.
+#   rotulo_grupos ....... como chamar os grupos nos gráficos e nos textos
+#                         (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna.
+#                         Os rótulos ficam guardados no resultado: as funções
+#                         que vêm depois já os usam, sem precisar repeti-los
 #   confianca ........... nível de confiança dos intervalos (padrão 0.95);
 #                         a significância dos testes é 1 - confianca
 #   mostrar_codigo ...... TRUE imprime o código R antes do resultado
@@ -59,13 +65,21 @@
 #
 # Exemplo:
 #   resultado <- tilapias |>
-#     comparar_medianas(resposta = peso, grupos = microalga)
+#     comparar_medianas(resposta        = peso,
+#                       grupos          = microalga,
+#                       rotulo_resposta = "Peso (g)",
+#                       rotulo_grupos   = "Microalga")
+#
+#   resultado |>
+#     grafico_medianas()        # os rótulos já vêm do resultado
 #
 comparar_medianas <- function(dados,
                               resposta,
                               grupos,
-                              confianca      = 0.95,
-                              mostrar_codigo = FALSE) {
+                              rotulo_resposta = NULL,
+                              rotulo_grupos   = NULL,
+                              confianca       = 0.95,
+                              mostrar_codigo  = FALSE) {
 
   # Guardamos o nome da tabela que o aluno usou (tilapias, por exemplo).
   nome_dados <- nome_do_objeto(substitute(dados), padrao = "dados")
@@ -76,6 +90,8 @@ comparar_medianas <- function(dados,
 
   # Antes de calcular, conferimos se as colunas existem e servem para comparar.
   conferir_colunas(dados, coluna_resposta, coluna_grupos)
+  conferir_rotulo(rotulo_resposta, "rotulo_resposta")
+  conferir_rotulo(rotulo_grupos, "rotulo_grupos")
 
   # Contamos os grupos que têm resposta: dois pedem o Mann-Whitney; mais, o
   # Kruskal-Wallis.
@@ -104,12 +120,15 @@ comparar_medianas <- function(dados,
   )
 
   # Anotamos no resultado o que foi analisado; as outras funções vão precisar.
+  # Os rótulos também ficam: gráficos e textos os usam sem o aluno repeti-los.
   resultado$nomes <- list(
-    dados     = nome_dados,
-    resposta  = coluna_resposta,
-    grupos    = coluna_grupos,
-    confianca = confianca,
-    analise   = analise
+    dados           = nome_dados,
+    resposta        = coluna_resposta,
+    grupos          = coluna_grupos,
+    rotulo_resposta = ou_entao(rotulo_resposta, coluna_resposta),
+    rotulo_grupos   = ou_entao(rotulo_grupos, coluna_grupos),
+    confianca       = confianca,
+    analise         = analise
   )
 
   # Damos ao resultado uma etiqueta, para o console saber como exibi-lo.
@@ -296,8 +315,8 @@ pacotes_medianas <- list(
 #
 # Argumentos:
 #   resultado ........... o que comparar_medianas() devolveu
-#   rotulo_resposta ..... texto do eixo y; sem ele, vai o nome da coluna
-#   rotulo_grupos ....... texto do eixo x; sem ele, vai o nome da coluna
+#   rotulo_resposta ..... texto do eixo y; sem ele, vai o de comparar_medianas()
+#   rotulo_grupos ....... texto do eixo x; sem ele, vai o de comparar_medianas()
 #   titulo .............. título da figura (padrão: sem título)
 #   explicacao .......... TRUE (padrão) escreve no topo o que cada elemento
 #                         mostra; FALSE tira, para a explicação ir para a
@@ -348,9 +367,9 @@ grafico_medianas <- function(resultado,
   conferir_sim_ou_nao(mostrar_letras, "mostrar_letras")
   vetor_cores <- escolher_cores(cores)
 
-  # Sem rótulo informado, os eixos mostram o próprio nome da coluna.
-  rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$resposta)
-  rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$grupos)
+  # Sem rótulo informado aqui, valem os que a análise guardou.
+  rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$rotulo_resposta)
+  rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$rotulo_grupos)
 
   # A explicação do topo cita só as partes que aparecem na figura.
   partes <- c(if (mostrar_pontos) "pontos: observações",
@@ -722,7 +741,7 @@ list(
 print.clara_medianas <- function(x, ...) {
 
   # Título e tamanho da amostra.
-  cat("\nComparação de medianas:", x$nomes$resposta, "por", x$nomes$grupos, "\n")
+  cat("\nComparação de medianas:", x$nomes$rotulo_resposta, "por", x$nomes$rotulo_grupos, "\n")
   cat(nrow(x$dados), "observações em", nrow(x$resumo), "grupos")
 
   # Avisamos quando linhas ficaram de fora por falta de resposta ou grupo.

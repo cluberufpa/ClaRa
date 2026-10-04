@@ -18,8 +18,13 @@ glimpse(artemias)
 
 # 3. Comparar as medianas --------------------------------------------------
 # Com dois grupos, a ClaRa usa o Mann-Whitney no lugar do Kruskal-Wallis.
+# Os rótulos ficam guardados no resultado: gráficos e textos já os usam.
 resultado <- artemias |>
-  comparar_medianas(resposta = taxa_crescimento_mg_dia, grupos = racao)
+  comparar_medianas(resposta        = taxa_crescimento_mg_dia,
+                    grupos          = racao,
+                    rotulo_resposta = "Taxa de crescimento (mg/dia)",
+                    rotulo_grupos   = "Ração",
+                    confianca       = 0.95)
 
 resultado
 
@@ -28,9 +33,15 @@ resultado |>
   medir_efeito()
 
 # 5. Mostrar a comparação num gráfico --------------------------------------
+# A figura que vai para o artigo: todas as escolhas escritas, com as opções
+# ao lado. Um título, se a revista pedir, entra com titulo = "...".
 grafico_principal <- resultado |>
-  grafico_medianas(rotulo_resposta = "Taxa de crescimento (mg/dia)",
-                   rotulo_grupos   = "Ração")
+  grafico_medianas(explicacao     = TRUE,           # FALSE tira a explicação do topo
+                   mostrar_pontos = TRUE,
+                   mostrar_letras = TRUE,
+                   cores          = "ocean",        # "ocean", "cinza" ou um vetor
+                   tamanho_texto  = 12,
+                   fonte          = "sans")         # "sans" (Arial) ou "serif" (Times)
 
 grafico_principal
 
@@ -43,8 +54,7 @@ resultado |>
 # As frases saem do resultado: se os dados mudam, o texto muda junto.
 # No Quarto, cada frase entra no parágrafo com `r textos$teste`.
 textos <- resultado |>
-  escrever_resultados(rotulo_resposta = "Taxa de crescimento (mg/dia)",
-                      rotulo_grupos   = "Ração")
+  escrever_resultados()
 
 textos
 

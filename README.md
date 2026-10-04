@@ -9,7 +9,10 @@ tidyverse, e esse código aparece quando você pede.
 source("R/clara.R", encoding = "UTF-8")
 
 resultado <- peixes |>
-  comparar_medias(resposta = peso_g, grupos = racao)
+  comparar_medias(resposta        = peso_g,
+                  grupos          = racao,
+                  rotulo_resposta = "Peso (g)",
+                  rotulo_grupos   = "Ração")
 
 resultado                                  # um pequeno relatório no console
 resultado |> medir_efeito()                # a diferença é grande ou pequena?
@@ -47,6 +50,45 @@ Uma análise nova não cria funções novas em "Para qualquer análise": ela só
 ensina a `medir_efeito()`, a `escrever_resultados()`, a `grafico_residuos()`
 e a `grafico_qq()` a falar dela. Por isso a
 lista de funções continua curta, mesmo com muitas análises.
+
+## A gramática da ClaRa
+
+A ClaRa tem poucas classes de palavras, e elas se combinam sempre do mesmo
+jeito. Quem aprende a frase de uma análise já sabe escrever a das outras.
+
+| Classe | O que é | Exemplos |
+|---|---|---|
+| **Substantivos** | o que existe no roteiro: a base de dados e o resultado de uma análise | `bagres`, `resultado`, `textos` |
+| **Verbos de pergunta** | fazem a análise; recebem a base e devolvem um resultado | `comparar_medias()`, `comparar_medianas()` |
+| **Verbos sobre o resultado** | recebem o resultado e devolvem uma tabela, uma figura ou frases | `medir_efeito()`, `grafico_...()`, `escrever_resultados()` |
+| **Modificadores** | os argumentos: dizem o papel de cada coluna e as escolhas da análise | `resposta`, `grupos`, `rotulo_resposta`, `variancias_iguais` |
+
+Três regras ligam as palavras:
+
+1. **Toda frase começa por um substantivo e segue pelo pipe** (`|>`): a base
+   entra num verbo de pergunta; o resultado entra num verbo sobre o
+   resultado.
+2. **O resultado lembra a análise.** O que você disse na pergunta (as
+   colunas, os rótulos, a confiança, o teste escolhido) fica guardado nele.
+   Por isso as frases seguintes são curtas: `resultado |> grafico_medias()`
+   já sabe que o eixo se chama "Peso (g)".
+3. **O mesmo verbo serve a qualquer análise.** `medir_efeito()` devolve η²
+   depois de uma ANOVA, d de Cohen depois de um teste t e ε² depois de um
+   Kruskal-Wallis. O verbo pergunta ao resultado qual análise foi feita.
+
+Um modificador muda a análise sem mudar a pergunta (`variancias_iguais =
+TRUE` troca o Welch pelo Student). Uma pergunta nova pede um verbo novo
+(medianas não são médias). Cada figura tem o seu nome: nenhum modificador
+troca uma figura por outra.
+
+Escreva um modificador por linha, com os `=` alinhados. O roteiro fica mais
+longo, mas cada escolha aparece numa linha própria e se lê sem esforço.
+Quando a escolha importa para a conclusão, escreva-a mesmo que seja o
+padrão (`variancias_iguais = FALSE`): assim o roteiro registra a decisão.
+
+Quando é preciso programar (ler arquivos, preparar a base, repetir uma
+tarefa), o roteiro volta ao R comum, com dplyr e um `for` simples. A ClaRa
+cuida das análises, não substitui o R.
 
 ## Ver o R por trás
 

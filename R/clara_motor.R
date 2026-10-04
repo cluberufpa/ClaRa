@@ -227,6 +227,14 @@ conferir_sim_ou_nao <- function(valor, nome_argumento) {
   }
 }
 
+# Confere se um rótulo recebeu um texto só (ou nada, para usar o nome da coluna).
+conferir_rotulo <- function(valor, nome_argumento) {
+  if (!is.null(valor) && (!is.character(valor) || length(valor) != 1)) {
+    stop(nome_argumento, " aceita um texto entre aspas, como \"Peso (g)\".",
+         call. = FALSE)
+  }
+}
+
 # Devolve a opção escolhida num argumento de escolha. O padrão do argumento
 # lista todas as opções (assim o Tab do RStudio as mostra); se o aluno não
 # escolheu, vale a primeira. Uma opção que não existe vira mensagem amigável.

@@ -21,8 +21,16 @@ dentes <- ToothGrowth |>
   rename(comprimento = len, fonte = supp)
 
 # 2. Comparar as médias ----------------------------------------------------
+# Os rótulos ficam guardados no resultado: gráficos e textos já os usam.
+# variancias_iguais = FALSE é o padrão (Welch); escrito aqui, a escolha fica
+# registrada no roteiro.
 resultado <- dentes |>
-  comparar_medias(resposta = comprimento, grupos = fonte)
+  comparar_medias(resposta          = comprimento,
+                  grupos            = fonte,
+                  rotulo_resposta   = "Comprimento dos odontoblastos",
+                  rotulo_grupos     = "Fonte de vitamina C",
+                  confianca         = 0.95,
+                  variancias_iguais = FALSE)
 
 resultado
 
@@ -31,9 +39,22 @@ resultado |>
   medir_efeito()
 
 # 4. Mostrar a comparação num gráfico --------------------------------------
+# A figura que vai para o artigo: todas as escolhas escritas, com as opções
+# ao lado. Um título, se a revista pedir, entra com titulo = "...".
 resultado |>
-  grafico_medias(rotulo_resposta = "Comprimento dos odontoblastos",
-                 rotulo_grupos   = "Fonte de vitamina C")
+  grafico_medias(explicacao       = TRUE,           # FALSE tira a explicação do topo
+                 haste            = "ic",           # "ic", "ep" ou "dp"
+                 mostrar_barras   = TRUE,
+                 largura_barras   = 0.3,            # de 0 a 1
+                 mostrar_pontos   = TRUE,
+                 mostrar_media_dp = TRUE,
+                 casas            = 2,              # casas decimais do rótulo
+                 angulo_rotulo    = 0,              # 0 deitado; -90 ou 90 em pé
+                 altura_rotulo    = 0.5,            # fração da barra
+                 mostrar_letras   = TRUE,
+                 cores            = "ocean",        # "ocean", "cinza" ou um vetor
+                 tamanho_texto    = 12,
+                 fonte            = "sans")         # "sans" (Arial) ou "serif" (Times)
 
 # 5. Ver o código R por trás da ClaRa --------------------------------------
 # Com mostrar_codigo = TRUE, a função imprime o código e depois o resultado.
@@ -55,8 +76,7 @@ ggsave("exemplos/figuras/teste_t_dois_grupos.png",
 # grafico_medias() devolve um gráfico do ggplot2: dá para continuar com +.
 # Aqui trocamos os códigos OJ e VC por nomes e tiramos a explicação do topo.
 resultado |>
-  grafico_medias(rotulo_resposta = "Comprimento dos odontoblastos",
-                 rotulo_grupos   = "Fonte de vitamina C") +
+  grafico_medias() +
   scale_x_discrete(labels = c(OJ = "Suco de laranja",
                               VC = "Ácido ascórbico")) +
   labs(title = NULL)
@@ -79,8 +99,7 @@ resultado |>
 # As frases saem do resultado: se os dados mudam, o texto muda junto.
 # No Quarto, cada frase entra no parágrafo com `r textos$teste`.
 textos <- resultado |>
-  escrever_resultados(rotulo_resposta = "Comprimento dos odontoblastos",
-                      rotulo_grupos   = "Fonte de vitamina C")
+  escrever_resultados()
 
 textos
 
