@@ -66,7 +66,9 @@ grafico_caixas
 # 9.2 Figura principal: barras, pontos, média ± DP, IC e letras.
 grafico_barras <- resultado |>
   grafico_medias(rotulo_resposta = "Peso (g)",
-                 rotulo_grupos   = "Tipo de Ração")
+                 rotulo_grupos   = "Tipo de Ração",
+                 angulo_rotulo = -90,
+                 altura_rotulo = 0.5)
 
 grafico_barras
 
