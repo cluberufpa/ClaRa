@@ -36,11 +36,12 @@ resultado |>
 
 # 6. Guardar a figura ------------------------------------------------------
 # O ggsave() grava o último gráfico desenhado, o da seção 4.
-ggsave("exemplos/anova_um_fator.png",
-       width  = 7,
-       height = 4.6,
-       dpi    = 300,
-       bg     = "white")
+ggsave("exemplos/figuras/anova_um_fator.png",
+       width      = 7,
+       height     = 4.6,
+       dpi        = 300,
+       bg         = "white",
+       create.dir = TRUE)
 
 # 7. Escrever os resultados ------------------------------------------------
 # As frases saem do resultado: se os dados mudam, o texto muda junto.

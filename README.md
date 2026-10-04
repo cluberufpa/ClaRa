@@ -59,7 +59,7 @@ copiar, colar e rodar sem a ClaRa.
 
 ```
 R/clara.R         as funções (um arquivo por pergunta quando a ClaRa crescer)
-exemplos/         um roteiro por análise, com as figuras que ele gera
+exemplos/         um roteiro por análise; as figuras que ele gera ficam em figuras/
 dados_treino/     dados reais e sintéticos para testar e estudar as funções
 docs/             histórico e ideias
 ```

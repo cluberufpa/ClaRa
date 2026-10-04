@@ -18,15 +18,14 @@ ClaRa/
   ClaRa.Rproj
   R/                            só as funções
     clara.R                     todas as funções da ClaRa, em seções
-  exemplos/                     um roteiro por análise, com as figuras que ele gera
+  exemplos/                     um roteiro por análise
     anova_um_fator.R            ANOVA de um fator (PlantGrowth renomeado)
-    anova_um_fator.png          figura gerada pelo próprio roteiro (ggsave)
     teste_t_dois_grupos.R       teste t de Welch (ToothGrowth, dose 0,5)
-    teste_t_dois_grupos.png
     anova_bagres.R              o analise.R do anova-bagres-gabarito
                                 (EAPACadernos) reescrito em ClaRa, mesmas
                                 seções, sem nenhum bloco em R comum
-    anova_bagres.png
+    figuras/                    figuras gravadas pelos roteiros (ggsave),
+                                com o nome do roteiro como prefixo
   dados_treino/                 dados para testar e estudar as funções
     preparar_dados_treino.R     gera todos os CSVs desta pasta
     real_*.rds / real_*.csv     dados reais, exportados do pacote EAPADados
@@ -56,7 +55,10 @@ No Git Bash, um `-e` com várias linhas derruba o Rscript: grave o teste num
 arquivo `.R` e rode o arquivo.
 
 Os roteiros de `exemplos/` rodam sempre a partir da raiz: carregam as funções
-com `source("R/clara.R")` e gravam suas figuras em `exemplos/`.
+com `source("R/clara.R")` e gravam suas figuras em `exemplos/figuras/`
+(`ggsave(..., create.dir = TRUE)`, que cria a pasta se ela faltar). Cada
+figura leva o nome do roteiro como prefixo (`anova_bagres_qq.png`), para
+se saber de onde veio sem criar uma subpasta por roteiro.
 
 Pacotes usados: dplyr, ggplot2, broom, car, multcompView, effectsize, rlang,
 stringr e pwr (todos do CRAN). O EAPADados (GitHub) só é preciso para

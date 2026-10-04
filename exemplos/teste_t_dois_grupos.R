@@ -44,11 +44,12 @@ dentes |>
 
 # 6. Guardar a figura ------------------------------------------------------
 # O ggsave() grava o último gráfico desenhado, o da seção 4.
-ggsave("exemplos/teste_t_dois_grupos.png",
-       width  = 7,
-       height = 4.6,
-       dpi    = 300,
-       bg     = "white")
+ggsave("exemplos/figuras/teste_t_dois_grupos.png",
+       width      = 7,
+       height     = 4.6,
+       dpi        = 300,
+       bg         = "white",
+       create.dir = TRUE)
 
 # 7. Ajustar o gráfico com o ggplot2 ---------------------------------------
 # grafico_medias() devolve um gráfico do ggplot2: dá para continuar com +.

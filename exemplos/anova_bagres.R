@@ -54,10 +54,14 @@ resultado$pares
 
 # 9. Gráficos --------------------------------------------------------------
 
+# Cada gráfico fica guardado com um nome, para ser salvo na seção 11.
+
 # 9.1 Exploração: caixas com as observações por cima.
-resultado |>
+grafico_caixas <- resultado |>
   grafico_boxplot(rotulo_resposta = "Peso (g)",
                   rotulo_grupos   = "Tipo de Ração")
+
+grafico_caixas
 
 # 9.2 Figura principal: barras, pontos, média ± DP, IC e letras.
 grafico_barras <- resultado |>
@@ -67,18 +71,24 @@ grafico_barras <- resultado |>
 grafico_barras
 
 # 9.3 Resíduos contra ajustados: faixas de alturas parecidas, variâncias parecidas.
-resultado |>
+grafico_ajustados <- resultado |>
   grafico_residuos(rotulo_grupos = "Tipo de Ração")
 
+grafico_ajustados
+
 # 9.4 Q-Q: pontos perto da reta, resíduos compatíveis com a normal.
-resultado |>
+grafico_normal <- resultado |>
   grafico_qq()
+
+grafico_normal
 
 # 9.5 Diferenças entre pares: haste que cruza a linha tracejada (zero),
 #     sem diferença entre os dois grupos.
-resultado |>
+grafico_diferencas <- resultado |>
   grafico_pares(rotulo_resposta = "Peso (g)",
                 rotulo_grupos   = "Tipo de Ração")
+
+grafico_diferencas
 
 # 10. Textos para o relatório ----------------------------------------------
 # No Quarto, cada frase entra no parágrafo com `r textos$teste`.
@@ -89,13 +99,24 @@ textos <- resultado |>
 textos
 
 # 11. Salvar cópias --------------------------------------------------------
-# No projeto da CatalyseR, os CSVs e PNGs vão para saida/. Aqui, só a figura.
-ggsave("exemplos/anova_bagres.png",
-       plot   = grafico_barras,
-       width  = 7,
-       height = 4.6,
-       dpi    = 300,
-       bg     = "white")
+# No projeto da CatalyseR, os CSVs e PNGs vão para saida/. Aqui, só as
+# figuras, em exemplos/figuras/, com o nome do roteiro na frente.
+figuras <- list(boxplot  = grafico_caixas,
+                medias   = grafico_barras,
+                residuos = grafico_ajustados,
+                qq       = grafico_normal,
+                pares    = grafico_diferencas)
+
+# Uma volta para cada figura: anova_bagres_boxplot.png, anova_bagres_medias.png...
+for (nome in names(figuras)) {
+  ggsave(paste0("exemplos/figuras/anova_bagres_", nome, ".png"),
+         plot       = figuras[[nome]],
+         width      = 7,
+         height     = 4.6,
+         dpi        = 300,
+         bg         = "white",
+         create.dir = TRUE)
+}
 
 # 12. Registrar o ambiente -------------------------------------------------
 # No projeto da CatalyseR: sessionInfo() gravado em saida/sessionInfo.txt.
