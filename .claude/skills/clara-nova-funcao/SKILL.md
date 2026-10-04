@@ -6,18 +6,25 @@ description: Use ao criar ou revisar uma função da ClaRa (o dialeto amigável 
 # Criar uma função nova da ClaRa
 
 Leia o CLAUDE.md da raiz antes de começar. Ele traz as regras de estilo.
-Use `comparar_medias()` em `R/clara.R` como modelo vivo.
+Use `comparar_medias()` em `R/clara_medias.R` como modelo vivo; para uma
+pergunta nova, `R/clara_medianas.R` mostra o arquivo completo de uma pergunta.
 
 ## Passo a passo
 
 0. **Veja onde a função mora** (CLAUDE.md, "Como a ClaRa se organiza"). Cada
-   pergunta tem a sua análise e os seus gráficos, numa seção própria do
-   `clara.R`. Uma variação da mesma análise vira argumento, não função; mas
+   pergunta tem a sua análise e os seus gráficos, num arquivo próprio
+   (`R/clara_<pergunta>.R`), que entra na lista `arquivos_clara` de
+   `R/clara.R` e abre com o título de seção (`# Comparar medianas ----`),
+   que vira o grupo na `ajuda()`. Uma variação da mesma análise vira
+   argumento, não função; mas
    cada figura diferente tem o seu nome (uma função, uma figura: nada de
    `tipo` escolhendo figuras). Uma
    função para qualquer análise já existe? Então a análise nova só acrescenta
    receitas a `receitas_efeito`, `receitas_textos`, `receitas_residuos` e
-   `receitas_qq`.
+   `receitas_qq`. Se uma delas não se aplica à análise (os resíduos não
+   servem às medianas), não acrescente receita: `escolher_receita()`
+   explica isso ao aluno. Um gráfico de uma pergunta só confere o
+   resultado com `conferir_resultado()`.
    Receitas de gráfico com cores começam com `trecho_cores` (ou
    `trecho_de_cores(vetor)`), para rodarem copiadas. Gráficos de conferência
    têm poucos parâmetros; a figura de publicação (`grafico_medias()`) tem mais.
@@ -113,4 +120,5 @@ Use `comparar_medias()` em `R/clara.R` como modelo vivo.
 
 9. **Atualize o CLAUDE.md** (seção "Como o aluno usa" e "Decisões em aberto")
    e o exemplo da análise em `exemplos/<nome_da_analise>.R` (um roteiro por
-   análise, rodando a partir da raiz, que grava suas figuras em `exemplos/`).
+   análise, rodando a partir da raiz, que grava suas figuras em
+   `exemplos/figuras/`, com o nome do roteiro como prefixo).

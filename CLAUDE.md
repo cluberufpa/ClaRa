@@ -16,11 +16,18 @@ ClaRa/
   CLAUDE.md                     este arquivo
   LICENSE                       MIT, clubeR e Evaldo Martins da Silva
   ClaRa.Rproj
-  R/                            só as funções
-    clara.R                     todas as funções da ClaRa, em seções
+  R/                            só as funções, um arquivo por pergunta
+    clara.R                     porta de entrada: carrega os outros (source)
+    clara_medias.R              comparar_medias() e os gráficos das médias
+    clara_medianas.R            comparar_medianas() e grafico_medianas()
+    clara_qualquer_analise.R    medir_efeito(), escrever_resultados(),
+                                grafico_residuos(), grafico_qq()
+    clara_motor.R               ajuda() e peças internas
   exemplos/                     um roteiro por análise
     anova_um_fator.R            ANOVA de um fator (PlantGrowth renomeado)
     teste_t_dois_grupos.R       teste t de Welch (ToothGrowth, dose 0,5)
+    kruskal_wallis.R            medianas com 3 grupos (CPUE por petrecho)
+    mann_whitney.R              medianas com 2 grupos (artêmia)
     anova_bagres.R              o analise.R do anova-bagres-gabarito
                                 (EAPACadernos) reescrito em ClaRa, mesmas
                                 seções, sem nenhum bloco em R comum
@@ -43,6 +50,8 @@ Para testar tudo, a partir da raiz do projeto:
 Rscript -e 'source("exemplos/anova_um_fator.R", echo = TRUE)'
 Rscript -e 'source("exemplos/teste_t_dois_grupos.R", echo = TRUE)'
 Rscript -e 'source("exemplos/anova_bagres.R", echo = TRUE)'
+Rscript -e 'source("exemplos/kruskal_wallis.R", echo = TRUE)'
+Rscript -e 'source("exemplos/mann_whitney.R", echo = TRUE)'
 ```
 
 `anova_bagres.R` é o modelo da migração para a CatalyseR: o analise.R da
@@ -113,7 +122,7 @@ completa, para quem abre o repositório.
 | Pergunta | Análise | Gráficos | Testes por trás |
 |---|---|---|---|
 | A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | t de Welch ou Student; ANOVA e Tukey; depois t pareado e ANOVA de Welch, como argumentos |
-| A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()` | Mann-Whitney; Kruskal-Wallis |
+| A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()`, `grafico_boxplot()` | Mann-Whitney; Kruskal-Wallis e Dunn |
 | Uma variável acompanha a outra? | `relacionar_variaveis()` | a definir | regressão linear |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | a definir | qui-quadrado ou teste de proporções |
 
@@ -133,9 +142,11 @@ Regras que saem desse desenho:
 - Análise nova não cria funções em "Para qualquer análise": só acrescenta
   receitas a `receitas_efeito`, `receitas_textos`, `receitas_residuos` e
   `receitas_qq`.
-- No `clara.R`, cada pergunta é uma seção (`# 1. Comparar médias ----`), e
-  "Para qualquer análise" é a seção 2. A `ajuda()` agrupa a lista de funções
-  por esses títulos de seção, então uma seção nova aparece sozinha.
+- Cada pergunta mora no seu arquivo (`R/clara_medias.R`,
+  `R/clara_medianas.R`), que abre com o título de seção (`# Comparar médias
+  ----`). A `ajuda()` agrupa a lista de funções por esses títulos, então
+  uma pergunta nova aparece sozinha, desde que o arquivo entre em
+  `arquivos_clara` (em `R/clara.R`).
 - Caso de fronteira, a decidir com o professor: ANOVA de dois fatores (ração
   e temperatura). Ainda é pergunta sobre médias, com interação: pode ser
   `comparar_medias(grupos = c(racao, temperatura))` ou um verbo próprio.
@@ -217,9 +228,8 @@ Cada gráfico das médias tem a sua receita: `trechos_grafico_medias`,
 cores da receita para qualquer vetor, e o objeto na receita se chama `cores`. `grafico_pares()` usa
 `resultado$pares` (Tukey) na ANOVA e `resultado$teste` no teste t; o título
 explica o ponto, a haste e a linha tracejada da diferença zero. Com muitos
-grupos (10 grupos = 45 pares), salve a figura mais alta. Quando entrar
-`comparar_medianas()`, o boxplot e os pares podem servir às medianas também,
-com uma receita a mais (Dunn no lugar do Tukey).
+grupos (10 grupos = 45 pares), salve a figura mais alta. O boxplot já
+serve às medianas (só usa `$dados`); os pares ainda não (ver "Em espera").
 
 Toda receita de gráfico com cores começa com um trecho de cores
 (`trecho_de_cores()`), que define `cores` (estendidas com
@@ -258,11 +268,61 @@ exploração dos dados (menu Explorar e Visualizar da CatalyseR) já mostrou
 dispersões parecidas. A ClaRa nunca troca de teste olhando o Levene; se o
 Levene rejeitar, o relatório recomenda voltar ao Welch.
 
+### Comparar medianas (v0.6)
+
+```r
+resultado <- capturas |>
+  comparar_medianas(resposta = cpue_kg, grupos = petrecho)
+
+resultado |> medir_efeito()          # ε² dos postos (3+) ou r bisserial (2)
+resultado |> grafico_medianas()      # a figura principal
+resultado |> grafico_boxplot()       # exploração, a mesma das médias
+textos <- resultado |> escrever_resultados()
+```
+
+| Grupos | Teste | Partes próprias | `medir_efeito()` |
+|---|---|---|---|
+| 2 | Mann-Whitney, com o deslocamento de Hodges-Lehmann e IC | `$teste` | r bisserial dos postos |
+| 3 ou mais | Kruskal-Wallis; Dunn com p ajustado por Holm | `$teste`, `$pares` | ε² dos postos |
+
+- `$resumo` traz n, mediana, q1, q3, `aiq` e `letra`; `$pressupostos` traz
+  o Fligner-Killeen (dispersão parecida nos grupos). Com dispersões
+  parecidas, o teste compara as medianas; se o Fligner rejeitar, as frases
+  de `escrever_resultados()` dizem "as distribuições" no lugar de "as
+  medianas" e o alerta explica por quê.
+- O Dunn é escrito em dplyr na própria receita (postos, correção de empates,
+  z, `p.adjust(method = "holm")`), sem pacote novo; os z e os p conferem com
+  `FSA::dunnTest()` e `dunn.test::dunn.test()`. Os pares saem na ordem do
+  Tukey (`B-A`).
+- Letras: `vec2mat()` e `multcompLetters()` com a matriz ordenada pela
+  mediana, para a maior mediana levar "a". Com dois grupos, a regra do
+  teste t.
+- Mann-Whitney: `exact` é decidido na receita (exato sem empates e com menos
+  de 50 observações; senão, aproximação normal), para o R não soltar avisos
+  em inglês.
+- ε² vem de `rank_epsilon_squared()`, com intervalo por bootstrap; a receita
+  usa `set.seed(1)` para o resultado se repetir. Em `escrever_resultados()`,
+  o ε² é calculado direto do H (`H / (n - 1)`), igual ao do effectsize.
+- `grafico_medianas()`: pontos, losango na mediana, haste de q1 a q3 e
+  letras; argumentos `titulo`, `explicacao`, `mostrar_pontos`,
+  `mostrar_letras`, `cores`, `tamanho_texto` e `fonte`, montados de
+  `trechos_grafico_medianas` como no `grafico_medias()`.
+- `grafico_residuos()` e `grafico_qq()` não têm receita para as medianas:
+  `escolher_receita()` (motor) explica isso ao aluno e indica o
+  `grafico_boxplot()`. `grafico_medias()`, `grafico_pares()` e
+  `grafico_medianas()` conferem a classe do resultado com
+  `conferir_resultado()` e indicam a função certa.
+- `$poder` sai vazio nas medianas (a ClaRa ainda não calcula poder para
+  testes de postos).
+
 ### Ajuda
 
 `ajuda()` lista as funções; `ajuda(comparar_medias)` mostra o cabeçalho
-da função, lido do próprio `clara.R` (o caminho fica em `arquivo_clara`,
-descoberto no `source()`). No RStudio, a ajuda abre como página HTML no
+da função, lido do arquivo onde ela mora (`ler_cabecalhos()` percorre
+`arquivos_clara`, cujos caminhos `R/clara.R` descobre no `source()`). A seção
+de cada função é o último título antes dela no formato `# Nome da seção ----`
+(começa com maiúscula, sem parênteses); por isso títulos internos como
+`# As receitas de comparar_medias() ----` não viram grupo. No RStudio, a ajuda abre como página HTML no
 painel **Viewer** (`getOption("viewer")`); fora dele, ou com
 `onde = "console"`, sai no console. O painel **Help** só mostra
 documentação `.Rd` de pacotes: fica para quando a ClaRa virar pacote
@@ -343,9 +403,9 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 - **Uma frase explicativa acima de cada linha** nas funções do aluno,
   principalmente na função principal. Funções claras pedem comentários
   curtos; não repetir o óbvio.
-- Arquivo organizado em seções numeradas (`# 1. ... ----`), visíveis no
-  sumário do RStudio (Ctrl+Shift+O). Peças internas ficam na última seção,
-  "Motor das receitas".
+- Cada arquivo organizado em seções (`# Nome da seção ----`), visíveis no
+  sumário do RStudio (Ctrl+Shift+O). Peças internas ficam em
+  `R/clara_motor.R`, na seção "Motor das receitas".
 - Textos para o aluno com linguagem humanizada; **evitar travessões**.
 - Números exibidos com vírgula decimal (`numero()`, `escrever_p()`); um p
   muito pequeno aparece como "p < 0,001", nunca zero.
@@ -361,7 +421,8 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 - Nomes de coluna com espaço ou símbolo (`Peso (g)`) quebram `TukeyHSD()` e
   `multcompLetters4()`. A ClaRa recusa esses nomes com mensagem amigável e
   pede `rename()` no preparo. Acentos (`ração`) funcionam.
-- Hífen no nome de um grupo atrapalha as letras do Tukey; também é recusado.
+- Hífen no nome de um grupo atrapalha as letras (Tukey e Dunn); também é
+  recusado.
 - `executar_receita()` carrega os pacotes com `library()` (efeito colateral
   aceito: o analise.R carrega os mesmos pacotes).
 - Com mais de 5000 observações, o `shapiro.test()` para com erro em inglês.
@@ -399,6 +460,16 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 7. ~~`grafico_diagnostico(tipo = ...)`~~: separado em `grafico_residuos()` e
    `grafico_qq()`, pela regra "uma função, uma figura" (outubro de 2026, a
    pedido do professor, para avaliar como fica).
+8. Medianas: Dunn com Holm, escrito na receita, ou um pacote (FSA,
+   rstatix)? A receita mostra a conta inteira, mas fica longa. Holm ou
+   Bonferroni (o EAPA usa qual)?
+9. Medianas: limites de leitura. ε² usa os mesmos do η² (0,01; 0,06; 0,14)
+   e o r bisserial os de Cohen para correlação (0,1; 0,3; 0,5). O intervalo
+   do ε² é unilateral, como o do η² (decisão 1).
+10. Medianas: o pressuposto conferido é a dispersão (Fligner-Killeen). Basta,
+    ou também a forma das distribuições? E o mínimo de 3 observações por
+    grupo (decisão 4) vale aqui também, embora os testes de postos não usem
+    o Shapiro.
 
 ## Regras de crescimento
 
@@ -412,35 +483,29 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    do início ao fim, o `mostrar_codigo = TRUE` reproduz o resultado e o
    CLAUDE.md está atualizado. Ideias que surgirem no caminho vão para a seção
    "Em espera", não para o código.
-3. **Um só arquivo (`R/clara.R`) enquanto couber.** Dividir em um arquivo por
-   análise mais o motor (`clara_motor.R`, `clara_medias.R`...) somente quando
-   ficar difícil de navegar. **Gatilho já decidido:** dividir quando entrar a
-   segunda pergunta (`relacionar_variaveis()` ou `comparar_medianas()`).
-   Plano, **um arquivo por pergunta**, todos na pasta `R/`:
-   - `R/clara.R` vira só a porta de entrada: carrega os outros arquivos com
-     `source()`, para o aluno continuar escrevendo `source("R/clara.R")`;
-   - `R/clara_medias.R`: os dois verbos das médias (`comparar_medias()`,
-     `grafico_medias()`) e todas as receitas das médias, inclusive as de
-     efeito e de textos da ANOVA e do teste t;
-   - `R/clara_medianas.R`, `R/clara_regressao.R`...: o mesmo para cada
-     pergunta nova;
+3. **Um arquivo por pergunta, na pasta `R/`** (divisão feita em outubro de
+   2026, quando entrou `comparar_medianas()`):
+   - `R/clara.R` é só a porta de entrada: carrega os outros arquivos com
+     `source()`, e o aluno continua escrevendo `source("R/clara.R")`;
+   - `R/clara_medias.R`, `R/clara_medianas.R`...: o verbo, os gráficos, as
+     receitas (inclusive as de efeito e de textos) e o `print` de cada
+     pergunta, que acrescenta as suas receitas às listas
+     (`receitas_efeito$kruskal <- ...`);
    - `R/clara_qualquer_analise.R`: `medir_efeito()`,
      `escrever_resultados()`, `grafico_residuos()` e `grafico_qq()`, só as
-     funções (as receitas moram no arquivo
-     de cada pergunta, que as acrescenta às listas:
-     `receitas_efeito$regressao <- ...`);
-   - `R/clara_motor.R`: peças internas, exibição no console e `ajuda()`.
-   Quem quiser estudar uma pergunta abre um arquivo só e encontra tudo dela.
+     funções e as listas vazias, mais o desenho dos resíduos que serve a
+     todas;
+   - `R/clara_motor.R`: `ajuda()`, peças internas e paletas.
+   A ordem de carga é o motor, depois "qualquer análise", depois as
+   perguntas (`rev(arquivos_clara)`). O plano original punha a exibição no
+   console no motor; ela ficou no arquivo de cada pergunta, para quem
+   estuda uma pergunta achar tudo dela num arquivo só.
    **Arquivos, não subpastas** (decidido em outubro de 2026): cada pergunta
    cabe num arquivo de tamanho razoável; o sumário do RStudio
    (Ctrl+Shift+O) funciona dentro de um arquivo, não entre pastas; o prefixo
    `clara_` mantém tudo junto no painel Files, como uma lista de perguntas;
    e, se a ClaRa um dia virar pacote, a pasta `R/` de um pacote não aceita
    subpastas.
-   Atenção: a `ajuda()` hoje lê os cabeçalhos e os títulos de seção de
-   `arquivo_clara`; ela precisa passar a ler todos os `R/clara*.R`, e cada
-   arquivo de pergunta abre com o seu título de seção (`# Comparar médias
-   ----`), que vira o grupo na lista.
 4. **Não transformar em pacote por antecipação.** `source()` basta até existir
    um motivo concreto, como a CatalyseR precisar de `library(clara)` no
    projeto exportado.
@@ -455,10 +520,11 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   como `pareado_por = individuo`;
 - ANOVA de Welch como comparação quando o Levene rejeitar a igualdade das
   variâncias;
-- `comparar_medianas()` e `grafico_medianas()`: Mann-Whitney (2 grupos) e
-  Kruskal-Wallis (3 ou mais), com Dunn para os pares; o alerta de
-  `escrever_resultados()` já sugere esses testes quando a normalidade falha
-  com grupos pequenos;
+- `grafico_pares()` para as medianas: o Dunn não dá intervalo; seria
+  preciso um IC por par (Hodges-Lehmann de cada par, com ajuste);
+- poder para as medianas (`$poder` sai vazio);
+- o alerta de `escrever_resultados()` nas médias poderia citar
+  `comparar_medianas()` pelo nome, agora que ela existe;
 - `rotulo_resposta` e `rotulo_grupos` informados uma vez só, em
   `comparar_medias()`, em vez de repetidos no gráfico e nos textos;
 - próximas análises: `relacionar_variaveis()` (regressão) e
@@ -466,12 +532,11 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 
 ## Próximos passos possíveis
 
-- Ao começar a segunda pergunta (regressão ou medianas): primeiro dividir o
-  `clara.R` em um arquivo por pergunta (plano na regra 3 de crescimento),
-  conferir que os dois exemplos e a `ajuda()` continuam iguais, e só então
-  escrever o verbo novo.
+- Próxima pergunta (regressão ou proporções): um arquivo novo
+  `R/clara_<pergunta>.R`, no molde de `R/clara_medianas.R`, acrescentado a
+  `arquivos_clara`.
 - Integração com a CatalyseR: o exportador poderia gerar o analise.R em
-  ClaRa, copiando `R/clara.R` para o projeto exportado como já faz com o
+  ClaRa, copiando os arquivos `R/clara*.R` para o projeto exportado como já faz com o
   `funcoes.R` (só pacotes do CRAN). Mapa do analise.R do EAPACaderno (ANOVA):
   seções 4 a 7 → `comparar_medias()` e `medir_efeito()`; 9.2 →
   `grafico_medias()`; 9.1 → `grafico_boxplot()`; 9.3 e 9.4 →

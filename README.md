@@ -31,16 +31,16 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 | Pergunta da pesquisa | Análise | Gráfico | Testes por trás | Situação |
 |---|---|---|---|---|
 | A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | teste t de Welch ou de Student (2 grupos); ANOVA com Tukey (3 ou mais) | pronta |
-| A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()` | Mann-Whitney (2 grupos); Kruskal-Wallis (3 ou mais) | planejada |
+| A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()`, `grafico_boxplot()` | Mann-Whitney (2 grupos); Kruskal-Wallis com Dunn (3 ou mais) | pronta |
 | Uma variável acompanha a outra? | `relacionar_variaveis()` | ainda sem nome | regressão linear | planejada |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | ainda sem nome | qui-quadrado ou teste de proporções | planejada |
 
 | Para qualquer análise | O que faz |
 |---|---|
-| `medir_efeito()` | diz se o efeito é grande ou pequeno (η², ω², d de Cohen...) |
+| `medir_efeito()` | diz se o efeito é grande ou pequeno (η², ω², d de Cohen, ε² dos postos...) |
 | `escrever_resultados()` | escreve as frases do relatório, que mudam junto com os dados |
-| `grafico_residuos()` | resíduos contra ajustados: as variâncias dos grupos são parecidas? |
-| `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? |
+| `grafico_residuos()` | resíduos contra ajustados: as variâncias dos grupos são parecidas? (só médias) |
+| `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? (só médias) |
 | `ajuda()` | lista as funções ou explica uma delas |
 
 Uma análise nova não cria funções novas em "Para qualquer análise": ela só
@@ -58,7 +58,9 @@ copiar, colar e rodar sem a ClaRa.
 ## Pastas
 
 ```
-R/clara.R         as funções (um arquivo por pergunta quando a ClaRa crescer)
+R/clara.R         a porta de entrada: carrega os outros arquivos de R/
+R/clara_*.R       um arquivo por pergunta (clara_medias.R, clara_medianas.R),
+                  o que serve a qualquer análise e o motor
 exemplos/         um roteiro por análise; as figuras que ele gera ficam em figuras/
 dados_treino/     dados reais e sintéticos para testar e estudar as funções
 docs/             histórico e ideias

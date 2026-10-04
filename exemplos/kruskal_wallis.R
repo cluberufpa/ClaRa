@@ -1,0 +1,77 @@
+# COMPARAÇÃO DE MEDIANAS COM A ClaRa: EXEMPLO COM TRÊS GRUPOS
+# x========================================================================x
+# Pergunta: a captura por unidade de esforço (CPUE, kg) difere entre os
+# petrechos de pesca?
+# Dados: sintéticos, 45 lances (15 por petrecho). A CPUE é assimétrica: a
+# maioria dos lances pesca pouco, e alguns pescam muito. Com resposta assim,
+# a mediana representa melhor o lance típico do que a média.
+# Rode a partir da raiz do projeto (abrindo o ClaRa.Rproj ou com Rscript):
+#   Rscript exemplos/kruskal_wallis.R
+
+# 1. Preparar o ambiente ---------------------------------------------------
+library(dplyr)
+library(ggplot2)
+source("R/clara.R", encoding = "UTF-8")
+
+# 2. Ler os dados ----------------------------------------------------------
+capturas <- readRDS("dados_treino/sint_residuos_assimetricos.rds")
+
+glimpse(capturas)
+
+# 3. Comparar as medianas --------------------------------------------------
+# Com três grupos, a ClaRa usa o Kruskal-Wallis e, para os pares, o Dunn.
+resultado <- capturas |>
+  comparar_medianas(resposta = cpue_kg, grupos = petrecho)
+
+resultado
+
+# 4. Olhar as observações de cada grupo ------------------------------------
+# Pontos muito acima dos outros, em todos os petrechos: a CPUE é assimétrica.
+# Caixas de alturas parecidas: dispersão parecida, como o Fligner-Killeen.
+grafico_caixas <- resultado |>
+  grafico_boxplot(rotulo_resposta = "CPUE (kg)",
+                  rotulo_grupos   = "Petrecho")
+
+grafico_caixas
+
+# 5. Medir o tamanho do efeito ---------------------------------------------
+resultado |>
+  medir_efeito()
+
+# 6. Mostrar a comparação num gráfico --------------------------------------
+grafico_principal <- resultado |>
+  grafico_medianas(rotulo_resposta = "CPUE (kg)",
+                   rotulo_grupos   = "Petrecho")
+
+grafico_principal
+
+# 7. Ver o código R por trás da ClaRa --------------------------------------
+# Com mostrar_codigo = TRUE, a função imprime o código e depois o resultado.
+capturas |>
+  comparar_medianas(resposta       = cpue_kg,
+                    grupos         = petrecho,
+                    mostrar_codigo = TRUE)
+
+# 8. Escrever os resultados ------------------------------------------------
+# As frases saem do resultado: se os dados mudam, o texto muda junto.
+# No Quarto, cada frase entra no parágrafo com `r textos$teste`.
+textos <- resultado |>
+  escrever_resultados(rotulo_resposta = "CPUE (kg)",
+                      rotulo_grupos   = "Petrecho")
+
+textos
+
+# 9. Guardar as figuras ----------------------------------------------------
+figuras <- list(boxplot  = grafico_caixas,
+                medianas = grafico_principal)
+
+# Uma volta para cada figura: kruskal_wallis_boxplot.png e kruskal_wallis_medianas.png.
+for (nome in names(figuras)) {
+  ggsave(paste0("exemplos/figuras/kruskal_wallis_", nome, ".png"),
+         plot       = figuras[[nome]],
+         width      = 7,
+         height     = 4.6,
+         dpi        = 300,
+         bg         = "white",
+         create.dir = TRUE)
+}
