@@ -48,7 +48,7 @@ resultado
 
 # Tamanho de efeito: η² e ω², com a leitura de Cohen.
 resultado |>
-  medir_efeito()
+  medir_efeito(mostrar_codigo = F)
 
 # 8. Tabelas ---------------------------------------------------------------
 # As tabelas já saem prontas do resultado; a formatação para o Word
@@ -83,7 +83,7 @@ grafico_barras <- resultado |>
                  mostrar_letras   = TRUE,
                  cores            = "ocean",        # "ocean", "cinza" ou um vetor
                  tamanho_texto    = 12,
-                 fonte            = "sans")         # "sans" (Arial) ou "serif" (Times)
+                 fonte            = "serif")         # "sans" (Arial) ou "serif" (Times)
 
 grafico_barras
 
