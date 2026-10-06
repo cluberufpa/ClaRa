@@ -18,6 +18,7 @@ ClaRa/
   ClaRa.Rproj
   R/                            só as funções, um arquivo por pergunta
     clara.R                     porta de entrada: carrega os outros (source)
+                                e guarda a versão (versao_clara)
     clara_medias.R              comparar_medias() e os gráficos das médias
     clara_medianas.R            comparar_medianas() e grafico_medianas()
     clara_qualquer_analise.R    medir_efeito(), escrever_resultados(),
@@ -546,6 +547,16 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 4. **Não transformar em pacote por antecipação.** `source()` basta até existir
    um motivo concreto, como a CatalyseR precisar de `library(clara)` no
    projeto exportado.
+   **Primeiro motivo concreto anotado** (outubro de 2026, ao discutir a
+   migração para a CatalyseR): o exportador copia os `R/clara*.R` para cada
+   projeto, e cada cópia fica congelada na versão do dia da exportação.
+   Projetos exportados em datas diferentes podem ter ClaRas diferentes (um
+   argumento novo funciona num e falha no outro). Por enquanto, a versão
+   fica em `R/clara.R` (no título e em `versao_clara`, avisada no
+   `source()`), e toda mudança na ClaRa atualiza esse número nos dois
+   lugares. Se manter as cópias em dia começar a dar trabalho, é a hora de
+   virar pacote: instalado uma vez, atualizado num lugar só, com
+   `packageVersion()`.
 5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
    (privado, ramo `main`). Nesta pasta os commits saem como
    `clubeR <cluber.ufpa@gmail.com>`; o push usa a credencial do cluberufpa

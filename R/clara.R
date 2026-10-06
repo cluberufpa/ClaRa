@@ -1,5 +1,6 @@
 # =============================================================================
 #  ClaRa: o R escrito com clareza
+#  Versão 0.7 (outubro de 2026)
 # =============================================================================
 #
 #  Cada função da ClaRa responde a uma pergunta da pesquisa, em português.
@@ -51,3 +52,9 @@ arquivos_clara <- file.path(pasta_da_clara(), c(
 # às listas de clara_qualquer_analise.R.
 for (arquivo in rev(arquivos_clara)) source(arquivo, encoding = "UTF-8")
 rm(arquivo)
+
+# A versão desta cópia da ClaRa. Cada projeto exportado leva a sua cópia;
+# a versão diz qual é, quando algo não funcionar igual em dois projetos.
+# Ao mudar a ClaRa, atualize aqui e no título acima.
+versao_clara <- "0.7"
+message("ClaRa ", versao_clara, " carregada.")
