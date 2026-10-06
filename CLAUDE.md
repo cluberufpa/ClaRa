@@ -472,9 +472,10 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 
 ## Decisões em aberto
 
-1. Intervalo de η² e ω²: o effectsize usa intervalo unilateral por padrão, e o
-   limite superior sai sempre 1. Manter, mostrar só o limite inferior ou usar
-   `alternative = "two.sided"`?
+1. ~~Intervalo de η² e ω²~~: resolvido em outubro de 2026 (v0.7.1). Como o
+   do d de Cohen no teste t, o intervalo é bilateral
+   (`alternative = "two.sided"`): o limite superior deixa de sair sempre 1.
+   Vale também para o ε² das medianas (decisão 9).
 2. ~~Rótulo "média ± DP" no gráfico~~: resolvido em outubro de 2026, a pedido
    do professor. O gráfico agora tem barra transparente até a média, o rótulo
    "média ± DP" ao lado do losango, letras todas na mesma altura, explicação
@@ -487,14 +488,16 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    que muda o padrão da ANOVA. Decidir com o professor.
 4. Mínimo de 3 observações por grupo (exigido pelo Shapiro em cada grupo):
    vale hoje também para a ANOVA, que tecnicamente aceitaria 2.
-5. Letras com dois grupos: imitam o Tukey ("a"/"a" sem diferença; "a" para a
-   maior média e "b" com diferença). Manter ou não mostrar letras no teste t?
-6. Poder observado em `escrever_resultados()`: segue o EAPACaderno (calcula o
+5. ~~Letras com dois grupos~~: mantidas (decisão do professor, outubro de
+   2026). Imitam o Tukey ("a"/"a" sem diferença; "a" para a maior média e
+   "b" com diferença).
+6. ~~Poder observado~~: mantido como está (decisão do professor, outubro de
+   2026). Registro do que se discutiu: segue o EAPACaderno (calcula o
    poder com o efeito observado e só o cita quando p ≥ α e poder < 80%). O
    poder observado é função direta do p, então essa frase aparece em quase
    todo resultado sem evidência e pouco acrescenta. Alternativas: dizer o n
    por grupo necessário para detectar um efeito de interesse definido pelo
-   pesquisador, ou retirar a frase. Decidir com o professor.
+   pesquisador, ou retirar a frase. O professor preferiu manter.
 7. ~~`grafico_diagnostico(tipo = ...)`~~: separado em `grafico_residuos()` e
    `grafico_qq()`, pela regra "uma função, uma figura" (outubro de 2026, a
    pedido do professor, para avaliar como fica).
@@ -503,7 +506,7 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    Bonferroni (o EAPA usa qual)?
 9. Medianas: limites de leitura. ε² usa os mesmos do η² (0,01; 0,06; 0,14)
    e o r bisserial os de Cohen para correlação (0,1; 0,3; 0,5). O intervalo
-   do ε² é unilateral, como o do η² (decisão 1).
+   do ε² é bilateral, como o do η² (decisão 1).
 10. Medianas: o pressuposto conferido é a dispersão (Fligner-Killeen). Basta,
     ou também a forma das distribuições? E o mínimo de 3 observações por
     grupo (decisão 4) vale aqui também, embora os testes de postos não usem

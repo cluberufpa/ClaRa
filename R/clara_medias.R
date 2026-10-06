@@ -869,8 +869,16 @@ ggplot(pares, aes(x = diferenca, y = comparacao)) +
 # ANOVA: η² e ω² com intervalo de confiança, e a leitura de Cohen.
 receitas_efeito$anova <- "
 # Tamanho de efeito da ANOVA, com intervalo de confiança.
-eta   <- eta_squared(<<RESULTADO>>$modelo, partial = FALSE, ci = <<CONFIANCA>>)
-omega <- omega_squared(<<RESULTADO>>$modelo, partial = FALSE, ci = <<CONFIANCA>>)
+# alternative = \"two.sided\" dá um intervalo com os dois limites, como o do
+# d de Cohen no teste t; sem ele, o limite de cima sairia sempre 1.
+eta   <- eta_squared(<<RESULTADO>>$modelo,
+                     partial     = FALSE,
+                     ci          = <<CONFIANCA>>,
+                     alternative = \"two.sided\")
+omega <- omega_squared(<<RESULTADO>>$modelo,
+                       partial     = FALSE,
+                       ci          = <<CONFIANCA>>,
+                       alternative = \"two.sided\")
 
 tibble(
   medida = c(\"η²\", \"ω²\"),

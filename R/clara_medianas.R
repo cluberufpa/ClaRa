@@ -517,10 +517,12 @@ receitas_efeito$kruskal <- "
 # Tamanho de efeito do Kruskal-Wallis: ε² dos postos, a fração da variação
 # das posições que acompanha os grupos. O intervalo vem de reamostragem
 # (bootstrap); a semente faz o resultado se repetir a cada execução.
+# alternative = \"two.sided\" dá os dois limites, como no η² da ANOVA.
 set.seed(1)
 epsilon <- rank_epsilon_squared(<<RESPOSTA>> ~ <<GRUPOS>>,
-                                data = <<RESULTADO>>$dados,
-                                ci   = <<CONFIANCA>>)
+                                data        = <<RESULTADO>>$dados,
+                                ci          = <<CONFIANCA>>,
+                                alternative = \"two.sided\")
 
 tibble(
   medida = \"ε² (postos)\",
