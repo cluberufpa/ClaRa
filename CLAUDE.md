@@ -610,6 +610,10 @@ Decisões do professor para o projeto exportado em ClaRa:
   intermediários); o carimbo traz linhas, contagem e média por grupo que a
   tela mostrou, e `stopifnot()` trava só o número de linhas.
 - **Só CRAN**: sem catalyser nem EAPADados no projeto.
+- **`dados/` só com a planilha**, sem `brutos/` e `processados/`. A cópia
+  da base para o Excel sai do script, em `saida/tabelas/base.csv`, refeita a
+  cada execução; não vira aba da planilha bruta (seria cópia estática e
+  mexeria na entrada preservada).
 - A ClaRa viaja em `R/clara/`; em `R/` o aluno vê só `analise.R` e
   `funcoes.R`. A seção 10 do roteiro se chama "Textos dinâmicos".
 - Limites de linhas são acompanhados, não travados.
