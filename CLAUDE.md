@@ -590,6 +590,30 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 - próximas análises: `relacionar_variaveis()` (regressão) e
   `comparar_proporcoes()`.
 
+## A ClaRa na CatalyseR (outubro de 2026)
+
+A integração começou pela ANOVA de um fator, como opção experimental no
+exportador da CatalyseR ("Escrever o código em ClaRa", branch `clara` do
+repositório da CatalyseR; só método clássico). O trabalho mora na CatalyseR,
+não aqui (regra 1): `inst/app/templates/clara/` guarda a cópia da ClaRa que
+viaja nos projetos e `inst/app/templates/anova_clara/` o roteiro e o
+relatório. Ao mudar a ClaRa, atualize essa cópia (e a versão, regra 4).
+
+Decisões do professor para o projeto exportado em ClaRa:
+- **Um só QMD**: `R/analise.R` é o caderno de estudo (cerca de 170 linhas) e
+  `relatorios/relatorio.qmd` é o relatório Word, com a tabela da ANOVA, o
+  resumo por grupo e a figura principal (sem a figura dos pares). Não há
+  caderno HTML; os chunks do relatório repetem as chamadas da ClaRa do script
+  e rodam sozinhos. Mais resultados, se preciso, entram como apêndice no Word.
+- **Receita e carimbo, sem `.rds`**: a base nasce da planilha numa só cadeia
+  com pipe até `base` (trilha, ramo e grupos como fator, sem nomes
+  intermediários); o carimbo traz linhas, contagem e média por grupo que a
+  tela mostrou, e `stopifnot()` trava só o número de linhas.
+- **Só CRAN**: sem catalyser nem EAPADados no projeto.
+- A ClaRa viaja em `R/clara/`; em `R/` o aluno vê só `analise.R` e
+  `funcoes.R`. A seção 10 do roteiro se chama "Textos dinâmicos".
+- Limites de linhas são acompanhados, não travados.
+
 ## Próximos passos possíveis
 
 - Próxima pergunta (regressão ou proporções): um arquivo novo
