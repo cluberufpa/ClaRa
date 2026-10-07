@@ -134,4 +134,5 @@ for (nome in names(figuras)) {
 }
 
 # 12. Registrar o ambiente -------------------------------------------------
-# No projeto da CatalyseR: sessionInfo() gravado em saida/sessionInfo.txt.
+# As versões da ClaRa, do R e dos pacotes usadas nesta execução.
+registrar_ambiente(arquivo = "exemplos/figuras/anova_bagres_sessionInfo.txt")

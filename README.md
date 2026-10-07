@@ -44,6 +44,7 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 | `escrever_resultados()` | escreve as frases do relatório, que mudam junto com os dados |
 | `grafico_residuos()` | resíduos contra ajustados: as variâncias dos grupos são parecidas? (só médias) |
 | `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? (só médias) |
+| `registrar_ambiente()` | grava as versões da ClaRa, do R e dos pacotes, no fim do roteiro |
 | `ajuda()` | lista as funções ou explica uma delas |
 
 Uma análise nova não cria funções novas em "Para qualquer análise": ela só

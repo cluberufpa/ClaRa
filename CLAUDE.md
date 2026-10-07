@@ -22,7 +22,8 @@ ClaRa/
     clara_medias.R              comparar_medias() e os gráficos das médias
     clara_medianas.R            comparar_medianas() e grafico_medianas()
     clara_qualquer_analise.R    medir_efeito(), escrever_resultados(),
-                                grafico_residuos(), grafico_qq()
+                                grafico_residuos(), grafico_qq(),
+                                registrar_ambiente()
     clara_motor.R               ajuda() e peças internas
   exemplos/                     um roteiro por análise
     anova_um_fator.R            ANOVA de um fator (PlantGrowth renomeado)
@@ -183,6 +184,8 @@ resultado |>
   grafico_residuos()            # resíduos contra ajustados
 resultado |>
   grafico_qq()                  # Q-Q dos resíduos
+
+registrar_ambiente(arquivo = here("saida", "sessionInfo.txt"))  # no fim
 ```
 
 **O resultado carrega o contexto** (v0.7, outubro de 2026): `rotulo_resposta`
@@ -615,7 +618,10 @@ Decisões do professor para o projeto exportado em ClaRa:
   cada execução; não vira aba da planilha bruta (seria cópia estática e
   mexeria na entrada preservada).
 - A ClaRa viaja em `R/clara/`; em `R/` o aluno vê só `analise.R` e
-  `funcoes.R`. A seção 10 do roteiro se chama "Textos dinâmicos".
+  `funcoes.R`. As seções do roteiro são numeradas em sequência: 1 Preparar
+  o ambiente, 2 Ler a planilha, 3 Preparar a base, 4 Comparar as médias,
+  5 Tabelas, 6 Gráficos, 7 Textos dinâmicos, 8 Salvar cópias (R comum) e
+  9 Registrar o ambiente (`registrar_ambiente()`).
 - Limites de linhas são acompanhados, não travados.
 
 ## Próximos passos possíveis
@@ -629,8 +635,9 @@ Decisões do professor para o projeto exportado em ClaRa:
   seções 4 a 7 → `comparar_medias()` e `medir_efeito()`; 9.2 →
   `grafico_medias()`; 9.1 → `grafico_boxplot()`; 9.3 e 9.4 →
   `grafico_residuos()` e `grafico_qq()`; 9.5 → `grafico_pares()`; 10 →
-  `escrever_resultados()`. Ficam fora da ClaRa: leitura e preparo (2, 3),
-  tabelas flextable (8), salvar cópias (11, 12). A análise do roteiro está
+  `escrever_resultados()`; 12 → `registrar_ambiente()` (v0.7.2). Ficam fora
+  da ClaRa: leitura e preparo (2, 3), tabelas flextable (8) e salvar cópias
+  (11), que segue em R comum por decisão do professor. A análise do roteiro está
   toda coberta: `exemplos/anova_bagres.R` não tem mais blocos "Ainda sem
   ClaRa" (462 linhas de código no original, 42 em ClaRa). Os QMDs precisarão ler
   `resultado$...` e `textos$...` no lugar dos objetos soltos atuais.
