@@ -44,6 +44,8 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 | `escrever_resultados()` | escreve as frases do relatório, que mudam junto com os dados |
 | `grafico_residuos()` | resíduos contra ajustados: as variâncias dos grupos são parecidas? (só médias) |
 | `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? (só médias) |
+| `salvar_tabelas()` | grava cada tabela em CSV que o Excel em português abre |
+| `salvar_figuras()` | grava cada gráfico em PNG, com medidas em centímetros |
 | `registrar_ambiente()` | grava as versões da ClaRa, do R e dos pacotes, no fim do roteiro |
 | `ajuda()` | lista as funções ou explica uma delas |
 
@@ -87,9 +89,11 @@ longo, mas cada escolha aparece numa linha própria e se lê sem esforço.
 Quando a escolha importa para a conclusão, escreva-a mesmo que seja o
 padrão (`variancias_iguais = FALSE`): assim o roteiro registra a decisão.
 
-Quando é preciso programar (ler arquivos, preparar a base, repetir uma
-tarefa), o roteiro volta ao R comum, com dplyr e um `for` simples. A ClaRa
-cuida das análises, não substitui o R.
+Quando é preciso programar (ler arquivos, preparar a base), o roteiro volta
+ao R comum, com dplyr. A ClaRa cuida das análises, não substitui o R. Para
+guardar cópias, `salvar_tabelas()` e `salvar_figuras()` dispensam o `for`:
+o nome antes do `=` vira o nome do arquivo (`anova = resultado$anova` grava
+`anova.csv`).
 
 ## Ver o R por trás
 

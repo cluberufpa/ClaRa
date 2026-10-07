@@ -71,16 +71,9 @@ textos <- resultado |>
 textos
 
 # 9. Guardar as figuras ----------------------------------------------------
-figuras <- list(boxplot  = grafico_caixas,
-                medianas = grafico_principal)
-
-# Uma volta para cada figura: kruskal_wallis_boxplot.png e kruskal_wallis_medianas.png.
-for (nome in names(figuras)) {
-  ggsave(paste0("exemplos/figuras/kruskal_wallis_", nome, ".png"),
-         plot       = figuras[[nome]],
-         width      = 7,
-         height     = 4.6,
-         dpi        = 300,
-         bg         = "white",
-         create.dir = TRUE)
-}
+# O nome antes do = vira o nome do arquivo: kruskal_wallis_boxplot.png...
+salvar_figuras(kruskal_wallis_boxplot  = grafico_caixas,
+               kruskal_wallis_medianas = grafico_principal,
+               pasta                   = "exemplos/figuras",
+               largura                 = 18,
+               altura                  = 12)

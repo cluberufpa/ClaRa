@@ -116,22 +116,15 @@ textos
 # 11. Salvar cópias --------------------------------------------------------
 # No projeto da CatalyseR, os CSVs e PNGs vão para saida/. Aqui, só as
 # figuras, em exemplos/figuras/, com o nome do roteiro na frente.
-figuras <- list(boxplot  = grafico_caixas,
-                medias   = grafico_barras,
-                residuos = grafico_ajustados,
-                qq       = grafico_normal,
-                pares    = grafico_diferencas)
-
-# Uma volta para cada figura: anova_bagres_boxplot.png, anova_bagres_medias.png...
-for (nome in names(figuras)) {
-  ggsave(paste0("exemplos/figuras/anova_bagres_", nome, ".png"),
-         plot       = figuras[[nome]],
-         width      = 7,
-         height     = 4.6,
-         dpi        = 300,
-         bg         = "white",
-         create.dir = TRUE)
-}
+# O nome antes do = vira o nome do arquivo: anova_bagres_boxplot.png...
+salvar_figuras(anova_bagres_boxplot  = grafico_caixas,
+               anova_bagres_medias   = grafico_barras,
+               anova_bagres_residuos = grafico_ajustados,
+               anova_bagres_qq       = grafico_normal,
+               anova_bagres_pares    = grafico_diferencas,
+               pasta                 = "exemplos/figuras",
+               largura               = 18,
+               altura                = 12)
 
 # 12. Registrar o ambiente -------------------------------------------------
 # As versões da ClaRa, do R e dos pacotes usadas nesta execução.

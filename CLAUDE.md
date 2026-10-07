@@ -620,8 +620,9 @@ Decisões do professor para o projeto exportado em ClaRa:
 - A ClaRa viaja em `R/clara/`; em `R/` o aluno vê só `analise.R` e
   `funcoes.R`. As seções do roteiro são numeradas em sequência: 1 Preparar
   o ambiente, 2 Ler a planilha, 3 Preparar a base, 4 Comparar as médias,
-  5 Tabelas, 6 Gráficos, 7 Textos dinâmicos, 8 Salvar cópias (R comum) e
-  9 Registrar o ambiente (`registrar_ambiente()`).
+  5 Tabelas, 6 Gráficos, 7 Textos dinâmicos, 8 Salvar cópias
+  (`salvar_tabelas()` e `salvar_figuras()`, v0.7.3) e 9 Registrar o
+  ambiente (`registrar_ambiente()`).
 - Limites de linhas são acompanhados, não travados.
 
 ## Próximos passos possíveis
@@ -635,9 +636,12 @@ Decisões do professor para o projeto exportado em ClaRa:
   seções 4 a 7 → `comparar_medias()` e `medir_efeito()`; 9.2 →
   `grafico_medias()`; 9.1 → `grafico_boxplot()`; 9.3 e 9.4 →
   `grafico_residuos()` e `grafico_qq()`; 9.5 → `grafico_pares()`; 10 →
-  `escrever_resultados()`; 12 → `registrar_ambiente()` (v0.7.2). Ficam fora
-  da ClaRa: leitura e preparo (2, 3), tabelas flextable (8) e salvar cópias
-  (11), que segue em R comum por decisão do professor. A análise do roteiro está
+  `escrever_resultados()`; 11 → `salvar_tabelas()` e `salvar_figuras()`
+  (v0.7.3); 12 → `registrar_ambiente()` (v0.7.2). Ficam fora da ClaRa:
+  leitura e preparo (2, 3) e tabelas flextable (8). Salvar cópias passou
+  para a ClaRa em v0.7.3, por decisão do professor: a chamada esconde o
+  `dir.create()`, a lista e o `for`, mas mostra cada item salvo com o nome
+  do arquivo antes do `=` (`anova = resultado$anova` grava `anova.csv`). A análise do roteiro está
   toda coberta: `exemplos/anova_bagres.R` não tem mais blocos "Ainda sem
   ClaRa" (462 linhas de código no original, 42 em ClaRa). Os QMDs precisarão ler
   `resultado$...` e `textos$...` no lugar dos objetos soltos atuais.
