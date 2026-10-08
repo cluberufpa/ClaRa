@@ -592,6 +592,14 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    lugares. Se manter as cópias em dia começar a dar trabalho, é a hora de
    virar pacote: instalado uma vez, atualizado num lugar só, com
    `packageVersion()`.
+   **Revisto em 8/10/2026, com o nome novo da IDE (Trilha, pacote
+   `trilha`):** a ClaRa já vem junto com a Trilha, como cópia em
+   `inst/app/templates/clara/`, e a IDE não executa a ClaRa, só a põe nos
+   projetos. Empacotar não muda isso e esbarra em duas coisas: este
+   repositório é privado, e o projeto exportado deixaria de ser só CRAN.
+   Por isso a ClaRa continua sem pacote. O cuidado que fica é a cópia
+   atrasar; um teste na Trilha vai comparar as `versao_clara` (ver
+   `CATALYSER/docs/PLANO_TRILHA.md`).
 5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
    (privado, ramo `main`). Nesta pasta os commits saem como
    `clubeR <cluber.ufpa@gmail.com>`; o push usa a credencial do cluberufpa
@@ -601,8 +609,6 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 
 - teste t pareado (antes e depois no mesmo animal): pede outro argumento,
   como `pareado_por = individuo`;
-- ANOVA de Welch como comparação quando o Levene rejeitar a igualdade das
-  variâncias;
 - `grafico_pares()` para as medianas: o Dunn não dá intervalo; seria
   preciso um IC por par (Hodges-Lehmann de cada par, com ajuste);
 - poder para as medianas (`$poder` sai vazio);
