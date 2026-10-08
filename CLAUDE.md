@@ -28,6 +28,8 @@ ClaRa/
   exemplos/                     um roteiro por análise
     anova_um_fator.R            ANOVA de um fator (PlantGrowth renomeado)
     teste_t_dois_grupos.R       teste t de Welch (ToothGrowth, dose 0,5)
+    anova_welch.R               ANOVA de Welch com Games-Howell (densidade
+                                de estocagem, variâncias desiguais)
     kruskal_wallis.R            medianas com 3 grupos (CPUE por petrecho)
     mann_whitney.R              medianas com 2 grupos (artêmia)
     anova_bagres.R              o analise.R do anova-bagres-gabarito
@@ -52,6 +54,7 @@ Para testar tudo, a partir da raiz do projeto:
 ```
 Rscript -e 'source("exemplos/anova_um_fator.R", echo = TRUE)'
 Rscript -e 'source("exemplos/teste_t_dois_grupos.R", echo = TRUE)'
+Rscript -e 'source("exemplos/anova_welch.R", echo = TRUE)'
 Rscript -e 'source("exemplos/anova_bagres.R", echo = TRUE)'
 Rscript -e 'source("exemplos/kruskal_wallis.R", echo = TRUE)'
 Rscript -e 'source("exemplos/mann_whitney.R", echo = TRUE)'
@@ -124,7 +127,7 @@ completa, para quem abre o repositório.
 
 | Pergunta | Análise | Gráficos | Testes por trás |
 |---|---|---|---|
-| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | t de Welch ou Student; ANOVA e Tukey; depois t pareado e ANOVA de Welch, como argumentos |
+| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | t de Welch ou Student; ANOVA e Tukey; ANOVA de Welch e Games-Howell (`variancias_iguais = FALSE`); depois t pareado, como argumento |
 | A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()`, `grafico_boxplot()` | Mann-Whitney; Kruskal-Wallis e Dunn |
 | Uma variável acompanha a outra? | `relacionar_variaveis()` | a definir | regressão linear |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | a definir | qui-quadrado ou teste de proporções |
@@ -293,7 +296,8 @@ pergunta; a ClaRa escolhe o teste):
 | Grupos | Teste | Partes próprias | `medir_efeito()` |
 |---|---|---|---|
 | 2 | t de Welch (padrão) ou de Student (`variancias_iguais = TRUE`, com Levene) | `$teste` | d de Cohen e g de Hedges (`pooled_sd` segue `variancias_iguais`) |
-| 3 ou mais | ANOVA, Shapiro dos resíduos, Levene, Tukey | `$anova`, `$pares`, `$modelo` | η² e ω² |
+| 3 ou mais | ANOVA clássica (padrão): Shapiro dos resíduos, Levene, Tukey | `$anova`, `$pares`, `$modelo` | η² e ω² |
+| 3 ou mais, `variancias_iguais = FALSE` | ANOVA de Welch: Shapiro em cada grupo, Games-Howell | `$anova` (sem SQ e QM), `$pares` | ω² aproximado, convertido do F de Welch |
 
 As duas devolvem `$resumo` (com `letra`), `$pressupostos`, `$amostra` (total,
 usadas e excluídas) e `$dados`, por isso
@@ -308,6 +312,30 @@ porque também têm marcadores.
 exploração dos dados (menu Explorar e Visualizar da CatalyseR) já mostrou
 dispersões parecidas. A ClaRa nunca troca de teste olhando o Levene; se o
 Levene rejeitar, o relatório recomenda voltar ao Welch.
+
+### ANOVA de Welch (v0.8.0)
+
+Com três ou mais grupos e `variancias_iguais = FALSE`, a análise anotada é
+`anova_welch`, com receitas próprias em `receitas_medias`,
+`receitas_efeito` e `receitas_textos`:
+- `oneway.test(var.equal = FALSE)`, lido direto do objeto (o `tidy()` dele
+  solta uma mensagem em inglês). `$anova` tem as mesmas linhas da clássica
+  (fator e resíduos), sem `sq` e `qm`; o gl dos resíduos tem decimais.
+- Pressuposto: Shapiro em cada grupo, como no t de Welch; sem Levene.
+- Games-Howell escrito em dplyr na receita (`cross_join`, `qtukey`,
+  `ptukey`), como o Dunn; confere com `rstatix::games_howell_test()`.
+  Letras com `vec2mat()` e `multcompLetters()`, maior média leva "a".
+- `medir_efeito()`: ω² aproximado com `F_to_omega2()` (IC bilateral),
+  igual à CatalyseR; o η² clássico não entra.
+- Textos: F com os gl separados por ";" (o segundo tem vírgula decimal);
+  aviso de cautela no Games-Howell com menos de 6 observações num grupo;
+  o poder é aproximado pela F não central com os pesos do Welch (n /
+  variância de cada grupo) e os gl do Welch, porque o pwr supõe variâncias
+  iguais; confere com simulação a ±1 ponto percentual. Como na clássica,
+  só entra no texto sem evidência e com poder abaixo de 80%.
+- `grafico_residuos()` e `grafico_qq()` usam as receitas do teste t
+  (resíduo = observação menos a média do grupo; Q-Q por grupo), porque não
+  há modelo com variância comum.
 
 ### Comparar medianas (v0.6)
 
@@ -484,11 +512,12 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    "média ± DP" ao lado do losango, letras todas na mesma altura, explicação
    no título e jitter com semente (a figura não muda a cada execução).
    `grafico_medias()` devolve um ggplot: ajustes extras entram com `+`.
-3. ~~t de Student como opção~~: resolvido com `variancias_iguais = TRUE`.
-   Em aberto: com três ou mais grupos o argumento ainda não tem efeito (a
-   ANOVA clássica já supõe variâncias iguais). Quando a ANOVA de Welch
-   entrar, `variancias_iguais = FALSE` deve passar a valer também ali, o
-   que muda o padrão da ANOVA. Decidir com o professor.
+3. ~~t de Student como opção; ANOVA de Welch~~: resolvido. O teste t usa
+   `variancias_iguais = TRUE` para o Student. A ANOVA de Welch entrou em
+   v0.8.0 (outubro de 2026) com `variancias_iguais = FALSE`; por decisão do
+   professor, o padrão do argumento (`NULL`) depende do número de grupos:
+   FALSE (Welch) com dois, TRUE (ANOVA clássica) com três ou mais. Assim
+   os roteiros de ANOVA que não escrevem o argumento não mudaram.
 4. Mínimo de 3 observações por grupo (exigido pelo Shapiro em cada grupo):
    vale hoje também para a ANOVA, que tecnicamente aceitaria 2.
 5. ~~Letras com dois grupos~~: mantidas (decisão do professor, outubro de
@@ -597,7 +626,9 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 
 A integração começou pela ANOVA de um fator, como opção experimental no
 exportador da CatalyseR ("Escrever o código em ClaRa", branch `clara` do
-repositório da CatalyseR; só método clássico). O trabalho mora na CatalyseR,
+repositório da CatalyseR; clássica, Welch e automático da tela, este escrito
+como `variancias_iguais` conforme a escolha que a CatalyseR fez pelo Levene).
+O trabalho mora na CatalyseR,
 não aqui (regra 1): `inst/app/templates/clara/` guarda a cópia da ClaRa que
 viaja nos projetos e `inst/app/templates/anova_clara/` o roteiro e o
 relatório. Ao mudar a ClaRa, atualize essa cópia (e a versão, regra 4).

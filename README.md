@@ -33,7 +33,7 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 
 | Pergunta da pesquisa | Análise | Gráfico | Testes por trás | Situação |
 |---|---|---|---|---|
-| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | teste t de Welch ou de Student (2 grupos); ANOVA com Tukey (3 ou mais) | pronta |
+| A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | teste t de Welch ou de Student (2 grupos); ANOVA clássica com Tukey ou ANOVA de Welch com Games-Howell (3 ou mais) | pronta |
 | A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()`, `grafico_boxplot()` | Mann-Whitney (2 grupos); Kruskal-Wallis com Dunn (3 ou mais) | pronta |
 | Uma variável acompanha a outra? | `relacionar_variaveis()` | ainda sem nome | regressão linear | planejada |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | ainda sem nome | qui-quadrado ou teste de proporções | planejada |
@@ -80,7 +80,8 @@ Três regras ligam as palavras:
    Kruskal-Wallis. O verbo pergunta ao resultado qual análise foi feita.
 
 Um modificador muda a análise sem mudar a pergunta (`variancias_iguais =
-TRUE` troca o Welch pelo Student). Uma pergunta nova pede um verbo novo
+TRUE` troca o Welch pelo Student no teste t; `variancias_iguais = FALSE`
+troca a ANOVA clássica pela de Welch). Uma pergunta nova pede um verbo novo
 (medianas não são médias). Cada figura tem o seu nome: nenhum modificador
 troca uma figura por outra.
 
