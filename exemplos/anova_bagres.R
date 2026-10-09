@@ -14,7 +14,7 @@
 # 1. Preparar o ambiente ---------------------------------------------------
 library(dplyr)
 library(ggplot2)
-source("R/clara.R", encoding = "UTF-8")  # Carrega funções
+library(clara)
 
 # 2. Ler os dados ----------------------------------------------------------
 # A base já preparada, em .rds: guarda os tipos e a ordem dos grupos.

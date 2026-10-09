@@ -5,8 +5,6 @@
 #  Tudo da pergunta "a mediana da resposta difere entre os grupos?": a
 #  análise (comparar_medianas()), o gráfico dela, as receitas que as funções
 #  para qualquer análise usam com as medianas e o relatório no console.
-#
-#  Carregado por R/clara.R; no roteiro, basta source("R/clara.R").
 # =============================================================================
 
 
@@ -20,59 +18,52 @@
 # sem supor distribuição normal.
 
 # comparar_medianas() ----------------------------------------------------------
-#
-# Pergunta: a mediana da resposta difere entre os grupos?
-#
-# Use quando a média não representa bem os grupos: resposta assimétrica,
-# valores extremos ou resíduos longe da normal com grupos pequenos. Os
-# testes ordenam todas as observações, da menor para a maior, e comparam as
-# posições (postos) de cada grupo. Não supõem distribuição normal, mas
-# supõem dispersão parecida nos grupos: só assim a diferença entre as
-# posições é uma diferença entre as medianas.
-#
-# A ClaRa escolhe o teste pelo número de grupos com dados:
-#   dois grupos ........ Mann-Whitney (também chamado de Wilcoxon);
-#   três ou mais ....... Kruskal-Wallis, com Dunn para os pares.
-# Em qualquer caso, faz a análise na ordem em que a estudamos: resumo dos
-# grupos, teste, pressuposto e letras.
-#
-# Argumentos:
-#   dados ............... a tabela, com uma linha por observação
-#   resposta ............ a coluna numérica medida (peso, comprimento...)
-#   grupos .............. a coluna que diz o grupo de cada observação
-#   rotulo_resposta ..... como chamar a resposta nos gráficos e nos textos
-#                         (ex.: "Peso (g)"); sem ele, vai o nome da coluna.
-#   rotulo_grupos ....... como chamar os grupos nos gráficos e nos textos
-#                         (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna.
-#                         Os rótulos ficam guardados no resultado: as funções
-#                         que vêm depois já os usam, sem precisar repeti-los
-#   confianca ........... nível de confiança dos intervalos (padrão 0.95);
-#                         a significância dos testes é 1 - confianca
-#   mostrar_codigo ...... TRUE imprime o código R antes do resultado
-#
-# Devolve uma lista. Cada parte se abre com $:
-#   resultado$resumo        n, mediana, quartis (q1 e q3), amplitude
-#                           interquartil (aiq = q3 - q1) e letra de cada grupo
-#   resultado$teste         o teste, numa linha
-#   resultado$pressupostos  o teste da dispersão, com a leitura dele
-#   resultado$amostra       observações no total, usadas e excluídas
-#   resultado$dados         as observações usadas na análise
-# Com três ou mais grupos (Kruskal-Wallis):
-#   resultado$pares         todas as comparações de Dunn, com p ajustado
-# Com dois grupos (Mann-Whitney), resultado$teste traz também o
-# deslocamento: a mediana das diferenças entre uma observação de cada
-# grupo (estimativa de Hodges-Lehmann), com o seu intervalo de confiança.
-#
-# Exemplo:
-#   resultado <- tilapias |>
-#     comparar_medianas(resposta        = peso,
-#                       grupos          = microalga,
-#                       rotulo_resposta = "Peso (g)",
-#                       rotulo_grupos   = "Microalga")
-#
-#   resultado |>
-#     grafico_medianas()        # os rótulos já vêm do resultado
-#
+#' A mediana da resposta difere entre os grupos?
+#'
+#' Use quando a média não representa bem os grupos: resposta assimétrica, valores extremos ou resíduos longe da normal com grupos pequenos. Os testes ordenam todas as observações, da menor para a maior, e comparam as posições (postos) de cada grupo. Não supõem distribuição normal, mas supõem dispersão parecida nos grupos: só assim a diferença entre as posições é uma diferença entre as medianas.
+#'
+#' A ClaRa escolhe o teste pelo número de grupos com dados:
+#'
+#' - **dois grupos**: Mann-Whitney (também chamado de Wilcoxon);
+#' - **três ou mais**: Kruskal-Wallis, com Dunn para os pares.
+#'
+#' Em qualquer caso, faz a análise na ordem em que a estudamos: resumo dos grupos, teste, pressuposto e letras.
+#'
+#' @param dados a tabela, com uma linha por observação
+#' @param resposta a coluna numérica medida (peso, comprimento...)
+#' @param grupos a coluna que diz o grupo de cada observação
+#' @param rotulo_resposta como chamar a resposta nos gráficos e nos textos (ex.: "Peso (g)"); sem ele, vai o nome da coluna.
+#' @param rotulo_grupos como chamar os grupos nos gráficos e nos textos (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna. Os rótulos ficam guardados no resultado: as funções que vêm depois já os usam, sem precisar repeti-los
+#' @param confianca nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca
+#' @param mostrar_codigo TRUE imprime o código R antes do resultado
+#'
+#' @return Devolve uma lista. Cada parte se abre com $:
+#'
+#' - `resultado$resumo`: n, mediana, quartis (q1 e q3), amplitude interquartil (aiq = q3 - q1) e letra de cada grupo
+#' - `resultado$teste`: o teste, numa linha
+#' - `resultado$pressupostos`: o teste da dispersão, com a leitura dele
+#' - `resultado$amostra`: observações no total, usadas e excluídas
+#' - `resultado$dados`: as observações usadas na análise
+#'
+#' Com três ou mais grupos (Kruskal-Wallis):
+#'
+#' - `resultado$pares`: todas as comparações de Dunn, com p ajustado
+#'
+#' Com dois grupos (Mann-Whitney), resultado$teste traz também o deslocamento: a mediana das diferenças entre uma observação de cada grupo (estimativa de Hodges-Lehmann), com o seu intervalo de confiança.
+#'
+#' @examples
+#' # Insetos contados em parcelas com seis inseticidas (InsectSprays, do R).
+#' resultado <- InsectSprays |>
+#'   comparar_medianas(resposta        = count,
+#'                     grupos          = spray,
+#'                     rotulo_resposta = "Insetos por parcela",
+#'                     rotulo_grupos   = "Inseticida")
+#'
+#' resultado
+#' resultado$pares
+#'
+#' @concept Comparar medianas
+#' @export
 comparar_medianas <- function(dados,
                               resposta,
                               grupos,
@@ -304,41 +295,37 @@ pacotes_medianas <- list(
 
 
 # grafico_medianas() -----------------------------------------------------------
-#
-# Pergunta: como mostrar a comparação das medianas numa só figura?
-#
-# A figura principal da comparação de medianas. Por padrão: cada ponto
-# colorido é uma observação; o losango é a mediana do grupo; a haste vai do
-# 1º ao 3º quartil (a metade central dos dados); as letras, todas na mesma
-# altura, vêm do Dunn (ou do Mann-Whitney, com dois grupos). A explicação
-# no topo cita só as partes que aparecem.
-#
-# Argumentos:
-#   resultado ........... o que comparar_medianas() devolveu
-#   rotulo_resposta ..... texto do eixo y; sem ele, vai o de comparar_medianas()
-#   rotulo_grupos ....... texto do eixo x; sem ele, vai o de comparar_medianas()
-#   titulo .............. título da figura (padrão: sem título)
-#   explicacao .......... TRUE (padrão) escreve no topo o que cada elemento
-#                         mostra; FALSE tira, para a explicação ir para a
-#                         legenda do artigo
-#   mostrar_pontos ...... TRUE (padrão) desenha cada observação
-#   mostrar_letras ...... TRUE (padrão) escreve as letras das comparações
-#   cores ............... "ocean" (padrão), "cinza" (para impressão em preto e
-#                         branco) ou um vetor de cores, como
-#                         c("darkgreen", "orange"); Tab mostra as paletas
-#   tamanho_texto ....... tamanho base do texto (padrão 12); as letras e a
-#                         explicação acompanham
-#   fonte ............... "sans" (padrão; Arial no Windows) ou "serif"
-#                         (Times New Roman no Windows), para todos os textos
-#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
-#
-# Devolve um gráfico do ggplot2; ajustes extras entram com +.
-#
-# Exemplo:
-#   resultado |>
-#     grafico_medianas(rotulo_resposta = "Peso (g)",
-#                      rotulo_grupos   = "Microalga")
-#
+#' Como mostrar a comparação das medianas numa só figura?
+#'
+#' A figura principal da comparação de medianas. Por padrão: cada ponto colorido é uma observação; o losango é a mediana do grupo; a haste vai do 1º ao 3º quartil (a metade central dos dados); as letras, todas na mesma altura, vêm do Dunn (ou do Mann-Whitney, com dois grupos). A explicação no topo cita só as partes que aparecem.
+#'
+#' @param resultado o que comparar_medianas() devolveu
+#' @param rotulo_resposta texto do eixo y; sem ele, vai o de comparar_medianas()
+#' @param rotulo_grupos texto do eixo x; sem ele, vai o de comparar_medianas()
+#' @param titulo título da figura (padrão: sem título)
+#' @param explicacao TRUE (padrão) escreve no topo o que cada elemento mostra; FALSE tira, para a explicação ir para a legenda do artigo
+#' @param mostrar_pontos TRUE (padrão) desenha cada observação
+#' @param mostrar_letras TRUE (padrão) escreve as letras das comparações
+#' @param cores "ocean" (padrão), "cinza" (para impressão em preto e branco) ou um vetor de cores, como c("darkgreen", "orange"); Tab mostra as paletas
+#' @param tamanho_texto tamanho base do texto (padrão 12); as letras e a explicação acompanham
+#' @param fonte "sans" (padrão; Arial no Windows) ou "serif" (Times New Roman no Windows), para todos os textos
+#' @param mostrar_codigo TRUE imprime o código R antes do gráfico
+#'
+#' @return Devolve um gráfico do ggplot2; ajustes extras entram com +.
+#'
+#' @examples
+#' # Insetos contados em parcelas com seis inseticidas (InsectSprays, do R).
+#' resultado <- InsectSprays |>
+#'   comparar_medianas(resposta        = count,
+#'                     grupos          = spray,
+#'                     rotulo_resposta = "Insetos por parcela",
+#'                     rotulo_grupos   = "Inseticida")
+#'
+#' resultado |>
+#'   grafico_medianas()
+#'
+#' @concept Comparar medianas
+#' @export
 grafico_medianas <- function(resultado,
                              rotulo_resposta = NULL,
                              rotulo_grupos   = NULL,
@@ -740,6 +727,7 @@ list(
 # Ao digitar o nome do resultado no console, o R chama esta função.
 # Ela mostra a análise como um pequeno relatório, na ordem do estudo.
 
+#' @export
 print.clara_medianas <- function(x, ...) {
 
   # Título e tamanho da amostra.

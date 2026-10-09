@@ -12,20 +12,26 @@ mensagens de erro e documentação.
 ## Estrutura
 
 ```
-ClaRa/
+ClaRa/                          o pacote R clara (desde 9/10/2026, v0.9.0)
   CLAUDE.md                     este arquivo
-  LICENSE                       MIT, clubeR e Evaldo Martins da Silva
-  ClaRa.Rproj
+  DESCRIPTION                   nome, versão (a única), Imports e Collate
+  NAMESPACE                     gerado pelo roxygen2 (não editar)
+  NEWS.md                       o que mudou em cada versão
+  LICENSE / LICENSE.md          MIT, clubeR e Evaldo Martins da Silva
+  ClaRa.Rproj                   projeto de pacote (painel Build do RStudio)
   R/                            só as funções, um arquivo por pergunta
-    clara.R                     porta de entrada: carrega os outros (source)
-                                e guarda a versão (versao_clara)
+    clara.R                     página do pacote (?clara) e o mapa dos arquivos
     clara_medias.R              comparar_medias() e os gráficos das médias
     clara_medianas.R            comparar_medianas() e grafico_medianas()
     clara_qualquer_analise.R    medir_efeito(), escrever_resultados(),
                                 grafico_residuos(), grafico_qq(),
                                 registrar_ambiente()
     clara_motor.R               ajuda() e peças internas
-  exemplos/                     um roteiro por análise
+  man/                          páginas de ajuda, geradas pelo roxygen2
+  tests/testthat/               testes; dados/ guarda cópias das bases de
+                                treino usadas nos testes
+  exemplos/                     um roteiro por análise (fora do pacote,
+                                pelo .Rbuildignore; carregam library(clara))
     anova_um_fator.R            ANOVA de um fator (PlantGrowth renomeado)
     teste_t_dois_grupos.R       teste t de Welch (ToothGrowth, dose 0,5)
     anova_welch.R               ANOVA de Welch com Games-Howell (densidade
@@ -49,7 +55,22 @@ ClaRa/
                                 passo a passo para criar uma função nova
 ```
 
-Para testar tudo, a partir da raiz do projeto:
+Para testar tudo, a partir da raiz do projeto (no RStudio, o painel Build
+faz o mesmo: Document, Test, Check, Install):
+
+```
+Rscript -e "roxygen2::roxygenise()"     # depois de mudar um bloco #'
+Rscript -e "devtools::test()"           # os testes de tests/testthat
+R CMD build --no-manual . && R CMD check --no-manual clara_<versão>.tar.gz
+R CMD INSTALL --no-multiarch .          # antes de rodar os exemplos
+```
+
+A meta do check (decisão J do professor, 9/10/2026): 0 erros, 0 notas e
+**um só aviso conhecido**, o dos acentos nos textos do código ("non-ASCII
+characters"). Os acentos ficam por enquanto; antes do CRAN, um script troca
+os textos por escapes `\u`. Qualquer outro aviso ou nota é problema novo.
+
+Os roteiros de `exemplos/` usam a ClaRa instalada:
 
 ```
 Rscript -e 'source("exemplos/anova_um_fator.R", echo = TRUE)'
@@ -69,8 +90,8 @@ O R desta máquina está em `C:\R\R-4.6.1` (`C:/R/R-4.6.1/bin/Rscript.exe`).
 No Git Bash, um `-e` com várias linhas derruba o Rscript: grave o teste num
 arquivo `.R` e rode o arquivo.
 
-Os roteiros de `exemplos/` rodam sempre a partir da raiz: carregam as funções
-com `source("R/clara.R")` e gravam suas figuras em `exemplos/figuras/`
+Os roteiros de `exemplos/` rodam sempre a partir da raiz: carregam a ClaRa
+com `library(clara)` e gravam suas figuras em `exemplos/figuras/`
 (`ggsave(..., create.dir = TRUE)`, que cria a pasta se ela faltar). Cada
 figura leva o nome do roteiro como prefixo (`anova_bagres_qq.png`), para
 se saber de onde veio sem criar uma subpasta por roteiro.
@@ -150,9 +171,9 @@ Regras que saem desse desenho:
   `receitas_qq`.
 - Cada pergunta mora no seu arquivo (`R/clara_medias.R`,
   `R/clara_medianas.R`), que abre com o título de seção (`# Comparar médias
-  ----`). A `ajuda()` agrupa a lista de funções por esses títulos, então
-  uma pergunta nova aparece sozinha, desde que o arquivo entre em
-  `arquivos_clara` (em `R/clara.R`).
+  ----`). A `ajuda()` agrupa a lista de funções pelo `@concept` de cada
+  uma, então uma pergunta nova aparece sozinha, desde que o arquivo entre
+  no campo `Collate` do `DESCRIPTION` (depois de `clara_qualquer_analise.R`).
 - Caso de fronteira, a decidir com o professor: ANOVA de dois fatores (ração
   e temperatura). Ainda é pergunta sobre médias, com interação: pode ser
   `comparar_medias(grupos = c(racao, temperatura))` ou um verbo próprio.
@@ -386,38 +407,41 @@ textos <- resultado |> escrever_resultados()
 
 ### Ajuda
 
-`ajuda()` lista as funções; `ajuda(comparar_medias)` mostra o cabeçalho
-da função, lido do arquivo onde ela mora (`ler_cabecalhos()` percorre
-`arquivos_clara`, cujos caminhos `R/clara.R` descobre no `source()`). A seção
-de cada função é o último título antes dela no formato `# Nome da seção ----`
-(começa com maiúscula, sem parênteses); por isso títulos internos como
-`# As receitas de comparar_medias() ----` não viram grupo. No RStudio, a ajuda abre como página HTML no
-painel **Viewer** (`getOption("viewer")`); fora dele, ou com
-`onde = "console"`, sai no console. O painel **Help** só mostra
-documentação `.Rd` de pacotes: fica para quando a ClaRa virar pacote
-(regra 4). `pagina_de_ajuda()` monta o HTML (texto num bloco de largura
-fixa, rótulos de bloco em negrito, cores Ocean). Por isso toda função do aluno precisa de um
-cabeçalho no formato:
+Desde a v0.9.0 (pacote), a ajuda vem das páginas `.Rd` geradas pelo
+roxygen2. `ajuda()` lista as funções do aluno, agrupadas por seção, com a
+pergunta de cada uma; `funcoes_da_clara()` lê as páginas do pacote instalado
+(`tools::Rd_db("clara")`; com `devtools::load_all()`, os arquivos de `man/`).
+A pergunta é o título da página e a seção é o `@concept`. A lista abre no
+painel **Viewer** (`pagina_de_ajuda()` monta o HTML, cores Ocean) ou, com
+`onde = "console"`, no console. `ajuda(comparar_medias)` abre a página da
+função no painel **Help**, o mesmo que `?comparar_medias`. A ordem da lista
+é a de estudo, em `ordem_da_ajuda` (motor); uma função nova que ainda não
+esteja lá entra no fim da sua seção, e uma seção nova antes de "Para
+qualquer análise". Toda função do aluno tem este bloco roxygen, logo abaixo
+da linha de título (que fica para o sumário do RStudio, Ctrl+Shift+O):
 
 ```
 # nome_da_funcao() -------------------------------------------------------
-#
-# Pergunta: ...?
-#
-# O que faz.
-#
-# Argumentos:
-#   argumento ........... o que é
-#
-# Devolve ...
-#
-# Exemplo:
-#   ...
-#
+#' A pergunta da pesquisa, com maiúscula e ponto de interrogação?
+#'
+#' O que faz, em parágrafos; listas em markdown (- **chave**: texto).
+#'
+#' @param argumento o que é
+#'
+#' @return Devolve ...; partes do resultado em lista (- `resultado$x`: ...).
+#'
+#' @examples
+#' # exemplo que roda com dados do próprio R (PlantGrowth, ToothGrowth,
+#' # InsectSprays); arquivos só em tempdir()
+#'
+#' @concept Nome da seção (Comparar médias, Para qualquer análise...)
+#' @export
 ```
 
-A linha de título (`# nome() ----`) é só para funções do aluno: é ela que a
-`ajuda()` procura. Peças internas levam um comentário comum.
+Depois de mudar um bloco `#'`, rode `roxygen2::roxygenise()` (ou
+Ctrl+Shift+D no RStudio). Um `` `r ...` `` dentro do texto é avaliado pelo
+roxygen: para mostrá-lo como código, use crase dupla (`` `` `r x` `` ``).
+Peças internas levam comentário comum, sem `#'`.
 
 ## A ideia central: a receita
 
@@ -468,7 +492,7 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   (como em `cor(method = ...)`). Na função, `escolher_opcao()` devolve a
   escolhida ou dá mensagem amigável. O Tab também lista os nomes dos
   argumentos dentro de `funcao(`, porque o RStudio lê a definição da função
-  depois do `source()`.
+  depois do `library(clara)`.
 - **Uma frase explicativa acima de cada linha** nas funções do aluno,
   principalmente na função principal. Funções claras pedem comentários
   curtos; não repetir o óbvio.
@@ -492,8 +516,13 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   pede `rename()` no preparo. Acentos (`ração`) funcionam.
 - Hífen no nome de um grupo atrapalha as letras (Tukey e Dunn); também é
   recusado.
-- `executar_receita()` carrega os pacotes com `library()` (efeito colateral
-  aceito: o analise.R carrega os mesmos pacotes).
+- ~~`executar_receita()` carrega os pacotes com `library()`~~: resolvido
+  na v0.9.0 (decisão K). A receita enxerga os pacotes por um ambiente
+  próprio (`ambiente_com_pacotes()`, na ordem de `pacotes_*`, o último
+  escondendo os anteriores, como no `library()`), e o caminho de busca do
+  aluno não muda. O código mostrado traz os `library()` no topo, para rodar
+  copiado numa sessão nova. A semente aleatória do aluno é preservada com
+  `withr::with_preserve_seed()`, mesmo com o `set.seed(1)` da receita do ε².
 - Com mais de 5000 observações, o `shapiro.test()` para com erro em inglês.
   O EAPACaderno trata isso (registra NA e deixa a leitura para o Q-Q); a
   ClaRa ainda não.
@@ -558,8 +587,8 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    "Em espera", não para o código.
 3. **Um arquivo por pergunta, na pasta `R/`** (divisão feita em outubro de
    2026, quando entrou `comparar_medianas()`):
-   - `R/clara.R` é só a porta de entrada: carrega os outros arquivos com
-     `source()`, e o aluno continua escrevendo `source("R/clara.R")`;
+   - `R/clara.R` é a página do pacote (`?clara`) e o mapa dos arquivos; o
+     aluno escreve `library(clara)`;
    - `R/clara_medias.R`, `R/clara_medianas.R`...: o verbo, os gráficos, as
      receitas (inclusive as de efeito e de textos) e o `print` de cada
      pergunta, que acrescenta as suas receitas às listas
@@ -570,7 +599,7 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
      todas;
    - `R/clara_motor.R`: `ajuda()`, peças internas e paletas.
    A ordem de carga é o motor, depois "qualquer análise", depois as
-   perguntas (`rev(arquivos_clara)`). O plano original punha a exibição no
+   perguntas (campo `Collate` do `DESCRIPTION`). O plano original punha a exibição no
    console no motor; ela ficou no arquivo de cada pergunta, para quem
    estuda uma pergunta achar tudo dela num arquivo só.
    **Arquivos, não subpastas** (decidido em outubro de 2026): cada pergunta
@@ -611,6 +640,29 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    CRAN, o projeto exportado continua levando a cópia em `R/clara/`, mas
    tirada do pacote instalado. Mantém-se o desenho de hoje: um arquivo por
    pergunta em `R/`, receitas em listas, motor à parte.
+   **Fase 1 feita em 9/10/2026 (v0.9.0, ramo `pacote`):** `DESCRIPTION`,
+   roxygen2, testthat e `R CMD check` com só o aviso dos acentos. Os seis
+   roteiros de `exemplos/` dão os mesmos números e figuras da 0.8.9. A
+   versão mora só no `DESCRIPTION`; toda mudança na ClaRa sobe a versão lá
+   e ganha uma linha no `NEWS.md`. Decisões do professor de 9/10 (letras do
+   plano de 8/10, revistas): A nome `clara`; B `formatar_numero()` e
+   `formatar_p()`, logo depois da Fase 1; C prefixo `exibir_*`; D
+   effectsize em Imports, car fica por ora (trocar o Levene muda números),
+   flextable só quando a formatação entrar; E redação só das análises que a
+   ClaRa já cobre; F `atualizar_codigo()`, `conferir_codigo()` e
+   `resumir_grupo()` ficam fora; G o `analise.R` e o relatório da rota
+   ClaRa chamam a ClaRa; H mantenedor Evaldo Martins da Silva
+   <cluber.ufpa@gmail.com> por enquanto (para o CRAN, o institucional é
+   mais seguro); I dados só nos testes na Fase 1, e uns 15 conjuntos das
+   ciências agrárias (criação animal, foco em pescado) numa fase própria;
+   J acentos ficam até a Fase 5; K `library()` e `set.seed()` corrigidos
+   já; L entram ANOVA, teste t e medianas; M prefixo `catalyser_` →
+   `trilha_` na Trilha, feito no mesmo dia.
+   **Para a Fase 2:** um pacote instalado não guarda os `.R` legíveis. Para
+   o projeto exportado continuar levando a ClaRa em `R/clara/` (só CRAN), o
+   pacote precisa de uma cópia dos fontes em `inst/`, gerada por script no
+   build; a alternativa é o projeto usar `library(clara)` do GitHub. Decidir
+   com o professor.
 5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
    (privado, ramo `main`). Nesta pasta os commits saem como
    `clubeR <cluber.ufpa@gmail.com>`; o push usa a credencial do cluberufpa
@@ -618,6 +670,11 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 
 ## Em espera
 
+- Mann-Whitney com empates: a receita usa a aproximação normal
+  (`exact = FALSE` quando há empates). Desde o R 4.4, o `wilcox.test()`
+  calcula o p exato também com empates, e o padrão dele dá outro p (na
+  `real_artemia_racoes`: 0,027 no padrão do R, 0,035 na ClaRa). Decidir
+  com o professor se a ClaRa acompanha o R novo;
 - teste t pareado (antes e depois no mesmo animal): pede outro argumento,
   como `pareado_por = individuo`;
 - `grafico_pares()` para as medianas: o Dunn não dá intervalo; seria
@@ -678,8 +735,9 @@ Decisões do professor para o projeto exportado em ClaRa:
 ## Próximos passos possíveis
 
 - Próxima pergunta (regressão ou proporções): um arquivo novo
-  `R/clara_<pergunta>.R`, no molde de `R/clara_medianas.R`, acrescentado a
-  `arquivos_clara`.
+  `R/clara_<pergunta>.R`, no molde de `R/clara_medianas.R`, acrescentado ao
+  `Collate` do `DESCRIPTION` e à `ordem_da_ajuda` (motor), com testes
+  em `tests/testthat/`.
 - Integração com a CatalyseR: o exportador poderia gerar o analise.R em
   ClaRa, copiando os arquivos `R/clara*.R` para o projeto exportado como já faz com o
   `funcoes.R` (só pacotes do CRAN). Mapa do analise.R do EAPACaderno (ANOVA):

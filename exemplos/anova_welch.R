@@ -14,7 +14,7 @@
 # 1. Preparar o ambiente ---------------------------------------------------
 library(dplyr)
 library(ggplot2)
-source("R/clara.R", encoding = "UTF-8")
+library(clara)
 
 # A base pronta: densidade como fator, na ordem baixa, media e alta.
 peixes <- readRDS("dados_treino/sint_variancias_desiguais.rds")

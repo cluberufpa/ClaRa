@@ -11,7 +11,7 @@
 # 1. Preparar o ambiente ---------------------------------------------------
 library(dplyr)
 library(ggplot2)
-source("R/clara.R", encoding = "UTF-8")
+library(clara)
 
 # 2. Ler os dados ----------------------------------------------------------
 capturas <- readRDS("dados_treino/sint_residuos_assimetricos.rds")

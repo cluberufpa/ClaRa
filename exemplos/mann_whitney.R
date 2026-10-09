@@ -9,7 +9,7 @@
 # 1. Preparar o ambiente ---------------------------------------------------
 library(dplyr)
 library(ggplot2)
-source("R/clara.R", encoding = "UTF-8")
+library(clara)
 
 # 2. Ler os dados ----------------------------------------------------------
 artemias <- readRDS("dados_treino/real_artemia_racoes.rds")

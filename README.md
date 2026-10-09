@@ -6,7 +6,7 @@ pergunta da pesquisa, em português. Por trás dela roda R comum, no estilo do
 tidyverse, e esse código aparece quando você pede.
 
 ```r
-source("R/clara.R", encoding = "UTF-8")
+library(clara)
 
 resultado <- peixes |>
   comparar_medias(resposta        = peso_g,
@@ -22,6 +22,15 @@ textos <- resultado |> escrever_resultados()   # frases para o relatório
 
 ajuda()                                    # a lista de funções
 ajuda(comparar_medias)                     # o que uma função faz e como usá-la
+```
+
+## Instalar
+
+A ClaRa é um pacote R. Enquanto não chega ao CRAN, instale do GitHub:
+
+```r
+install.packages("remotes")
+remotes::install_github("cluberufpa/ClaRa")
 ```
 
 ## Como a ClaRa se organiza
@@ -106,22 +115,25 @@ copiar, colar e rodar sem a ClaRa.
 ## Pastas
 
 ```
-R/clara.R         a porta de entrada: carrega os outros arquivos de R/
+R/clara.R         a página do pacote e o mapa dos arquivos
 R/clara_*.R       um arquivo por pergunta (clara_medias.R, clara_medianas.R),
                   o que serve a qualquer análise e o motor
+man/              as páginas de ajuda, geradas pelo roxygen2 (não editar)
+tests/testthat/   os testes: cada situação dos dados de treino e a conferência
+                  de que a receita mostrada dá o mesmo resultado
 exemplos/         um roteiro por análise; as figuras que ele gera ficam em figuras/
 dados_treino/     dados reais e sintéticos para testar e estudar as funções
 docs/             histórico e ideias
 ```
 
-Para rodar um exemplo, a partir da raiz do projeto:
+Para rodar um exemplo, com a ClaRa instalada, a partir da raiz do projeto:
 
 ```
 Rscript exemplos/anova_um_fator.R
 ```
 
 Pacotes do CRAN: dplyr, ggplot2, broom, car, multcompView, effectsize, rlang,
-stringr e pwr.
+stringr, pwr e withr.
 
 ## Licença
 

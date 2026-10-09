@@ -5,8 +5,6 @@
 #  Tudo da pergunta "a média da resposta difere entre os grupos?": a análise
 #  (comparar_medias()), os três gráficos dela, as receitas que as funções
 #  para qualquer análise usam com as médias e o relatório no console.
-#
-#  Carregado por R/clara.R; no roteiro, basta source("R/clara.R").
 # =============================================================================
 
 
@@ -20,61 +18,67 @@
 # ANOVA (clássica ou de Welch) com três ou mais.
 
 # comparar_medias() ------------------------------------------------------------
-#
-# Pergunta: a média da resposta difere entre os grupos?
-#
-# A ClaRa escolhe o teste pelo número de grupos com dados:
-#   dois grupos ........ teste t: de Welch (padrão, não supõe variâncias
-#                        iguais) ou de Student (com variancias_iguais = TRUE);
-#   três ou mais ....... ANOVA de um fator: clássica, com Tukey (padrão),
-#                        ou de Welch, com Games-Howell (com
-#                        variancias_iguais = FALSE).
-# Em qualquer caso, faz a análise na ordem em que a estudamos: resumo dos
-# grupos, teste, pressupostos e letras.
-#
-# Argumentos:
-#   dados ............... a tabela, com uma linha por observação
-#   resposta ............ a coluna numérica medida (peso, comprimento...)
-#   grupos .............. a coluna que diz o grupo de cada observação
-#   rotulo_resposta ..... como chamar a resposta nos gráficos e nos textos
-#                         (ex.: "Peso (g)"); sem ele, vai o nome da coluna.
-#   rotulo_grupos ....... como chamar os grupos nos gráficos e nos textos
-#                         (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna.
-#                         Os rótulos ficam guardados no resultado: as funções
-#                         que vêm depois já os usam, sem precisar repeti-los
-#   confianca ........... nível de confiança dos intervalos (padrão 0.95);
-#                         a significância dos testes é 1 - confianca
-#   variancias_iguais ... TRUE supõe variâncias iguais nos grupos; FALSE não
-#                         supõe. Sem ele, vale o padrão de cada teste: com
-#                         dois grupos, FALSE (teste t de Welch; TRUE dá o
-#                         de Student); com três ou mais, TRUE (ANOVA
-#                         clássica com Tukey; FALSE dá a ANOVA de Welch com
-#                         Games-Howell). Escreva a escolha no roteiro: ela
-#                         pode mudar a conclusão e assim fica registrada
-#   mostrar_codigo ...... TRUE imprime o código R antes do resultado
-#
-# Devolve uma lista. Cada parte se abre com $:
-#   resultado$resumo        n, média, DP, EP, IC e letra de cada grupo
-#   resultado$pressupostos  testes dos pressupostos, com uma leitura de cada um
-#   resultado$amostra       observações no total, usadas e excluídas
-#   resultado$dados         as observações usadas na análise
-# Com três ou mais grupos (ANOVA):
-#   resultado$anova         a tabela da ANOVA (na de Welch, sem SQ e QM)
-#   resultado$pares         todas as comparações de Tukey (ou de Games-Howell)
-#   resultado$modelo        o modelo aov(), só na ANOVA clássica
-# Com dois grupos (teste t):
-#   resultado$teste         diferença das médias, IC, t, gl e p
-#
-# Exemplo:
-#   resultado <- plantas |>
-#     comparar_medias(resposta        = peso,
-#                     grupos          = tratamento,
-#                     rotulo_resposta = "Peso seco (g)",
-#                     rotulo_grupos   = "Tratamento")
-#
-#   resultado |>
-#     grafico_medias()          # os rótulos já vêm do resultado
-#
+#' A média da resposta difere entre os grupos?
+#'
+#' A ClaRa escolhe o teste pelo número de grupos com dados:
+#'
+#' - **dois grupos**: teste t: de Welch (padrão, não supõe variâncias iguais) ou de Student (com variancias_iguais = TRUE);
+#' - **três ou mais**: ANOVA de um fator: clássica, com Tukey (padrão), ou de Welch, com Games-Howell (com variancias_iguais = FALSE).
+#'
+#' Em qualquer caso, faz a análise na ordem em que a estudamos: resumo dos grupos, teste, pressupostos e letras.
+#'
+#' @param dados a tabela, com uma linha por observação
+#' @param resposta a coluna numérica medida (peso, comprimento...)
+#' @param grupos a coluna que diz o grupo de cada observação
+#' @param rotulo_resposta como chamar a resposta nos gráficos e nos textos (ex.: "Peso (g)"); sem ele, vai o nome da coluna.
+#' @param rotulo_grupos como chamar os grupos nos gráficos e nos textos (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna. Os rótulos ficam guardados no resultado: as funções que vêm depois já os usam, sem precisar repeti-los
+#' @param confianca nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca
+#' @param variancias_iguais TRUE supõe variâncias iguais nos grupos; FALSE não supõe. Sem ele, vale o padrão de cada teste: com dois grupos, FALSE (teste t de Welch; TRUE dá o de Student); com três ou mais, TRUE (ANOVA clássica com Tukey; FALSE dá a ANOVA de Welch com Games-Howell). Escreva a escolha no roteiro: ela pode mudar a conclusão e assim fica registrada
+#' @param mostrar_codigo TRUE imprime o código R antes do resultado
+#'
+#' @return Devolve uma lista. Cada parte se abre com $:
+#'
+#' - `resultado$resumo`: n, média, DP, EP, IC e letra de cada grupo
+#' - `resultado$pressupostos`: testes dos pressupostos, com uma leitura de cada um
+#' - `resultado$amostra`: observações no total, usadas e excluídas
+#' - `resultado$dados`: as observações usadas na análise
+#'
+#' Com três ou mais grupos (ANOVA):
+#'
+#' - `resultado$anova`: a tabela da ANOVA (na de Welch, sem SQ e QM)
+#' - `resultado$pares`: todas as comparações de Tukey (ou de Games-Howell)
+#' - `resultado$modelo`: o modelo aov(), só na ANOVA clássica
+#'
+#' Com dois grupos (teste t):
+#'
+#' - `resultado$teste`: diferença das médias, IC, t, gl e p
+#'
+#' @examples
+#' # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).
+#' resultado <- PlantGrowth |>
+#'   comparar_medias(resposta        = weight,
+#'                   grupos          = group,
+#'                   rotulo_resposta = "Peso seco (g)",
+#'                   rotulo_grupos   = "Tratamento")
+#'
+#' resultado
+#' resultado$resumo
+#'
+#' # Com dois grupos, o teste t de Welch.
+#' dose_baixa <- subset(ToothGrowth, dose == 0.5)
+#' dose_baixa |>
+#'   comparar_medias(resposta          = len,
+#'                   grupos            = supp,
+#'                   variancias_iguais = FALSE)
+#'
+#' # O código R que rodou por baixo.
+#' PlantGrowth |>
+#'   comparar_medias(resposta       = weight,
+#'                   grupos         = group,
+#'                   mostrar_codigo = TRUE)
+#'
+#' @concept Comparar médias
+#' @export
 comparar_medias <- function(dados,
                             resposta,
                             grupos,
@@ -486,75 +490,55 @@ pacotes_medias <- list(
 
 
 # grafico_medias() -------------------------------------------------------------
-#
-# Pergunta: como mostrar a comparação numa só figura?
-#
-# A figura principal, a que vai para o relatório, o artigo ou a tese. Por
-# padrão: a barra clara vai do zero até a média; cada ponto colorido é uma
-# observação; o losango é a média do grupo, com "média ± DP" ao lado; a
-# haste é o intervalo de confiança da média; as letras, todas na mesma
-# altura, vêm do Tukey (do Games-Howell, na ANOVA de Welch; do teste t, com
-# dois grupos). Cada parte pode ser
-# ligada ou desligada, e a receita mostrada traz só as partes pedidas.
-#
-# Argumentos:
-#   resultado ........... o que comparar_medias() devolveu
-#   rotulo_resposta ..... texto do eixo y; sem ele, vai o de comparar_medias()
-#   rotulo_grupos ....... texto do eixo x; sem ele, vai o de comparar_medias()
-#   titulo .............. título da figura (padrão: sem título)
-#   explicacao .......... TRUE (padrão) escreve no topo o que cada elemento
-#                         mostra; FALSE tira, para a explicação ir para a
-#                         legenda do artigo
-#   haste ............... o que a haste mostra: "ic" (padrão, intervalo de
-#                         confiança da média), "ep" (média ± erro padrão) ou
-#                         "dp" (média ± desvio padrão). No RStudio, digite
-#                         haste = e aperte Tab para ver as opções
-#   mostrar_barras ...... TRUE (padrão) desenha a barra clara até a média
-#   largura_barras ...... largura das barras, de 0 a 1 (padrão 0.3; 1 encosta
-#                         uma barra na outra); o rótulo em pé acompanha
-#   mostrar_pontos ...... TRUE (padrão) desenha cada observação
-#   mostrar_media_dp .... TRUE (padrão) escreve "média ± DP" ao lado do losango
-#   casas ............... casas decimais do rótulo média ± DP (padrão 2)
-#   angulo_rotulo ....... ângulo do rótulo média ± DP, em graus. Sem ele: 0
-#                         (deitado, ao lado do losango) até 6 grupos e -90
-#                         com mais: em pé, dentro da barra, no meio da
-#                         altura dela, lido de cima para baixo, sem invadir
-#                         a coluna vizinha (90 lê de baixo para cima). Com
-#                         mais de 8 grupos, a função avisa e sugere mostrar
-#                         as médias numa tabela.
-#   altura_rotulo ....... altura do rótulo em pé dentro da coluna, como
-#                         fração da altura dela: 0.5 (padrão) no meio, 0.2
-#                         perto da base, 0.8 perto do topo (com haste
-#                         longa, valores altos encostam nela)
-#                         Sem barras, fica deitado: em pé, sairia cortado
-#                         embaixo. Com muitos grupos e sem barras, prefira
-#                         mostrar_media_dp = FALSE
-#   mostrar_letras ...... TRUE (padrão) escreve as letras das comparações
-#   cores ............... "ocean" (padrão), "cinza" (para impressão em preto e
-#                         branco) ou um vetor de cores, como
-#                         c("darkgreen", "orange"); Tab mostra as paletas
-#   tamanho_texto ....... tamanho base do texto (padrão 12); o rótulo, as
-#                         letras e a explicação acompanham
-#   fonte ............... "sans" (padrão; Arial no Windows) ou "serif"
-#                         (Times New Roman no Windows), para todos os textos
-#                         da figura, inclusive o rótulo e as letras
-#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
-#
-# Devolve um gráfico do ggplot2. Por isso dá para continuar com +:
-#   resultado |>
-#     grafico_medias() +
-#     theme(axis.text = element_text(size = 14))
-#
-# Exemplo:
-#   resultado |>
-#     grafico_medias(rotulo_resposta = "Peso seco (g)",
-#                    rotulo_grupos   = "Tratamento")
-#   resultado |>
-#     grafico_medias(rotulo_resposta = "Peso seco (g)",
-#                    explicacao      = FALSE,
-#                    haste           = "ep",
-#                    cores           = "cinza")
-#
+#' Como mostrar a comparação numa só figura?
+#'
+#' A figura principal, a que vai para o relatório, o artigo ou a tese. Por padrão: a barra clara vai do zero até a média; cada ponto colorido é uma observação; o losango é a média do grupo, com "média ± DP" ao lado; a haste é o intervalo de confiança da média; as letras, todas na mesma altura, vêm do Tukey (do Games-Howell, na ANOVA de Welch; do teste t, com dois grupos). Cada parte pode ser ligada ou desligada, e a receita mostrada traz só as partes pedidas.
+#'
+#' @param resultado o que comparar_medias() devolveu
+#' @param rotulo_resposta texto do eixo y; sem ele, vai o de comparar_medias()
+#' @param rotulo_grupos texto do eixo x; sem ele, vai o de comparar_medias()
+#' @param titulo título da figura (padrão: sem título)
+#' @param explicacao TRUE (padrão) escreve no topo o que cada elemento mostra; FALSE tira, para a explicação ir para a legenda do artigo
+#' @param haste o que a haste mostra: "ic" (padrão, intervalo de confiança da média), "ep" (média ± erro padrão) ou "dp" (média ± desvio padrão). No RStudio, digite haste = e aperte Tab para ver as opções
+#' @param mostrar_barras TRUE (padrão) desenha a barra clara até a média
+#' @param largura_barras largura das barras, de 0 a 1 (padrão 0.3; 1 encosta uma barra na outra); o rótulo em pé acompanha
+#' @param mostrar_pontos TRUE (padrão) desenha cada observação
+#' @param mostrar_media_dp TRUE (padrão) escreve "média ± DP" ao lado do losango
+#' @param casas casas decimais do rótulo média ± DP (padrão 2)
+#' @param angulo_rotulo ângulo do rótulo média ± DP, em graus. Sem ele: 0 (deitado, ao lado do losango) até 6 grupos e -90 com mais: em pé, dentro da barra, no meio da altura dela, lido de cima para baixo, sem invadir a coluna vizinha (90 lê de baixo para cima). Com mais de 8 grupos, a função avisa e sugere mostrar as médias numa tabela.
+#' @param altura_rotulo altura do rótulo em pé dentro da coluna, como fração da altura dela: 0.5 (padrão) no meio, 0.2 perto da base, 0.8 perto do topo (com haste longa, valores altos encostam nela) Sem barras, fica deitado: em pé, sairia cortado embaixo. Com muitos grupos e sem barras, prefira mostrar_media_dp = FALSE
+#' @param mostrar_letras TRUE (padrão) escreve as letras das comparações
+#' @param cores "ocean" (padrão), "cinza" (para impressão em preto e branco) ou um vetor de cores, como c("darkgreen", "orange"); Tab mostra as paletas
+#' @param tamanho_texto tamanho base do texto (padrão 12); o rótulo, as letras e a explicação acompanham
+#' @param fonte "sans" (padrão; Arial no Windows) ou "serif" (Times New Roman no Windows), para todos os textos da figura, inclusive o rótulo e as letras
+#' @param mostrar_codigo TRUE imprime o código R antes do gráfico
+#'
+#' @return Devolve um gráfico do ggplot2. Por isso dá para continuar com +:
+#'
+#' ```r
+#' resultado |>
+#'   grafico_medias() +
+#'   theme(axis.text = element_text(size = 14))
+#' ```
+#'
+#' @examples
+#' # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).
+#' resultado <- PlantGrowth |>
+#'   comparar_medias(resposta        = weight,
+#'                   grupos          = group,
+#'                   rotulo_resposta = "Peso seco (g)",
+#'                   rotulo_grupos   = "Tratamento")
+#'
+#' resultado |>
+#'   grafico_medias()
+#'
+#' resultado |>
+#'   grafico_medias(explicacao = FALSE,
+#'                  haste      = "ep",
+#'                  cores      = "cinza")
+#'
+#' @concept Comparar médias
+#' @export
 grafico_medias <- function(resultado,
                            rotulo_resposta  = NULL,
                            rotulo_grupos    = NULL,
@@ -806,29 +790,30 @@ trechos_grafico_medias$tema <- "  theme_classic(base_size = <<TAMANHO>><<FAMILIA
   )"
 
 # grafico_boxplot() ------------------------------------------------------------
-#
-# Pergunta: como se distribuem as observações em cada grupo?
-#
-# A figura da exploração, para olhar os dados antes de concluir. A caixa
-# mostra a mediana e a metade central dos dados; os pontos são as
-# observações. Caixas de alturas muito diferentes sugerem variâncias
-# diferentes; pontos muito afastados merecem uma conferência na planilha.
-# Serve às médias e às medianas.
-#
-# Argumentos:
-#   resultado ........... o que comparar_medias() ou comparar_medianas()
-#                         devolveu
-#   rotulo_resposta ..... texto do eixo y; sem ele, vai o de comparar_medias()
-#   rotulo_grupos ....... texto do eixo x; sem ele, vai o de comparar_medias()
-#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
-#
-# Devolve um gráfico do ggplot2; ajustes extras entram com +.
-#
-# Exemplo:
-#   resultado |>
-#     grafico_boxplot(rotulo_resposta = "Peso (g)",
-#                     rotulo_grupos   = "Tipo de Ração")
-#
+#' Como se distribuem as observações em cada grupo?
+#'
+#' A figura da exploração, para olhar os dados antes de concluir. A caixa mostra a mediana e a metade central dos dados; os pontos são as observações. Caixas de alturas muito diferentes sugerem variâncias diferentes; pontos muito afastados merecem uma conferência na planilha. Serve às médias e às medianas.
+#'
+#' @param resultado o que comparar_medias() ou comparar_medianas() devolveu
+#' @param rotulo_resposta texto do eixo y; sem ele, vai o de comparar_medias()
+#' @param rotulo_grupos texto do eixo x; sem ele, vai o de comparar_medias()
+#' @param mostrar_codigo TRUE imprime o código R antes do gráfico
+#'
+#' @return Devolve um gráfico do ggplot2; ajustes extras entram com +.
+#'
+#' @examples
+#' # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).
+#' resultado <- PlantGrowth |>
+#'   comparar_medias(resposta        = weight,
+#'                   grupos          = group,
+#'                   rotulo_resposta = "Peso seco (g)",
+#'                   rotulo_grupos   = "Tratamento")
+#'
+#' resultado |>
+#'   grafico_boxplot()
+#'
+#' @concept Comparar médias
+#' @export
 grafico_boxplot <- function(resultado,
                             rotulo_resposta = NULL,
                             rotulo_grupos   = NULL,
@@ -882,31 +867,30 @@ ggplot(<<RESULTADO>>$dados, aes(x = <<GRUPOS>>, y = <<RESPOSTA>>)) +
         plot.title.position = \"plot\")"
 
 # grafico_pares() --------------------------------------------------------------
-#
-# Pergunta: quais pares de grupos diferem, e por quanto?
-#
-# Cada linha compara dois grupos: o ponto é a diferença entre as médias e a
-# haste, o seu intervalo de confiança. A linha tracejada vertical marca a
-# diferença zero: haste que cruza a linha, sem diferença entre os dois
-# grupos; haste toda de um lado, diferença. Em "B-A", a diferença é a média
-# de B menos a média de A. Na ANOVA, os pares e os intervalos vêm do Tukey
-# (do Games-Howell, na ANOVA de Welch); no teste t, há um par só, com o
-# intervalo do próprio teste.
-#
-# Argumentos:
-#   resultado ........... o que comparar_medias() devolveu
-#   rotulo_resposta ..... a resposta no texto do eixo x; sem ele, vai o de comparar_medias()
-#   rotulo_grupos ....... os grupos no texto do eixo y; sem ele, vai o de comparar_medias()
-#   mostrar_codigo ...... TRUE imprime o código R antes do gráfico
-#
-# Devolve um gráfico do ggplot2; ajustes extras entram com +. Com muitos
-# grupos (10 grupos dão 45 pares), salve a figura mais alta.
-#
-# Exemplo:
-#   resultado |>
-#     grafico_pares(rotulo_resposta = "Peso (g)",
-#                   rotulo_grupos   = "Tipo de Ração")
-#
+#' Quais pares de grupos diferem, e por quanto?
+#'
+#' Cada linha compara dois grupos: o ponto é a diferença entre as médias e a haste, o seu intervalo de confiança. A linha tracejada vertical marca a diferença zero: haste que cruza a linha, sem diferença entre os dois grupos; haste toda de um lado, diferença. Em "B-A", a diferença é a média de B menos a média de A. Na ANOVA, os pares e os intervalos vêm do Tukey (do Games-Howell, na ANOVA de Welch); no teste t, há um par só, com o intervalo do próprio teste.
+#'
+#' @param resultado o que comparar_medias() devolveu
+#' @param rotulo_resposta a resposta no texto do eixo x; sem ele, vai o de comparar_medias()
+#' @param rotulo_grupos os grupos no texto do eixo y; sem ele, vai o de comparar_medias()
+#' @param mostrar_codigo TRUE imprime o código R antes do gráfico
+#'
+#' @return Devolve um gráfico do ggplot2; ajustes extras entram com +. Com muitos grupos (10 grupos dão 45 pares), salve a figura mais alta.
+#'
+#' @examples
+#' # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).
+#' resultado <- PlantGrowth |>
+#'   comparar_medias(resposta        = weight,
+#'                   grupos          = group,
+#'                   rotulo_resposta = "Peso seco (g)",
+#'                   rotulo_grupos   = "Tratamento")
+#'
+#' resultado |>
+#'   grafico_pares()
+#'
+#' @concept Comparar médias
+#' @export
 grafico_pares <- function(resultado,
                           rotulo_resposta = NULL,
                           rotulo_grupos   = NULL,
@@ -1807,6 +1791,7 @@ receitas_qq$anova_welch <- receitas_qq$teste_t
 # Ao digitar o nome do resultado no console, o R chama esta função.
 # Ela mostra a análise como um pequeno relatório, na ordem do estudo.
 
+#' @export
 print.clara_medias <- function(x, ...) {
 
   # Título e tamanho da amostra.

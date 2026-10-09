@@ -13,7 +13,7 @@
 # 1. Preparar o ambiente ---------------------------------------------------
 library(dplyr)
 library(ggplot2)
-source("R/clara.R", encoding = "UTF-8")
+library(clara)
 
 # Ficamos com a menor dose e damos nomes em português às colunas.
 dentes <- ToothGrowth |>

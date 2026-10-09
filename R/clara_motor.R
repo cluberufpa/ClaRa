@@ -5,80 +5,137 @@
 #  A ajuda() e as peças internas que todas as funções usam: conferir as
 #  colunas, preencher a receita, mostrá-la e rodá-la, as paletas de cores
 #  e a escrita dos números. O aluno não precisa abrir este arquivo.
-#
-#  Carregado por R/clara.R; no roteiro, basta source("R/clara.R").
 # =============================================================================
 
 
 # Ajuda ------------------------------------------------------------------------
 
 # ajuda() ----------------------------------------------------------------------
-#
-# Pergunta: o que faz uma função da ClaRa e como usá-la?
-#
-# Mostra o cabeçalho da função, o mesmo que está escrito acima dela no
-# arquivo da ClaRa onde ela mora: a pergunta, o que faz, os argumentos, o
-# que devolve e um exemplo.
-# Sem nome de função, lista todas as funções da ClaRa. No RStudio, a ajuda
-# abre como página no painel Viewer; fora dele, aparece no console. (O
-# painel Help do RStudio só mostra ajuda de pacotes, e a ClaRa ainda não é
-# um pacote.)
-#
-# Argumentos:
-#   funcao .............. o nome da função, com ou sem aspas
-#   onde ................ "viewer" (padrão: painel Viewer do RStudio) ou
-#                         "console"
-#
-# Exemplo:
-#   ajuda()
-#   ajuda(comparar_medias)
-#   ajuda(grafico_medias, onde = "console")
-#
+#' Que funções a ClaRa tem, e como usar cada uma?
+#'
+#' Sem nome de função, lista todas as funções da ClaRa, agrupadas pela
+#' pergunta da pesquisa que respondem. Com o nome de uma função, abre a
+#' página de ajuda dela no painel Help do RStudio: a pergunta, o que faz, os
+#' argumentos, o que devolve e exemplos. É o mesmo que `?comparar_medias`.
+#'
+#' @param funcao o nome da função, com ou sem aspas
+#' @param onde "painel" (padrão: a lista no painel Viewer e a página da
+#'   função no painel Help do RStudio) ou "console"
+#'
+#' @return Sem nome de função, os nomes de todas as funções da ClaRa; com
+#'   ele, o nome pedido. Os dois sem imprimir.
+#'
+#' @examples
+#' if (interactive()) {
+#'   ajuda()
+#'   ajuda(comparar_medias)
+#' }
+#'
+#' @concept Ajuda
+#' @export
 ajuda <- function(funcao,
-                  onde = c("viewer", "console")) {
+                  onde = c("painel", "console")) {
 
-  # Onde mostrar: no painel Viewer do RStudio (padrão) ou no console.
-  onde <- escolher_opcao(onde, c("viewer", "console"), "onde")
+  # Onde mostrar: nos painéis do RStudio (padrão) ou no console.
+  onde <- escolher_opcao(onde, c("painel", "console"), "onde")
 
-  # Lemos os arquivos da ClaRa, onde cada função tem seu cabeçalho de ajuda.
-  cabecalhos <- ler_cabecalhos(arquivos_clara)
-  funcoes    <- cabecalhos$funcao
+  # As funções do aluno, lidas das páginas de ajuda do pacote.
+  funcoes <- funcoes_da_clara()
 
   # Sem nome de função, mostramos a lista de todas, agrupadas pela seção
   # onde moram, com a pergunta de cada uma.
   if (missing(funcao)) {
-    mostrar_ajuda("Funções da ClaRa", listar_funcoes(cabecalhos), onde)
-    return(invisible(funcoes))
+    mostrar_lista("Funções da ClaRa", listar_funcoes(funcoes), onde)
+    return(invisible(funcoes$funcao))
   }
 
   # O nome que o aluno pediu, escrito com ou sem aspas.
   nome <- rlang::as_name(rlang::ensym(funcao))
 
   # Se não for uma função da ClaRa, dizemos quais existem.
-  if (!is.element(nome, funcoes)) {
+  if (!is.element(nome, funcoes$funcao)) {
     stop("Não há ajuda da ClaRa para ", nome, ". As funções da ClaRa são: ",
-         toString(funcoes), ".", call. = FALSE)
+         toString(funcoes$funcao), ".", call. = FALSE)
   }
 
-  # O cabeçalho é o bloco de comentários logo abaixo da linha de título.
-  texto <- cabecalhos$texto[[match(nome, funcoes)]]
-
-  # Mostramos o título e o cabeçalho, sem os # do começo das linhas.
-  mostrar_ajuda(paste0(nome, "()"), texto, onde)
+  # A página da função: no painel Help ou, no console, como texto.
+  tipo <- if (onde == "console") "text" else getOption("help_type", "html")
+  print(utils::help(nome, package = "clara", help_type = tipo))
 
   invisible(nome)
 }
 
-# Mostra uma ajuda: no RStudio, como página no painel Viewer; fora dele (ou
-# com onde = "console"), como texto no console.
-mostrar_ajuda <- function(titulo, linhas, onde) {
+# As funções do aluno: nome, pergunta (o título da página de ajuda) e seção
+# (o @concept). Lê as páginas do pacote instalado; com devtools::load_all(),
+# lê os arquivos de man/.
+funcoes_da_clara <- function() {
+  paginas <- tryCatch(tools::Rd_db("clara"), error = function(e) list())
+  if (!length(paginas)) {
+    arquivos <- list.files(system.file("man", package = "clara"), "[.]Rd$",
+                           full.names = TRUE)
+    paginas  <- lapply(arquivos, tools::parse_Rd)
+  }
+  campo <- function(pagina, marca) {
+    marcas <- vapply(pagina, function(parte) attr(parte, "Rd_tag"), character(1))
+    partes <- pagina[marcas == marca]
+    if (!length(partes)) return("")
+    trimws(gsub("\\s+", " ", paste(unlist(partes[[1]]), collapse = "")))
+  }
+  funcoes <- data.frame(
+    funcao   = vapply(paginas, campo, character(1), marca = "\\name"),
+    pergunta = vapply(paginas, campo, character(1), marca = "\\title"),
+    secao    = vapply(paginas, campo, character(1), marca = "\\concept")
+  )
+  # Só as páginas com seção são de funções do aluno (a do pacote não tem).
+  funcoes <- funcoes[nzchar(funcoes$secao), ]
+  # A ordem de estudo: as funções de ordem_da_ajuda primeiro, na ordem dela;
+  # uma função nova, que ainda não esteja lá, entra no fim, e a seção dela
+  # (uma pergunta nova) aparece antes de "Para qualquer análise".
+  posicao <- match(funcoes$funcao, ordem_da_ajuda, nomatch = length(ordem_da_ajuda) + 1)
+  finais  <- c("Para qualquer análise", "Ajuda")
+  ordem   <- order(match(funcoes$secao, finais, nomatch = 0),
+                   tapply(posicao, funcoes$secao, min)[funcoes$secao],
+                   posicao, funcoes$funcao)
+  funcoes <- funcoes[ordem, ]
+  rownames(funcoes) <- NULL
+  funcoes
+}
+
+# As funções na ordem em que se estudam, para a lista da ajuda().
+ordem_da_ajuda <- c(
+  "comparar_medias", "grafico_medias", "grafico_boxplot", "grafico_pares",
+  "comparar_medianas", "grafico_medianas",
+  "medir_efeito", "escrever_resultados", "grafico_residuos", "grafico_qq",
+  "salvar_tabelas", "salvar_figuras", "registrar_ambiente",
+  "ajuda"
+)
+
+# Lista as funções da ClaRa, cada uma com a pergunta que responde, agrupadas
+# pela seção onde moram (como "Comparar médias"). Devolve as linhas do texto.
+listar_funcoes <- function(funcoes) {
+  nomes   <- paste0(funcoes$funcao, "()")
+  largura <- max(nchar(nomes))
+
+  # Um bloco por seção: o nome da seção e as suas funções, alinhadas.
+  blocos <- lapply(unique(funcoes$secao), function(secao) {
+    escolhidas <- funcoes$secao == secao
+    c("", paste0(secao, ":"),
+      paste0("  ", formatC(nomes[escolhidas], width = -largura), "  ",
+             funcoes$pergunta[escolhidas]))
+  })
+  c(unlist(blocos), "", "Para saber mais sobre uma delas: ajuda(comparar_medias)")
+}
+
+# Mostra a lista de funções: no RStudio, como página no painel Viewer; fora
+# dele (ou com onde = "console"), como texto no console.
+mostrar_lista <- function(titulo, linhas, onde) {
   visualizador <- getOption("viewer")
-  if (onde == "viewer" && is.function(visualizador)) {
+  if (onde == "painel" && is.function(visualizador)) {
     pagina <- tempfile("ajuda_clara_", fileext = ".html")
     writeLines(enc2utf8(pagina_de_ajuda(titulo, linhas)), pagina, useBytes = TRUE)
     visualizador(pagina)
-    cat("A ajuda de ", titulo, " abriu no painel Viewer. ",
-        "Para vê-la aqui: ajuda(..., onde = \"console\").\n", sep = "")
+    cat("A lista das funções abriu no painel Viewer. ",
+        "Para vê-la aqui: ajuda(onde = \"console\").\n", sep = "")
   } else {
     cat("\n", titulo, "\n", strrep("=", nchar(titulo)), "\n", sep = "")
     cat(linhas, sep = "\n")
@@ -86,12 +143,12 @@ mostrar_ajuda <- function(titulo, linhas, onde) {
   }
 }
 
-# Monta a página HTML da ajuda, com as cores da ClaRa. O texto vai num bloco
-# de largura fixa, para manter alinhadas as listas de argumentos.
+# Monta a página HTML da lista, com as cores da ClaRa. O texto vai num bloco
+# de largura fixa, para manter alinhadas as funções e as perguntas.
 pagina_de_ajuda <- function(titulo, linhas) {
   escapar <- function(x) gsub(">", "&gt;", gsub("<", "&lt;", gsub("&", "&amp;", x, fixed = TRUE), fixed = TRUE), fixed = TRUE)
   corpo <- escapar(linhas)
-  # Rótulos de bloco (Pergunta:, Argumentos:, Exemplo: ...) em negrito.
+  # Nomes das seções (Comparar médias:, Ajuda: ...) em negrito.
   corpo <- sub("^([A-ZÁÉÍÓÚ][A-Za-zçãõáéíóú ]*:)", "<b>\\1</b>", corpo)
   c("<!DOCTYPE html>",
     "<html lang=\"pt-BR\"><head><meta charset=\"utf-8\">",
@@ -107,64 +164,10 @@ pagina_de_ajuda <- function(titulo, linhas) {
     "</body></html>")
 }
 
-# Lê os cabeçalhos de ajuda de todos os arquivos da ClaRa, na ordem deles.
-# Devolve, para cada função do aluno, o nome, a seção onde ela mora e o
-# texto do cabeçalho.
-ler_cabecalhos <- function(arquivos) {
-  partes <- lapply(arquivos, function(arquivo) {
-    linhas <- readLines(arquivo, encoding = "UTF-8")
-
-    # Cada cabeçalho começa com uma linha como "# comparar_medias() ------".
-    inicios <- grep("^# [a-z_]+\\(\\) -+$", linhas)
-
-    # A seção de cada função é o último título "# Nome da seção ----" antes
-    # dela: começa com maiúscula e não tem parênteses.
-    titulos <- grep("^# [A-Z][^(]* -{4,}$", linhas)
-    secoes  <- vapply(inicios, function(inicio) {
-      sub("^# (.+?) -{4,}$", "\\1", linhas[max(titulos[titulos < inicio])])
-    }, character(1))
-
-    list(funcao = sub("^# ([a-z_]+)\\(\\) -+$", "\\1", linhas[inicios]),
-         secao  = secoes,
-         texto  = lapply(inicios, function(inicio) bloco_de_comentarios(linhas, inicio)))
-  })
-  list(funcao = unlist(lapply(partes, function(parte) parte$funcao)),
-       secao  = unlist(lapply(partes, function(parte) parte$secao)),
-       texto  = unlist(lapply(partes, function(parte) parte$texto), recursive = FALSE))
+# A versão da ClaRa instalada, que registrar_ambiente() grava.
+versao_da_clara <- function() {
+  as.character(utils::packageVersion("clara"))
 }
-
-# Lista as funções da ClaRa, cada uma com a pergunta que responde, agrupadas
-# pela seção onde moram (como "Comparar médias"). Devolve as linhas do
-# texto, para mostrar_ajuda() exibir.
-listar_funcoes <- function(cabecalhos) {
-  perguntas <- vapply(cabecalhos$texto, function(texto) {
-    sub("^Pergunta: ", "", grep("^Pergunta: ", texto, value = TRUE)[1])
-  }, character(1))
-  secoes <- cabecalhos$secao
-
-  nomes   <- paste0(cabecalhos$funcao, "()")
-  largura <- max(nchar(nomes))
-
-  # Um bloco por seção: o nome da seção e as suas funções, alinhadas.
-  blocos <- lapply(unique(secoes), function(secao) {
-    escolhidas <- secoes == secao
-    c("", paste0(secao, ":"),
-      paste0("  ", formatC(nomes[escolhidas], width = -largura), "  ",
-             perguntas[escolhidas]))
-  })
-  c(unlist(blocos), "", "Para saber mais sobre uma delas: ajuda(comparar_medias)")
-}
-
-# Devolve o bloco de comentários que vem logo depois da linha de título,
-# sem o "# " do começo e sem linhas vazias nas pontas.
-bloco_de_comentarios <- function(linhas, inicio) {
-  depois  <- linhas[(inicio + 1):length(linhas)]
-  tamanho <- match(FALSE, startsWith(depois, "#")) - 1
-  texto   <- sub("^# ?", "", depois[seq_len(tamanho)])
-  preenchidas <- which(nzchar(texto))
-  texto[min(preenchidas):max(preenchidas)]
-}
-
 
 # Motor das receitas -----------------------------------------------------------
 #
@@ -331,9 +334,12 @@ preencher_receita <- function(receita, valores) {
   trimws(receita)
 }
 
-# Imprime a receita com uma moldura, para o aluno copiar para o script.
-mostrar_receita <- function(receita) {
+# Imprime a receita com uma moldura, para o aluno copiar para o script. Os
+# library() dos pacotes vêm no topo: numa sessão nova, a receita copiada
+# precisa deles para rodar.
+mostrar_receita <- function(receita, pacotes = character()) {
   cat("\n# ---- Código R por trás da ClaRa: copie, cole e rode ----------\n\n")
+  if (length(pacotes)) cat(paste0("library(", pacotes, ")"), "", sep = "\n")
   cat(receita, "\n")
   cat("\n# --------------------------------------------------------------\n\n")
 }
@@ -342,14 +348,37 @@ mostrar_receita <- function(receita) {
 # Assim, o código mostrado e o código executado são o mesmo texto. Quando a
 # receita repete o código que o aluno escreveu (resultado$resumo), ela roda
 # a partir do lugar de onde a função foi chamada, para achar os objetos dele.
+# Os pacotes da receita não são carregados com library(): ela os enxerga por
+# um ambiente próprio, e o caminho de busca do aluno não muda. A semente
+# aleatória do aluno é guardada e devolvida, mesmo que a receita use
+# set.seed().
 executar_receita <- function(receita, objetos, pacotes, mostrar_codigo,
                              ambiente_do_aluno = globalenv()) {
+  if (mostrar_codigo) mostrar_receita(receita, pacotes)
+  ambiente <- list2env(objetos, parent = ambiente_com_pacotes(pacotes, ambiente_do_aluno))
+  withr::with_preserve_seed(
+    eval(parse(text = receita, keep.source = FALSE), envir = ambiente)
+  )
+}
+
+# Um ambiente que enxerga as funções exportadas dos pacotes, como se tivessem
+# sido carregados com library(), na mesma ordem (o último esconde os
+# anteriores), e, depois deles, o ambiente do aluno.
+ambiente_com_pacotes <- function(pacotes, ambiente_do_aluno) {
+  ambiente <- ambiente_do_aluno
   for (pacote in pacotes) {
-    suppressPackageStartupMessages(library(pacote, character.only = TRUE))
+    espaco    <- asNamespace(pacote)
+    nomes     <- getNamespaceExports(pacote)
+    proprios  <- nomes[vapply(nomes, exists, logical(1), envir = espaco, inherits = FALSE)]
+    # As reexportadas (como o tibble() do dplyr) moram nas importações do pacote.
+    importados <- parent.env(espaco)
+    alheios   <- setdiff(nomes, proprios)
+    alheios   <- alheios[vapply(alheios, exists, logical(1), envir = importados, inherits = FALSE)]
+    ambiente <- new.env(parent = ambiente)
+    importIntoEnv(ambiente, proprios, espaco, proprios)
+    list2env(mget(alheios, envir = importados), envir = ambiente)
   }
-  if (mostrar_codigo) mostrar_receita(receita)
-  ambiente <- list2env(objetos, parent = ambiente_do_aluno)
-  eval(parse(text = receita, keep.source = FALSE), envir = ambiente)
+  ambiente
 }
 
 # Devolve o valor informado ou, se ele estiver vazio (NULL), a alternativa.

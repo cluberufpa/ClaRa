@@ -13,9 +13,10 @@ pergunta nova, `R/clara_medianas.R` mostra o arquivo completo de uma pergunta.
 
 0. **Veja onde a função mora** (CLAUDE.md, "Como a ClaRa se organiza"). Cada
    pergunta tem a sua análise e os seus gráficos, num arquivo próprio
-   (`R/clara_<pergunta>.R`), que entra na lista `arquivos_clara` de
-   `R/clara.R` e abre com o título de seção (`# Comparar medianas ----`),
-   que vira o grupo na `ajuda()`. Uma variação da mesma análise vira
+   (`R/clara_<pergunta>.R`), que entra no campo `Collate` do `DESCRIPTION`
+   (depois de `clara_qualquer_analise.R`) e abre com o título de seção
+   (`# Comparar medianas ----`); o mesmo nome vai no `@concept` de cada
+   função, e é ele que vira o grupo na `ajuda()`. Uma variação da mesma análise vira
    argumento, não função; mas
    cada figura diferente tem o seu nome (uma função, uma figura: nada de
    `tipo` escolhendo figuras). Uma
@@ -31,10 +32,15 @@ pergunta nova, `R/clara_medianas.R` mostra o arquivo completo de uma pergunta.
 
 1. **Comece pela pergunta da pesquisa.** O nome da função é um verbo em
    português que responde a ela (`relacionar_variaveis`, `comparar_proporcoes`).
-   Escreva o cabeçalho no formato do CLAUDE.md (seção "Ajuda"): linha de
-   título `# nome() ----`, Pergunta, o que a função faz, Argumentos, o que
-   devolve, Exemplo. Esse cabeçalho é o que `ajuda(nome)` mostra ao aluno;
-   confira com `ajuda()` que a função aparece na lista.
+   Escreva o bloco roxygen no formato do CLAUDE.md (seção "Ajuda"): linha
+   de título `# nome() ----` e, abaixo, `#'` com a pergunta como título, o
+   que a função faz, `@param`, `@return`, `@examples` que rodem com dados do
+   próprio R, `@concept` e `@export`. Ponha o nome em `ordem_da_ajuda`
+   (motor). Rode `roxygen2::roxygenise()` e confira com `ajuda()` que a
+   função aparece na lista e com `?nome` que a página abre.
+   Feche com testes em `tests/testthat/` (os números contra a função
+   clássica do R e a receita copiada dando o mesmo resultado) e com o
+   `R CMD check` sem aviso novo (só o dos acentos).
 
 2. **Escreva primeiro a receita, como R comum que um aluno digitaria.**
    Pipe `|>`, verbos do dplyr, `case_when()`, `tidy()` depois de testes

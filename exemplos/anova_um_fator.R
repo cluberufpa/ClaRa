@@ -8,7 +8,7 @@
 # 1. Preparar o ambiente ---------------------------------------------------
 library(dplyr)
 library(ggplot2)
-source("R/clara.R", encoding = "UTF-8")
+library(clara)
 
 # Damos nomes em português às colunas, como viriam de uma planilha nossa.
 plantas <- PlantGrowth |>
