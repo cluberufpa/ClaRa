@@ -599,7 +599,14 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    repositório é privado, e o projeto exportado deixaria de ser só CRAN.
    Por isso a ClaRa continua sem pacote. O cuidado que fica é a cópia
    atrasar; um teste na Trilha vai comparar as `versao_clara` (ver
-   `CATALYSER/docs/PLANO_TRILHA.md`).
+   `TRILHA/docs/PLANO_TRILHA.md`).
+   **Em estudo desde 8/10/2026 (sem aprovação):** pouco depois dessa
+   revisão, o professor pediu um plano de pacote com três famílias (análise,
+   redação `relatar_*`/`interpretar_*` e formatação), público ampliado às
+   ciências agrárias e biológicas e preparo para o CRAN. O plano foi
+   entregue e espera decisão; nenhum código migrou. Enquanto não houver
+   decisão, vale o parágrafo acima. Resumo do plano e das decisões
+   pendentes: `docs/resumo_sessoes_2026-10.md`.
 5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
    (privado, ramo `main`). Nesta pasta os commits saem como
    `clubeR <cluber.ufpa@gmail.com>`; o push usa a credencial do cluberufpa
@@ -628,16 +635,18 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
 - próximas análises: `relacionar_variaveis()` (regressão) e
   `comparar_proporcoes()`.
 
-## A ClaRa na CatalyseR (outubro de 2026)
+## A ClaRa na Trilha, antiga CatalyseR (outubro de 2026)
 
 A integração começou pela ANOVA de um fator, como opção experimental no
 exportador da CatalyseR ("Escrever o código em ClaRa", branch `clara` do
 repositório da CatalyseR; clássica, Welch e automático da tela, este escrito
 como `variancias_iguais` conforme a escolha que a CatalyseR fez pelo Levene).
-O trabalho mora na CatalyseR,
-não aqui (regra 1): `inst/app/templates/clara/` guarda a cópia da ClaRa que
-viaja nos projetos e `inst/app/templates/anova_clara/` o roteiro e o
-relatório. Ao mudar a ClaRa, atualize essa cópia (e a versão, regra 4).
+Desde 9/10/2026 a IDE se chama **Trilha** e se desenvolve só em `TRILHA/`
+(`cluberufpa/trilha`); a CatalyseR foi encerrada na 0.1.34 e não recebe mais
+cópias. O trabalho mora na Trilha, não aqui (regra 1):
+`TRILHA/inst/app/templates/clara/` guarda a cópia da ClaRa que viaja nos
+projetos e `TRILHA/inst/app/templates/anova_clara/` o roteiro e o relatório.
+Ao mudar a ClaRa, atualize essa cópia (e a versão, regra 4).
 
 Decisões do professor para o projeto exportado em ClaRa:
 - **Um só QMD**: `R/analise.R` é o caderno de estudo (cerca de 170 linhas) e
@@ -687,12 +696,17 @@ Decisões do professor para o projeto exportado em ClaRa:
   (`comparacao = "contra_controle"`, `controle = "A"`), e as escolhas
   principais vão escritas mesmo quando são o padrão
   (`comparacao = "todos_os_pares"`, `variancias_iguais = FALSE`).
+- **Superado pelo carimbo.** Os dois itens abaixo descrevem a primeira ideia
+  de conferência da base (`.rds` + `all.equal()`). Na rota ClaRa vigente, a
+  base nasce da planilha e o carimbo trava o número de linhas com
+  `stopifnot()` (seção "A ClaRa na Trilha"). Ficam como histórico; o que
+  continua valendo é o projeto exportado sem catalyser nem EAPADados.
 - Com `all.equal()` no lugar do `catalyser_conferir_base()` e a base lida do
   `.rds`, o analise.R exportado não precisa mais dos blocos que conferem a
   instalação do catalyser e do EAPADados (observação do professor, outubro
   de 2026). A mudança é no exportador da CatalyseR, não aqui.
 - **Na migração, a conferência da base usa `all.equal()`** (aprovado pelo
-  professor em outubro de 2026). O analise.R exportado lê a base pronta
+  professor em outubro de 2026). O analise.R exportado lia a base pronta
   (`readRDS("dados/processados/base_compartilhada.rds")`), mostra em dplyr a
   receita que a CatalyseR registrou e confere com
   `all.equal(base_da_receita, base_pronta)`: `TRUE` confirma; senão, o R diz
