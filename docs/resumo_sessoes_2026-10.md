@@ -47,7 +47,8 @@ guarda o que ainda depende do professor.
    dispersão; mínimo de 3 por grupo.
 3. **Comparar com um controle** (aprovado, a implementar): `comparacao` e
    `controle` em `comparar_medias()` e `comparar_medianas()`.
-4. **Virar pacote ou não.** Às 12h04 de 8/10 a regra 4 foi revista: a ClaRa
+4. **Virar pacote: decidido em 9/10/2026, sim** (regra 4 do CLAUDE.md;
+   roteiro em `TRILHA/docs/PLANO_TRILHA_E_CLARA.md`). O histórico: às 12h04 de 8/10 a regra 4 foi revista: a ClaRa
    continua sem pacote, porque viaja como cópia na Trilha e o projeto
    exportado tem de ser só CRAN. Dez minutos depois, outra sessão
    ("ClaRa R package planning") recebeu do professor um pedido de plano de

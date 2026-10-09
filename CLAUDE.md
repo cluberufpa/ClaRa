@@ -600,13 +600,17 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    Por isso a ClaRa continua sem pacote. O cuidado que fica é a cópia
    atrasar; um teste na Trilha vai comparar as `versao_clara` (ver
    `TRILHA/docs/PLANO_TRILHA.md`).
-   **Em estudo desde 8/10/2026 (sem aprovação):** pouco depois dessa
-   revisão, o professor pediu um plano de pacote com três famílias (análise,
-   redação `relatar_*`/`interpretar_*` e formatação), público ampliado às
-   ciências agrárias e biológicas e preparo para o CRAN. O plano foi
-   entregue e espera decisão; nenhum código migrou. Enquanto não houver
-   decisão, vale o parágrafo acima. Resumo do plano e das decisões
-   pendentes: `docs/resumo_sessoes_2026-10.md`.
+   **Decidido em 9/10/2026: a ClaRa vira pacote** (substitui os dois
+   parágrafos acima). Palavras do professor: "um belo pacote, bem
+   estruturado, sem bugs, conversando bem com a Trilha". O motivo concreto
+   agora existe: a Trilha vai **executar** a ClaRa, e não só copiá-la, e
+   só um pacote instalado garante que a tela e o projeto rodem a mesma
+   versão. O roteiro está em `TRILHA/docs/PLANO_TRILHA_E_CLARA.md`
+   (fases 0 a 5); o plano de 8/10 e as decisões A a I estão em
+   `docs/resumo_sessoes_2026-10.md`. Enquanto a `clara` não estiver no
+   CRAN, o projeto exportado continua levando a cópia em `R/clara/`, mas
+   tirada do pacote instalado. Mantém-se o desenho de hoje: um arquivo por
+   pergunta em `R/`, receitas em listas, motor à parte.
 5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
    (privado, ramo `main`). Nesta pasta os commits saem como
    `clubeR <cluber.ufpa@gmail.com>`; o push usa a credencial do cluberufpa
