@@ -18,6 +18,7 @@
 #    clara_medias.R ............. comparar_medias(), grafico_medias(),
 #                                 grafico_boxplot(), grafico_pares()
 #    clara_medianas.R ........... comparar_medianas(), grafico_medianas()
+#    clara_regressao.R .......... relacionar_variaveis(), grafico_reta()
 #    clara_qualquer_analise.R ... medir_efeito(), escrever_resultados(),
 #                                 grafico_residuos(), grafico_qq(),
 #                                 salvar_tabelas(), salvar_figuras(),

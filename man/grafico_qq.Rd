@@ -7,7 +7,7 @@
 grafico_qq(resultado, mostrar_codigo = FALSE)
 }
 \arguments{
-\item{resultado}{o que comparar_medias() devolveu}
+\item{resultado}{o que comparar_medias() ou relacionar_variaveis() devolveu}
 
 \item{mostrar_codigo}{TRUE imprime o código R antes do gráfico}
 }
@@ -15,7 +15,7 @@ grafico_qq(resultado, mostrar_codigo = FALSE)
 Devolve um gráfico do ggplot2; ajustes extras entram com +.
 }
 \description{
-Gráfico Q-Q: os resíduos contra os quantis da distribuição normal. Pontos perto da reta indicam resíduos compatíveis com a normal; caudas que se afastam indicam assimetria ou valores extremos. Na ANOVA, usa os resíduos padronizados do modelo; no teste t, há um painel por grupo, como o Shapiro-Wilk em cada grupo. O gráfico completa o Shapiro-Wilk: o teste dá um p, o gráfico mostra onde está o desvio e de que tamanho ele é.
+Gráfico Q-Q: os resíduos contra os quantis da distribuição normal. Pontos perto da reta indicam resíduos compatíveis com a normal; caudas que se afastam indicam assimetria ou valores extremos. Na ANOVA e na regressão, usa os resíduos padronizados do modelo; no teste t, há um painel por grupo, como o Shapiro-Wilk em cada grupo. O gráfico completa o Shapiro-Wilk: o teste dá um p, o gráfico mostra onde está o desvio e de que tamanho ele é.
 }
 \examples{
 # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).

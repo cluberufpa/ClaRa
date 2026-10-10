@@ -7,7 +7,7 @@
 medir_efeito(resultado, mostrar_codigo = FALSE)
 }
 \arguments{
-\item{resultado}{o que comparar_medias() ou comparar_medianas() devolveu}
+\item{resultado}{o que comparar_medias(), comparar_medianas() ou relacionar_variaveis() devolveu}
 
 \item{mostrar_codigo}{TRUE imprime o código R antes do resultado}
 }
@@ -15,12 +15,14 @@ medir_efeito(resultado, mostrar_codigo = FALSE)
 Devolve uma tabela: medida, valor, intervalo de confiança e leitura.
 }
 \description{
-O p-valor diz se há evidência de diferença; o tamanho de efeito diz quanto ela pesa. A medida depende da análise feita em comparar_medias():
+O p-valor diz se há evidência de diferença; o tamanho de efeito diz quanto ela pesa. A medida depende da análise feita:
 }
 \details{
 \itemize{
 \item \strong{ANOVA}: η² é a fração da variação da resposta que acompanha os grupos; ω² corrige o exagero do η² em amostras pequenas.
 \item \strong{teste t}: d de Cohen é a diferença das médias medida em desvios padrão; g de Hedges corrige o exagero do d em amostras pequenas. O sinal segue a ordem da comparação.
+\item \strong{medianas}: ε² dos postos (Kruskal-Wallis) ou a correlação bisserial dos postos (Mann-Whitney).
+\item \strong{regressão}: r de Pearson (o sinal é o da inclinação) e R², a fração da variação da resposta que a reta explica.
 }
 
 A leitura segue a convenção de Cohen, uma referência estatística, não biológica.

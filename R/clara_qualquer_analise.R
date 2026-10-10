@@ -20,14 +20,16 @@
 # medir_efeito() ---------------------------------------------------------------
 #' O efeito encontrado é grande ou pequeno?
 #'
-#' O p-valor diz se há evidência de diferença; o tamanho de efeito diz quanto ela pesa. A medida depende da análise feita em comparar_medias():
+#' O p-valor diz se há evidência de diferença; o tamanho de efeito diz quanto ela pesa. A medida depende da análise feita:
 #'
 #' - **ANOVA**: η² é a fração da variação da resposta que acompanha os grupos; ω² corrige o exagero do η² em amostras pequenas.
 #' - **teste t**: d de Cohen é a diferença das médias medida em desvios padrão; g de Hedges corrige o exagero do d em amostras pequenas. O sinal segue a ordem da comparação.
+#' - **medianas**: ε² dos postos (Kruskal-Wallis) ou a correlação bisserial dos postos (Mann-Whitney).
+#' - **regressão**: r de Pearson (o sinal é o da inclinação) e R², a fração da variação da resposta que a reta explica.
 #'
 #' A leitura segue a convenção de Cohen, uma referência estatística, não biológica.
 #'
-#' @param resultado o que comparar_medias() ou comparar_medianas() devolveu
+#' @param resultado o que comparar_medias(), comparar_medianas() ou relacionar_variaveis() devolveu
 #' @param mostrar_codigo TRUE imprime o código R antes do resultado
 #'
 #' @return Devolve uma tabela: medida, valor, intervalo de confiança e leitura.
@@ -56,6 +58,7 @@ medir_efeito <- function(resultado,
     RESULTADO         = nome_resultado,
     RESPOSTA          = resultado$nomes$resposta,
     GRUPOS            = resultado$nomes$grupos,
+    PREDITOR          = resultado$nomes$preditor,
     CONFIANCA         = resultado$nomes$confianca,
     VARIANCIAS_IGUAIS = resultado$nomes$variancias_iguais
   ))
@@ -79,12 +82,13 @@ receitas_efeito <- list()
 #'
 #' Escreve as frases de um relatório a partir do resultado: a amostra, o teste, o tamanho de efeito, as comparações entre pares (ANOVA), os pressupostos, um alerta sobre o que pede cuidado e, quando muda a leitura, o poder do teste. Os números e as conclusões vêm do resultado: se os dados mudam, as frases mudam junto.
 #'
-#' É uma função só para todas as análises. Ela olha qual análise o resultado guarda (ANOVA ou teste t) e escolhe a receita daquela análise. Por isso, com mostrar_codigo = TRUE, aparece só o código da análise que você fez, nunca o das outras. Quando a ClaRa ganhar uma análise nova, a função continua a mesma: só a lista de receitas cresce.
+#' É uma função só para todas as análises. Ela olha qual análise o resultado guarda (ANOVA, teste t, medianas ou regressão) e escolhe a receita daquela análise. Por isso, com mostrar_codigo = TRUE, aparece só o código da análise que você fez, nunca o das outras. Quando a ClaRa ganhar uma análise nova, a função continua a mesma: só a lista de receitas cresce.
 #'
-#' @param resultado o que comparar_medias() ou comparar_medianas() devolveu
+#' @param resultado o que comparar_medias(), comparar_medianas() ou relacionar_variaveis() devolveu
 #' @param rotulo_resposta como chamar a resposta no texto (ex.: "Peso (g)"); sem ele, vai o da análise
 #' @param rotulo_grupos como chamar os grupos no texto (ex.: "Tipo de Ração"); sem ele, vai o da análise
-#' @param casas casas decimais da média ± DP no destaque (ANOVA); use a precisão da medição
+#' @param rotulo_preditor como chamar o preditor no texto (regressão; ex.: "Comprimento (cm)"); sem ele, vai o da análise
+#' @param casas casas decimais da média ± DP no destaque (ANOVA) ou dos coeficientes (regressão); use a precisão da medição
 #' @param destacar o grupo em destaque na ANOVA: "maior" (a maior média), "menor" (a menor: conversão alimentar, mortalidade) ou o nome do grupo de referência (ex.: "Controle"), comparado com os demais
 #' @param haste a haste da figura de grafico_medias(), para a legenda: "ic" (padrão), "ep" ou "dp"
 #' @param tabela_anova a referência da tabela da ANOVA no Quarto (ex.: "@tbl-anova"), citada logo depois do F; sem ela (NULL, o padrão), a frase sai sem citação
@@ -96,7 +100,11 @@ receitas_efeito <- list()
 #'   se aplica), `textos$sintese` e, na ANOVA, `textos$comparacoes`,
 #'   `textos$destaque` (o grupo em destaque e de quais grupos ele diferiu),
 #'   `textos$nota_tabela` (a nota da tabela de médias) e
-#'   `textos$legenda_figura` (a legenda de [grafico_medias()]).
+#'   `textos$legenda_figura` (a legenda de [grafico_medias()]). Na
+#'   regressão, no lugar das comparações e do destaque, vêm
+#'   `textos$equacao` (a reta com os rótulos) e `textos$influencia` (as
+#'   observações que merecem conferência); a nota é a da tabela dos
+#'   coeficientes e a legenda, a de [grafico_reta()].
 #'
 #'   No Quarto, a frase entra no meio do parágrafo com
 #'   `` `r textos$teste` ``.
@@ -119,6 +127,7 @@ receitas_efeito <- list()
 escrever_resultados <- function(resultado,
                                 rotulo_resposta = NULL,
                                 rotulo_grupos   = NULL,
+                                rotulo_preditor = NULL,
                                 casas           = 2,
                                 destacar        = "maior",
                                 haste           = "ic",
@@ -131,6 +140,7 @@ escrever_resultados <- function(resultado,
   # Sem rótulo informado aqui, valem os que a análise guardou.
   rotulo_resposta <- ou_entao(rotulo_resposta, resultado$nomes$rotulo_resposta)
   rotulo_grupos   <- ou_entao(rotulo_grupos,   resultado$nomes$rotulo_grupos)
+  rotulo_preditor <- ou_entao(rotulo_preditor, resultado$nomes$rotulo_preditor)
 
   # destacar: "maior", "menor" ou um dos grupos.
   grupos_validos <- as.character(resultado$resumo[[resultado$nomes$grupos]])
@@ -151,6 +161,8 @@ escrever_resultados <- function(resultado,
     GRUPOS            = resultado$nomes$grupos,
     ROTULO_RESPOSTA   = rotulo_resposta,
     ROTULO_GRUPOS     = rotulo_grupos,
+    PREDITOR          = resultado$nomes$preditor,
+    ROTULO_PREDITOR   = rotulo_preditor,
     ALFA              = 1 - resultado$nomes$confianca,
     NIVEL             = resultado$nomes$confianca * 100,
     CASAS             = casas,
@@ -187,7 +199,9 @@ receitas_textos <- list()
 #'
 #' Resíduos contra os valores ajustados (as médias dos grupos): cada grupo forma uma faixa vertical. Faixas de alturas parecidas indicam variâncias parecidas; uma faixa muito mais alta que as outras pede cautela. O gráfico completa o teste de Levene: o teste dá um p, o gráfico mostra qual grupo se afasta e quanto.
 #'
-#' @param resultado o que comparar_medias() devolveu
+#' Na regressão, os ajustados são os valores da reta e os resíduos formam uma nuvem só, com uma curva que a acompanha: pontos espalhados em torno do zero indicam que a reta serve; uma curva em U pede outro modelo, e um funil (a nuvem abrindo) indica variância que muda ao longo da reta, o que o Breusch-Pagan testa.
+#'
+#' @param resultado o que comparar_medias() ou relacionar_variaveis() devolveu
 #' @param rotulo_grupos nome dos grupos na legenda; sem ele, vai o da análise
 #' @param mostrar_codigo TRUE imprime o código R antes do gráfico
 #'
@@ -237,9 +251,9 @@ grafico_residuos <- function(resultado,
 # grafico_qq() -----------------------------------------------------------------
 #' Os resíduos são compatíveis com a distribuição normal?
 #'
-#' Gráfico Q-Q: os resíduos contra os quantis da distribuição normal. Pontos perto da reta indicam resíduos compatíveis com a normal; caudas que se afastam indicam assimetria ou valores extremos. Na ANOVA, usa os resíduos padronizados do modelo; no teste t, há um painel por grupo, como o Shapiro-Wilk em cada grupo. O gráfico completa o Shapiro-Wilk: o teste dá um p, o gráfico mostra onde está o desvio e de que tamanho ele é.
+#' Gráfico Q-Q: os resíduos contra os quantis da distribuição normal. Pontos perto da reta indicam resíduos compatíveis com a normal; caudas que se afastam indicam assimetria ou valores extremos. Na ANOVA e na regressão, usa os resíduos padronizados do modelo; no teste t, há um painel por grupo, como o Shapiro-Wilk em cada grupo. O gráfico completa o Shapiro-Wilk: o teste dá um p, o gráfico mostra onde está o desvio e de que tamanho ele é.
 #'
-#' @param resultado o que comparar_medias() devolveu
+#' @param resultado o que comparar_medias() ou relacionar_variaveis() devolveu
 #' @param mostrar_codigo TRUE imprime o código R antes do gráfico
 #'
 #' @return Devolve um gráfico do ggplot2; ajustes extras entram com +.
@@ -321,14 +335,21 @@ receitas_qq       <- list()
 #'   GL e p;
 #' - **Kruskal-Wallis**: H, GL e p;
 #' - **Mann-Whitney**: o deslocamento (Hodges-Lehmann), o intervalo de
-#'   confiança, W e p.
+#'   confiança, W e p;
+#' - **regressão**: os coeficientes (intercepto e inclinação), com o erro
+#'   padrão, o intervalo de confiança, t e p.
 #'
 #' Como [escrever_resultados()], é uma função só para todas as análises:
 #' ela olha qual análise o resultado guarda e usa a receita dela.
 #'
-#' @param resultado o que comparar_medias() ou comparar_medianas() devolveu
+#' @param resultado o que comparar_medias(), comparar_medianas() ou
+#'   relacionar_variaveis() devolveu
 #' @param rotulo_grupos como chamar os grupos na linha do fator (ANOVA);
 #'   sem ele, vai o da análise
+#' @param rotulo_preditor como chamar o preditor na linha da inclinação
+#'   (regressão); sem ele, vai o da análise
+#' @param casas casas decimais dos coeficientes (regressão; padrão 2); use a
+#'   precisão da medição
 #' @param tema "ocean" (padrão, relatório Word) ou "cinza" (Viewer)
 #' @param mostrar_codigo TRUE imprime o código R antes da tabela
 #'
@@ -351,9 +372,11 @@ receitas_qq       <- list()
 #' @concept Para qualquer análise
 #' @export
 exibir_teste <- function(resultado,
-                         rotulo_grupos  = NULL,
-                         tema           = c("ocean", "cinza"),
-                         mostrar_codigo = FALSE) {
+                         rotulo_grupos   = NULL,
+                         rotulo_preditor = NULL,
+                         casas           = 2,
+                         tema            = c("ocean", "cinza"),
+                         mostrar_codigo  = FALSE) {
 
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
@@ -361,7 +384,11 @@ exibir_teste <- function(resultado,
   # Conferimos as escolhas antes de montar a tabela.
   tema <- escolher_opcao(tema, c("ocean", "cinza"), "tema")
   conferir_rotulo(rotulo_grupos, "rotulo_grupos")
+  conferir_rotulo(rotulo_preditor, "rotulo_preditor")
   conferir_sim_ou_nao(mostrar_codigo, "mostrar_codigo")
+  if (!is.numeric(casas) || length(casas) != 1 || casas < 0) {
+    stop("casas aceita um número inteiro, como 1 ou 2.", call. = FALSE)
+  }
 
   # Trocamos os marcadores da receita da análise feita pelos nomes dela.
   receita <- preencher_receita(escolher_receita(receitas_tabela_teste, resultado, "exibir_teste"), list(
@@ -369,6 +396,8 @@ exibir_teste <- function(resultado,
     TEMA           = temas_tabela[[tema]],
     RESULTADO      = nome_resultado,
     ROTULO_GRUPOS  = ou_entao(rotulo_grupos, resultado$nomes$rotulo_grupos),
+    ROTULO_PREDITOR = ou_entao(rotulo_preditor, resultado$nomes$rotulo_preditor),
+    CASAS          = casas,
     ROTULO_IC      = rotulo_ic(resultado$nomes$confianca, alternativa_do(resultado)),
     CASAS_GL       = dplyr::case_when(isTRUE(resultado$nomes$variancias_iguais) ~ 0,
                                       .default = 2)
@@ -394,14 +423,17 @@ exibir_teste <- function(resultado,
 #' - **médias** (ANOVA, ANOVA de Welch, teste t): n, média ± desvio padrão
 #'   e o intervalo de confiança da média;
 #' - **medianas** (Kruskal-Wallis, Mann-Whitney): n, mediana e a metade
-#'   central dos dados (do 1º ao 3º quartil).
+#'   central dos dados (do 1º ao 3º quartil);
+#' - **regressão**: o ajuste do modelo numa linha (n, R², R² ajustado, erro
+#'   padrão dos resíduos e o teste F).
 #'
 #' A nota de rodapé que [escrever_resultados()] escreve (`textos$nota_tabela`)
 #' entra com `nota`.
 #'
-#' @param resultado o que comparar_medias() ou comparar_medianas() devolveu
-#' @param casas casas decimais das médias, desvios e quartis (padrão 2); use
-#'   a precisão da medição
+#' @param resultado o que comparar_medias(), comparar_medianas() ou
+#'   relacionar_variaveis() devolveu
+#' @param casas casas decimais das médias, desvios e quartis, ou do erro
+#'   padrão dos resíduos na regressão (padrão 2); use a precisão da medição
 #' @param nota o texto da nota de rodapé, como `textos$nota_tabela`; sem ela
 #'   (NULL, o padrão), a tabela sai sem nota
 #' @param rotulo_grupos o nome da coluna dos grupos; sem ele, vai o da análise

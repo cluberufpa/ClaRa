@@ -7,7 +7,7 @@
 grafico_residuos(resultado, rotulo_grupos = NULL, mostrar_codigo = FALSE)
 }
 \arguments{
-\item{resultado}{o que comparar_medias() devolveu}
+\item{resultado}{o que comparar_medias() ou relacionar_variaveis() devolveu}
 
 \item{rotulo_grupos}{nome dos grupos na legenda; sem ele, vai o da análise}
 
@@ -18,6 +18,9 @@ Devolve um gráfico do ggplot2; ajustes extras entram com +.
 }
 \description{
 Resíduos contra os valores ajustados (as médias dos grupos): cada grupo forma uma faixa vertical. Faixas de alturas parecidas indicam variâncias parecidas; uma faixa muito mais alta que as outras pede cautela. O gráfico completa o teste de Levene: o teste dá um p, o gráfico mostra qual grupo se afasta e quanto.
+}
+\details{
+Na regressão, os ajustados são os valores da reta e os resíduos formam uma nuvem só, com uma curva que a acompanha: pontos espalhados em torno do zero indicam que a reta serve; uma curva em U pede outro modelo, e um funil (a nuvem abrindo) indica variância que muda ao longo da reta, o que o Breusch-Pagan testa.
 }
 \examples{
 # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).

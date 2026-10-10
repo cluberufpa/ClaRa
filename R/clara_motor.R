@@ -105,6 +105,7 @@ funcoes_da_clara <- function() {
 ordem_da_ajuda <- c(
   "comparar_medias", "grafico_medias", "grafico_boxplot", "grafico_pares",
   "comparar_medianas", "grafico_medianas",
+  "relacionar_variaveis", "grafico_reta",
   "medir_efeito", "escrever_resultados", "exibir_teste", "exibir_resumo",
   "grafico_residuos", "grafico_qq",
   "salvar_tabelas", "salvar_figuras", "registrar_ambiente",
@@ -204,6 +205,34 @@ conferir_colunas <- function(dados, coluna_resposta, coluna_grupos) {
   if (problema != "nenhum") stop(problema, call. = FALSE)
 }
 
+# Confere, antes da regressão, se as duas colunas existem e servem para a reta.
+conferir_colunas_reta <- function(dados, coluna_resposta, coluna_preditor) {
+  colunas_que_faltam <- setdiff(c(coluna_resposta, coluna_preditor), names(dados))
+  nomes_com_simbolos <- make.names(c(coluna_resposta, coluna_preditor)) !=
+    c(coluna_resposta, coluna_preditor)
+  completas <- !is.na(dados[[coluna_resposta]]) & !is.na(dados[[coluna_preditor]])
+
+  problema <- dplyr::case_when(
+    length(colunas_que_faltam) > 0 ~
+      paste("Coluna não encontrada nos dados:", toString(colunas_que_faltam)),
+    any(nomes_com_simbolos) ~
+      "Use nomes de coluna sem espaços nem símbolos, como peso_g. Renomeie com rename().",
+    coluna_resposta == coluna_preditor ~
+      "A resposta e o preditor precisam ser colunas diferentes.",
+    !is.numeric(dados[[coluna_resposta]]) ~
+      "A resposta precisa ser numérica. Confira o tipo da coluna no preparo.",
+    !is.numeric(dados[[coluna_preditor]]) ~
+      "O preditor precisa ser numérico. Para comparar grupos, use comparar_medias().",
+    sum(completas) < 3 ~
+      "A reta precisa de pelo menos 3 observações com resposta e preditor.",
+    dplyr::n_distinct(dados[[coluna_preditor]][completas]) < 2 ~
+      "O preditor tem um valor só; sem variação nele, não há reta para ajustar.",
+    .default = "nenhum"
+  )
+
+  if (problema != "nenhum") stop(problema, call. = FALSE)
+}
+
 # Confere se o resultado veio da análise que a função sabe desenhar.
 conferir_resultado <- function(resultado, classe, mensagem) {
   if (!inherits(resultado, classe)) stop(mensagem, call. = FALSE)
@@ -217,9 +246,9 @@ escolher_receita <- function(receitas, resultado, nome_funcao) {
     stop(nome_funcao, "() não se aplica a este resultado. ",
          dplyr::case_when(
            is.element(nome_funcao, c("grafico_residuos", "grafico_qq")) ~
-             paste("Os resíduos conferem os pressupostos das médias (ANOVA e teste t);",
-                   "para olhar as observações de cada grupo, use grafico_boxplot()."),
-           .default = "Ela serve aos resultados de comparar_medias() e comparar_medianas()."
+             paste("Os resíduos conferem os pressupostos das médias (ANOVA e teste t)",
+                   "e da regressão; para olhar as observações de cada grupo, use grafico_boxplot()."),
+           .default = "Ela serve aos resultados de comparar_medias(), comparar_medianas() e relacionar_variaveis()."
          ), call. = FALSE)
   }
   receita

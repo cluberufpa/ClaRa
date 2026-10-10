@@ -23,6 +23,7 @@ ClaRa/                          o pacote R clara (desde 9/10/2026, v0.9.0)
     clara.R                     página do pacote (?clara) e o mapa dos arquivos
     clara_medias.R              comparar_medias() e os gráficos das médias
     clara_medianas.R            comparar_medianas() e grafico_medianas()
+    clara_regressao.R           relacionar_variaveis() e grafico_reta()
     clara_qualquer_analise.R    medir_efeito(), escrever_resultados(),
                                 grafico_residuos(), grafico_qq(),
                                 registrar_ambiente()
@@ -40,6 +41,7 @@ ClaRa/                          o pacote R clara (desde 9/10/2026, v0.9.0)
                                 de estocagem, variâncias desiguais)
     kruskal_wallis.R            medianas com 3 grupos (CPUE por petrecho)
     mann_whitney.R              medianas com 2 grupos (artêmia)
+    regressao_barbo.R           regressão linear simples (morfometria do barbo)
     anova_bagres.R              o analise.R do anova-bagres-gabarito
                                 (EAPACadernos) reescrito em ClaRa, mesmas
                                 seções, sem nenhum bloco em R comum
@@ -83,6 +85,7 @@ Rscript -e 'source("exemplos/anova_welch.R", echo = TRUE)'
 Rscript -e 'source("exemplos/anova_bagres.R", echo = TRUE)'
 Rscript -e 'source("exemplos/kruskal_wallis.R", echo = TRUE)'
 Rscript -e 'source("exemplos/mann_whitney.R", echo = TRUE)'
+Rscript -e 'source("exemplos/regressao_barbo.R", echo = TRUE)'
 ```
 
 `anova_bagres.R` é o modelo da migração para a CatalyseR: o analise.R da
@@ -140,6 +143,8 @@ EAPACaderno.
 | `sint_com_faltantes` | respostas e grupos em branco (5 de 21 excluídas) |
 | `sint_dois_locais` | Welch e Student divergem; com Student, o Levene rejeita |
 | `sint_dez_tanques` | mais grupos que as 8 cores da paleta |
+| `real_barbo_morfometria` | regressão real, reta limpa (r = 0,94), cinco populações para colorir; linhas em ordem de população (o Durbin-Watson rejeita) |
+| `real_cangulo_peso_comprimento` | regressão real de uma relação curva (peso e comprimento): resíduos em U |
 
 ## Como a ClaRa se organiza
 
@@ -154,7 +159,7 @@ completa, para quem abre o repositório.
 |---|---|---|---|
 | A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | t de Welch ou Student; ANOVA e Tukey; ANOVA de Welch e Games-Howell (`variancias_iguais = FALSE`); depois t pareado, como argumento |
 | A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()`, `grafico_boxplot()` | Mann-Whitney; Kruskal-Wallis e Dunn |
-| Uma variável acompanha a outra? | `relacionar_variaveis()` | a definir | regressão linear |
+| Uma variável acompanha a outra? | `relacionar_variaveis()` | `grafico_reta()` | regressão linear simples (v0.12.0) |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | a definir | qui-quadrado ou teste de proporções |
 
 Regras que saem desse desenho:
@@ -337,6 +342,61 @@ porque também têm marcadores.
 exploração dos dados (menu Explorar e Visualizar da CatalyseR) já mostrou
 dispersões parecidas. A ClaRa nunca troca de teste olhando o Levene; se o
 Levene rejeitar, o relatório recomenda voltar ao Welch.
+
+### Relacionar variáveis (v0.12.0)
+
+Decisões do professor (10/10/2026), pedidas pela Trilha para levar a
+regressão linear simples para a ClaRa:
+
+```r
+resultado <- barbos |>
+  relacionar_variaveis(resposta               = altura_maxima_corpo,
+                       preditor               = distancia_dorsal_pelvica,
+                       rotulo_resposta        = "Altura máxima do corpo",
+                       rotulo_preditor        = "Distância dorsal-pélvica",
+                       confianca              = 0.95,
+                       avaliar_autocorrelacao = FALSE)
+
+resultado |> grafico_reta(colorir_por = populacao)   # a figura principal
+resultado |> grafico_residuos()                      # curva e funil
+resultado |> grafico_qq()
+```
+
+- **Nomes**: `resposta` (o mesmo de `comparar_medias()`) e `preditor` (o
+  termo da tela e dos moldes da Trilha); `rotulo_preditor` acompanha
+  `rotulo_resposta`. A figura principal é `grafico_reta()`: diz o que se
+  vê, como `grafico_medias()`.
+- **Só uma reta** nesta versão. Grupos entram só como cor dos pontos, em
+  `grafico_reta(colorir_por = ...)`, que não muda o modelo. Retas por
+  grupo ficam em espera (outro modelo, com interação).
+- **Diagnóstico**: Shapiro-Wilk e Breusch-Pagan (`car::ncvTest()`, o mesmo
+  p de `performance::check_heteroscedasticity()`, que a tela usa) em
+  `$pressupostos`; resíduos e Q-Q nas receitas de `grafico_residuos()` e
+  `grafico_qq()`; Cook, alavancagem e resíduo extremo em
+  `$influencia` (limites 4/n, 2p/n e 3, como o roteiro antigo da Trilha) e
+  em `textos$influencia`. Gráficos próprios de influência ficam em espera.
+- **Durbin-Watson** só com `avaliar_autocorrelacao = TRUE` (variante na
+  receita, `variantes_regressao`), porque só faz sentido quando a ordem das
+  linhas é a ordem da coleta. O p vem de reamostragem
+  (`car::durbinWatsonTest()`, o mesmo algoritmo do `performance`); a
+  receita usa `set.seed(1)`, e a tela da Trilha, que não fixa a semente,
+  pode dar outro p a cada clique.
+- `linha_da_base` (a posição na tabela original, antes de tirar as linhas
+  sem resposta ou preditor) entra em `$dados` e `$influencia`, para o
+  aluno achar a observação na planilha.
+- **Efeito**: r de Pearson (com o sinal da inclinação, IC de `cor.test()`)
+  e R² (IC de `eta_squared()` sobre o `lm`, bilateral como na ANOVA). A
+  leitura usa os limites de Cohen para r (0,1; 0,3; 0,5), que ao quadrado
+  valem para o R² (0,01; 0,09; 0,25), e não os do η².
+- **Textos**: `$teste` traz a inclinação por unidade do preditor com o IC;
+  `$equacao` escreve a reta com os rótulos; `$poder` usa `pwr.f2.test()`
+  (f² = R² / (1 - R²)) e, como na ANOVA, só aparece sem evidência e com
+  poder abaixo de 80%.
+- **Tabelas**: `exibir_teste()` mostra os coeficientes (ganhou `casas` e
+  `rotulo_preditor`, que só a regressão usa) e `exibir_resumo()`, o
+  ajuste do modelo numa linha.
+- `grafico_residuos()` da regressão: uma nuvem só, com `geom_smooth(method
+  = "loess")` em coral para mostrar curva (o cangulo dá um U).
 
 ### Teste t unilateral (v0.11.0)
 
@@ -770,8 +830,14 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
   `escrever_resultados()` diz "a ração B diferiu do controle (A)". Com dois
   grupos, `comparacao` não muda o teste e `controle` define o sentido da
   diferença (tratamento menos controle);
-- próximas análises: `relacionar_variaveis()` (regressão) e
-  `comparar_proporcoes()`.
+- regressão com uma reta por grupo (`relacionar_variaveis(..., grupos = sexo)`):
+  outro modelo, com interação, e decisões próprias (como testar se as
+  retas diferem); até lá, a Trilha usa o molde antigo quando a tela pede
+  retas por grupo;
+- gráficos de influência da regressão (Cook, alavancagem,
+  escala-localização), cada um com o seu nome; hoje a influência sai em
+  `resultado$influencia` e nos textos;
+- próxima análise: `comparar_proporcoes()`.
 
 ## A ClaRa na Trilha, antiga CatalyseR (outubro de 2026)
 

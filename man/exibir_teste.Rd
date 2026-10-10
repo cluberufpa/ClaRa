@@ -7,15 +7,24 @@
 exibir_teste(
   resultado,
   rotulo_grupos = NULL,
+  rotulo_preditor = NULL,
+  casas = 2,
   tema = c("ocean", "cinza"),
   mostrar_codigo = FALSE
 )
 }
 \arguments{
-\item{resultado}{o que comparar_medias() ou comparar_medianas() devolveu}
+\item{resultado}{o que comparar_medias(), comparar_medianas() ou
+relacionar_variaveis() devolveu}
 
 \item{rotulo_grupos}{como chamar os grupos na linha do fator (ANOVA);
 sem ele, vai o da análise}
+
+\item{rotulo_preditor}{como chamar o preditor na linha da inclinação
+(regressão); sem ele, vai o da análise}
+
+\item{casas}{casas decimais dos coeficientes (regressão; padrão 2); use a
+precisão da medição}
 
 \item{tema}{"ocean" (padrão, relatório Word) ou "cinza" (Viewer)}
 
@@ -38,7 +47,9 @@ Welch, com decimais), F e p;
 GL e p;
 \item \strong{Kruskal-Wallis}: H, GL e p;
 \item \strong{Mann-Whitney}: o deslocamento (Hodges-Lehmann), o intervalo de
-confiança, W e p.
+confiança, W e p;
+\item \strong{regressão}: os coeficientes (intercepto e inclinação), com o erro
+padrão, o intervalo de confiança, t e p.
 }
 
 Como \code{\link[=escrever_resultados]{escrever_resultados()}}, é uma função só para todas as análises:

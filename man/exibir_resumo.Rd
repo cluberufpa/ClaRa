@@ -14,10 +14,11 @@ exibir_resumo(
 )
 }
 \arguments{
-\item{resultado}{o que comparar_medias() ou comparar_medianas() devolveu}
+\item{resultado}{o que comparar_medias(), comparar_medianas() ou
+relacionar_variaveis() devolveu}
 
-\item{casas}{casas decimais das médias, desvios e quartis (padrão 2); use
-a precisão da medição}
+\item{casas}{casas decimais das médias, desvios e quartis, ou do erro
+padrão dos resíduos na regressão (padrão 2); use a precisão da medição}
 
 \item{nota}{o texto da nota de rodapé, como \code{textos$nota_tabela}; sem ela
 (NULL, o padrão), a tabela sai sem nota}
@@ -41,7 +42,9 @@ a mesma letra não diferem entre si. A tabela depende da pergunta:
 \item \strong{médias} (ANOVA, ANOVA de Welch, teste t): n, média ± desvio padrão
 e o intervalo de confiança da média;
 \item \strong{medianas} (Kruskal-Wallis, Mann-Whitney): n, mediana e a metade
-central dos dados (do 1º ao 3º quartil).
+central dos dados (do 1º ao 3º quartil);
+\item \strong{regressão}: o ajuste do modelo numa linha (n, R², R² ajustado, erro
+padrão dos resíduos e o teste F).
 }
 
 A nota de rodapé que \code{\link[=escrever_resultados]{escrever_resultados()}} escreve (\code{textos$nota_tabela})

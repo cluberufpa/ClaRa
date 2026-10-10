@@ -46,17 +46,17 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 |---|---|---|---|---|
 | A média difere entre os grupos? | `comparar_medias()` | `grafico_medias()`, `grafico_boxplot()`, `grafico_pares()` | teste t de Welch ou de Student (2 grupos); ANOVA clássica com Tukey ou ANOVA de Welch com Games-Howell (3 ou mais) | pronta |
 | A mediana difere entre os grupos? | `comparar_medianas()` | `grafico_medianas()`, `grafico_boxplot()` | Mann-Whitney (2 grupos); Kruskal-Wallis com Dunn (3 ou mais) | pronta |
-| Uma variável acompanha a outra? | `relacionar_variaveis()` | ainda sem nome | regressão linear | planejada |
+| Uma variável acompanha a outra? | `relacionar_variaveis()` | `grafico_reta()` | regressão linear simples, com Shapiro-Wilk e Breusch-Pagan nos resíduos (Durbin-Watson, se a ordem das linhas for a da coleta) | pronta |
 | A proporção difere entre os grupos? | `comparar_proporcoes()` | ainda sem nome | qui-quadrado ou teste de proporções | planejada |
 
 | Para qualquer análise | O que faz |
 |---|---|
-| `medir_efeito()` | diz se o efeito é grande ou pequeno (η², ω², d de Cohen, ε² dos postos...) |
+| `medir_efeito()` | diz se o efeito é grande ou pequeno (η², ω², d de Cohen, ε² dos postos, r e R²...) |
 | `escrever_resultados()` | escreve as frases do relatório, que mudam junto com os dados |
-| `exibir_teste()` | a tabela do teste (ANOVA, t, Kruskal-Wallis...), pronta para o Word |
-| `exibir_resumo()` | a tabela por grupo, com a letra das comparações sobrescrita e a nota de rodapé |
-| `grafico_residuos()` | resíduos contra ajustados: as variâncias dos grupos são parecidas? (só médias) |
-| `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? (só médias) |
+| `exibir_teste()` | a tabela do teste (ANOVA, t, Kruskal-Wallis, coeficientes da reta...), pronta para o Word |
+| `exibir_resumo()` | a tabela por grupo, com a letra das comparações sobrescrita e a nota de rodapé (na regressão, o ajuste do modelo) |
+| `grafico_residuos()` | resíduos contra ajustados: variâncias parecidas e, na regressão, sem curva (médias e regressão) |
+| `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? (médias e regressão) |
 | `salvar_tabelas()` | grava cada tabela em CSV que o Excel em português abre |
 | `salvar_figuras()` | grava cada gráfico em PNG, com medidas em centímetros |
 | `registrar_ambiente()` | grava as versões da ClaRa, do R e dos pacotes, no fim do roteiro |

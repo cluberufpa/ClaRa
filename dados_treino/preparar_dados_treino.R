@@ -53,6 +53,19 @@ EAPADados::biometria_caranguejos |>
          largura_carapaca = LC, comprimento_carapaca = CC) |>
   gravar("real_caranguejos_braganca")
 
+# Barbo: medidas do corpo já corrigidas pelo comprimento padrão, em cinco
+# populações (regressão: uma reta limpa, com os pontos coloridos por população).
+EAPADados::morfometria_barbo |>
+  select(id_peixe, populacao, distancia_dorsal_pelvica, altura_maxima_corpo,
+         comprimento_cabeca, distancia_pre_peitoral) |>
+  gravar("real_barbo_morfometria")
+
+# Cangulo: peso e comprimento (regressão de uma relação curva, porque o peso
+# cresce com o cubo do comprimento; os resíduos da reta formam um U).
+EAPADados::cangulo_crescimento |>
+  select(comprimento_cm, peso_g) |>
+  gravar("real_cangulo_peso_comprimento")
+
 
 # 2. Dados sintéticos -------------------------------------------------------
 # A semente fixa faz o sorteio sair sempre igual.

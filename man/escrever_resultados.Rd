@@ -8,6 +8,7 @@ escrever_resultados(
   resultado,
   rotulo_resposta = NULL,
   rotulo_grupos = NULL,
+  rotulo_preditor = NULL,
   casas = 2,
   destacar = "maior",
   haste = "ic",
@@ -16,13 +17,15 @@ escrever_resultados(
 )
 }
 \arguments{
-\item{resultado}{o que comparar_medias() ou comparar_medianas() devolveu}
+\item{resultado}{o que comparar_medias(), comparar_medianas() ou relacionar_variaveis() devolveu}
 
 \item{rotulo_resposta}{como chamar a resposta no texto (ex.: "Peso (g)"); sem ele, vai o da análise}
 
 \item{rotulo_grupos}{como chamar os grupos no texto (ex.: "Tipo de Ração"); sem ele, vai o da análise}
 
-\item{casas}{casas decimais da média ± DP no destaque (ANOVA); use a precisão da medição}
+\item{rotulo_preditor}{como chamar o preditor no texto (regressão; ex.: "Comprimento (cm)"); sem ele, vai o da análise}
+
+\item{casas}{casas decimais da média ± DP no destaque (ANOVA) ou dos coeficientes (regressão); use a precisão da medição}
 
 \item{destacar}{o grupo em destaque na ANOVA: "maior" (a maior média), "menor" (a menor: conversão alimentar, mortalidade) ou o nome do grupo de referência (ex.: "Controle"), comparado com os demais}
 
@@ -39,7 +42,11 @@ Devolve uma lista de frases. Cada parte se abre com $:
 se aplica), \code{textos$sintese} e, na ANOVA, \code{textos$comparacoes},
 \code{textos$destaque} (o grupo em destaque e de quais grupos ele diferiu),
 \code{textos$nota_tabela} (a nota da tabela de médias) e
-\code{textos$legenda_figura} (a legenda de \code{\link[=grafico_medias]{grafico_medias()}}).
+\code{textos$legenda_figura} (a legenda de \code{\link[=grafico_medias]{grafico_medias()}}). Na
+regressão, no lugar das comparações e do destaque, vêm
+\code{textos$equacao} (a reta com os rótulos) e \code{textos$influencia} (as
+observações que merecem conferência); a nota é a da tabela dos
+coeficientes e a legenda, a de \code{\link[=grafico_reta]{grafico_reta()}}.
 
 No Quarto, a frase entra no meio do parágrafo com
 \code{`r textos$teste`}.
@@ -48,7 +55,7 @@ No Quarto, a frase entra no meio do parágrafo com
 Escreve as frases de um relatório a partir do resultado: a amostra, o teste, o tamanho de efeito, as comparações entre pares (ANOVA), os pressupostos, um alerta sobre o que pede cuidado e, quando muda a leitura, o poder do teste. Os números e as conclusões vêm do resultado: se os dados mudam, as frases mudam junto.
 }
 \details{
-É uma função só para todas as análises. Ela olha qual análise o resultado guarda (ANOVA ou teste t) e escolhe a receita daquela análise. Por isso, com mostrar_codigo = TRUE, aparece só o código da análise que você fez, nunca o das outras. Quando a ClaRa ganhar uma análise nova, a função continua a mesma: só a lista de receitas cresce.
+É uma função só para todas as análises. Ela olha qual análise o resultado guarda (ANOVA, teste t, medianas ou regressão) e escolhe a receita daquela análise. Por isso, com mostrar_codigo = TRUE, aparece só o código da análise que você fez, nunca o das outras. Quando a ClaRa ganhar uma análise nova, a função continua a mesma: só a lista de receitas cresce.
 }
 \examples{
 # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).
