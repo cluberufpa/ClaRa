@@ -69,8 +69,10 @@ R CMD INSTALL --no-multiarch .          # antes de rodar os exemplos
 
 A meta do check (decisão J do professor, 9/10/2026): 0 erros, 0 notas e
 **um só aviso conhecido**, o dos acentos nos textos do código ("non-ASCII
-characters"). Os acentos ficam por enquanto; antes do CRAN, um script troca
-os textos por escapes `\u`. Qualquer outro aviso ou nota é problema novo.
+characters"). Os acentos ficam no repositório; para o CRAN,
+`Rscript ferramentas/preparar_cran.R --check` copia o pacote, troca os
+acentos dos textos por escapes `\u` na cópia, gera o `.tar.gz` na pasta
+acima da ClaRa e roda o check `--as-cran`, que sai sem o aviso. Qualquer outro aviso ou nota é problema novo.
 
 Os roteiros de `exemplos/` usam a ClaRa instalada:
 
