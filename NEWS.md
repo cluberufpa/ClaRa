@@ -28,8 +28,9 @@ em `R/clara_regressao.R`.
   ajuste do modelo), `grafico_residuos()` (nuvem única com uma curva loess,
   para mostrar curvatura e funil) e `grafico_qq()` (resíduos
   padronizados, como na ANOVA).
-* `exibir_teste()` ganhou `rotulo_preditor` e `casas`, e
-  `escrever_resultados()`, `rotulo_preditor`; os dois só valem para a
+* `exibir_teste()` ganhou `rotulo_preditor` e `casas` (só a regressão os usa)
+  e `nota`, a nota de rodapé, como `exibir_resumo()` (em todas as análises);
+  `escrever_resultados()` ganhou `rotulo_preditor`, que só vale para a
   regressão.
 * Dados de treino novos: `real_barbo_morfometria` (reta limpa, cinco
   populações) e `real_cangulo_peso_comprimento` (relação curva). Roteiro

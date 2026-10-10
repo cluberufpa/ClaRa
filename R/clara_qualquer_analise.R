@@ -350,6 +350,8 @@ receitas_qq       <- list()
 #'   (regressão); sem ele, vai o da análise
 #' @param casas casas decimais dos coeficientes (regressão; padrão 2); use a
 #'   precisão da medição
+#' @param nota o texto da nota de rodapé, como `textos$nota_tabela` na
+#'   regressão; sem ela (NULL, o padrão), a tabela sai sem nota
 #' @param tema "ocean" (padrão, relatório Word) ou "cinza" (Viewer)
 #' @param mostrar_codigo TRUE imprime o código R antes da tabela
 #'
@@ -369,17 +371,31 @@ receitas_qq       <- list()
 #' resultado |>
 #'   exibir_teste(tema = "cinza")
 #'
+#' # Na regressão, a nota da tabela dos coeficientes vem de escrever_resultados().
+#' reta   <- mtcars |>
+#'   relacionar_variaveis(resposta = mpg, preditor = wt)
+#' textos <- reta |>
+#'   escrever_resultados()
+#' reta |>
+#'   exibir_teste(nota = textos$nota_tabela)
+#'
 #' @concept Para qualquer análise
 #' @export
 exibir_teste <- function(resultado,
                          rotulo_grupos   = NULL,
                          rotulo_preditor = NULL,
                          casas           = 2,
+                         nota            = NULL,
                          tema            = c("ocean", "cinza"),
                          mostrar_codigo  = FALSE) {
 
   # Guardamos o nome do resultado, como o aluno o chamou.
   nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # A nota entra na receita como o aluno a escreveu (textos$nota_tabela).
+  # A expressão é guardada antes de o R calcular o valor da nota.
+  expressao_nota <- rlang::enquo(nota)
+  codigo_nota    <- if (is.null(nota)) NULL else rlang::quo_text(expressao_nota)
 
   # Conferimos as escolhas antes de montar a tabela.
   tema <- escolher_opcao(tema, c("ocean", "cinza"), "tema")
@@ -389,11 +405,15 @@ exibir_teste <- function(resultado,
   if (!is.numeric(casas) || length(casas) != 1 || casas < 0) {
     stop("casas aceita um número inteiro, como 1 ou 2.", call. = FALSE)
   }
+  if (!is.null(nota) && (!is.character(nota) || length(nota) != 1)) {
+    stop("nota aceita um texto só, como textos$nota_tabela.", call. = FALSE)
+  }
 
   # Trocamos os marcadores da receita da análise feita pelos nomes dela.
   receita <- preencher_receita(escolher_receita(receitas_tabela_teste, resultado, "exibir_teste"), list(
     NUMEROS        = trecho_numeros_tabela,
     TEMA           = temas_tabela[[tema]],
+    NOTA           = trecho_nota(codigo_nota, tema),
     RESULTADO      = nome_resultado,
     ROTULO_GRUPOS  = ou_entao(rotulo_grupos, resultado$nomes$rotulo_grupos),
     ROTULO_PREDITOR = ou_entao(rotulo_preditor, resultado$nomes$rotulo_preditor),
@@ -403,12 +423,14 @@ exibir_teste <- function(resultado,
                                       .default = 2)
   ))
 
-  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  # Rodamos a receita a partir de onde o aluno chamou a função: a nota
+  # (textos$nota_tabela) mora lá.
   executar_receita(
-    receita        = receita,
-    objetos        = rlang::set_names(list(resultado), nome_resultado),
-    pacotes        = c("dplyr", "flextable"),
-    mostrar_codigo = mostrar_codigo
+    receita           = receita,
+    objetos           = rlang::set_names(list(resultado), nome_resultado),
+    pacotes           = c("dplyr", "flextable"),
+    mostrar_codigo    = mostrar_codigo,
+    ambiente_do_aluno = parent.frame()
   )
 }
 

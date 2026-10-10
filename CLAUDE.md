@@ -393,7 +393,8 @@ resultado |> grafico_qq()
   (f² = R² / (1 - R²)) e, como na ANOVA, só aparece sem evidência e com
   poder abaixo de 80%.
 - **Tabelas**: `exibir_teste()` mostra os coeficientes (ganhou `casas` e
-  `rotulo_preditor`, que só a regressão usa) e `exibir_resumo()`, o
+  `rotulo_preditor`, que só a regressão usa, e `nota`, que vale para todas
+  as análises, como em `exibir_resumo()`) e `exibir_resumo()`, o
   ajuste do modelo numa linha.
 - `grafico_residuos()` da regressão: uma nuvem só, com `geom_smooth(method
   = "loess")` em coral para mostrar curva (o cangulo dá um U).

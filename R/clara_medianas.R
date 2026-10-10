@@ -733,7 +733,7 @@ tabela <- <<RESULTADO>>$teste |>
 
 # 3. A tabela no tema escolhido.
 tabela |>
-  <<TEMA>>"
+  <<TEMA>> <<NOTA>>"
 
 receitas_tabela_teste$mann_whitney <- "<<NUMEROS>>
 
@@ -748,7 +748,7 @@ tabela <- <<RESULTADO>>$teste |>
 
 # 3. A tabela no tema escolhido.
 tabela |>
-  <<TEMA>>"
+  <<TEMA>> <<NOTA>>"
 
 # A receita de exibir_resumo(), a mesma para as duas análises das medianas.
 receitas_tabela_resumo$kruskal <- "<<NUMEROS>>

@@ -1922,7 +1922,7 @@ tabela <- <<RESULTADO>>$anova |>
 
 # 3. A tabela no tema escolhido.
 tabela |>
-  <<TEMA>>"
+  <<TEMA>> <<NOTA>>"
 
 receitas_tabela_teste$anova_welch <- "<<NUMEROS>>
 
@@ -1936,7 +1936,7 @@ tabela <- <<RESULTADO>>$anova |>
 
 # 3. A tabela no tema escolhido.
 tabela |>
-  <<TEMA>>"
+  <<TEMA>> <<NOTA>>"
 
 receitas_tabela_teste$teste_t <- "<<NUMEROS>>
 
@@ -1951,7 +1951,7 @@ tabela <- <<RESULTADO>>$teste |>
 
 # 3. A tabela no tema escolhido.
 tabela |>
-  <<TEMA>>"
+  <<TEMA>> <<NOTA>>"
 
 # A receita de exibir_resumo(), a mesma para as três análises das médias:
 # todas devolvem o $resumo com média, DP, IC e letra.

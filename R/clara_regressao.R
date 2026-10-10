@@ -769,7 +769,7 @@ tabela <- <<RESULTADO>>$coeficientes |>
 
 # 3. A tabela no tema escolhido.
 tabela |>
-  <<TEMA>>"
+  <<TEMA>> <<NOTA>>"
 
 receitas_tabela_resumo$regressao <- "<<NUMEROS>>
 

@@ -120,3 +120,15 @@ test_that("as conferências explicam o problema em português", {
   expect_error(grafico_reta(resultado, colorir_por = sexo), "não encontrada")
   expect_error(grafico_medias(resultado), "comparar_medias")
 })
+
+test_that("exibir_teste() aceita a nota de rodapé, como exibir_resumo()", {
+  barbos    <- ler_treino("real_barbo_morfometria")
+  resultado <- relacionar_variaveis(barbos, resposta = altura_maxima_corpo,
+                                    preditor = distancia_dorsal_pelvica)
+  textos    <- escrever_resultados(resultado)
+
+  com_nota <- exibir_teste(resultado, nota = textos$nota_tabela)
+  expect_equal(nrow(com_nota$footer$dataset), 1)
+  expect_equal(nrow(exibir_teste(resultado)$footer$dataset), 0)
+  expect_error(exibir_teste(resultado, nota = 1), "nota aceita")
+})

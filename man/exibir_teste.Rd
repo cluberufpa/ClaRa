@@ -9,6 +9,7 @@ exibir_teste(
   rotulo_grupos = NULL,
   rotulo_preditor = NULL,
   casas = 2,
+  nota = NULL,
   tema = c("ocean", "cinza"),
   mostrar_codigo = FALSE
 )
@@ -25,6 +26,9 @@ sem ele, vai o da análise}
 
 \item{casas}{casas decimais dos coeficientes (regressão; padrão 2); use a
 precisão da medição}
+
+\item{nota}{o texto da nota de rodapé, como \code{textos$nota_tabela} na
+regressão; sem ela (NULL, o padrão), a tabela sai sem nota}
 
 \item{tema}{"ocean" (padrão, relatório Word) ou "cinza" (Viewer)}
 
@@ -68,6 +72,14 @@ resultado |>
 
 resultado |>
   exibir_teste(tema = "cinza")
+
+# Na regressão, a nota da tabela dos coeficientes vem de escrever_resultados().
+reta   <- mtcars |>
+  relacionar_variaveis(resposta = mpg, preditor = wt)
+textos <- reta |>
+  escrever_resultados()
+reta |>
+  exibir_teste(nota = textos$nota_tabela)
 
 }
 \concept{Para qualquer análise}
