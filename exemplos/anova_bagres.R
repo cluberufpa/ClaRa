@@ -51,11 +51,18 @@ resultado |>
   medir_efeito(mostrar_codigo = F)
 
 # 8. Tabelas ---------------------------------------------------------------
-# As tabelas já saem prontas do resultado; a formatação para o Word
-# (flextable) é apresentação e fica no funcoes.R do projeto da CatalyseR.
+# As tabelas já saem prontas do resultado, para conferir no console.
 resultado$resumo
 resultado$anova
 resultado$pares
+
+# Para o Word, exibir_teste() e exibir_resumo() as montam no tema Ocean, com
+# nomes em português e vírgula decimal (tema = "cinza" para o Viewer).
+resultado |>
+  exibir_teste()
+
+resultado |>
+  exibir_resumo(casas = 1)        # a nota de rodapé entra na seção 10
 
 # 9. Gráficos --------------------------------------------------------------
 
@@ -112,6 +119,11 @@ textos <- resultado |>
   escrever_resultados()
 
 textos
+
+# A tabela de médias com a nota de rodapé que escrever_resultados() escreveu.
+resultado |>
+  exibir_resumo(casas = 1,
+                nota  = textos$nota_tabela)
 
 # 11. Salvar cópias --------------------------------------------------------
 # No projeto da CatalyseR, os CSVs e PNGs vão para saida/. Aqui, só as

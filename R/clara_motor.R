@@ -92,7 +92,7 @@ funcoes_da_clara <- function() {
   # uma função nova, que ainda não esteja lá, entra no fim, e a seção dela
   # (uma pergunta nova) aparece antes de "Para qualquer análise".
   posicao <- match(funcoes$funcao, ordem_da_ajuda, nomatch = length(ordem_da_ajuda) + 1)
-  finais  <- c("Para qualquer análise", "Ajuda")
+  finais  <- c("Para qualquer análise", "Formatar e exibir", "Ajuda")
   ordem   <- order(match(funcoes$secao, finais, nomatch = 0),
                    tapply(posicao, funcoes$secao, min)[funcoes$secao],
                    posicao, funcoes$funcao)
@@ -105,8 +105,10 @@ funcoes_da_clara <- function() {
 ordem_da_ajuda <- c(
   "comparar_medias", "grafico_medias", "grafico_boxplot", "grafico_pares",
   "comparar_medianas", "grafico_medianas",
-  "medir_efeito", "escrever_resultados", "grafico_residuos", "grafico_qq",
+  "medir_efeito", "escrever_resultados", "exibir_teste", "exibir_resumo",
+  "grafico_residuos", "grafico_qq",
   "salvar_tabelas", "salvar_figuras", "registrar_ambiente",
+  "formatar_numero", "formatar_p", "exibir_tabela",
   "ajuda"
 )
 
@@ -386,18 +388,8 @@ ou_entao <- function(valor, alternativa) {
   if (is.null(valor)) alternativa else valor
 }
 
-# Escreve um número com vírgula decimal, como no português.
-numero <- function(x, casas = 2) {
-  formatC(x, format = "f", digits = casas, decimal.mark = ",")
-}
-
-# Escreve o p-valor como no texto científico; um p muito pequeno nunca vira zero.
-escrever_p <- function(p) {
-  dplyr::case_when(
-    p < 0.001 ~ "p < 0,001",
-    .default  = paste("p =", numero(p, 3))
-  )
-}
+# Os números e os p-valores do console usam formatar_numero() e formatar_p()
+# (clara_formatar.R), as mesmas funções que o aluno usa.
 
 
 # Cores dos gráficos -----------------------------------------------------------

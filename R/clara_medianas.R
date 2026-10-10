@@ -721,6 +721,55 @@ list(
 ) |>
   lapply(as.character)")
 
+# As receitas de exibir_teste(), uma por análise. O trecho dos números
+# (<<NUMEROS>>) e o do tema (<<TEMA>>) vêm de clara_formatar.R.
+receitas_tabela_teste$kruskal <- "<<NUMEROS>>
+
+# 2. A tabela do Kruskal-Wallis: a estatística H, os graus de liberdade e o p.
+tabela <- <<RESULTADO>>$teste |>
+  transmute(H  = com_virgula(h),
+            GL = com_virgula(gl, 0),
+            p  = texto_p(p))
+
+# 3. A tabela no tema escolhido.
+tabela |>
+  <<TEMA>>"
+
+receitas_tabela_teste$mann_whitney <- "<<NUMEROS>>
+
+# 2. A tabela do Mann-Whitney: o deslocamento entre os grupos (estimativa
+#    de Hodges-Lehmann) e o seu intervalo, W e p.
+tabela <- <<RESULTADO>>$teste |>
+  transmute(Comparação    = comparacao,
+            Deslocamento  = com_virgula(deslocamento),
+            `<<ROTULO_IC>>`      = paste(com_virgula(ic_inf), \"a\", com_virgula(ic_sup)),
+            W             = com_virgula(w, 1),
+            p             = texto_p(p))
+
+# 3. A tabela no tema escolhido.
+tabela |>
+  <<TEMA>>"
+
+# A receita de exibir_resumo(), a mesma para as duas análises das medianas.
+receitas_tabela_resumo$kruskal <- "<<NUMEROS>>
+
+# 2. Uma linha por grupo: n, mediana e a metade central dos dados (do 1º
+#    ao 3º quartil).
+tabela <- <<RESULTADO>>$resumo |>
+  transmute(`<<ROTULO_GRUPOS>>` = <<GRUPOS>>,
+            n,
+            Mediana   = com_virgula(mediana, <<CASAS>>),
+            `Q1 a Q3` = paste(com_virgula(q1, <<CASAS>>), \"a\", com_virgula(q3, <<CASAS>>)))
+
+# 3. A tabela no tema escolhido, com a letra das comparações sobrescrita à
+#    mediana: grupos com a mesma letra não diferem.
+tabela |>
+  <<TEMA>> |>
+  compose(j     = \"Mediana\",
+          value = as_paragraph(Mediana, as_sup(<<RESULTADO>>$resumo$letra))) <<NOTA>>"
+
+receitas_tabela_resumo$mann_whitney <- receitas_tabela_resumo$kruskal
+
 
 # Exibição no console ----------------------------------------------------------
 #
@@ -750,14 +799,14 @@ print.clara_medianas <- function(x, ...) {
   if (x$nomes$analise == "mann_whitney") {
     cat("\n# Mann-Whitney\n")
     cat("Com dois grupos, a ClaRa usa o Mann-Whitney no lugar do Kruskal-Wallis.\n")
-    cat("W = ", numero(teste$w, 1), "; ", escrever_p(teste$p), ": ",
+    cat("W = ", formatar_numero(teste$w, 1), "; ", formatar_p(teste$p, no_texto = TRUE), ": ",
         concluir_medianas(teste$p, x$nomes$confianca), "\n", sep = "")
-    cat("Deslocamento ", teste$comparacao, ": ", numero(teste$deslocamento),
-        " (IC ", x$nomes$confianca * 100, "%: ", numero(teste$ic_inf),
-        " a ", numero(teste$ic_sup), ")\n", sep = "")
+    cat("Deslocamento ", teste$comparacao, ": ", formatar_numero(teste$deslocamento),
+        " (IC ", x$nomes$confianca * 100, "%: ", formatar_numero(teste$ic_inf),
+        " a ", formatar_numero(teste$ic_sup), ")\n", sep = "")
   } else {
     cat("\n# Kruskal-Wallis\n")
-    cat("H(", teste$gl, ") = ", numero(teste$h), "; ", escrever_p(teste$p), ": ",
+    cat("H(", teste$gl, ") = ", formatar_numero(teste$h), "; ", formatar_p(teste$p, no_texto = TRUE), ": ",
         concluir_medianas(teste$p, x$nomes$confianca), "\n", sep = "")
   }
 

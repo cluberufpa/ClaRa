@@ -304,6 +304,186 @@ receitas_residuos <- list()
 receitas_qq       <- list()
 
 
+# exibir_teste() ---------------------------------------------------------------
+#' Como mostrar a tabela do teste no relatório?
+#'
+#' Monta a tabela do teste feito, com nomes em português e números com
+#' vírgula, pronta para o relatório Word (tema Ocean) ou para o Viewer
+#' (tema cinza). A tabela depende da análise:
+#'
+#' - **ANOVA**: fonte de variação, GL, SQ, QM, F e p;
+#' - **ANOVA de Welch**: fonte, GL (o dos resíduos com a correção de
+#'   Welch, com decimais), F e p;
+#' - **teste t**: a diferença entre as médias, o intervalo de confiança, t,
+#'   GL e p;
+#' - **Kruskal-Wallis**: H, GL e p;
+#' - **Mann-Whitney**: o deslocamento (Hodges-Lehmann), o intervalo de
+#'   confiança, W e p.
+#'
+#' Como [escrever_resultados()], é uma função só para todas as análises:
+#' ela olha qual análise o resultado guarda e usa a receita dela.
+#'
+#' @param resultado o que comparar_medias() ou comparar_medianas() devolveu
+#' @param rotulo_grupos como chamar os grupos na linha do fator (ANOVA);
+#'   sem ele, vai o da análise
+#' @param tema "ocean" (padrão, relatório Word) ou "cinza" (Viewer)
+#' @param mostrar_codigo TRUE imprime o código R antes da tabela
+#'
+#' @return Uma tabela do flextable; ajustes extras entram com o pipe.
+#'
+#' @examples
+#' # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).
+#' resultado <- PlantGrowth |>
+#'   comparar_medias(resposta        = weight,
+#'                   grupos          = group,
+#'                   rotulo_resposta = "Peso seco (g)",
+#'                   rotulo_grupos   = "Tratamento")
+#'
+#' resultado |>
+#'   exibir_teste()
+#'
+#' resultado |>
+#'   exibir_teste(tema = "cinza")
+#'
+#' @concept Para qualquer análise
+#' @export
+exibir_teste <- function(resultado,
+                         rotulo_grupos  = NULL,
+                         tema           = c("ocean", "cinza"),
+                         mostrar_codigo = FALSE) {
+
+  # Guardamos o nome do resultado, como o aluno o chamou.
+  nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # Conferimos as escolhas antes de montar a tabela.
+  tema <- escolher_opcao(tema, c("ocean", "cinza"), "tema")
+  conferir_rotulo(rotulo_grupos, "rotulo_grupos")
+  conferir_sim_ou_nao(mostrar_codigo, "mostrar_codigo")
+
+  # Trocamos os marcadores da receita da análise feita pelos nomes dela.
+  receita <- preencher_receita(escolher_receita(receitas_tabela_teste, resultado, "exibir_teste"), list(
+    NUMEROS        = trecho_numeros_tabela,
+    TEMA           = temas_tabela[[tema]],
+    RESULTADO      = nome_resultado,
+    ROTULO_GRUPOS  = ou_entao(rotulo_grupos, resultado$nomes$rotulo_grupos),
+    ROTULO_IC      = rotulo_ic(resultado$nomes$confianca),
+    CASAS_GL       = dplyr::case_when(isTRUE(resultado$nomes$variancias_iguais) ~ 0,
+                                      .default = 2)
+  ))
+
+  # Rodamos a receita, mostrando o código antes, se o aluno pediu.
+  executar_receita(
+    receita        = receita,
+    objetos        = rlang::set_names(list(resultado), nome_resultado),
+    pacotes        = c("dplyr", "flextable"),
+    mostrar_codigo = mostrar_codigo
+  )
+}
+
+
+# exibir_resumo() --------------------------------------------------------------
+#' Como mostrar o resumo de cada grupo numa tabela?
+#'
+#' Monta a tabela do resumo por grupo, uma linha por grupo, com a letra das
+#' comparações sobrescrita, como nas revistas (`86,2 ± 3,1ᶜ`). Grupos com
+#' a mesma letra não diferem entre si. A tabela depende da pergunta:
+#'
+#' - **médias** (ANOVA, ANOVA de Welch, teste t): n, média ± desvio padrão
+#'   e o intervalo de confiança da média;
+#' - **medianas** (Kruskal-Wallis, Mann-Whitney): n, mediana e a metade
+#'   central dos dados (do 1º ao 3º quartil).
+#'
+#' A nota de rodapé que [escrever_resultados()] escreve (`textos$nota_tabela`)
+#' entra com `nota`.
+#'
+#' @param resultado o que comparar_medias() ou comparar_medianas() devolveu
+#' @param casas casas decimais das médias, desvios e quartis (padrão 2); use
+#'   a precisão da medição
+#' @param nota o texto da nota de rodapé, como `textos$nota_tabela`; sem ela
+#'   (NULL, o padrão), a tabela sai sem nota
+#' @param rotulo_grupos o nome da coluna dos grupos; sem ele, vai o da análise
+#' @param tema "ocean" (padrão, relatório Word) ou "cinza" (Viewer)
+#' @param mostrar_codigo TRUE imprime o código R antes da tabela
+#'
+#' @return Uma tabela do flextable; ajustes extras entram com o pipe.
+#'
+#' @examples
+#' # Peso seco de plantas sob três tratamentos (PlantGrowth, do R).
+#' resultado <- PlantGrowth |>
+#'   comparar_medias(resposta        = weight,
+#'                   grupos          = group,
+#'                   rotulo_resposta = "Peso seco (g)",
+#'                   rotulo_grupos   = "Tratamento")
+#'
+#' textos <- resultado |>
+#'   escrever_resultados()
+#'
+#' resultado |>
+#'   exibir_resumo(casas = 2,
+#'                 nota  = textos$nota_tabela)
+#'
+#' @concept Para qualquer análise
+#' @export
+exibir_resumo <- function(resultado,
+                          casas          = 2,
+                          nota           = NULL,
+                          rotulo_grupos  = NULL,
+                          tema           = c("ocean", "cinza"),
+                          mostrar_codigo = FALSE) {
+
+  # Guardamos o nome do resultado, como o aluno o chamou.
+  nome_resultado <- nome_do_objeto(substitute(resultado), padrao = "resultado")
+
+  # A nota entra na receita como o aluno a escreveu (textos$nota_tabela).
+  # A expressão é guardada antes de o R calcular o valor da nota.
+  expressao_nota <- rlang::enquo(nota)
+  codigo_nota    <- if (is.null(nota)) NULL else rlang::quo_text(expressao_nota)
+
+  # Conferimos as escolhas antes de montar a tabela.
+  tema <- escolher_opcao(tema, c("ocean", "cinza"), "tema")
+  conferir_rotulo(rotulo_grupos, "rotulo_grupos")
+  conferir_sim_ou_nao(mostrar_codigo, "mostrar_codigo")
+  if (!is.numeric(casas) || length(casas) != 1 || casas < 0) {
+    stop("casas aceita um número inteiro, como 1 ou 2.", call. = FALSE)
+  }
+  if (!is.null(nota) && (!is.character(nota) || length(nota) != 1)) {
+    stop("nota aceita um texto só, como textos$nota_tabela.", call. = FALSE)
+  }
+
+  # Trocamos os marcadores da receita da análise feita pelos nomes dela.
+  receita <- preencher_receita(escolher_receita(receitas_tabela_resumo, resultado, "exibir_resumo"), list(
+    NUMEROS       = trecho_numeros_tabela,
+    TEMA          = temas_tabela[[tema]],
+    NOTA          = trecho_nota(codigo_nota, tema),
+    RESULTADO     = nome_resultado,
+    GRUPOS        = resultado$nomes$grupos,
+    ROTULO_GRUPOS = ou_entao(rotulo_grupos, resultado$nomes$rotulo_grupos),
+    ROTULO_IC     = rotulo_ic(resultado$nomes$confianca),
+    CASAS         = casas
+  ))
+
+  # Rodamos a receita a partir de onde o aluno chamou a função: a nota
+  # (textos$nota_tabela) mora lá.
+  executar_receita(
+    receita           = receita,
+    objetos           = rlang::set_names(list(resultado), nome_resultado),
+    pacotes           = c("dplyr", "flextable"),
+    mostrar_codigo    = mostrar_codigo,
+    ambiente_do_aluno = parent.frame()
+  )
+}
+
+# As receitas de exibir_teste() e exibir_resumo(), uma por análise. Cada
+# arquivo de pergunta acrescenta as suas.
+receitas_tabela_teste  <- list()
+receitas_tabela_resumo <- list()
+
+# O nome da coluna do intervalo de confiança: "IC 95%".
+rotulo_ic <- function(confianca) {
+  paste0("IC ", format(confianca * 100), "%")
+}
+
+
 # salvar_tabelas() -------------------------------------------------------------
 #' Como levar as tabelas da análise para o Excel?
 #'

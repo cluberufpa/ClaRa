@@ -48,6 +48,7 @@
 #' @importFrom broom tidy
 #' @importFrom car leveneTest
 #' @importFrom effectsize eta_squared
+#' @importFrom flextable flextable
 #' @importFrom multcompView multcompLetters
 #' @importFrom pwr pwr.anova.test
 #' @importFrom stringr str_wrap

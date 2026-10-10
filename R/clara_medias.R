@@ -1785,6 +1785,73 @@ receitas_qq$teste_t <- paste(trimws(c(trecho_cores,
                                       trechos_diagnostico$qq_teste_t)), collapse = "\n\n")
 receitas_qq$anova_welch <- receitas_qq$teste_t
 
+# As receitas de exibir_teste(), uma por análise. O trecho dos números
+# (<<NUMEROS>>) e o do tema (<<TEMA>>) vêm de clara_formatar.R.
+receitas_tabela_teste$anova <- "<<NUMEROS>>
+
+# 2. A tabela da ANOVA, com os nomes em português.
+tabela <- <<RESULTADO>>$anova |>
+  transmute(Fonte = c(\"<<ROTULO_GRUPOS>>\", \"Resíduo\"),
+            GL    = com_virgula(gl, 0),
+            SQ    = com_virgula(sq),
+            QM    = com_virgula(qm),
+            F     = com_virgula(f),
+            p     = texto_p(p))
+
+# 3. A tabela no tema escolhido.
+tabela |>
+  <<TEMA>>"
+
+receitas_tabela_teste$anova_welch <- "<<NUMEROS>>
+
+# 2. A tabela da ANOVA de Welch: sem SQ e QM, e o GL dos resíduos com
+#    decimais, por causa da correção de Welch.
+tabela <- <<RESULTADO>>$anova |>
+  transmute(Fonte = c(\"<<ROTULO_GRUPOS>>\", \"Resíduo\"),
+            GL    = c(com_virgula(gl[1], 0), com_virgula(gl[2], 2)),
+            F     = com_virgula(f),
+            p     = texto_p(p))
+
+# 3. A tabela no tema escolhido.
+tabela |>
+  <<TEMA>>"
+
+receitas_tabela_teste$teste_t <- "<<NUMEROS>>
+
+# 2. A tabela do teste t: a diferença entre as médias e o seu intervalo.
+tabela <- <<RESULTADO>>$teste |>
+  transmute(Comparação    = comparacao,
+            Diferença     = com_virgula(diferenca),
+            `<<ROTULO_IC>>`      = paste(com_virgula(ic_inf), \"a\", com_virgula(ic_sup)),
+            t             = com_virgula(t),
+            GL            = com_virgula(gl, <<CASAS_GL>>),
+            p             = texto_p(p))
+
+# 3. A tabela no tema escolhido.
+tabela |>
+  <<TEMA>>"
+
+# A receita de exibir_resumo(), a mesma para as três análises das médias:
+# todas devolvem o $resumo com média, DP, IC e letra.
+receitas_tabela_resumo$anova <- "<<NUMEROS>>
+
+# 2. Uma linha por grupo: n, média ± desvio padrão e o intervalo de confiança.
+tabela <- <<RESULTADO>>$resumo |>
+  transmute(`<<ROTULO_GRUPOS>>` = <<GRUPOS>>,
+            n,
+            `Média ± DP`  = paste(com_virgula(media, <<CASAS>>), \"±\", com_virgula(dp, <<CASAS>>)),
+            `<<ROTULO_IC>>`      = paste(com_virgula(ic_inf, <<CASAS>>), \"a\", com_virgula(ic_sup, <<CASAS>>)))
+
+# 3. A tabela no tema escolhido, com a letra das comparações sobrescrita à
+#    média, como nas revistas: grupos com a mesma letra não diferem.
+tabela |>
+  <<TEMA>> |>
+  compose(j     = \"Média ± DP\",
+          value = as_paragraph(`Média ± DP`, as_sup(<<RESULTADO>>$resumo$letra))) <<NOTA>>"
+
+receitas_tabela_resumo$anova_welch <- receitas_tabela_resumo$anova
+receitas_tabela_resumo$teste_t     <- receitas_tabela_resumo$anova
+
 
 # Exibição no console ----------------------------------------------------------
 #
@@ -1827,8 +1894,8 @@ imprimir_anova <- function(x) {
   # casas decimais e, por causa da vírgula, os dois gl se separam por ";".
   cat(dplyr::case_when(welch ~ "\n# ANOVA de Welch\n", .default = "\n# ANOVA\n"))
   cat("F(", linha_f$gl, dplyr::case_when(welch ~ "; ", .default = ", "),
-      numero(x$anova$gl[2], dplyr::case_when(welch ~ 2, .default = 0)),
-      ") = ", numero(linha_f$f), "; ", escrever_p(linha_f$p), ": ",
+      formatar_numero(x$anova$gl[2], dplyr::case_when(welch ~ 2, .default = 0)),
+      ") = ", formatar_numero(linha_f$f), "; ", formatar_p(linha_f$p, no_texto = TRUE), ": ",
       concluir_medias(linha_f$p, x$nomes$confianca), "\n", sep = "")
 
   # Os pressupostos, com a leitura de cada teste.
@@ -1860,14 +1927,14 @@ imprimir_teste_t <- function(x) {
 
   # Os graus de liberdade só levam casas decimais quando não são inteiros (Welch).
   casas_gl <- dplyr::case_when(teste$gl == round(teste$gl) ~ 0, .default = 2)
-  cat("t(", numero(teste$gl, casas_gl), ") = ", numero(teste$t), "; ",
-      escrever_p(teste$p), ": ",
+  cat("t(", formatar_numero(teste$gl, casas_gl), ") = ", formatar_numero(teste$t), "; ",
+      formatar_p(teste$p, no_texto = TRUE), ": ",
       concluir_medias(teste$p, x$nomes$confianca), "\n", sep = "")
 
   # A diferença entre as médias, com o intervalo de confiança.
-  cat("Diferença ", teste$comparacao, ": ", numero(teste$diferenca),
-      " (IC ", x$nomes$confianca * 100, "%: ", numero(teste$ic_inf),
-      " a ", numero(teste$ic_sup), ")\n", sep = "")
+  cat("Diferença ", teste$comparacao, ": ", formatar_numero(teste$diferenca),
+      " (IC ", x$nomes$confianca * 100, "%: ", formatar_numero(teste$ic_inf),
+      " a ", formatar_numero(teste$ic_sup), ")\n", sep = "")
 
   # Os pressupostos, com a leitura de cada teste.
   cat("\n# Pressupostos\n")

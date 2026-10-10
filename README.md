@@ -19,6 +19,8 @@ resultado |> medir_efeito()                # a diferença é grande ou pequena?
 resultado |> grafico_medias()              # a comparação numa figura
 resultado |> grafico_qq()                  # os resíduos, num gráfico Q-Q
 textos <- resultado |> escrever_resultados()   # frases para o relatório
+resultado |> exibir_teste()                # a tabela do teste, para o Word
+resultado |> exibir_resumo(nota = textos$nota_tabela)   # médias e letras
 
 ajuda()                                    # a lista de funções
 ajuda(comparar_medias)                     # o que uma função faz e como usá-la
@@ -51,6 +53,8 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 |---|---|
 | `medir_efeito()` | diz se o efeito é grande ou pequeno (η², ω², d de Cohen, ε² dos postos...) |
 | `escrever_resultados()` | escreve as frases do relatório, que mudam junto com os dados |
+| `exibir_teste()` | a tabela do teste (ANOVA, t, Kruskal-Wallis...), pronta para o Word |
+| `exibir_resumo()` | a tabela por grupo, com a letra das comparações sobrescrita e a nota de rodapé |
 | `grafico_residuos()` | resíduos contra ajustados: as variâncias dos grupos são parecidas? (só médias) |
 | `grafico_qq()` | gráfico Q-Q: os resíduos são compatíveis com a normal? (só médias) |
 | `salvar_tabelas()` | grava cada tabela em CSV que o Excel em português abre |
@@ -58,9 +62,15 @@ escolhe o teste certo para a pergunta e diz no relatório qual usou.
 | `registrar_ambiente()` | grava as versões da ClaRa, do R e dos pacotes, no fim do roteiro |
 | `ajuda()` | lista as funções ou explica uma delas |
 
+| Formatar e exibir | O que faz |
+|---|---|
+| `formatar_numero()` | escreve números com vírgula decimal: `86,25` |
+| `formatar_p()` | escreve o p como no artigo: `0,032`, `< 0,001` ou `p = 0,032` |
+| `exibir_tabela()` | qualquer tabela no tema Ocean (Word) ou cinza (Viewer) |
+
 Uma análise nova não cria funções novas em "Para qualquer análise": ela só
-ensina a `medir_efeito()`, a `escrever_resultados()`, a `grafico_residuos()`
-e a `grafico_qq()` a falar dela. Por isso a
+ensina a `medir_efeito()`, a `escrever_resultados()`, a `exibir_teste()`,
+a `exibir_resumo()`, a `grafico_residuos()` e a `grafico_qq()` a falar dela. Por isso a
 lista de funções continua curta, mesmo com muitas análises.
 
 ## A gramática da ClaRa

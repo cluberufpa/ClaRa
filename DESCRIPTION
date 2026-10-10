@@ -1,7 +1,7 @@
 Package: clara
 Type: Package
 Title: O R Escrito com Clareza: Análises por Pergunta da Pesquisa
-Version: 0.9.0
+Version: 0.10.0
 Authors@R: c(
     person("Evaldo", "Martins da Silva", email = "cluber.ufpa@gmail.com",
            role = c("aut", "cre")),
@@ -11,7 +11,8 @@ Description: Funções em português para estudantes de estatística aplicada,
     uma por pergunta da pesquisa: comparar médias (teste t, ANOVA de um
     fator clássica ou de Welch), comparar medianas (Mann-Whitney,
     Kruskal-Wallis), medir o tamanho de efeito, desenhar as figuras de
-    publicação e de diagnóstico e escrever os resultados em frases. Cada
+    publicação e de diagnóstico, escrever os resultados em frases e
+    montar as tabelas do relatório, com números em português. Cada
     função mostra, quando se pede, o código R comum no estilo do tidyverse
     que rodou por baixo.
 License: MIT + file LICENSE
@@ -23,6 +24,7 @@ Imports:
     car,
     dplyr,
     effectsize,
+    flextable,
     ggplot2,
     multcompView,
     pwr,
@@ -36,6 +38,7 @@ Roxygen: list(markdown = TRUE)
 Collate:
     'clara.R'
     'clara_motor.R'
+    'clara_formatar.R'
     'clara_qualquer_analise.R'
     'clara_medias.R'
     'clara_medianas.R'

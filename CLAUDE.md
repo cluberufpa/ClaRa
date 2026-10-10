@@ -26,6 +26,8 @@ ClaRa/                          o pacote R clara (desde 9/10/2026, v0.9.0)
     clara_qualquer_analise.R    medir_efeito(), escrever_resultados(),
                                 grafico_residuos(), grafico_qq(),
                                 registrar_ambiente()
+    clara_formatar.R            formatar_numero(), formatar_p(),
+                                exibir_tabela() e os temas das tabelas
     clara_motor.R               ajuda() e peças internas
   man/                          páginas de ajuda, geradas pelo roxygen2
   tests/testthat/               testes; dados/ guarda cópias das bases de
@@ -167,8 +169,8 @@ Regras que saem desse desenho:
   `comparar_medianas()` (nome aprovado pelo professor: conceito fácil de
   ensinar), e não para dentro de `comparar_medias()`.
 - Análise nova não cria funções em "Para qualquer análise": só acrescenta
-  receitas a `receitas_efeito`, `receitas_textos`, `receitas_residuos` e
-  `receitas_qq`.
+  receitas a `receitas_efeito`, `receitas_textos`, `receitas_residuos`,
+  `receitas_qq`, `receitas_tabela_teste` e `receitas_tabela_resumo`.
 - Cada pergunta mora no seu arquivo (`R/clara_medias.R`,
   `R/clara_medianas.R`), que abre com o título de seção (`# Comparar médias
   ----`). A `ajuda()` agrupa a lista de funções pelo `@concept` de cada
@@ -404,6 +406,37 @@ textos <- resultado |> escrever_resultados()
   `conferir_resultado()` e indicam a função certa.
 - `$poder` sai vazio nas medianas (a ClaRa ainda não calcula poder para
   testes de postos).
+
+### Formatar e exibir (v0.10.0)
+
+Decisões B, C e D do professor (9/10/2026): uma só versão das funções de
+formatação que se repetiam nos moldes da Trilha (`fmt()`, `formatar_p()`,
+`flextable_ocean()`) e no EAPADados (`flextable_ocean()`,
+`flextable_cinza()`), com o prefixo `exibir_*` para as tabelas.
+
+- `formatar_numero(x, casas = 2)` e `formatar_p(p, casas = 3, no_texto =
+  FALSE)`, em `R/clara_formatar.R`: vírgula decimal, `"< 0,001"`, traço no
+  `NA` (como o `fmt()` dos moldes). Os `print()` dos resultados usam as
+  duas; `numero()` e `escrever_p()` saíram do motor.
+- `exibir_tabela(tabela, tema = c("ocean", "cinza"))`: qualquer tabela. Os
+  temas são os do livro: `"ocean"` para a tabela numerada do Word (Times
+  New Roman 10, como a dos moldes da Trilha; o EAPADados usava 9) e
+  `"cinza"` para olhar no Viewer (Consolas 9, fundo sage). Os dois moram
+  em `temas_tabela`, como trecho de receita.
+- `exibir_teste()` e `exibir_resumo()`, em "Para qualquer análise": verbos
+  sobre o resultado, como `escrever_resultados()`, com receitas por análise
+  em `receitas_tabela_teste` e `receitas_tabela_resumo` (as cinco análises
+  de hoje). A receita define `com_virgula()` e `texto_p()` (célula vazia no
+  `NA`, como pede uma tabela de artigo) e o tema do flextable, para rodar
+  copiada. `exibir_resumo()` põe a letra sobrescrita (`compose()` com
+  `as_sup()`) e recebe a nota em `nota = textos$nota_tabela`; a receita
+  mostra a nota como o aluno a escreveu (`rlang::enquo()` antes de o R
+  avaliar o argumento) e roda no ambiente de quem chamou.
+- Para a Trilha (rota ClaRa): o `relatorio.qmd` pode trocar o `transmute()`
+  + `flextable_ocean()` das duas tabelas por `resultado |> exibir_teste()` e
+  `resultado |> exibir_resumo(casas = casas, nota = textos$nota_tabela)`, e
+  o `funcoes.R` do projeto deixa de precisar de `fmt()`, `formatar_p()` e
+  `flextable_ocean()`. A mudança é na Trilha, não aqui (regra 1).
 
 ### Ajuda
 
@@ -646,9 +679,10 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    versão mora só no `DESCRIPTION`; toda mudança na ClaRa sobe a versão lá
    e ganha uma linha no `NEWS.md`. Decisões do professor de 9/10 (letras do
    plano de 8/10, revistas): A nome `clara`; B `formatar_numero()` e
-   `formatar_p()`, logo depois da Fase 1; C prefixo `exibir_*`; D
-   effectsize em Imports, car fica por ora (trocar o Levene muda números),
-   flextable só quando a formatação entrar; E redação só das análises que a
+   `formatar_p()`, logo depois da Fase 1 (feito na v0.10.0, seção
+   "Formatar e exibir"); C prefixo `exibir_*` (feito); D effectsize em
+   Imports, car fica por ora (trocar o Levene muda números), flextable
+   entrou com a formatação (v0.10.0); E redação só das análises que a
    ClaRa já cobre; F `atualizar_codigo()`, `conferir_codigo()` e
    `resumir_grupo()` ficam fora; G o `analise.R` e o relatório da rota
    ClaRa chamam a ClaRa; H mantenedor Evaldo Martins da Silva
@@ -746,7 +780,8 @@ Decisões do professor para o projeto exportado em ClaRa:
   `grafico_residuos()` e `grafico_qq()`; 9.5 → `grafico_pares()`; 10 →
   `escrever_resultados()`; 11 → `salvar_tabelas()` e `salvar_figuras()`
   (v0.7.3); 12 → `registrar_ambiente()` (v0.7.2). Ficam fora da ClaRa:
-  leitura e preparo (2, 3) e tabelas flextable (8). Salvar cópias passou
+  leitura e preparo (2, 3); as tabelas flextable (8) entraram em v0.10.0
+  (`exibir_teste()`, `exibir_resumo()`). Salvar cópias passou
   para a ClaRa em v0.7.3, por decisão do professor: a chamada esconde o
   `dir.create()`, a lista e o `for`, mas mostra cada item salvo com o nome
   do arquivo antes do `=` (`anova = resultado$anova` grava `anova.csv`). A análise do roteiro está
