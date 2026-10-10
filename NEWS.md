@@ -1,3 +1,26 @@
+# clara 0.11.0 (10 de outubro de 2026)
+
+Teste t unilateral (decisão do professor, 10/10/2026), para a Trilha levar
+o teste t de duas amostras para a ClaRa sem perder a hipótese unilateral
+que a tela dela oferece.
+
+* `comparar_medias(..., alternativa = "bilateral")`: com dois grupos,
+  `"maior"` (a média do primeiro grupo, na ordem dos níveis, é maior que a
+  do segundo) ou `"menor"`. Com três ou mais grupos, só `"bilateral"`: a
+  ANOVA é sempre bilateral, e a função recusa com mensagem. A escolha fica
+  em `resultado$nomes$alternativa`, e a receita escreve `alternative =` no
+  `t.test()`.
+* No unilateral, o intervalo da diferença é aberto de um lado. As frases
+  de `escrever_resultados()`, a tabela de `exibir_teste()` (coluna
+  "IC 95% unilateral") e o console escrevem `+∞` ou `-∞`;
+  `grafico_pares()` tem receita própria, com uma seta no lado aberto. O
+  intervalo do tamanho de efeito continua bilateral.
+* No unilateral, o poder é calculado no sentido da hipótese; se a
+  diferença saiu no sentido contrário, `$poder` diz isso.
+* `escrever_resultados()` do teste t passa a trazer `$nota_tabela` e
+  `$legenda_figura`, como a ANOVA (para o relatório do teste t na Trilha).
+* `formatar_numero()` e as tabelas escrevem `+∞` e `-∞` no lugar de `Inf`.
+
 # clara 0.10.0 (9 de outubro de 2026)
 
 Formatar e exibir (decisões B, C e D do professor): uma só versão das

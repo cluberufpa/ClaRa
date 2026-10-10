@@ -159,7 +159,10 @@ escrever_resultados <- function(resultado,
     TABELA_ANOVA      = if (is.null(tabela_anova)) "" else tabela_anova,
     VARIANCIAS_IGUAIS = resultado$nomes$variancias_iguais,
     NOME_T            = dplyr::case_when(isTRUE(resultado$nomes$variancias_iguais) ~ "de Student",
-                                         .default = "de Welch")
+                                         .default = "de Welch"),
+    # Resultados de versões antigas, sem a alternativa guardada, são bilaterais.
+    ALTERNATIVA       = alternativa_do(resultado),
+    ALTERNATIVE       = alternativas_r[[alternativa_do(resultado)]]
   ))
 
   # Rodamos a receita, mostrando o código antes, se o aluno pediu.
@@ -366,7 +369,7 @@ exibir_teste <- function(resultado,
     TEMA           = temas_tabela[[tema]],
     RESULTADO      = nome_resultado,
     ROTULO_GRUPOS  = ou_entao(rotulo_grupos, resultado$nomes$rotulo_grupos),
-    ROTULO_IC      = rotulo_ic(resultado$nomes$confianca),
+    ROTULO_IC      = rotulo_ic(resultado$nomes$confianca, alternativa_do(resultado)),
     CASAS_GL       = dplyr::case_when(isTRUE(resultado$nomes$variancias_iguais) ~ 0,
                                       .default = 2)
   ))
@@ -479,8 +482,15 @@ receitas_tabela_teste  <- list()
 receitas_tabela_resumo <- list()
 
 # O nome da coluna do intervalo de confiança: "IC 95%".
-rotulo_ic <- function(confianca) {
-  paste0("IC ", format(confianca * 100), "%")
+rotulo_ic <- function(confianca, alternativa = "bilateral") {
+  paste0("IC ", format(confianca * 100), "%",
+         if (!identical(alternativa, "bilateral")) " unilateral")
+}
+
+# A hipótese alternativa guardada no resultado; "bilateral" quando não há
+# (as medianas e os resultados de versões antigas da ClaRa).
+alternativa_do <- function(resultado) {
+  ou_entao(resultado$nomes$alternativa, "bilateral")
 }
 
 

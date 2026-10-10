@@ -12,6 +12,7 @@ comparar_medias(
   rotulo_grupos = NULL,
   confianca = 0.95,
   variancias_iguais = NULL,
+  alternativa = c("bilateral", "maior", "menor"),
   mostrar_codigo = FALSE
 )
 }
@@ -29,6 +30,8 @@ comparar_medias(
 \item{confianca}{nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca}
 
 \item{variancias_iguais}{TRUE supõe variâncias iguais nos grupos; FALSE não supõe. Sem ele, vale o padrão de cada teste: com dois grupos, FALSE (teste t de Welch; TRUE dá o de Student); com três ou mais, TRUE (ANOVA clássica com Tukey; FALSE dá a ANOVA de Welch com Games-Howell). Escreva a escolha no roteiro: ela pode mudar a conclusão e assim fica registrada}
+
+\item{alternativa}{a hipótese alternativa do teste t: "bilateral" (padrão: as médias diferem, em qualquer sentido), "maior" (a média do primeiro grupo, na ordem dos níveis, é maior que a do segundo) ou "menor" (é menor). A hipótese unilateral se decide no planejamento, antes de olhar os dados, e só existe com dois grupos: a ANOVA é sempre bilateral. No unilateral, o intervalo da diferença fica aberto de um lado (de 0,15 a +∞, por exemplo); o do tamanho de efeito continua bilateral}
 
 \item{mostrar_codigo}{TRUE imprime o código R antes do resultado}
 }
@@ -81,6 +84,14 @@ dose_baixa |>
   comparar_medias(resposta          = len,
                   grupos            = supp,
                   variancias_iguais = FALSE)
+
+# Unilateral, decidido no planejamento: o suco de laranja (OJ, o
+# primeiro nível) dá dentes maiores que a vitamina C (VC)?
+dose_baixa |>
+  comparar_medias(resposta          = len,
+                  grupos            = supp,
+                  variancias_iguais = FALSE,
+                  alternativa       = "maior")
 
 # O código R que rodou por baixo.
 PlantGrowth |>

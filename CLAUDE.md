@@ -338,6 +338,30 @@ exploração dos dados (menu Explorar e Visualizar da CatalyseR) já mostrou
 dispersões parecidas. A ClaRa nunca troca de teste olhando o Levene; se o
 Levene rejeitar, o relatório recomenda voltar ao Welch.
 
+### Teste t unilateral (v0.11.0)
+
+Decisão do professor (10/10/2026), pedida pela Trilha, cuja tela do teste t
+de duas amostras oferece a hipótese unilateral: `comparar_medias(...,
+alternativa = "bilateral")`, com `"maior"` ou `"menor"` (a média do
+primeiro grupo, na ordem dos níveis, maior ou menor que a do segundo). É
+argumento, não função nova (regra do verbo). Com três ou mais grupos, só
+`"bilateral"`: a ANOVA é sempre bilateral, e a função recusa o resto.
+- A receita escreve `alternative =` no `t.test()`; a escolha fica em
+  `resultado$nomes$alternativa` (`alternativa_do()` devolve `"bilateral"`
+  para resultados sem ela, como as medianas).
+- O IC da diferença fica aberto de um lado. Frases, `exibir_teste()`
+  (coluna "IC 95% unilateral"), console e `formatar_numero()` escrevem
+  `+∞`/`-∞`. `grafico_pares()` tem receita própria no unilateral, com uma
+  seta no lado aberto (`receita_grafico_pares_unilateral`), para não
+  pesar no código que os alunos da ANOVA veem.
+- O IC do tamanho de efeito continua bilateral: estima o tamanho, não
+  testa a hipótese.
+- Poder no sentido da hipótese (d com sinal e `alternative` no
+  `pwr.t2n.test()`). Diferença no sentido contrário: `$poder` diz isso, no
+  lugar de um poder perto de zero.
+- `escrever_resultados()` do teste t ganhou `$nota_tabela` e
+  `$legenda_figura`, como a ANOVA, para o relatório do teste t na Trilha.
+
 ### ANOVA de Welch (v0.8.0)
 
 Com três ou mais grupos e `variancias_iguais = FALSE`, a análise anotada é

@@ -34,6 +34,7 @@
 #' @param rotulo_grupos como chamar os grupos nos gráficos e nos textos (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna. Os rótulos ficam guardados no resultado: as funções que vêm depois já os usam, sem precisar repeti-los
 #' @param confianca nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca
 #' @param variancias_iguais TRUE supõe variâncias iguais nos grupos; FALSE não supõe. Sem ele, vale o padrão de cada teste: com dois grupos, FALSE (teste t de Welch; TRUE dá o de Student); com três ou mais, TRUE (ANOVA clássica com Tukey; FALSE dá a ANOVA de Welch com Games-Howell). Escreva a escolha no roteiro: ela pode mudar a conclusão e assim fica registrada
+#' @param alternativa a hipótese alternativa do teste t: "bilateral" (padrão: as médias diferem, em qualquer sentido), "maior" (a média do primeiro grupo, na ordem dos níveis, é maior que a do segundo) ou "menor" (é menor). A hipótese unilateral se decide no planejamento, antes de olhar os dados, e só existe com dois grupos: a ANOVA é sempre bilateral. No unilateral, o intervalo da diferença fica aberto de um lado (de 0,15 a +∞, por exemplo); o do tamanho de efeito continua bilateral
 #' @param mostrar_codigo TRUE imprime o código R antes do resultado
 #'
 #' @return Devolve uma lista. Cada parte se abre com $:
@@ -71,6 +72,14 @@
 #'                   grupos            = supp,
 #'                   variancias_iguais = FALSE)
 #'
+#' # Unilateral, decidido no planejamento: o suco de laranja (OJ, o
+#' # primeiro nível) dá dentes maiores que a vitamina C (VC)?
+#' dose_baixa |>
+#'   comparar_medias(resposta          = len,
+#'                   grupos            = supp,
+#'                   variancias_iguais = FALSE,
+#'                   alternativa       = "maior")
+#'
 #' # O código R que rodou por baixo.
 #' PlantGrowth |>
 #'   comparar_medias(resposta       = weight,
@@ -86,6 +95,7 @@ comparar_medias <- function(dados,
                             rotulo_grupos     = NULL,
                             confianca         = 0.95,
                             variancias_iguais = NULL,
+                            alternativa       = c("bilateral", "maior", "menor"),
                             mostrar_codigo    = FALSE) {
 
   # Guardamos o nome da tabela que o aluno usou (plantas, por exemplo).
@@ -111,6 +121,14 @@ comparar_medias <- function(dados,
   variancias_iguais <- ou_entao(variancias_iguais, quantos_grupos > 2)
   conferir_sim_ou_nao(variancias_iguais, "variancias_iguais")
 
+  # A hipótese unilateral só existe no teste t: a ANOVA é sempre bilateral.
+  alternativa <- escolher_opcao(alternativa, c("bilateral", "maior", "menor"), "alternativa")
+  if (quantos_grupos > 2 && alternativa != "bilateral") {
+    stop("alternativa = \"", alternativa, "\" só existe com dois grupos (teste t). ",
+         "Com ", quantos_grupos, " grupos, a ANOVA é sempre bilateral: ",
+         "use alternativa = \"bilateral\".", call. = FALSE)
+  }
+
   # Com três ou mais grupos, as variâncias decidem entre a ANOVA clássica e
   # a de Welch.
   analise <- dplyr::case_when(quantos_grupos == 2 ~ "teste_t",
@@ -132,7 +150,8 @@ comparar_medias <- function(dados,
       CONFIANCA         = confianca,
       ALFA              = 1 - confianca,
       QUANTIL           = 1 - (1 - confianca) / 2,
-      VARIANCIAS_IGUAIS = variancias_iguais
+      VARIANCIAS_IGUAIS = variancias_iguais,
+      ALTERNATIVE       = alternativas_r[[alternativa]]
     )
   ))
 
@@ -154,12 +173,17 @@ comparar_medias <- function(dados,
     rotulo_grupos     = ou_entao(rotulo_grupos, coluna_grupos),
     confianca         = confianca,
     analise           = analise,
-    variancias_iguais = variancias_iguais
+    variancias_iguais = variancias_iguais,
+    alternativa       = alternativa
   )
 
   # Damos ao resultado uma etiqueta, para o console saber como exibi-lo.
   structure(resultado, class = "clara_medias")
 }
+
+# A hipótese alternativa em português (como o aluno escreve) e no R (como o
+# t.test() a recebe).
+alternativas_r <- list(bilateral = "two.sided", maior = "greater", menor = "less")
 
 
 # As receitas de comparar_medias() ---------------------------------------------
@@ -388,10 +412,14 @@ resumo <- dados_analise |>
 
 # 3. <<TITULO_T>>
 #    A diferença é a média do primeiro grupo menos a do segundo.
+#    alternative: \"two.sided\" (bilateral), \"greater\" (a média do primeiro
+#    grupo é maior) ou \"less\" (é menor). No unilateral, o IC é aberto de
+#    um lado (-Inf ou Inf).
 teste_t <- t.test(<<RESPOSTA>> ~ <<GRUPOS>>,
-                  data       = dados_analise,
-                  var.equal  = <<VARIANCIAS_IGUAIS>>,
-                  conf.level = <<CONFIANCA>>)
+                  data        = dados_analise,
+                  var.equal   = <<VARIANCIAS_IGUAIS>>,
+                  alternative = \"<<ALTERNATIVE>>\",
+                  conf.level  = <<CONFIANCA>>)
 
 teste <- teste_t |>
   tidy() |>
@@ -918,9 +946,13 @@ grafico_pares <- function(resultado,
     resultado$nomes$variancias_iguais ~ "teste t de Student",
     .default                          = "teste t de Welch"
   )
+  # No unilateral, o IC é aberto de um lado, e a figura tem receita própria:
+  # a haste vai do limite até uma seta, que mostra o lado aberto.
+  unilateral <- alternativa_do(resultado) != "bilateral"
 
   # Trocamos os marcadores pelos nomes desta análise.
-  receita <- preencher_receita(receita_grafico_pares, list(
+  receita <- preencher_receita(if (unilateral) receita_grafico_pares_unilateral else
+                                 receita_grafico_pares, list(
     RESULTADO       = nome_resultado,
     ROTULO_RESPOSTA = rotulo_resposta,
     ROTULO_GRUPOS   = rotulo_grupos,
@@ -956,6 +988,43 @@ ggplot(pares, aes(x = diferenca, y = comparacao)) +
   labs(
     title = paste(\"Ponto: diferença entre as médias do par; haste: IC <<NIVEL>>% (<<METODO>>).\",
                   \"Linha tracejada: diferença zero. Haste que cruza a linha: sem diferença entre os dois grupos.\",
+                  sep = \"\\n\"),
+    x     = \"Diferença entre as médias, <<ROTULO_RESPOSTA>>\",
+    y     = \"<<ROTULO_GRUPOS>>\"
+  ) +
+  theme_classic(base_size = 12) +
+  theme(plot.title = element_text(size = 10, colour = \"grey30\"),
+        plot.title.position = \"plot\")"
+
+# A receita de grafico_pares() no teste t unilateral. O IC vai do limite
+# calculado até o infinito (+Inf ou -Inf), que não cabe num gráfico: a
+# haste sai do limite, passa pela diferença e termina numa seta.
+receita_grafico_pares_unilateral <- "
+# A comparação do teste t. O lado aberto do IC (+Inf ou -Inf) vira uma
+# seta: ela vai além da diferença, o dobro da distância até o limite.
+pares <- <<RESULTADO>>$<<PARTE_PARES>> |>
+  mutate(
+    limite = if_else(is.infinite(ic_sup), ic_inf, ic_sup),
+    seta   = diferenca + 2 * (diferenca - limite)
+  )
+
+# Ponto: a diferença; haste: do limite até a seta; linha tracejada: zero.
+ggplot(pares, aes(x = diferenca, y = comparacao)) +
+  geom_vline(xintercept = 0, linetype = \"dashed\", colour = \"grey60\") +
+  geom_errorbar(
+    aes(xmin = limite, xmax = limite),
+    width = 0.2, linewidth = 0.8, colour = \"#2E7D8F\", orientation = \"y\"
+  ) +
+  geom_segment(
+    aes(x = limite, xend = seta, yend = comparacao),
+    linewidth = 0.8, colour = \"#2E7D8F\",
+    arrow = arrow(length = unit(0.3, \"cm\"))
+  ) +
+  geom_point(size = 3, colour = \"#0F3B5F\") +
+  labs(
+    title = paste(\"Ponto: diferença entre as médias; haste: IC <<NIVEL>>% unilateral (<<METODO>>),\",
+                  \"do limite até o infinito, no sentido da seta.\",
+                  \"Linha tracejada: diferença zero. Haste que cruza a linha: sem evidência no sentido da hipótese.\",
                   sep = \"\\n\"),
     x     = \"Diferença entre as médias, <<ROTULO_RESPOSTA>>\",
     y     = \"<<ROTULO_GRUPOS>>\"
@@ -1601,17 +1670,35 @@ texto_amostra <- case_when(
 
 # 4. O teste t numa frase, com a diferença entre as médias e seu intervalo.
 #    Os graus de liberdade só levam casas decimais quando não são inteiros.
+#    alternativa: \"bilateral\", \"maior\" (a média de grupos[1] é maior) ou
+#    \"menor\"; no unilateral, o IC é aberto de um lado.
+alternativa <- \"<<ALTERNATIVA>>\"
 evidencia <- case_when(
-  teste$p <  alfa ~ \"houve evidência de diferença entre as médias\",
-  teste$p >= alfa ~ \"não houve evidência de diferença entre as médias\"
+  alternativa == \"bilateral\" & teste$p <  alfa ~ \"houve evidência de diferença entre as médias\",
+  alternativa == \"bilateral\" & teste$p >= alfa ~ \"não houve evidência de diferença entre as médias\",
+  teste$p <  alfa ~ paste0(\"houve evidência de que a média de \", grupos[1], \" é \",
+                           alternativa, \" que a de \", grupos[2]),
+  teste$p >= alfa ~ paste0(\"não houve evidência de que a média de \", grupos[1], \" seja \",
+                           alternativa, \" que a de \", grupos[2])
+)
+entre_grupos <- if_else(alternativa == \"bilateral\",
+                        paste0(\" de \", grupos[1], \" e \", grupos[2]), \"\")
+nome_teste <- if_else(alternativa == \"bilateral\", \"teste t <<NOME_T>>\",
+                      \"teste t <<NOME_T>> unilateral\")
+texto_ic <- case_when(
+  alternativa == \"maior\" ~ paste0(\"IC <<NIVEL>>% unilateral de \",
+                                    com_virgula(teste$ic_inf), \" a +∞\"),
+  alternativa == \"menor\" ~ paste0(\"IC <<NIVEL>>% unilateral de -∞ a \",
+                                    com_virgula(teste$ic_sup)),
+  .default = paste0(\"IC <<NIVEL>>% de \", com_virgula(teste$ic_inf), \" a \",
+                    com_virgula(teste$ic_sup))
 )
 casas_gl <- case_when(teste$gl == round(teste$gl) ~ 0, .default = 2)
 texto_teste <- str_glue(
-  \"Em <<ROTULO_RESPOSTA>>, {evidencia} de {grupos[1]} e {grupos[2]} \",
-  \"pelo teste t <<NOME_T>> (t({com_virgula(teste$gl, casas_gl)}) = \",
+  \"Em <<ROTULO_RESPOSTA>>, {evidencia}{entre_grupos} \",
+  \"pelo {nome_teste} (t({com_virgula(teste$gl, casas_gl)}) = \",
   \"{com_virgula(teste$t)}; {texto_p(teste$p)}). A média de {grupos[1]} \",
-  \"menos a de {grupos[2]} foi {com_virgula(teste$diferenca)}, com IC <<NIVEL>>% \",
-  \"de {com_virgula(teste$ic_inf)} a {com_virgula(teste$ic_sup)}.\"
+  \"menos a de {grupos[2]} foi {com_virgula(teste$diferenca)}, com {texto_ic}.\"
 )
 
 # 5. Tamanho de efeito, com a leitura de Cohen. pooled_sd segue o teste:
@@ -1671,14 +1758,24 @@ texto_alerta <- case_when(
 )
 
 # 8. Poder do teste: só entra no texto quando muda a leitura, isto é, sem
-#    evidência e com poder abaixo de 80%.
+#    evidência e com poder abaixo de 80%. No unilateral, o d vai com o sinal
+#    e o poder é o do mesmo sentido da hipótese.
 poder <- pwr.t2n.test(
-  n1        = resumo$n[1],
-  n2        = resumo$n[2],
-  d         = abs(d),
-  sig.level = alfa
+  n1          = resumo$n[1],
+  n2          = resumo$n[2],
+  d           = if_else(alternativa == \"bilateral\", abs(d), d),
+  sig.level   = alfa,
+  alternative = \"<<ALTERNATIVE>>\"
 )$power
+#    No unilateral, com a diferença no sentido contrário ao da hipótese, o
+#    poder não se aplica: o texto diz o sentido observado.
+contrario <- (alternativa == \"maior\" & teste$diferenca < 0) |
+             (alternativa == \"menor\" & teste$diferenca > 0)
 texto_poder <- case_when(
+  contrario ~
+    paste0(\"A diferença observada foi no sentido contrário ao da hipótese: a média de \",
+           grupos[1], \" foi \", if_else(teste$diferenca < 0, \"menor\", \"maior\"),
+           \" que a de \", grupos[2], \".\"),
   teste$p >= alfa & poder < 0.80 ~
     paste0(\"A ausência de evidência não deve ser lida como ausência de efeito: \",
            \"para o tamanho de efeito observado, o poder do teste foi de apenas \",
@@ -1693,15 +1790,40 @@ texto_sintese <- str_glue(
   \"d = {com_virgula(d)}). A interpretação deve considerar os pressupostos e o delineamento.\"
 )
 
-# 10. Todas as frases, numa lista com partes nomeadas.
+# 10. A nota da tabela de médias e a legenda da figura principal, como na
+#     ANOVA. A haste é a mesma de grafico_medias(): \"ic\", \"ep\" ou \"dp\".
+haste <- \"<<HASTE>>\"
+texto_haste <- case_when(
+  haste == \"ic\" ~ \"os intervalos de confiança de <<NIVEL>>% das médias\",
+  haste == \"ep\" ~ \"os erros padrão das médias\",
+  .default      = \"os desvios padrão dos grupos\"
+)
+texto_nota_tabela <- str_glue(
+  \"Médias seguidas pela mesma letra não diferem entre si pelo {nome_teste} \",
+  \"ao nível de {com_virgula(100 * alfa, 0)}% de significância \",
+  \"(α = {com_virgula(alfa)}). DP: desvio padrão; IC: intervalo de confiança \",
+  \"de <<NIVEL>>% da média.\"
+)
+texto_legenda_figura <- str_glue(
+  \"Comparação entre os grupos de <<ROTULO_GRUPOS>> quanto a <<ROTULO_RESPOSTA>>. \",
+  \"As alturas das barras e os losangos representam as médias dos grupos; os \",
+  \"pontos representam as observações individuais. As barras de erro indicam \",
+  \"{texto_haste}. Os valores inscritos nas barras correspondem à média ± desvio \",
+  \"padrão (DP). Grupos que compartilham uma letra não diferem \",
+  \"significativamente entre si pelo {nome_teste} (α = {com_virgula(alfa)}).\"
+)
+
+# 11. Todas as frases, numa lista com partes nomeadas.
 list(
-  amostra      = texto_amostra,
-  teste        = texto_teste,
-  efeito       = texto_efeito,
-  pressupostos = texto_pressupostos,
-  alerta       = texto_alerta,
-  poder        = texto_poder,
-  sintese      = texto_sintese
+  amostra        = texto_amostra,
+  teste          = texto_teste,
+  efeito         = texto_efeito,
+  pressupostos   = texto_pressupostos,
+  alerta         = texto_alerta,
+  poder          = texto_poder,
+  sintese        = texto_sintese,
+  nota_tabela    = texto_nota_tabela,
+  legenda_figura = texto_legenda_figura
 ) |>
   lapply(as.character)"
 
@@ -1922,18 +2044,25 @@ imprimir_teste_t <- function(x) {
                                  .default                  = "Welch")
 
   # Por que não há ANOVA, e o resultado do teste numa frase.
-  cat("\n# Teste t de ", nome_teste, "\n", sep = "")
+  alternativa <- alternativa_do(x)
+  grupos <- levels(x$dados[[x$nomes$grupos]])
+  cat("\n# Teste t de ", nome_teste,
+      if (alternativa != "bilateral")
+        paste0(", unilateral (H1: a média de ", grupos[1], " é ", alternativa,
+               " que a de ", grupos[2], ")"),
+      "\n", sep = "")
   cat("Com dois grupos, a ClaRa usa o teste t no lugar da ANOVA.\n")
 
   # Os graus de liberdade só levam casas decimais quando não são inteiros (Welch).
   casas_gl <- dplyr::case_when(teste$gl == round(teste$gl) ~ 0, .default = 2)
   cat("t(", formatar_numero(teste$gl, casas_gl), ") = ", formatar_numero(teste$t), "; ",
       formatar_p(teste$p, no_texto = TRUE), ": ",
-      concluir_medias(teste$p, x$nomes$confianca), "\n", sep = "")
+      concluir_medias(teste$p, x$nomes$confianca, alternativa, grupos), "\n", sep = "")
 
-  # A diferença entre as médias, com o intervalo de confiança.
+  # A diferença entre as médias, com o intervalo de confiança; no
+  # unilateral, aberto de um lado.
   cat("Diferença ", teste$comparacao, ": ", formatar_numero(teste$diferenca),
-      " (IC ", x$nomes$confianca * 100, "%: ", formatar_numero(teste$ic_inf),
+      " (", rotulo_ic(x$nomes$confianca, alternativa), ": ", formatar_numero(teste$ic_inf),
       " a ", formatar_numero(teste$ic_sup), ")\n", sep = "")
 
   # Os pressupostos, com a leitura de cada teste.
@@ -1956,9 +2085,15 @@ imprimir_teste_t <- function(x) {
   cat("\nPartes do resultado: $resumo $teste $pressupostos $amostra $dados\n")
 }
 
-# A conclusão da comparação, escrita conforme o p-valor.
-concluir_medias <- function(p, confianca) {
+# A conclusão da comparação, escrita conforme o p-valor; no unilateral, no
+# sentido da hipótese ("maior" ou "menor").
+concluir_medias <- function(p, confianca, alternativa = "bilateral", grupos = NULL) {
+  sentido <- function(verbo) {
+    paste0("a média de ", grupos[1], " ", verbo, " ", alternativa, " que a de ", grupos[2], ".")
+  }
   dplyr::case_when(
+    alternativa != "bilateral" & p <  1 - confianca ~ paste("há evidência de que", sentido("é")),
+    alternativa != "bilateral" & p >= 1 - confianca ~ paste("não há evidência de que", sentido("seja")),
     p <  1 - confianca ~ "há evidência de diferença entre as médias dos grupos.",
     p >= 1 - confianca ~ "não há evidência de diferença entre as médias dos grupos."
   )

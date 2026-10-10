@@ -45,6 +45,10 @@ formatar_numero <- function(x,
   # Onde não há número, um traço; "NA" não aparece numa tabela de artigo.
   texto[is.na(x)] <- "-"
 
+  # O limite aberto de um intervalo unilateral, como se escreve: +∞ ou -∞.
+  texto[!is.na(x) & x ==  Inf] <- "+∞"
+  texto[!is.na(x) & x == -Inf] <- "-∞"
+
   texto
 }
 
@@ -196,8 +200,10 @@ fontes_tabela <- list(ocean = "Times New Roman", cinza = "Consolas")
 # das receitas. Na tabela, onde não há número fica a célula vazia.
 trecho_numeros_tabela <- "# 1. Duas funções pequenas para escrever os números como no português.
 com_virgula <- function(x, casas = 2) {
-  case_when(is.na(x) ~ \"\",
-            .default = formatC(x, format = \"f\", digits = casas, decimal.mark = \",\"))
+  case_when(is.na(x)  ~ \"\",
+            x ==  Inf ~ \"+∞\",
+            x == -Inf ~ \"-∞\",
+            .default  = formatC(x, format = \"f\", digits = casas, decimal.mark = \",\"))
 }
 texto_p <- function(p) {
   case_when(is.na(p)  ~ \"\",
