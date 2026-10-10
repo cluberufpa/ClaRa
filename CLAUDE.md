@@ -418,6 +418,16 @@ formatação que se repetiam nos moldes da Trilha (`fmt()`, `formatar_p()`,
   FALSE)`, em `R/clara_formatar.R`: vírgula decimal, `"< 0,001"`, traço no
   `NA` (como o `fmt()` dos moldes). Os `print()` dos resultados usam as
   duas; `numero()` e `escrever_p()` saíram do motor.
+- **Por que `exibir_` e não `mostrar_`** (confirmado pelo professor em
+  9/10/2026): na ClaRa, "mostrar" já é o verbo do código, no argumento
+  `mostrar_codigo = TRUE` de todas as funções; `exibir_teste(mostrar_codigo
+  = TRUE)` separa exibir o resultado de mostrar o código. E no ecossistema
+  `mostrar_*` já tem outro dono: nos moldes antigos da Trilha e no
+  EAPADados, `mostrar_anova()` e `mostrar_teste_t()` recebem os dados e
+  fazem o teste, enquanto `exibir_*` (como `exibir_teste_t()` do EAPADados)
+  apresenta um resultado já calculado. Regra: **`exibir_*` recebe um
+  resultado pronto e devolve a apresentação (tabela)**; nenhuma função nova
+  da ClaRa usa o prefixo `mostrar_`.
 - `exibir_tabela(tabela, tema = c("ocean", "cinza"))`: qualquer tabela. Os
   temas são os do livro: `"ocean"` para a tabela numerada do Word (Times
   New Roman 10, como a dos moldes da Trilha; o EAPADados usava 9) e
@@ -692,11 +702,17 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    J acentos ficam até a Fase 5; K `library()` e `set.seed()` corrigidos
    já; L entram ANOVA, teste t e medianas; M prefixo `catalyser_` →
    `trilha_` na Trilha, feito no mesmo dia.
-   **Para a Fase 2:** um pacote instalado não guarda os `.R` legíveis. Para
-   o projeto exportado continuar levando a ClaRa em `R/clara/` (só CRAN), o
-   pacote precisa de uma cópia dos fontes em `inst/`, gerada por script no
-   build; a alternativa é o projeto usar `library(clara)` do GitHub. Decidir
-   com o professor.
+   **Decidido em 9/10/2026, para a Fase 2: o projeto exportado usa
+   `library(clara)`** (opção b do professor). A cópia em `R/clara/` sai do
+   projeto, e a de `TRILHA/inst/app/templates/clara/` deixa de existir. O
+   motivo, nas palavras do professor: a `clara` só depende do CRAN e será
+   um pacote leve e útil. Enquanto ela não estiver no CRAN, o projeto pede
+   a instalação pelo GitHub (`remotes::install_github("cluberufpa/ClaRa")`,
+   a mesma que a Trilha faz no `instalar_trilha.R`); quando entrar, basta
+   `install.packages("clara")`. Assim a regra "só CRAN" do projeto exportado
+   (seção "A ClaRa na Trilha") passa a ser "só CRAN e a `clara`". Foi
+   descartada a opção (a), uma cópia legível dos fontes em `inst/` gerada no
+   build, porque mantinha duas formas da mesma ClaRa.
 5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
    (público desde 9/10/2026, ramo `main`; os alunos instalam com
    `remotes::install_github("cluberufpa/ClaRa")`). Nesta pasta os commits saem como
@@ -754,12 +770,15 @@ Decisões do professor para o projeto exportado em ClaRa:
   com pipe até `base` (trilha, ramo e grupos como fator, sem nomes
   intermediários); o carimbo traz linhas, contagem e média por grupo que a
   tela mostrou, e `stopifnot()` trava só o número de linhas.
-- **Só CRAN**: sem catalyser nem EAPADados no projeto.
+- **Só CRAN**: sem catalyser nem EAPADados no projeto. Desde 9/10/2026
+  (Fase 2), **só CRAN e a `clara`**: o projeto carrega `library(clara)`
+  em vez da cópia em `R/clara/` (regra 4).
 - **`dados/` só com a planilha**, sem `brutos/` e `processados/`. A cópia
   da base para o Excel sai do script, em `saida/tabelas/base.csv`, refeita a
   cada execução; não vira aba da planilha bruta (seria cópia estática e
   mexeria na entrada preservada).
-- A ClaRa viaja em `R/clara/`; em `R/` o aluno vê só `analise.R` e
+- A ClaRa viajava em `R/clara/`; a partir da Fase 2 o projeto usa
+  `library(clara)` e a pasta sai. Em `R/` o aluno vê só `analise.R` e
   `funcoes.R`. As seções do roteiro são numeradas em sequência: 1 Preparar
   o ambiente, 2 Ler a planilha, 3 Preparar a base, 4 Comparar as médias,
   5 Tabelas, 6 Gráficos, 7 Textos dinâmicos, 8 Salvar cópias
