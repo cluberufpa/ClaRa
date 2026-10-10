@@ -698,7 +698,8 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    build; a alternativa é o projeto usar `library(clara)` do GitHub. Decidir
    com o professor.
 5. **Versionar com git.** O repositório é `github.com/cluberufpa/ClaRa`
-   (privado, ramo `main`). Nesta pasta os commits saem como
+   (público desde 9/10/2026, ramo `main`; os alunos instalam com
+   `remotes::install_github("cluberufpa/ClaRa")`). Nesta pasta os commits saem como
    `clubeR <cluber.ufpa@gmail.com>`; o push usa a credencial do cluberufpa
    guardada no Windows (Git Credential Manager).
 
