@@ -203,3 +203,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D24 `darter_ontario`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D25 `exportacao_pargo`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D26 `gammarus_dieta_temperatura_resumo`, provisório, com fonte e decisões anteriores registradas.

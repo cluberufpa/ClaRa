@@ -72,4 +72,5 @@ Collate:
     'dados_crabs_morfometria.R'
     'dados_darter_ontario.R'
     'dados_exportacao_pargo.R'
+    'dados_gammarus_dieta_temperatura_resumo.R'
 Config/roxygen2/version: 8.1.0

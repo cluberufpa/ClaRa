@@ -1,0 +1,20 @@
+{
+  "codigo": "D26",
+  "registro": "D26_gammarus_resumo",
+  "nome": "gammarus_dieta_temperatura_resumo",
+  "nome_eapadados": "gammarus_dieta_temperatura_resumo",
+  "rotulo": "Gammarus: resumo por dieta e temperatura",
+  "titulo": "D26 - Gammarus: resumo por dieta e temperatura",
+  "natureza": "real agregada",
+  "origem": "EAPADados::gammarus_dieta_temperatura_resumo",
+  "unidade_amostral": "combinação de dieta e temperatura; médias, desvios-padrão e n, não réplicas",
+  "linhas": 12,
+  "colunas": 11,
+  "analises": "Planejamento fatorial; Gráficos de médias e desvios-padrão",
+  "analise_principal": "Planejamento fatorial",
+  "palavras_chave": "gammarus; dieta; temperatura; resumo",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Ribes-Navarro et al. (2022), Frontiers in Marine Science 9:931991, Table 1, DOI 10.3389/fmars.2022.931991",
+  "situacao": "provisório"
+}
