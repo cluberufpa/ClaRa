@@ -26,6 +26,10 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- D06 (`salvelino_formalina_remocao`): CSV conferido; 30 × 7; 696 bytes
+  em xz. Preservar unidades experimentais e o desenho desequilibrado;
+  revisar pressupostos e transformação antes da análise fatorial.
+
 - D05 (`abalone_adultos`): recorte conferido com CSV UCI; 2.641 × 9;
   26.096 bytes em xz. Revisar em detalhe unidades e critérios herdados,
   sem nova seleção na migração.

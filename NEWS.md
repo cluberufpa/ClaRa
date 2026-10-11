@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D06 `salvelino_formalina_remocao`, provisório, adaptado de `EAPADados::salvelino_formalina_remocao`; fonte preservada.
+
 - Dados: D05 `abalone_adultos`, provisório, adaptado de `EAPADados::abalone_adultos`; fonte preservada.
 
 - Dados: D04 `doubs_ambiente`, provisório, adaptado de `EAPADados::doubs_ambiente`; fonte preservada.

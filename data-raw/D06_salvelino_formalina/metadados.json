@@ -1,0 +1,20 @@
+{
+  "codigo": "D06",
+  "registro": "D06_salvelino_formalina",
+  "nome": "salvelino_formalina_remocao",
+  "nome_eapadados": "salvelino_formalina_remocao",
+  "rotulo": "Salvelino: formalina e remoção de ovos mortos",
+  "titulo": "D06 - Salvelino: formalina e remoção de ovos mortos",
+  "natureza": "real",
+  "origem": "EAPADados::salvelino_formalina_remocao",
+  "unidade_amostral": "unidade experimental do incubatório, não um ovo individual",
+  "linhas": 30,
+  "colunas": 7,
+  "analises": "ANOVA de dois fatores com interação; Estatística descritiva",
+  "analise_principal": "ANOVA de dois fatores com interação",
+  "palavras_chave": "salvelino; formalina; remocao",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Olk, Lydersen e Wollebæk (2023); DataverseNO, DOI 10.23642/USN.7334573",
+  "situacao": "provisório"
+}
