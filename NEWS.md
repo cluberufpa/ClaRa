@@ -197,3 +197,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D21 `captura_pescada_amarela`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D22 `captura_pescada_amarela_bruta`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D23 `crabs_morfometria`, provisório, com fonte e decisões anteriores registradas.
