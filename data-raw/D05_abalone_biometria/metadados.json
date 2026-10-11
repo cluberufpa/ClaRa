@@ -1,0 +1,20 @@
+{
+  "codigo": "D05",
+  "registro": "D05_abalone_biometria",
+  "nome": "abalone_adultos",
+  "nome_eapadados": "abalone_adultos",
+  "rotulo": "Abalones adultos: biometria e peso",
+  "titulo": "D05 - Abalones adultos: biometria e peso",
+  "natureza": "real",
+  "origem": "EAPADados::abalone_adultos",
+  "unidade_amostral": "abalone adulto do recorte preexistente",
+  "linhas": 2641,
+  "colunas": 9,
+  "analises": "Estatística descritiva; Histograma; Boxplot; Regressão linear simples",
+  "analise_principal": "Estatística descritiva",
+  "palavras_chave": "abalone; adultos",
+  "verbo_clara": "relacionar_variaveis",
+  "licenca": "CC BY 4.0",
+  "referencia": "Nash, Sellers, Talbot, Cawthorn e Ford (1994); UCI Abalone, DOI 10.24432/C55C7W",
+  "situacao": "provisório"
+}

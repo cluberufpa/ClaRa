@@ -26,6 +26,10 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- D05 (`abalone_adultos`): recorte conferido com CSV UCI; 2.641 × 9;
+  26.096 bytes em xz. Revisar em detalhe unidades e critérios herdados,
+  sem nova seleção na migração.
+
 - D04 (`doubs_ambiente`): fonte ade4 1.7-24 congelada e conferida; 30 × 13;
   1.112 bytes em xz. Escalas descritas corretamente, sem transformar dados.
   Licença GPL (>= 2) da origem registrada; não substituída pela MIT.

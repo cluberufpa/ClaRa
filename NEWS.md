@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D05 `abalone_adultos`, provisório, adaptado de `EAPADados::abalone_adultos`; fonte preservada.
+
 - Dados: D04 `doubs_ambiente`, provisório, adaptado de `EAPADados::doubs_ambiente`; fonte preservada.
 
 - Dados: D03 `cpue_tubarao`, provisório, adaptado de `EAPADados::cpue_tubarao`; fonte preservada.
