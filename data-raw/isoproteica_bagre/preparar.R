@@ -18,7 +18,7 @@ stopifnot(nrow(brutos) == 19L, ncol(brutos) == 2L)
 # A, B, C e D são categorias nominais, nessa ordem de apresentação.
 # Cada peso é a média final de uma gaiola, segundo a documentação recebida.
 # Não são pesos individuais nem ganho de peso; não calculamos valores novos.
-bagre_racao_isoproteica <- data.frame(
+D001_bagre_racao_isoproteica <- data.frame(
   racao = factor(brutos[[1]], levels = c("A", "B", "C", "D")),
   peso_medio_final_g = as.double(brutos[[2]])
 )
@@ -28,16 +28,16 @@ bagre_racao_isoproteica <- data.frame(
 anterior <- new.env(parent = emptyenv())
 load(file.path(pasta, "fonte", "isoproteica_bagre.rda"), envir = anterior)
 stopifnot(
-  identical(dim(bagre_racao_isoproteica), c(19L, 2L)),
-  !anyNA(bagre_racao_isoproteica),
-  identical(as.integer(table(bagre_racao_isoproteica$racao)), c(5L, 5L, 4L, 5L)),
-  identical(as.character(bagre_racao_isoproteica$racao),
+  identical(dim(D001_bagre_racao_isoproteica), c(19L, 2L)),
+  !anyNA(D001_bagre_racao_isoproteica),
+  identical(as.integer(table(D001_bagre_racao_isoproteica$racao)), c(5L, 5L, 4L, 5L)),
+  identical(as.character(D001_bagre_racao_isoproteica$racao),
             as.character(anterior$isoproteica_bagre$racao)),
-  identical(bagre_racao_isoproteica$peso_medio_final_g,
+  identical(D001_bagre_racao_isoproteica$peso_medio_final_g,
             as.double(anterior$isoproteica_bagre$peso_g)),
-  identical(as.double(tapply(bagre_racao_isoproteica$peso_medio_final_g,
-                            bagre_racao_isoproteica$racao, sum)),
+  identical(as.double(tapply(D001_bagre_racao_isoproteica$peso_medio_final_g,
+                            D001_bagre_racao_isoproteica$racao, sum)),
             c(431, 444, 410, 463))
 )
 
-usethis::use_data(bagre_racao_isoproteica, overwrite = TRUE, compress = "xz")
+usethis::use_data(D001_bagre_racao_isoproteica, overwrite = TRUE, compress = "xz")

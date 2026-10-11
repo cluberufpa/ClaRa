@@ -1,7 +1,7 @@
 test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
   expect_false(anyDuplicated(catalogo_dados$codigo) > 0L)
   expect_false(anyDuplicated(catalogo_dados$nome) > 0L)
-  expect_true(all(grepl("^D-[0-9]{3,}$", catalogo_dados$codigo)))
+  expect_true(all(grepl("^D[0-9]{3,}$", catalogo_dados$codigo)))
 
   # No desenvolvimento lemos as páginas recém-geradas; no check, a ajuda
   # instalada. Não usamos uma instalação antiga para conferir dados novos.
@@ -44,12 +44,12 @@ test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
 })
 
 test_that("os bagres preservam as observações e a pendência de autorização", {
-  expect_identical(levels(bagre_racao_isoproteica$racao), c("A", "B", "C", "D"))
-  expect_false(is.ordered(bagre_racao_isoproteica$racao))
-  expect_identical(as.integer(table(bagre_racao_isoproteica$racao)), c(5L, 5L, 4L, 5L))
-  expect_identical(bagre_racao_isoproteica$peso_medio_final_g,
+  expect_identical(levels(D001_bagre_racao_isoproteica$racao), c("A", "B", "C", "D"))
+  expect_false(is.ordered(D001_bagre_racao_isoproteica$racao))
+  expect_identical(as.integer(table(D001_bagre_racao_isoproteica$racao)), c(5L, 5L, 4L, 5L))
+  expect_identical(D001_bagre_racao_isoproteica$peso_medio_final_g,
                    c(86, 83, 91, 84, 87, 88, 87, 94, 86, 89,
                      105, 104, 102, 99, 94, 91, 89, 92, 97))
-  expect_false(anyNA(bagre_racao_isoproteica))
-  expect_match(catalogo_dados$licenca[catalogo_dados$codigo == "D-001"], "pendente")
+  expect_false(anyNA(D001_bagre_racao_isoproteica))
+  expect_match(catalogo_dados$licenca[catalogo_dados$codigo == "D001"], "pendente")
 })

@@ -1,4 +1,4 @@
-#' D-001 - Peso médio final de bagres por ração isoproteica
+#' D001 - Peso médio final de bagres por ração isoproteica
 #'
 #' Adaptado de `EAPADados::isoproteica_bagre`: 19 observações sob quatro
 #' rações comerciais isoproteicas, apresentadas na Tabela 7.4 de Bhujel
@@ -52,7 +52,7 @@
 #' @examples
 #' # O peso médio final difere entre as quatro rações?
 #' resultado <- comparar_medias(
-#'   dados = bagre_racao_isoproteica,
+#'   dados = D001_bagre_racao_isoproteica,
 #'   resposta = peso_medio_final_g,
 #'   grupos = racao,
 #'   rotulo_resposta = "Peso médio final (g)",
@@ -67,4 +67,4 @@
 #'
 #' @docType data
 #' @keywords datasets
-"bagre_racao_isoproteica"
+"D001_bagre_racao_isoproteica"

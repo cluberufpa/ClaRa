@@ -10,13 +10,13 @@ Ela é uma cópia de consulta; a fonte preservada em `fonte/` não deve ser edit
 
 O professor aprovou os bagres no chat em 11/10/2026 e solicitou o preparo
 enquanto aguarda a resposta dos autores. O nome final é
-`bagre_racao_isoproteica`, com `racao` e `peso_medio_final_g`. As fontes e a
+`D001_bagre_racao_isoproteica`, com `racao` e `peso_medio_final_g`. As fontes e a
 planilha de revisão continuam preservadas; a autorização da fonte permanece
 pendente na ficha, na ajuda e no catálogo.
 
 | Conjunto atual | Situação | Data | Registro definitivo |
 |---|---|---|---|
-| isoproteica_bagre → bagre_racao_isoproteica | Curadoria aprovada; preparo aprovado; integração local autorizada; check e autorização da fonte pendentes | 11/10/2026 | D-001 |
+| isoproteica_bagre → D001_bagre_racao_isoproteica | Curadoria aprovada; preparo aprovado; integração local autorizada; check e autorização da fonte pendentes | 11/10/2026 | D001 |
 
 ## Planilha de acompanhamento
 
@@ -26,7 +26,7 @@ Essa autorização permite atualizar o acompanhamento, sem alterar dados,
 documentação ou decisões anteriores do EAPADados.
 
 - **Dados prontos**: conjunto, análises úteis, data de conclusão, identificador
-  permanente no formato `D-001`, `D-002`, ... e nome anterior/origem.
+  permanente no formato `D001`, `D002`, ... e nome anterior/origem.
 - Um conjunto só entra nessa aba após aprovação, documentação e validação na
   ClaRa. A linha correspondente recebe preenchimento verde `#C6E0B4` em
   **Núcleo 60** e **Inventário**; as novas colunas registram a situação, o
