@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- D39: `cowichan_amostragem`, fonte CC0, substitui `walleye_erie` por decisão do professor; 246 peixes e oito colunas. Comprimento do registro 234 a conferir.
+
 - Dados: D09 `tilapia_sensorial`, provisório, da literatura; 122 avaliadores, notas pareadas e escala pendente de interpretação.
 
 - Dados: D08 `pinguins`, provisório, adaptado de `EAPADados::pinguins`; fonte preservada.

@@ -66,6 +66,8 @@ for aba in E.fromstring(arquivos['xl/workbook.xml'][1]).findall('m:sheets/m:shee
         if integrado:
             situacao = ('Integrado na main como D01; autorização da fonte e check pendentes'
                         if r['codigo'] == 'D01' else 'Passada 1 provisória integrada na main; check pendente')
+        if r['nome_eapadados'] == 'walleye_erie' and r['nome'] == 'cowichan_amostragem':
+            situacao += '; fonte substituída por cowichan_amostragem com autorização do professor'
         escrever(row, col_situacao, situacao)
         escrever(row, col_codigo, r['codigo'])
         alterados.append(aba.attrib['name'] + '!' + col_codigo + row.attrib['r'])

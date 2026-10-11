@@ -1,0 +1,17 @@
+# Rodar a partir desta pasta; somente avalia a cópia de revisão.
+original <- as.data.frame(readxl::read_excel('Cowichan_Data.xlsx',sheet='Dataset',na='NA',trim_ws=FALSE,.name_repair='minimal'))
+recorte <- as.data.frame(readxl::read_excel('cowichan_para_revisao.xlsx',sheet='Dados para revisar'))
+stopifnot(identical(dim(recorte),c(246L,8L)),!anyNA(recorte),identical(recorte$id_registro,as.character(seq_len(246))))
+de_para <- c(ano='Year',local='Site name',sublocal='Sub-site',massa_fresca_g='Wet mass (g)',comprimento_total_mm='Total length (mm)')
+for (nome in names(de_para)) stopifnot(identical(recorte[[nome]],original[[de_para[[nome]]]]))
+stopifnot(identical(recorte$ambiente,unname(c(Lake='lago',River='rio',Estuary='estuário')[original[['Waterbody type']]])))
+stopifnot(identical(recorte$sexo,unname(c(Female='fêmea',Male='macho')[original$Sex])))
+cowichan_amostragem <- recorte
+arquivo_temporario <- tempfile(fileext='.rda')
+save(cowichan_amostragem,file=arquivo_temporario,compress='xz')
+bytes <- unname(file.info(arquivo_temporario)$size)
+stopifnot(bytes<=100000)
+res <- list(linhas=nrow(recorte),colunas=ncol(recorte),bytes_xz=bytes,ausencias=sum(is.na(recorte)),valores_conferidos=TRUE,observacao='Nome de objeto apenas da avaliação; não integrado ao catálogo.')
+jsonlite::write_json(res,'recorte_verificado.json',pretty=TRUE,auto_unbox=TRUE)
+unlink(arquivo_temporario)
+print(res)

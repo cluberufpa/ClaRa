@@ -1,0 +1,41 @@
+#' D39 - Cowichan: peixes para amostragem
+#'
+#' Recorte real de Gasterosteus aculeatus; 246 peixes de cinco locais.
+#' O professor autorizou substituir walleye_erie por esta fonte CC0.
+#'
+#' @format Um `data.frame` com 246 linhas e 8 colunas:
+#' \describe{
+#'   \item{id_registro}{Texto: ordem da linha da fonte, não marca individual de campo.}
+#'   \item{ano}{Ano da coleta, 2022 ou 2023.}
+#'   \item{local}{Um dos cinco locais da drenagem Cowichan; nomes geográficos originais.}
+#'   \item{sublocal}{Código original do ponto de coleta.}
+#'   \item{ambiente}{Lago, rio ou estuário.}
+#'   \item{sexo}{Fêmea ou macho, segundo identificação gonadal na fonte.}
+#'   \item{massa_fresca_g}{Massa fresca individual, em gramas.}
+#'   \item{comprimento_total_mm}{Comprimento total, em milímetros. Registro 234 com pendência; ver detalhes.}
+#' }
+#'
+#' @details
+#' Usar como população finita didática para amostragem simples ou estratificada.
+#' Não presumir que a coleta original foi probabilística da população natural.
+#' Sem exclusão de peixes ou imputação. Massa completa recomendada inicialmente.
+#' No registro 234 (linha 235 da fonte), total 51,09 mm e padrão 55 mm conflitam.
+#' O total está dentro da faixa observada; não foi corrigido nem excluído.
+#' Não há idade ou maturidade neste recorte.
+#'
+#' @section Adaptações:
+#' Selecionadas sete variáveis da fonte e criado id_registro pela ordem original.
+#' Cabeçalhos e categorias de ambiente/sexo traduzidos; nomes geográficos mantidos.
+#' Fonte integral de 34 colunas preservada em data-raw/D39_cowichan_amostragem/.
+#'
+#' @source
+#' May, de Haas, Sewell et al. (2026). Dryad, DOI 10.5061/dryad.6m905qg99.
+#' Versão 446982; dados sob CC0-1.0, conforme metadados oficiais.
+#'
+#' @examples
+#' summary(cowichan_amostragem)
+#' table(cowichan_amostragem$local)
+#'
+#' @docType data
+#' @keywords datasets
+"cowichan_amostragem"

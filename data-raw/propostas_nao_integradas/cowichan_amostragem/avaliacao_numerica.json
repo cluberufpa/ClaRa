@@ -1,0 +1,139 @@
+{
+  "linhas": 246,
+  "colunas": 34,
+  "objeto_bytes": 25176,
+  "duplicatas": 0,
+  "linhas_excel_comprimento_inconsistente": 235,
+  "ausencias": {
+    "Year": 0,
+    "Site name": 0,
+    "Sub-site": 0,
+    "Temperature ": 0,
+    "Waterbody type": 0,
+    "Sex": 0,
+    "Lateral plate number": 0,
+    "Lateral plate phenotype": 0,
+    "Wet mass (g)": 0,
+    "Dry mass (g)": 0,
+    "Pelvic girdle dry mass (mg)": 0,
+    "Proportion pelvic girdle": 0,
+    "Whole-body %P": 0,
+    "Lateral plate %P": 0,
+    "Pelvic girdle %P": 0,
+    "Total length (mm)": 0,
+    "Standard length (mm)": 0,
+    "Pelvic girdle length (mm)": 0,
+    "Pelvic spine length (mm)": 0,
+    "Foregut %P": 31,
+    "Hindut %P": 60,
+    "Hindgut %P/Foregut %P": 71,
+    "Digestion ratio": 71,
+    "P excretion (ug/min)": 137,
+    "N excretion (ug/min)": 137,
+    "Head length (mm)": 1,
+    "Eye diameter (mm)": 0,
+    "Snout length (mm)": 0,
+    "Jaw length (mm)": 0,
+    "Head depth (mm)": 0,
+    "Body depth (mm)": 0,
+    "Dorsal spine length (mm)": 1,
+    "Gape width (mm)": 0,
+    "Gut length (mm)": 0
+  },
+  "estratos": [
+    {
+      "local": "Bear Lake",
+      "N": 42,
+      "amostra_exemplo": 10,
+      "femeas": 27,
+      "machos": 15,
+      "anos": {
+        "2022": 20,
+        "2023": 22
+      },
+      "media_comprimento_mm": 55.023333333333,
+      "media_massa_g": 1.668166666667
+    },
+    {
+      "local": "Cowichan Estuary",
+      "N": 56,
+      "amostra_exemplo": 14,
+      "femeas": 25,
+      "machos": 31,
+      "anos": {
+        "2022": 29,
+        "2023": 27
+      },
+      "media_comprimento_mm": 61.278392857143,
+      "media_massa_g": 2.411867857143
+    },
+    {
+      "local": "Cowichan Lake",
+      "N": 56,
+      "amostra_exemplo": 14,
+      "femeas": 26,
+      "machos": 30,
+      "anos": {
+        "2022": 37,
+        "2023": 19
+      },
+      "media_comprimento_mm": 57.41375,
+      "media_massa_g": 1.925975
+    },
+    {
+      "local": "Cowichan River",
+      "N": 54,
+      "amostra_exemplo": 13,
+      "femeas": 25,
+      "machos": 29,
+      "anos": {
+        "2022": 30,
+        "2023": 24
+      },
+      "media_comprimento_mm": 56.455,
+      "media_massa_g": 1.907646296296
+    },
+    {
+      "local": "Mesachie Lake",
+      "N": 38,
+      "amostra_exemplo": 9,
+      "femeas": 24,
+      "machos": 14,
+      "anos": {
+        "2022": 20,
+        "2023": 18
+      },
+      "media_comprimento_mm": 48.787631578947,
+      "media_massa_g": 0.9905657894737
+    }
+  ],
+  "respostas": [
+    {
+      "variavel": "Total length (mm)",
+      "min": 36.5,
+      "max": 70.92,
+      "media": 56.34243902439,
+      "razao_variancia_estratificada_aas": 0.6674165153714
+    },
+    {
+      "variavel": "Wet mass (g)",
+      "min": 0.427,
+      "max": 3.82,
+      "media": 1.844051219512,
+      "razao_variancia_estratificada_aas": 0.5924622702622
+    }
+  ],
+  "sexo": {
+    "Female": 127,
+    "Male": 119
+  },
+  "ano": {
+    "2022": 136,
+    "2023": 110
+  },
+  "tipo_agua": {
+    "Estuary": 56,
+    "Lake": 136,
+    "River": 54
+  }
+}

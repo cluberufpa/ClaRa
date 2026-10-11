@@ -44,6 +44,56 @@ Referências oficiais consultadas:
 - https://fishr-core-team.r-universe.dev/FSAdata/FSAdata.pdf
   (WalleyeErie2: fonte Ohio DNR, uso não educacional requer permissão).
 
-O professor recebeu a opção de buscar uma base maior, avaliar esta
-candidata ou manter walleye_erie. Decisão ainda pendente; migração dos
-demais conjuntos pode seguir.
+## Conferência concluída com arquivos do professor — 11/10/2026
+
+Esta seção atualiza a limitação de download acima: o professor forneceu
+Cowichan_Data.xlsx e README (1).md de Downloads. Ambos têm exatamente os
+hashes SHA256 e tamanhos da versão 446982. Cópias originais preservadas aqui;
+README (1).md foi copiado com nome README.md. Licença da versão confirmada
+nos metadados da API: https://spdx.org/licenses/CC0-1.0.html.
+
+A aba analítica tem 246 linhas × 34 colunas, sem linhas totalmente repetidas.
+A aba do dicionário chama-se Meta-data (o README a chama Metadata).
+Sexo: 127 fêmeas e 119 machos; anos: 136 registros de 2022 e 110 de 2023.
+
+| Local | Peixes | Exemplo: amostra proporcional de 60 |
+|---|---:|---:|
+| Bear Lake | 42 | 10 |
+| Cowichan Estuary | 56 | 14 |
+| Cowichan Lake | 56 | 14 |
+| Cowichan River | 54 | 13 |
+| Mesachie Lake | 38 | 9 |
+
+Alocação pelo método dos maiores restos. Para a média de massa fresca,
+a variância teórica da amostragem estratificada desta base, com essa
+alocação e correção de população finita, é 0,5925 da variância da AAS de
+60 registros. Isso é uma comparação descritiva dos dois planos nesta
+população didática, não resultado de uma coleta nova ou teste inferencial.
+
+O professor pediu avaliar a candidata e depois manter só as colunas
+importantes. Preparado cowichan_para_revisao.xlsx com 246 × 8: id_registro,
+ano, local, sublocal, ambiente, sexo, massa_fresca_g e comprimento_total_mm.
+Nomes geográficos/códigos preservados; ambiente e sexo traduzidos. Nenhum
+peixe excluído, nenhum valor imputado. ID é a ordem original, não marca de campo.
+O recorte está completo para essas oito colunas. A fonte integral permanece.
+Conferência linha a linha em R e na planilha passou; objeto em xz medido
+com **3.504 bytes**, abaixo de 100 KB. Fonte integral serializada na avaliação:
+25.176 bytes. A avaliação não alterou data/, catálogo ou instalação da ClaRa.
+O R gravou os resultados de sucesso e encerrou com código 1; persiste a
+limitação de encerramento do ambiente conhecida nesta sessão. Isso não
+equivale a check do pacote aprovado.
+
+Massa fresca: 0,427 a 3,82 g; comprimento total: 36,5 a 70,92 mm.
+Na fonte integral, faltam dados de fósforo/digestão/excreção, fora do recorte.
+Há um conflito no registro 234 (linha Excel 235): total 51,09 mm e padrão
+55 mm. Não decidir por suposição qual medida está errada. Valor total
+mantido, com pendência explícita. Usar massa como resposta inicial dos
+exercícios; confirmar esse par com os autores antes de exercícios de comprimento.
+
+Recomendação: candidata adequada para substituir o exemplo de amostragem,
+com base menor, estratos suficientes e CC0. Não substitui análises de idade
+e maturidade do walleye. Usar a base como população finita didática, sem
+atribuir amostragem probabilística ao estudo original. A troca definitiva
+foi autorizada pelo professor após a avaliação e implementada no registro
+D39_cowichan_amostragem; objeto definitivo cowichan_amostragem, 3.500 bytes
+em xz. Esta pasta preserva a avaliação anterior; a ficha vigente é a do D39.
