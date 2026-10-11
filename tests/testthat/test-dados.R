@@ -1,7 +1,11 @@
 test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
   expect_false(anyDuplicated(catalogo_dados$codigo) > 0L)
   expect_false(anyDuplicated(catalogo_dados$nome) > 0L)
-  expect_true(all(grepl("^D[0-9]{3,}$", catalogo_dados$codigo)))
+  expect_true(all(grepl("^D[0-9]{3}$", catalogo_dados$codigo)))
+  expect_false(anyDuplicated(catalogo_dados$registro) > 0L)
+  expect_true(all(grepl("^D[0-9]{3}_[a-z]+(?:_[a-z]+)?$", catalogo_dados$registro, perl = TRUE)))
+  expect_true(all(startsWith(catalogo_dados$registro, paste0(catalogo_dados$codigo, "_"))))
+  expect_true("nome_eapadados" %in% names(catalogo_dados))
 
   # No desenvolvimento lemos as páginas recém-geradas; no check, a ajuda
   # instalada. Não usamos uma instalação antiga para conferir dados novos.
@@ -44,12 +48,21 @@ test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
 })
 
 test_that("os bagres preservam as observações e a pendência de autorização", {
-  expect_identical(levels(D001_bagre_racao_isoproteica$racao), c("A", "B", "C", "D"))
-  expect_false(is.ordered(D001_bagre_racao_isoproteica$racao))
-  expect_identical(as.integer(table(D001_bagre_racao_isoproteica$racao)), c(5L, 5L, 4L, 5L))
-  expect_identical(D001_bagre_racao_isoproteica$peso_medio_final_g,
+  expect_identical(levels(bagre_racao_isoproteica$racao), c("A", "B", "C", "D"))
+  expect_false(is.ordered(bagre_racao_isoproteica$racao))
+  expect_identical(as.integer(table(bagre_racao_isoproteica$racao)), c(5L, 5L, 4L, 5L))
+  expect_identical(bagre_racao_isoproteica$peso_g,
                    c(86, 83, 91, 84, 87, 88, 87, 94, 86, 89,
                      105, 104, 102, 99, 94, 91, 89, 92, 97))
-  expect_false(anyNA(D001_bagre_racao_isoproteica))
+  expect_false(anyNA(bagre_racao_isoproteica))
   expect_match(catalogo_dados$licenca[catalogo_dados$codigo == "D001"], "pendente")
+})
+
+ test_that("a Trilha encontra os bagres pelo nome anterior sem mudar as colunas", {
+  linha <- catalogo_dados[catalogo_dados$nome_eapadados == "isoproteica_bagre", ]
+  expect_equal(nrow(linha), 1L)
+  expect_identical(linha$codigo, "D001")
+  expect_identical(linha$registro, "D001_bagre_racao")
+  expect_identical(linha$nome, "bagre_racao_isoproteica")
+  expect_identical(names(bagre_racao_isoproteica), c("racao", "peso_g"))
 })

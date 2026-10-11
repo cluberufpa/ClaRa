@@ -2,7 +2,9 @@
 # Este arquivo registra apenas metadados; nunca recalcula os dados.
 novo <- data.frame(
   codigo = "D001",
-  nome = "D001_bagre_racao_isoproteica",
+  registro = "D001_bagre_racao",
+  nome = "bagre_racao_isoproteica",
+  nome_eapadados = "isoproteica_bagre",
   rotulo = "Bagres: rações isoproteicas",
   titulo = "D001 · Peso médio final de bagres por ração isoproteica",
   natureza = "real",

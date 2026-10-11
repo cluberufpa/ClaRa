@@ -45,6 +45,6 @@ Collate:
     'clara_medias.R'
     'clara_medianas.R'
     'clara_regressao.R'
-    'dados_D001_bagre_racao_isoproteica.R'
+    'dados_bagre_racao_isoproteica.R'
     'dados_catalogo.R'
 Config/roxygen2/version: 8.1.0
