@@ -48,3 +48,7 @@ Conferir a extração da planilha organizada contra o arquivo do depósito
 original, que não foi localizado entre as fontes locais. Nenhum objeto
 anterior do EAPADados existe para comparar. Não inferir independência entre
 as notas do mesmo avaliador. Curadoria fina e homologação ficam para a passada 2.
+
+## Revisão rápida do autor — 11/10/2026
+
+Cópia `tilapia_sensorial_para_revisao.xlsx`, com abas Dados para revisar, Revisão do autor e documentacao. As 122 linhas e sete colunas da tabela-fonte foram conferidas, sem alteração de valores ou ordem. Campos de resposta do autor em amarelo; aguardam significado da escala e decisão de curadoria. A cópia não é fonte do objeto R enquanto as decisões não forem explicitamente aplicadas.

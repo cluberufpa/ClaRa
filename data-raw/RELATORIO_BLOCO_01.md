@@ -96,3 +96,7 @@ conjuntos, com status de branch provisória e identificadores D01-D10.
 Decisões anteriores, estilos e demais abas foram preservados; nenhum
 conjunto foi marcado como concluído ou incluído como pronto enquanto o
 check estiver pendente. A cópia anterior está em `acompanhamento/`.
+
+## Atualização após o merge — 11/10/2026
+
+Merge local concluído em a5e6a20, com dez conjuntos na main e check ainda pendente. Professor confirmou D03 como dados próprios, publicados em outro formato; referência bibliográfica, licença específica, unidade da CPUE e desenho permanecem para completar. D04 deve ser mantido; encaminhamento de licenciamento será decidido depois, preservando o registro GPL da origem. D09 recebeu cópia para revisão rápida da escala pelo autor. Nenhum valor dos objetos de dados foi modificado nessas decisões.
