@@ -73,4 +73,5 @@ Collate:
     'dados_darter_ontario.R'
     'dados_exportacao_pargo.R'
     'dados_gammarus_dieta_temperatura_resumo.R'
+    'dados_idades_savel_repetibilidade.R'
 Config/roxygen2/version: 8.1.0

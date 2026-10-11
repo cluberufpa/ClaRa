@@ -1,0 +1,20 @@
+{
+  "codigo": "D27",
+  "registro": "D27_savel_idades",
+  "nome": "idades_savel_repetibilidade",
+  "nome_eapadados": "idades_savel_repetibilidade",
+  "rotulo": "Sável: repetibilidade das leituras de idade",
+  "titulo": "D27 - Sável: repetibilidade das leituras de idade",
+  "natureza": "real",
+  "origem": "EAPADados::idades_savel_repetibilidade",
+  "unidade_amostral": "peixe com leituras de idade repetidas por leitor",
+  "linhas": 53,
+  "colunas": 8,
+  "analises": "Wilcoxon pareado; Repetibilidade; Concordância",
+  "analise_principal": "Wilcoxon pareado",
+  "palavras_chave": "idades; savel; repetibilidade",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, FSAdata",
+  "referencia": "McBride, Hendricks e Olney (2005), Fisheries 30:10–18; FSAdata::ShadCR",
+  "situacao": "provisório"
+}
