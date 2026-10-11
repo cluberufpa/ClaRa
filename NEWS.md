@@ -189,3 +189,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D18 `cabritos_acidos_graxos`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D19 `camaroes_sexo`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D20 `cangulo_crescimento`, provisório, com fonte e decisões anteriores registradas.

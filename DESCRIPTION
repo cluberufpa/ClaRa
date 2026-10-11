@@ -65,4 +65,5 @@ Collate:
     'dados_salmouras_carbonatos.R'
     'dados_cabritos_acidos_graxos.R'
     'dados_camaroes_sexo.R'
+    'dados_cangulo_crescimento.R'
 Config/roxygen2/version: 8.1.0

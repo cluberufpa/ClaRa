@@ -1,0 +1,20 @@
+{
+  "codigo": "D20",
+  "registro": "D20_cangulo_biometria",
+  "nome": "cangulo_crescimento",
+  "nome_eapadados": "cangulo_crescimento",
+  "rotulo": "Cangulo: comprimento e pesos por classe",
+  "titulo": "D20 - Cangulo: comprimento e pesos por classe",
+  "natureza": "real declarada; fonte incompleta",
+  "origem": "EAPADados::cangulo_crescimento",
+  "unidade_amostral": "classe de comprimento com três pesos e média; protocolo a confirmar",
+  "linhas": 16,
+  "colunas": 7,
+  "analises": "Regressão de potência; Transformação logarítmica; Estatística descritiva",
+  "analise_principal": "Regressão de potência",
+  "palavras_chave": "cangulo; crescimento",
+  "verbo_clara": "",
+  "licenca": "Não localizada; origem e autorização a confirmar",
+  "referencia": "Fonte específica não identificada na documentação herdada",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}

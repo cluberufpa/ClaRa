@@ -1,0 +1,33 @@
+#' D20 - Cangulo: comprimento e pesos por classe
+#'
+#' Dados provisórios da passada 1. Unidade amostral: classe de comprimento com três pesos e média; protocolo a confirmar.
+#'
+#' @format Um `data.frame` com 16 linhas e 7 colunas:
+#' \describe{
+#'   \item{comprimento_cm}{Comprimento da classe, em centímetros conforme origem.}
+#'   \item{p1}{Primeiro peso da classe, em gramas conforme origem.}
+#'   \item{p2}{Segundo peso da classe, em gramas conforme origem.}
+#'   \item{p3}{Terceiro peso da classe, em gramas conforme origem.}
+#'   \item{peso_g}{Peso médio da classe, em gramas conforme origem.}
+#'   \item{ln_peso}{Logaritmo natural do peso médio; valores realocados da antiga ln_comp.}
+#'   \item{ln_comp}{Logaritmo natural do comprimento; valores realocados da antiga ln_peso.}
+#' }
+#'
+#' @details
+#' Fonte e protocolo incompletos; natureza real declarada, ainda não confirmada. Três pesos não são medidas repetidas do mesmo peixe. Os logaritmos estavam trocados e foram realocados às colunas corretas conforme pedido da Trilha; precisão original preservada. Avaliar retirada de derivados na passada 2.
+#'
+#' @section Adaptações:
+#' Correção explicitada no pedido da Trilha: ln_peso recebe valores da antiga ln_comp; ln_comp recebe valores da antiga ln_peso. Demais cabeçalhos e valores preservados, sem recalcular a precisão dos logaritmos.
+#'
+#' @source
+#' Fonte específica não identificada na documentação herdada.
+#' Licença: Não localizada; origem e autorização a confirmar.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D20_cangulo_biometria/.
+#'
+#' @examples
+#' summary(cangulo_crescimento)
+#'
+#' @docType data
+#' @keywords datasets
+"cangulo_crescimento"
