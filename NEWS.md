@@ -207,3 +207,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D26 `gammarus_dieta_temperatura_resumo`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D27 `idades_savel_repetibilidade`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D28 `lagostas_kelp_sexo`, provisório, com fonte e decisões anteriores registradas.

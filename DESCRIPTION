@@ -74,4 +74,5 @@ Collate:
     'dados_exportacao_pargo.R'
     'dados_gammarus_dieta_temperatura_resumo.R'
     'dados_idades_savel_repetibilidade.R'
+    'dados_lagostas_kelp_sexo.R'
 Config/roxygen2/version: 8.1.0
