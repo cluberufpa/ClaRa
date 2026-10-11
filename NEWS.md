@@ -171,3 +171,5 @@ dão os mesmos números e as mesmas figuras.
   receita mostrada, rodada sem a ClaRa, dá o mesmo resultado da função.
 
 - Passada 1: D10 `enobieta_baci`, macroinvertebrados para planejamento BACI; fonte completa preservada.
+
+- Dados: D11 `puromicina_reacao`, provisório, com fonte e decisões anteriores registradas.

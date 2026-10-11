@@ -56,4 +56,5 @@ Collate:
     'dados_pinguins.R'
     'dados_salvelino_formalina_remocao.R'
     'dados_tilapia_sensorial.R'
+    'dados_puromicina_reacao.R'
 Config/roxygen2/version: 8.1.0
