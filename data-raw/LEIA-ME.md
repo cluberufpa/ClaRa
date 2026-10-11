@@ -28,6 +28,9 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 - D09 (`tilapia_sensorial`): 122 × 7, 848 bytes em xz; notas preservadas.
   Confirmar significado, âncoras e sentido da escala; não presumir aceitação.
+  Professor consultará o artigo. Depois, explicar as medidas e avaliar a
+  pertinência das colunas para a análise; eventual retirada depende dessa
+  revisão e da identificação da coluna, preservando a fonte integral.
 - Bloco 1 preparado: dez conjuntos, 53.388 bytes com catálogo; 277
   expectativas e dez exemplos passaram; hashes das fontes conferidos.
   Collate atualizado com autorização expressa do professor. Build aprovado;

@@ -52,3 +52,9 @@ as notas do mesmo avaliador. Curadoria fina e homologação ficam para a passada
 ## Revisão rápida do autor — 11/10/2026
 
 Cópia `tilapia_sensorial_para_revisao.xlsx`, com abas Dados para revisar, Revisão do autor e documentacao. As 122 linhas e sete colunas da tabela-fonte foram conferidas, sem alteração de valores ou ordem. Campos de resposta do autor em amarelo; aguardam significado da escala e decisão de curadoria. A cópia não é fonte do objeto R enquanto as decisões não forem explicitamente aplicadas.
+
+## Encaminhamento do autor — leitura do artigo (11/10/2026)
+
+O professor consultará o artigo para esclarecer o significado da escala e das notas. Depois da leitura, explicar melhor o que cada medida representa e avaliar a pertinência de cada coluna para a análise pretendida. Uma coluna poderá ser retirada da base de análise se não tiver significado relevante para esse objetivo, mediante decisão do professor.
+
+A coluna específica ainda não foi identificada. Não interpretar esta anotação como autorização para excluir automaticamente o identificador ou qualquer uma das seis notas. Preservar a fonte integral e registrar a justificativa de eventual seleção na curadoria. Revisão e decisão continuam pendentes.
