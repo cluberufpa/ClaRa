@@ -1,0 +1,20 @@
+{
+  "codigo": "D13",
+  "registro": "D13_artemia_fitoesterois",
+  "nome": "artemia_fitoesterois",
+  "nome_eapadados": "",
+  "rotulo": "Artêmia: biomassa sob suplementação com fitoesteróis",
+  "titulo": "D13 - Artêmia: biomassa sob suplementação com fitoesteróis",
+  "natureza": "real",
+  "origem": "literatura: BCO-DMO, conjunto 724179",
+  "unidade_amostral": "recipiente experimental de 4 L, com resposta agregada por recipiente",
+  "linhas": 69,
+  "colunas": 5,
+  "analises": "ANOVA de um fator por experimento; Teste t de contraste planejado; Estatística descritiva",
+  "analise_principal": "ANOVA por experimento",
+  "palavras_chave": "artemia; fitoesterois",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Hassett e Giner (2021); BCO-DMO, versão 1 de 19/01/2018; DOI 10.26008/1912/bco-dmo.724179.1",
+  "situacao": "provisório"
+}

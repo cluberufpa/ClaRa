@@ -1,0 +1,2 @@
+Fonte: https://www.bco-dmo.org/dataset/724179 e https://www.bco-dmo.org/dataset/724179/description
+DOI: 10.26008/1912/bco-dmo.724179.1. CC BY 4.0. Métodos: três recipientes de 4 L por tratamento, oito dias, quatro experimentos (6, 6, 6 e 5 tratamentos). Primeiros três começam dois dias após eclosão; quarto começa quatro dias após. Respostas: biomassa seca final por recipiente (mg) e massa seca média individual (microgramas/indivíduo). MD5 do CSV na fonte: 3e4495f10c1cb70a73c73f00295ed467.
