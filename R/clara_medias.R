@@ -122,12 +122,8 @@ comparar_medias <- function(dados,
   conferir_sim_ou_nao(variancias_iguais, "variancias_iguais")
 
   # A hipótese unilateral só existe no teste t: a ANOVA é sempre bilateral.
-  alternativa <- escolher_opcao(alternativa, c("bilateral", "maior", "menor"), "alternativa")
-  if (quantos_grupos > 2 && alternativa != "bilateral") {
-    stop("alternativa = \"", alternativa, "\" só existe com dois grupos (teste t). ",
-         "Com ", quantos_grupos, " grupos, a ANOVA é sempre bilateral: ",
-         "use alternativa = \"bilateral\".", call. = FALSE)
-  }
+  alternativa <- escolher_alternativa(alternativa, quantos_grupos,
+                                      dois = "teste t", varios = "a ANOVA")
 
   # Com três ou mais grupos, as variâncias decidem entre a ANOVA clássica e
   # a de Welch.
@@ -180,10 +176,6 @@ comparar_medias <- function(dados,
   # Damos ao resultado uma etiqueta, para o console saber como exibi-lo.
   structure(resultado, class = "clara_medias")
 }
-
-# A hipótese alternativa em português (como o aluno escreve) e no R (como o
-# t.test() a recebe).
-alternativas_r <- list(bilateral = "two.sided", maior = "greater", menor = "less")
 
 
 # As receitas de comparar_medias() ---------------------------------------------

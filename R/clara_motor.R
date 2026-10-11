@@ -281,6 +281,23 @@ escolher_opcao <- function(valor, opcoes, nome_argumento) {
   valor
 }
 
+# A hipótese alternativa em português (como o aluno escreve) e no R (como o
+# t.test() e o wilcox.test() a recebem).
+alternativas_r <- list(bilateral = "two.sided", maior = "greater", menor = "less")
+
+# Devolve a hipótese alternativa escolhida. A unilateral só existe com dois
+# grupos; com três ou mais, o teste é sempre bilateral, e a mensagem diz
+# qual teste roda em cada caso (dois = "teste t", varios = "a ANOVA").
+escolher_alternativa <- function(alternativa, quantos_grupos, dois, varios) {
+  alternativa <- escolher_opcao(alternativa, names(alternativas_r), "alternativa")
+  if (quantos_grupos > 2 && alternativa != "bilateral") {
+    stop("alternativa = \"", alternativa, "\" só existe com dois grupos (", dois, "). ",
+         "Com ", quantos_grupos, " grupos, ", varios, " é sempre bilateral: ",
+         "use alternativa = \"bilateral\".", call. = FALSE)
+  }
+  alternativa
+}
+
 # Confere se um argumento recebeu uma fração: um número maior que 0 e até 1.
 conferir_fracao <- function(valor, nome_argumento) {
   if (!is.numeric(valor) || length(valor) != 1 || valor <= 0 || valor > 1) {

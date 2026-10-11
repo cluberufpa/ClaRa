@@ -1,3 +1,27 @@
+# clara 0.13.0 (10 de outubro de 2026)
+
+Mann-Whitney unilateral, pedido pela Trilha, cuja tela do Mann-Whitney
+oferece a hipótese unilateral. Segue a decisão do professor para o teste t
+(0.11.0): é argumento, não função nova.
+
+* `comparar_medianas(..., alternativa = "bilateral")`, com `"maior"` ou
+  `"menor"` (as observações do primeiro grupo, na ordem dos níveis, tendem
+  a valores maiores ou menores que as do segundo). Só com dois grupos: o
+  Kruskal-Wallis é sempre bilateral, e a função recusa com mensagem. A
+  escolha fica em `resultado$nomes$alternativa`, e a receita escreve
+  `alternative =` no `wilcox.test()`.
+* No unilateral, o intervalo do deslocamento (Hodges-Lehmann) fica aberto
+  de um lado; frases, tabela e console escrevem `+∞` ou `-∞`. Com
+  dispersões parecidas, a frase fala da mediana; com dispersões
+  diferentes, das observações como um todo. O intervalo do tamanho de
+  efeito continua bilateral.
+* `escrever_resultados()` das medianas (Mann-Whitney e Kruskal-Wallis)
+  passa a trazer `$nota_tabela` e `$legenda_figura`, como as médias, para
+  o relatório na Trilha.
+* Arrumação: `alternativas_r` e a conferência da alternativa
+  (`escolher_alternativa()`) passam para o motor, usadas pelas médias e
+  pelas medianas.
+
 # clara 0.12.0 (10 de outubro de 2026)
 
 Relacionar variáveis (decisões do professor de 10/10/2026), pedida pela

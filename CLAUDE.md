@@ -464,6 +464,13 @@ textos <- resultado |> escrever_resultados()
 | 2 | Mann-Whitney, com o deslocamento de Hodges-Lehmann e IC | `$teste` | r bisserial dos postos |
 | 3 ou mais | Kruskal-Wallis; Dunn com p ajustado por Holm | `$teste`, `$pares` | ε² dos postos |
 
+- **Mann-Whitney unilateral** (v0.13.0, pedido pela Trilha):
+  `alternativa = "bilateral"`, `"maior"` ou `"menor"`, como no teste t; só
+  com dois grupos (`escolher_alternativa()`, no motor, recusa com três ou
+  mais). O IC do deslocamento fica aberto de um lado; a frase fala da
+  mediana com dispersões parecidas e das observações com dispersões
+  diferentes. As frases das medianas trazem `$nota_tabela` e
+  `$legenda_figura`, como as médias.
 - `$resumo` traz n, mediana, q1, q3, `aiq` e `letra`; `$pressupostos` traz
   o Fligner-Killeen (dispersão parecida nos grupos). Com dispersões
   parecidas, o teste compara as medianas; se o Fligner rejeitar, as frases

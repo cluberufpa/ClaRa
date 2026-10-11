@@ -11,6 +11,7 @@ comparar_medianas(
   rotulo_resposta = NULL,
   rotulo_grupos = NULL,
   confianca = 0.95,
+  alternativa = c("bilateral", "maior", "menor"),
   mostrar_codigo = FALSE
 )
 }
@@ -26,6 +27,8 @@ comparar_medianas(
 \item{rotulo_grupos}{como chamar os grupos nos gráficos e nos textos (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna. Os rótulos ficam guardados no resultado: as funções que vêm depois já os usam, sem precisar repeti-los}
 
 \item{confianca}{nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca}
+
+\item{alternativa}{a hipótese alternativa do Mann-Whitney: "bilateral" (padrão: os grupos diferem, em qualquer sentido), "maior" (as observações do primeiro grupo, na ordem dos níveis, tendem a ser maiores que as do segundo) ou "menor" (tendem a ser menores). A hipótese unilateral se decide no planejamento, antes de olhar os dados, e só existe com dois grupos: o Kruskal-Wallis é sempre bilateral. No unilateral, o intervalo do deslocamento fica aberto de um lado (de 0,8 a +∞, por exemplo); o do tamanho de efeito continua bilateral}
 
 \item{mostrar_codigo}{TRUE imprime o código R antes do resultado}
 }
@@ -68,6 +71,13 @@ resultado <- InsectSprays |>
 
 resultado
 resultado$pares
+
+# Dois grupos, com a hipótese unilateral decidida no planejamento.
+dois <- droplevels(subset(InsectSprays, is.element(spray, c("A", "C"))))
+dois |>
+  comparar_medianas(resposta    = count,
+                    grupos      = spray,
+                    alternativa = "maior")
 
 }
 \concept{Comparar medianas}

@@ -35,6 +35,7 @@
 #' @param rotulo_resposta como chamar a resposta nos gráficos e nos textos (ex.: "Peso (g)"); sem ele, vai o nome da coluna.
 #' @param rotulo_grupos como chamar os grupos nos gráficos e nos textos (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna. Os rótulos ficam guardados no resultado: as funções que vêm depois já os usam, sem precisar repeti-los
 #' @param confianca nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca
+#' @param alternativa a hipótese alternativa do Mann-Whitney: "bilateral" (padrão: os grupos diferem, em qualquer sentido), "maior" (as observações do primeiro grupo, na ordem dos níveis, tendem a ser maiores que as do segundo) ou "menor" (tendem a ser menores). A hipótese unilateral se decide no planejamento, antes de olhar os dados, e só existe com dois grupos: o Kruskal-Wallis é sempre bilateral. No unilateral, o intervalo do deslocamento fica aberto de um lado (de 0,8 a +∞, por exemplo); o do tamanho de efeito continua bilateral
 #' @param mostrar_codigo TRUE imprime o código R antes do resultado
 #'
 #' @return Devolve uma lista. Cada parte se abre com $:
@@ -62,6 +63,13 @@
 #' resultado
 #' resultado$pares
 #'
+#' # Dois grupos, com a hipótese unilateral decidida no planejamento.
+#' dois <- droplevels(subset(InsectSprays, is.element(spray, c("A", "C"))))
+#' dois |>
+#'   comparar_medianas(resposta    = count,
+#'                     grupos      = spray,
+#'                     alternativa = "maior")
+#'
 #' @concept Comparar medianas
 #' @export
 comparar_medianas <- function(dados,
@@ -70,6 +78,7 @@ comparar_medianas <- function(dados,
                               rotulo_resposta = NULL,
                               rotulo_grupos   = NULL,
                               confianca       = 0.95,
+                              alternativa     = c("bilateral", "maior", "menor"),
                               mostrar_codigo  = FALSE) {
 
   # Guardamos o nome da tabela que o aluno usou (tilapias, por exemplo).
@@ -93,13 +102,19 @@ comparar_medianas <- function(dados,
   analise <- dplyr::case_when(quantos_grupos == 2 ~ "mann_whitney",
                               .default            = "kruskal")
 
+  # A hipótese unilateral só existe no Mann-Whitney: o Kruskal-Wallis é
+  # sempre bilateral.
+  alternativa <- escolher_alternativa(alternativa, quantos_grupos,
+                                      dois = "Mann-Whitney", varios = "o Kruskal-Wallis")
+
   # Trocamos os marcadores da receita escolhida pelos nomes desta análise.
   receita <- preencher_receita(receitas_medianas[[analise]], list(
-    DADOS     = nome_dados,
-    RESPOSTA  = coluna_resposta,
-    GRUPOS    = coluna_grupos,
-    CONFIANCA = confianca,
-    ALFA      = 1 - confianca
+    DADOS       = nome_dados,
+    RESPOSTA    = coluna_resposta,
+    GRUPOS      = coluna_grupos,
+    CONFIANCA   = confianca,
+    ALFA        = 1 - confianca,
+    ALTERNATIVE = alternativas_r[[alternativa]]
   ))
 
   # Rodamos a receita, mostrando o código antes, se o aluno pediu.
@@ -119,7 +134,8 @@ comparar_medianas <- function(dados,
     rotulo_resposta = ou_entao(rotulo_resposta, coluna_resposta),
     rotulo_grupos   = ou_entao(rotulo_grupos, coluna_grupos),
     confianca       = confianca,
-    analise         = analise
+    analise         = analise,
+    alternativa     = alternativa
   )
 
   # Damos ao resultado uma etiqueta, para o console saber como exibi-lo.
@@ -248,14 +264,17 @@ receitas_medianas$mann_whitney <- paste0(trecho_resumo_medianas, "
 #    Sem empates e com menos de 50 observações, o p é exato; senão, vem da
 #    aproximação normal. O deslocamento é a mediana das diferenças entre uma
 #    observação do primeiro grupo e uma do segundo (Hodges-Lehmann).
+#    alternative: \"two.sided\" (os grupos diferem), \"greater\" (o primeiro
+#    grupo tende a valores maiores) ou \"less\" (a valores menores).
 exato <- nrow(dados_analise) < 50 &
   n_distinct(dados_analise$<<RESPOSTA>>) == nrow(dados_analise)
 
 mann_whitney <- wilcox.test(<<RESPOSTA>> ~ <<GRUPOS>>,
-                            data       = dados_analise,
-                            exact      = exato,
-                            conf.int   = TRUE,
-                            conf.level = <<CONFIANCA>>)
+                            data        = dados_analise,
+                            exact       = exato,
+                            conf.int    = TRUE,
+                            conf.level  = <<CONFIANCA>>,
+                            alternative = \"<<ALTERNATIVE>>\")
 
 teste <- mann_whitney |>
   tidy() |>
@@ -656,14 +675,27 @@ texto_comparacoes <- case_when(
            \". Grupos que compartilham uma letra não diferiram entre si.\")
 )
 
-# 11. Síntese: o resultado principal numa frase só.
+# 11. A nota da tabela das medianas e a legenda da figura principal.
+texto_nota_tabela <- str_glue(
+  \"Medianas seguidas pela mesma letra não diferem entre si pelo teste de Dunn com p ajustado por Holm, \",
+  \"ao nível de {com_virgula(100 * alfa, 0)}% de significância (α = {com_virgula(alfa)}). \",
+  \"Q1 e Q3: 1º e 3º quartis; metade das observações fica entre eles.\"
+)
+texto_legenda_figura <- str_glue(
+  \"Comparação entre os grupos de <<ROTULO_GRUPOS>> quanto a <<ROTULO_RESPOSTA>>. \",
+  \"Os pontos representam as observações; os losangos, as medianas; as hastes vão \",
+  \"do 1º ao 3º quartil. Grupos que compartilham uma letra não diferem pelo \",
+  \"teste de Dunn com p ajustado por Holm (α = {com_virgula(alfa)}).\"
+)
+
+# 12. Síntese: o resultado principal numa frase só.
 texto_sintese <- str_glue(
   \"Na amostra de {amostra$usadas} observações em {nrow(resumo)} grupos, {evidencia} \",
   \"(H({teste$gl}) = {com_virgula(teste$h)}; {texto_p(teste$p)}; \",
   \"ε² = {com_virgula(epsilon2, 3)}). A interpretação deve considerar o pressuposto e o delineamento.\"
 )
 
-# 12. Todas as frases, numa lista com partes nomeadas.
+# 13. Todas as frases, numa lista com partes nomeadas.
 list(
   amostra      = texto_amostra,
   teste        = texto_teste,
@@ -672,7 +704,9 @@ list(
   pressupostos = texto_pressupostos,
   alerta       = texto_alerta,
   poder        = texto_poder,
-  sintese      = texto_sintese
+  sintese      = texto_sintese,
+  nota_tabela    = texto_nota_tabela,
+  legenda_figura = texto_legenda_figura
 ) |>
   lapply(as.character)")
 
@@ -680,16 +714,45 @@ list(
 # alerta e síntese.
 receitas_textos$mann_whitney <- paste0(trecho_textos_medianas, "
 
-# 8. O Mann-Whitney numa frase, com o deslocamento e o seu intervalo.
-texto_teste <- str_glue(
-  \"Em <<ROTULO_RESPOSTA>>, {evidencia} de {grupos[1]} e {grupos[2]} pelo teste \",
-  \"de Mann-Whitney (W = {com_virgula(teste$w, 1)}; {texto_p(teste$p)}). A mediana \",
-  \"das diferenças entre uma observação de {grupos[1]} e uma de {grupos[2]} foi \",
-  \"{com_virgula(teste$deslocamento)}, com IC <<NIVEL>>% de {com_virgula(teste$ic_inf)} \",
-  \"a {com_virgula(teste$ic_sup)}.\"
+# 8. A hipótese: \"bilateral\" (os grupos diferem), \"maior\" ou \"menor\" (o
+#    primeiro grupo tende a valores maiores ou menores que o segundo). Na
+#    unilateral, a frase diz o sentido, e o intervalo fica aberto de um lado.
+alternativa <- \"<<ALTERNATIVA>>\"
+# O sentido da hipótese: com dispersões parecidas, sobre as medianas; com
+# dispersões diferentes, sobre as observações como um todo.
+sentido <- function(verbo, tendem) {
+  case_when(
+    dispersao_parecida ~ paste(\"a mediana de\", grupos[1], verbo, alternativa,
+                               \"que a de\", grupos[2]),
+    .default           = paste0(\"as observações de \", grupos[1], \" \", tendem, \" a ser \",
+                                alternativa, \"es que as de \", grupos[2])
+  )
+}
+evidencia <- case_when(
+  alternativa == \"bilateral\" ~ evidencia,
+  teste$p < alfa ~ paste(\"houve evidência de que\", sentido(\"é\", \"tendem\")),
+  .default       = paste(\"não houve evidência de que\", sentido(\"seja\", \"tendam\"))
+)
+entre_grupos <- if_else(alternativa == \"bilateral\",
+                        paste0(\" de \", grupos[1], \" e \", grupos[2]), \"\")
+nome_teste <- if_else(alternativa == \"bilateral\", \"teste de Mann-Whitney\",
+                      \"teste de Mann-Whitney unilateral\")
+texto_ic <- case_when(
+  alternativa == \"maior\" ~ paste0(\"IC <<NIVEL>>% unilateral de \", com_virgula(teste$ic_inf), \" a +∞\"),
+  alternativa == \"menor\" ~ paste0(\"IC <<NIVEL>>% unilateral de -∞ a \", com_virgula(teste$ic_sup)),
+  .default               = paste0(\"IC <<NIVEL>>% de \", com_virgula(teste$ic_inf), \" a \",
+                                  com_virgula(teste$ic_sup))
 )
 
-# 9. Tamanho de efeito: a correlação bisserial dos postos.
+# 9. O Mann-Whitney numa frase, com o deslocamento e o seu intervalo.
+texto_teste <- str_glue(
+  \"Em <<ROTULO_RESPOSTA>>, {evidencia}{entre_grupos} pelo {nome_teste} \",
+  \"(W = {com_virgula(teste$w, 1)}; {texto_p(teste$p)}). A mediana \",
+  \"das diferenças entre uma observação de {grupos[1]} e uma de {grupos[2]} foi \",
+  \"{com_virgula(teste$deslocamento)}, com {texto_ic}.\"
+)
+
+# 10. Tamanho de efeito: a correlação bisserial dos postos.
 r <- rank_biserial(<<RESPOSTA>> ~ <<GRUPOS>>, data = <<RESULTADO>>$dados)$r_rank_biserial
 classe <- case_when(
   abs(r) < 0.1 ~ \"muito pequeno\",
@@ -702,14 +765,27 @@ texto_efeito <- str_glue(
   \"(r bisserial dos postos = {com_virgula(r)}), uma referência estatística, não biológica.\"
 )
 
-# 10. Síntese: o resultado principal numa frase só.
+# 11. A nota da tabela das medianas e a legenda da figura principal.
+texto_nota_tabela <- str_glue(
+  \"Medianas seguidas pela mesma letra não diferem entre si pelo teste de Mann-Whitney \",
+  \"ao nível de {com_virgula(100 * alfa, 0)}% de significância (α = {com_virgula(alfa)}). \",
+  \"Q1 e Q3: 1º e 3º quartis; metade das observações fica entre eles.\"
+)
+texto_legenda_figura <- str_glue(
+  \"Comparação entre os grupos de <<ROTULO_GRUPOS>> quanto a <<ROTULO_RESPOSTA>>. \",
+  \"Os pontos representam as observações; os losangos, as medianas; as hastes vão \",
+  \"do 1º ao 3º quartil. Grupos que compartilham uma letra não diferem pelo \",
+  \"teste de Mann-Whitney (α = {com_virgula(alfa)}).\"
+)
+
+# 12. Síntese: o resultado principal numa frase só.
 texto_sintese <- str_glue(
   \"Na amostra de {amostra$usadas} observações em dois grupos, {evidencia} \",
   \"(W = {com_virgula(teste$w, 1)}; {texto_p(teste$p)}; r = {com_virgula(r)}). \",
   \"A interpretação deve considerar o pressuposto e o delineamento.\"
 )
 
-# 11. Todas as frases, numa lista com partes nomeadas.
+# 13. Todas as frases, numa lista com partes nomeadas.
 list(
   amostra      = texto_amostra,
   teste        = texto_teste,
@@ -717,7 +793,9 @@ list(
   pressupostos = texto_pressupostos,
   alerta       = texto_alerta,
   poder        = texto_poder,
-  sintese      = texto_sintese
+  sintese      = texto_sintese,
+  nota_tabela    = texto_nota_tabela,
+  legenda_figura = texto_legenda_figura
 ) |>
   lapply(as.character)")
 
@@ -797,12 +875,18 @@ print.clara_medianas <- function(x, ...) {
   # O teste que a ClaRa escolheu, numa frase.
   teste <- x$teste
   if (x$nomes$analise == "mann_whitney") {
-    cat("\n# Mann-Whitney\n")
+    alternativa <- alternativa_do(x)
+    grupos <- levels(x$dados[[x$nomes$grupos]])
+    cat("\n# Mann-Whitney",
+        if (alternativa != "bilateral")
+          paste0(", unilateral (H1: ", grupos[1], " tende a valores ", alternativa,
+                 "es que ", grupos[2], ")"),
+        "\n", sep = "")
     cat("Com dois grupos, a ClaRa usa o Mann-Whitney no lugar do Kruskal-Wallis.\n")
     cat("W = ", formatar_numero(teste$w, 1), "; ", formatar_p(teste$p, no_texto = TRUE), ": ",
-        concluir_medianas(teste$p, x$nomes$confianca), "\n", sep = "")
+        concluir_medianas(teste$p, x$nomes$confianca, alternativa, grupos), "\n", sep = "")
     cat("Deslocamento ", teste$comparacao, ": ", formatar_numero(teste$deslocamento),
-        " (IC ", x$nomes$confianca * 100, "%: ", formatar_numero(teste$ic_inf),
+        " (", rotulo_ic(x$nomes$confianca, alternativa), ": ", formatar_numero(teste$ic_inf),
         " a ", formatar_numero(teste$ic_sup), ")\n", sep = "")
   } else {
     cat("\n# Kruskal-Wallis\n")
@@ -833,9 +917,15 @@ print.clara_medianas <- function(x, ...) {
   invisible(x)
 }
 
-# A conclusão da comparação, escrita conforme o p-valor.
-concluir_medianas <- function(p, confianca) {
+# A conclusão da comparação, escrita conforme o p-valor; no unilateral, no
+# sentido da hipótese ("maior" ou "menor").
+concluir_medianas <- function(p, confianca, alternativa = "bilateral", grupos = NULL) {
+  sentido <- function(verbo) {
+    paste0(grupos[1], " ", verbo, " a valores ", alternativa, "es que ", grupos[2], ".")
+  }
   dplyr::case_when(
+    alternativa != "bilateral" & p <  1 - confianca ~ paste("há evidência de que", sentido("tende")),
+    alternativa != "bilateral" & p >= 1 - confianca ~ paste("não há evidência de que", sentido("tenda")),
     p <  1 - confianca ~ "há evidência de diferença entre os grupos.",
     p >= 1 - confianca ~ "não há evidência de diferença entre os grupos."
   )
