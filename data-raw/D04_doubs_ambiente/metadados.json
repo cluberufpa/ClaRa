@@ -1,0 +1,20 @@
+{
+  "codigo": "D04",
+  "registro": "D04_doubs_ambiente",
+  "nome": "doubs_ambiente",
+  "nome_eapadados": "doubs_ambiente",
+  "rotulo": "Doubs: ambiente e riqueza de peixes",
+  "titulo": "D04 - Doubs: ambiente e riqueza de peixes",
+  "natureza": "real",
+  "origem": "EAPADados::doubs_ambiente; pacote R: ade4 1.7-24 (doubs)",
+  "unidade_amostral": "estação do rio Doubs",
+  "linhas": 30,
+  "colunas": 13,
+  "analises": "PCA; Agrupamento hierárquico",
+  "analise_principal": "PCA",
+  "palavras_chave": "doubs; ambiente",
+  "verbo_clara": "",
+  "licenca": "GPL (>= 2), conforme ade4 1.7-24; não relicenciado como MIT",
+  "referencia": "Verneaux (1973); ade4::doubs; Borcard, Gillet e Legendre (2018), Numerical Ecology with R",
+  "situacao": "provisório; escalas da origem a revisar"
+}

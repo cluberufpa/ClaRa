@@ -26,6 +26,11 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- D04 (`doubs_ambiente`): fonte ade4 1.7-24 congelada e conferida; 30 × 13;
+  1.112 bytes em xz. Escalas descritas corretamente, sem transformar dados.
+  Licença GPL (>= 2) da origem registrada; não substituída pela MIT.
+  Propor identificação explícita das estações na passada 2.
+
 - D03 (`cpue_tubarao`): fonte original conferida; 424 × 5; 3.376 bytes
   em xz. Completar créditos, autorização, unidade da CPUE e desenho da coleta.
   Colunas herdadas em inglês preservadas por decisão da passada 1.

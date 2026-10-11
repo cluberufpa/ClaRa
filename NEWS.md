@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D04 `doubs_ambiente`, provisório, adaptado de `EAPADados::doubs_ambiente`; fonte preservada.
+
 - Dados: D03 `cpue_tubarao`, provisório, adaptado de `EAPADados::cpue_tubarao`; fonte preservada.
 
 - Dados: D02 `morfometria_barbo`, provisório, adaptado de `EAPADados::morfometria_barbo`; fonte preservada.
