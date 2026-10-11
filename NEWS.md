@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D08 `pinguins`, provisório, adaptado de `EAPADados::pinguins`; fonte preservada.
+
 - Dados: D07 `camarao_vannamei_biometria`, provisório, adaptado de `EAPADados::camarao_vannamei_biometria`; fonte preservada.
 
 - Dados: D06 `salvelino_formalina_remocao`, provisório, adaptado de `EAPADados::salvelino_formalina_remocao`; fonte preservada.

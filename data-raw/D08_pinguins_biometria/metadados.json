@@ -1,0 +1,20 @@
+{
+  "codigo": "D08",
+  "registro": "D08_pinguins_biometria",
+  "nome": "pinguins",
+  "nome_eapadados": "pinguins",
+  "rotulo": "Pinguins: biometria do Arquipélago Palmer",
+  "titulo": "D08 - Pinguins: biometria do Arquipélago Palmer",
+  "natureza": "real",
+  "origem": "EAPADados::pinguins",
+  "unidade_amostral": "pinguim amostrado",
+  "linhas": 344,
+  "colunas": 8,
+  "analises": "Estatística descritiva; Teste t; ANOVA de um fator; ANCOVA; PCA",
+  "analise_principal": "Estatística descritiva",
+  "palavras_chave": "pinguins",
+  "verbo_clara": "comparar_medias",
+  "licenca": "CC0 1.0",
+  "referencia": "Horst, Hill e Gorman (2020); Gorman, Williams e Fraser (2014); palmerpenguins, DOI 10.5281/zenodo.3960218",
+  "situacao": "provisório"
+}

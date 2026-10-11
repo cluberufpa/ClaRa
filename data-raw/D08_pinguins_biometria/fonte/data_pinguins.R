@@ -1,0 +1,64 @@
+#' Pinguins do Arquipélago Palmer (palmerpenguins) com nomes em português
+#'
+#' @description
+#' Medidas morfométricas de três espécies de pinguins (organismos marinhos
+#' mergulhadores) coletadas na região da Palmer Station, Antártida. É uma versão
+#' contextualizada em português do conjunto \code{penguins} do pacote
+#' \pkg{palmerpenguins}. Excelente para análise exploratória multivariada
+#' (PCA, AAH/HCA), comparação de médias (teste t, ANOVA), regressão, gráficos
+#' e prática de tratamento de valores ausentes.
+#'
+#' @format Um data frame com 344 observações e 8 variáveis:
+#' \describe{
+#'   \item{especie}{Espécie do pinguim (fator: "Adelie", "Chinstrap", "Gentoo").}
+#'   \item{ilha}{Ilha de coleta no Arquipélago Palmer (fator: "Biscoe", "Dream",
+#'     "Torgersen").}
+#'   \item{comprimento_bico_mm}{Comprimento do bico (culmen), em mm (numérica).}
+#'   \item{profundidade_bico_mm}{Profundidade (altura) do bico, em mm (numérica).}
+#'   \item{comprimento_nadadeira_mm}{Comprimento da nadadeira, em mm (inteiro).}
+#'   \item{massa_g}{Massa corporal, em gramas (inteiro).}
+#'   \item{sexo}{Sexo do indivíduo (fator: "femea", "macho").}
+#'   \item{ano}{Ano da observação (inteiro: 2007 a 2009).}
+#' }
+#'
+#' @details
+#' O conjunto contém alguns valores ausentes (\code{NA}), úteis para ensinar
+#' tratamento de dados. Para PCA/AAH, use as quatro medidas morfométricas
+#' (\code{comprimento_bico_mm}, \code{profundidade_bico_mm},
+#' \code{comprimento_nadadeira_mm}, \code{massa_g}), com padronização, e use a
+#' espécie como grupo conhecido para validar os agrupamentos.
+#'
+#' @source Horst, A. M.; Hill, A. P.; Gorman, K. B. (2020). \emph{palmerpenguins:
+#'   Palmer Archipelago (Antarctica) penguin data}. Pacote R, versão 0.1.0.
+#'   DOI: 10.5281/zenodo.3960218. Dados originais: Gorman, K. B.; Williams, T. D.;
+#'   Fraser, W. R. (2014), coletados pela Palmer Station Antarctica LTER.
+#'   Licença: CC0 (domínio público).
+#' @docType data
+#' @encoding UTF-8
+#' @keywords datasets pca hca morfometria pinguins
+#' @name pinguins
+#' @usage data(pinguins)
+#'
+#' @examples
+#' data(pinguins)
+#' str(pinguins)
+#'
+#' # PCA das medidas morfométricas (removendo NAs)
+#' vars <- c("comprimento_bico_mm", "profundidade_bico_mm",
+#'           "comprimento_nadadeira_mm", "massa_g")
+#' dados <- na.omit(pinguins[, c("especie", vars)])
+#' pca <- prcomp(dados[, vars], scale. = TRUE)
+#' summary(pca)
+#'
+#' # Agrupamento hierárquico (Ward) e comparação com a espécie
+#' d <- dist(scale(dados[, vars]))
+#' plot(hclust(d, method = "ward.D2"), labels = dados$especie)
+#'
+#' # Gráfico de dispersão por espécie (requer ggplot2)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   library(ggplot2)
+#'   ggplot(pinguins, aes(comprimento_nadadeira_mm, massa_g, color = especie)) +
+#'     geom_point(na.rm = TRUE) +
+#'     theme_minimal()
+#' }
+"pinguins"

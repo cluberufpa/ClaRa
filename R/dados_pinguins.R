@@ -1,0 +1,55 @@
+#' D08 - Pinguins: biometria do Arquipélago Palmer
+#'
+#' @description
+#' Medidas morfométricas de três espécies de pinguins (organismos marinhos
+#' mergulhadores) coletadas na região da Palmer Station, Antártida. É uma versão
+#' contextualizada em português do conjunto \code{penguins} do pacote
+#' \pkg{palmerpenguins}. Excelente para análise exploratória multivariada
+#' (PCA, AAH/HCA), comparação de médias (teste t, ANOVA), regressão, gráficos
+#' e prática de tratamento de valores ausentes.
+#'
+#' @format Um data frame com 344 observações e 8 variáveis:
+#' \describe{
+#'   \item{especie}{Espécie do pinguim (fator: "Adelie", "Chinstrap", "Gentoo").}
+#'   \item{ilha}{Ilha de coleta no Arquipélago Palmer (fator: "Biscoe", "Dream",
+#'     "Torgersen").}
+#'   \item{comprimento_bico_mm}{Comprimento do bico (culmen), em mm (numérica).}
+#'   \item{profundidade_bico_mm}{Profundidade (altura) do bico, em mm (numérica).}
+#'   \item{comprimento_nadadeira_mm}{Comprimento da nadadeira, em mm (inteiro).}
+#'   \item{massa_g}{Massa corporal, em gramas (inteiro).}
+#'   \item{sexo}{Sexo do indivíduo (fator: "fêmea", "macho").}
+#'   \item{ano}{Ano da observação (inteiro: 2007 a 2009).}
+#' }
+#'
+#' @details
+#' O conjunto contém alguns valores ausentes (\code{NA}), úteis para ensinar
+#' tratamento de dados. Para PCA/AAH, use as quatro medidas morfométricas
+#' (\code{comprimento_bico_mm}, \code{profundidade_bico_mm},
+#' \code{comprimento_nadadeira_mm}, \code{massa_g}), com padronização, e use a
+#' espécie como grupo conhecido para validar os agrupamentos.
+#'
+#' @source Horst, A. M.; Hill, A. P.; Gorman, K. B. (2020). \emph{palmerpenguins:
+#'   Palmer Archipelago (Antarctica) penguin data}. Pacote R, versão 0.1.0.
+#'   DOI: 10.5281/zenodo.3960218. Dados originais: Gorman, K. B.; Williams, T. D.;
+#'   Fraser, W. R. (2014), coletados pela Palmer Station Antarctica LTER.
+#'   Licença: CC0 (domínio público).
+#'
+#' @section Migração para a ClaRa:
+#' Adaptado de `EAPADados::pinguins`. Passada 1: conjunto provisório. Todas as linhas, ordem, colunas e ausências preservadas; nenhuma imputação, filtro novo ou conversão de unidade. O texto herdado descreve adaptações anteriores do EAPADados, que não foram repetidas.
+#'
+#' A decisão anterior do professor no balanço foi aplicada: sexo `femea` passou a `fêmea`, mantendo `macho`, ausências e ordem do fator. A fonte original congelada corresponde a palmerpenguins 0.1.1; a referência de 2020 cita a versão original 0.1.0.
+#'
+#' @section Licença da origem:
+#' CC0 1.0. A licença MIT do código da ClaRa não substitui a licença destes dados.
+#'
+#' @section Pendências para a curadoria:
+#' Preservar ausências de sexo e biometria; selecionar casos completos somente na análise. Aplicar aprovação anterior de sexo fêmea/macho, conservando a ordem do fator.
+#'
+#' Preparo e fonte congelada: `data-raw/D08_pinguins_biometria/`.
+#'
+#' @docType data
+#' @keywords datasets
+#' @examples
+#' resultado <- comparar_medias(dados = pinguins, resposta = massa_g, grupos = especie, rotulo_resposta = "Massa corporal (g)", rotulo_grupos = "Espécie", confianca = 0.95, variancias_iguais = FALSE, alternativa = "bilateral", mostrar_codigo = FALSE)
+#' resultado$resumo
+"pinguins"
