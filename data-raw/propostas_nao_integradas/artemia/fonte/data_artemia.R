@@ -1,0 +1,63 @@
+#' Crescimento de Artemia Salina Sob Diferentes Rações
+#'
+#' @description
+#' Uma determinada fábrica de ração, numa campanha publicitária, afirma que a
+#' ração farelo de arroz (A) é mais eficiente que a ração farelo de babaçu (B)
+#' para acelerar o crescimento de Artemia salina. Este dataset contém dados
+#' para verificar tal afirmação.
+#' Útil para demonstrar testes t de comparação de médias.
+#'
+#' @format Um data frame com observações sobre duas variáveis:
+#' \describe{
+#'   \item{racao}{Fator indicando o tipo de ração utilizada no experimento.
+#'     Níveis: "A" (farelo de arroz) e "B" (farelo de babaçu).}
+#'   \item{taxa_crescimento_mg_dia}{Variável numérica contínua medindo a taxa de
+#'     crescimento dos organismos alimentados com cada tipo de ração,
+#'     expressa em miligramas por dia (mg/dia).}
+#' }
+#'
+#' @details
+#' O objetivo principal com este dataset é responder às seguintes perguntas:
+#' \enumerate{
+#'   \item Há diferença significativa entre as taxas de crescimento das duas rações?
+#'   \item Qual das rações apresenta maior taxa média de crescimento?
+#' }
+#' Recomenda-se a utilização de um teste t unilateral com nível de significância
+#' alpha = 0,05 para as análises.
+#'
+#' @source Dados fictícios baseados em um problema clássico de bioestatística,
+#'   adaptados. Fonte consolidada em APOIO/CURADORIA_DADOS/fontes_containers_originais/dados_brutos_eapadados.xlsx
+#'   (pasta de apoio do ecossistema, fora do pacote), aba "src_artemia".
+#' @docType data
+#' @encoding UTF-8
+#' @keywords datasets bioestatistica teste-t artemia
+#' @name artemia
+#' @usage data(artemia)
+#'
+#' @examples
+#' data(artemia)
+#' summary(artemia)
+#'
+#' # Exemplo de visualização (requer ggplot2)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   library(ggplot2)
+#'   ggplot(artemia, aes(x = racao, y = taxa_crescimento_mg_dia, fill = racao)) +
+#'     geom_boxplot(alpha = 0.7) +
+#'     geom_jitter(width = 0.1, alpha = 0.5) +
+#'     labs(title = "Taxa de Crescimento de Artemia por Tipo de Ração",
+#'          x = "Tipo de Ração",
+#'          y = "Taxa de Crescimento (mg/dia)") +
+#'     theme_minimal()
+#' }
+#'
+#' # Exemplo de teste t (assumindo variâncias iguais para simplificar)
+#' # Para uma análise mais robusta, verifique as premissas do teste t.
+#' if (nrow(artemia) > 2 && length(unique(artemia$racao)) == 2) {
+#'   resultado_teste_t <- t.test(taxa_crescimento_mg_dia ~ racao,
+#'                               data = artemia,
+#'                               alternative = "greater")
+#'   # Imprime o resultado do teste t (a hipótese alternativa 'greater'
+#'   # dependeria de qual ração se espera ser melhor, A ou B)
+#'   # print(resultado_teste_t)
+#' }
+"artemia" # CRUCIAL: Nome do objeto entre aspas, SEM @export!
