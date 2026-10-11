@@ -174,7 +174,9 @@ escrever_resultados <- function(resultado,
                                          .default = "de Welch"),
     # Resultados de versões antigas, sem a alternativa guardada, são bilaterais.
     ALTERNATIVA       = alternativa_do(resultado),
-    ALTERNATIVE       = alternativas_r[[alternativa_do(resultado)]]
+    ALTERNATIVE       = alternativas_r[[alternativa_do(resultado)]],
+    # O ajuste do p nas comparações de Dunn (medianas, três ou mais grupos).
+    NOME_AJUSTE       = if (inherits(resultado, "clara_medianas")) nome_do_ajuste(resultado)
   ))
 
   # Rodamos a receita, mostrando o código antes, se o aluno pediu.

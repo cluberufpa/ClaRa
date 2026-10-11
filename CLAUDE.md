@@ -462,7 +462,7 @@ textos <- resultado |> escrever_resultados()
 | Grupos | Teste | Partes próprias | `medir_efeito()` |
 |---|---|---|---|
 | 2 | Mann-Whitney, com o deslocamento de Hodges-Lehmann e IC | `$teste` | r bisserial dos postos |
-| 3 ou mais | Kruskal-Wallis; Dunn com p ajustado por Holm | `$teste`, `$pares` | ε² dos postos |
+| 3 ou mais | Kruskal-Wallis; Dunn com p ajustado por Holm (padrão), Bonferroni ou BH (`ajuste_p`, v0.14.0) | `$teste`, `$pares` | ε² dos postos |
 
 - **Mann-Whitney unilateral** (v0.13.0, pedido pela Trilha):
   `alternativa = "bilateral"`, `"maior"` ou `"menor"`, como no teste t; só
@@ -700,8 +700,10 @@ abaixo no analise.R; o R aparece apenas sob demanda, com `mostrar_codigo = TRUE`
    `grafico_qq()`, pela regra "uma função, uma figura" (outubro de 2026, a
    pedido do professor, para avaliar como fica).
 8. Medianas: Dunn com Holm, escrito na receita, ou um pacote (FSA,
-   rstatix)? A receita mostra a conta inteira, mas fica longa. Holm ou
-   Bonferroni (o EAPA usa qual)?
+   rstatix)? A receita mostra a conta inteira, mas fica longa. ~~Holm ou
+   Bonferroni?~~ Resolvido em 11/10/2026 (v0.14.0): argumento
+   `ajuste_p = c("holm", "bonferroni", "bh")`, Holm como padrão (controla
+   o erro como Bonferroni, com mais poder); só com três ou mais grupos.
 9. Medianas: limites de leitura. ε² usa os mesmos do η² (0,01; 0,06; 0,14)
    e o r bisserial os de Cohen para correlação (0,1; 0,3; 0,5). O intervalo
    do ε² é bilateral, como o do η² (decisão 1).

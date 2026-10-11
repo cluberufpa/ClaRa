@@ -36,6 +36,7 @@
 #' @param rotulo_grupos como chamar os grupos nos gráficos e nos textos (ex.: "Tipo de Ração"); sem ele, vai o nome da coluna. Os rótulos ficam guardados no resultado: as funções que vêm depois já os usam, sem precisar repeti-los
 #' @param confianca nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca
 #' @param alternativa a hipótese alternativa do Mann-Whitney: "bilateral" (padrão: os grupos diferem, em qualquer sentido), "maior" (as observações do primeiro grupo, na ordem dos níveis, tendem a ser maiores que as do segundo) ou "menor" (tendem a ser menores). A hipótese unilateral se decide no planejamento, antes de olhar os dados, e só existe com dois grupos: o Kruskal-Wallis é sempre bilateral. No unilateral, o intervalo do deslocamento fica aberto de um lado (de 0,8 a +∞, por exemplo); o do tamanho de efeito continua bilateral
+#' @param ajuste_p o ajuste do p nas comparações de Dunn, com três ou mais grupos: "holm" (padrão; controla o erro como Bonferroni, com mais poder), "bonferroni" (o mais conservador) ou "bh" (Benjamini-Hochberg, que controla a proporção de falsas descobertas, menos conservador). Com dois grupos não há pares a ajustar
 #' @param mostrar_codigo TRUE imprime o código R antes do resultado
 #'
 #' @return Devolve uma lista. Cada parte se abre com $:
@@ -79,6 +80,7 @@ comparar_medianas <- function(dados,
                               rotulo_grupos   = NULL,
                               confianca       = 0.95,
                               alternativa     = c("bilateral", "maior", "menor"),
+                              ajuste_p        = c("holm", "bonferroni", "bh"),
                               mostrar_codigo  = FALSE) {
 
   # Guardamos o nome da tabela que o aluno usou (tilapias, por exemplo).
@@ -107,6 +109,14 @@ comparar_medianas <- function(dados,
   alternativa <- escolher_alternativa(alternativa, quantos_grupos,
                                       dois = "Mann-Whitney", varios = "o Kruskal-Wallis")
 
+  # O ajuste do p só existe nas comparações de Dunn, com três ou mais grupos.
+  ajuste_p <- escolher_opcao(ajuste_p, names(ajustes_p_r), "ajuste_p")
+  if (quantos_grupos == 2 && ajuste_p != "holm") {
+    stop("ajuste_p só vale com três ou mais grupos (comparações de Dunn). ",
+         "Com dois grupos, o Mann-Whitney não tem pares a ajustar: tire o ajuste_p.",
+         call. = FALSE)
+  }
+
   # Trocamos os marcadores da receita escolhida pelos nomes desta análise.
   receita <- preencher_receita(receitas_medianas[[analise]], list(
     DADOS       = nome_dados,
@@ -114,7 +124,9 @@ comparar_medianas <- function(dados,
     GRUPOS      = coluna_grupos,
     CONFIANCA   = confianca,
     ALFA        = 1 - confianca,
-    ALTERNATIVE = alternativas_r[[alternativa]]
+    ALTERNATIVE = alternativas_r[[alternativa]],
+    AJUSTE_R    = ajustes_p_r[[ajuste_p]],
+    NOME_AJUSTE = nomes_ajuste_p[[ajuste_p]]
   ))
 
   # Rodamos a receita, mostrando o código antes, se o aluno pediu.
@@ -135,11 +147,23 @@ comparar_medianas <- function(dados,
     rotulo_grupos   = ou_entao(rotulo_grupos, coluna_grupos),
     confianca       = confianca,
     analise         = analise,
-    alternativa     = alternativa
+    alternativa     = alternativa,
+    ajuste_p        = ajuste_p
   )
 
   # Damos ao resultado uma etiqueta, para o console saber como exibi-lo.
   structure(resultado, class = "clara_medianas")
+}
+
+# O ajuste do p nas comparações de Dunn: como o aluno escreve, como o
+# p.adjust() o recebe e como as frases o chamam.
+ajustes_p_r    <- list(holm = "holm", bonferroni = "bonferroni", bh = "BH")
+nomes_ajuste_p <- list(holm = "Holm", bonferroni = "Bonferroni", bh = "Benjamini-Hochberg")
+
+# O nome do ajuste guardado no resultado; Holm nos resultados de versões
+# antigas, que não o guardavam.
+nome_do_ajuste <- function(resultado) {
+  nomes_ajuste_p[[ou_entao(resultado$nomes$ajuste_p, "holm")]]
 }
 
 
@@ -212,7 +236,7 @@ teste <- kruskal |>
 ", trecho_dispersao_medianas, "
 
 # 5. Dunn: cada par de grupos, comparando os postos médios, com o p ajustado
-#    pelo método de Holm. O posto é a posição de cada observação, da menor
+#    pelo método de <<NOME_AJUSTE>>. O posto é a posição de cada observação, da menor
 #    (1) para a maior; valores repetidos (empates) dividem as posições.
 postos <- dados_analise |>
   mutate(posto = rank(<<RESPOSTA>>))
@@ -236,7 +260,7 @@ pares <- cross_join(postos_medios, postos_medios, suffix = c(\"_1\", \"_2\")) |>
     diferenca_postos = posto_medio_1 - posto_medio_2,
     z                = diferenca_postos / sqrt(variancia * (1 / n_1 + 1 / n_2)),
     p                = 2 * pnorm(-abs(z)),
-    p_ajustado       = p.adjust(p, method = \"holm\")
+    p_ajustado       = p.adjust(p, method = \"<<AJUSTE_R>>\")
   )
 
 # 6. Letras: grupos com a mesma letra não diferiram. A maior mediana leva \"a\".
@@ -665,19 +689,19 @@ texto_comparacoes <- case_when(
   teste$p >= alfa ~
     \"Como o Kruskal-Wallis não indicou diferença global, as comparações de Dunn servem só para descrição.\",
   nrow(diferentes) == 0 ~
-    \"Pelo teste de Dunn (p ajustado por Holm), nenhum par de grupos diferiu ao nível adotado, apesar da diferença global indicada pelo Kruskal-Wallis.\",
+    \"Pelo teste de Dunn (p ajustado por <<NOME_AJUSTE>>), nenhum par de grupos diferiu ao nível adotado, apesar da diferença global indicada pelo Kruskal-Wallis.\",
   nrow(diferentes) == 1 ~
-    paste0(\"Pelo teste de Dunn (p ajustado por Holm), só diferiram \", diferentes$frase[1],
+    paste0(\"Pelo teste de Dunn (p ajustado por <<NOME_AJUSTE>>), só diferiram \", diferentes$frase[1],
            \". Grupos que compartilham uma letra não diferiram entre si.\"),
   .default =
-    paste0(\"Pelo teste de Dunn (p ajustado por Holm), diferiram os pares \",
+    paste0(\"Pelo teste de Dunn (p ajustado por <<NOME_AJUSTE>>), diferiram os pares \",
            paste(diferentes$frase, collapse = \"; \"),
            \". Grupos que compartilham uma letra não diferiram entre si.\")
 )
 
 # 11. A nota da tabela das medianas e a legenda da figura principal.
 texto_nota_tabela <- str_glue(
-  \"Medianas seguidas pela mesma letra não diferem entre si pelo teste de Dunn com p ajustado por Holm, \",
+  \"Medianas seguidas pela mesma letra não diferem entre si pelo teste de Dunn com p ajustado por <<NOME_AJUSTE>>, \",
   \"ao nível de {com_virgula(100 * alfa, 0)}% de significância (α = {com_virgula(alfa)}). \",
   \"Q1 e Q3: 1º e 3º quartis; metade das observações fica entre eles.\"
 )
@@ -685,7 +709,7 @@ texto_legenda_figura <- str_glue(
   \"Comparação entre os grupos de <<ROTULO_GRUPOS>> quanto a <<ROTULO_RESPOSTA>>. \",
   \"Os pontos representam as observações; os losangos, as medianas; as hastes vão \",
   \"do 1º ao 3º quartil. Grupos que compartilham uma letra não diferem pelo \",
-  \"teste de Dunn com p ajustado por Holm (α = {com_virgula(alfa)}).\"
+  \"teste de Dunn com p ajustado por <<NOME_AJUSTE>> (α = {com_virgula(alfa)}).\"
 )
 
 # 12. Síntese: o resultado principal numa frase só.
@@ -906,7 +930,7 @@ print.clara_medianas <- function(x, ...) {
 
   # Os pares do Dunn, quando há três ou mais grupos.
   if (x$nomes$analise == "kruskal") {
-    cat("\n# Comparações de Dunn (p ajustado por Holm)\n")
+    cat("\n# Comparações de Dunn (p ajustado por ", nome_do_ajuste(x), ")\n", sep = "")
     print(x$pares)
   }
 

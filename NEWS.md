@@ -1,3 +1,18 @@
+# clara 0.14.0 (11 de outubro de 2026)
+
+Ajuste do p nas comparações de Dunn (decisão do professor, 11/10/2026),
+pedido pela Trilha, cuja tela do Kruskal-Wallis oferece Bonferroni, Holm e
+BH.
+
+* `comparar_medianas(..., ajuste_p = "holm")`, com `"bonferroni"` e `"bh"`
+  (Benjamini-Hochberg). Holm continua o padrão, então quem já usa a função
+  sem escrever o ajuste não vê mudança. Só vale com três ou mais grupos;
+  com dois, a função recusa com mensagem. A escolha fica em
+  `resultado$nomes$ajuste_p`, e a receita escreve o método no
+  `p.adjust()`.
+* As frases (comparações, nota da tabela e legenda) e o console citam o
+  ajuste escolhido.
+
 # clara 0.13.0 (10 de outubro de 2026)
 
 Mann-Whitney unilateral, pedido pela Trilha, cuja tela do Mann-Whitney

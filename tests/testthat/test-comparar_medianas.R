@@ -68,3 +68,40 @@ test_that("a receita copiada do Mann-Whitney unilateral dá o mesmo teste", {
   copiado <- rodar_receita_copiada(receita_mostrada(saida), list(artemias = artemias))
   expect_equal(copiado$teste, resultado$teste)
 })
+
+test_that("o ajuste do p do Dunn segue a escolha, nas frases e no console", {
+  capturas <- ler_treino("sint_residuos_assimetricos")
+  holm     <- comparar_medianas(capturas, resposta = cpue_kg, grupos = petrecho)
+  for (ajuste in c("bonferroni", "bh")) {
+    outro <- comparar_medianas(capturas, resposta = cpue_kg, grupos = petrecho, ajuste_p = ajuste)
+    metodo <- c(bonferroni = "bonferroni", bh = "BH")[[ajuste]]
+    expect_equal(outro$pares$p_ajustado, p.adjust(holm$pares$p, method = metodo))
+    expect_identical(outro$nomes$ajuste_p, ajuste)
+  }
+  bagres     <- ler_treino("real_bagre_racoes")
+  bonferroni <- comparar_medianas(bagres, resposta = peso_g, grupos = racao,
+                                  ajuste_p = "bonferroni")
+  textos <- escrever_resultados(bonferroni)
+  expect_match(textos$comparacoes, "Bonferroni")
+  expect_match(textos$nota_tabela, "Bonferroni")
+  expect_match(paste(capture.output(print(bonferroni)), collapse = "\n"), "ajustado por Bonferroni")
+  expect_match(escrever_resultados(comparar_medianas(bagres, resposta = peso_g, grupos = racao))$comparacoes, "Holm")
+})
+
+test_that("com dois grupos, o ajuste do p não existe", {
+  artemias <- ler_treino("real_artemia_racoes")
+  expect_error(comparar_medianas(artemias, resposta = taxa_crescimento_mg_dia, grupos = racao,
+                                 ajuste_p = "bonferroni"),
+               "três ou mais grupos")
+})
+
+test_that("a receita copiada do Kruskal-Wallis com Bonferroni dá os mesmos pares", {
+  capturas <- ler_treino("sint_residuos_assimetricos")
+  saida <- capture.output(
+    resultado <- comparar_medianas(capturas, resposta = cpue_kg, grupos = petrecho,
+                                   ajuste_p = "bonferroni", mostrar_codigo = TRUE)
+  )
+  copiado <- rodar_receita_copiada(receita_mostrada(saida), list(capturas = capturas))
+  expect_equal(copiado$pares, resultado$pares)
+  expect_equal(copiado$resumo, resultado$resumo)
+})

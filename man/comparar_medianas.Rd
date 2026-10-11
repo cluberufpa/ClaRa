@@ -12,6 +12,7 @@ comparar_medianas(
   rotulo_grupos = NULL,
   confianca = 0.95,
   alternativa = c("bilateral", "maior", "menor"),
+  ajuste_p = c("holm", "bonferroni", "bh"),
   mostrar_codigo = FALSE
 )
 }
@@ -29,6 +30,8 @@ comparar_medianas(
 \item{confianca}{nível de confiança dos intervalos (padrão 0.95); a significância dos testes é 1 - confianca}
 
 \item{alternativa}{a hipótese alternativa do Mann-Whitney: "bilateral" (padrão: os grupos diferem, em qualquer sentido), "maior" (as observações do primeiro grupo, na ordem dos níveis, tendem a ser maiores que as do segundo) ou "menor" (tendem a ser menores). A hipótese unilateral se decide no planejamento, antes de olhar os dados, e só existe com dois grupos: o Kruskal-Wallis é sempre bilateral. No unilateral, o intervalo do deslocamento fica aberto de um lado (de 0,8 a +∞, por exemplo); o do tamanho de efeito continua bilateral}
+
+\item{ajuste_p}{o ajuste do p nas comparações de Dunn, com três ou mais grupos: "holm" (padrão; controla o erro como Bonferroni, com mais poder), "bonferroni" (o mais conservador) ou "bh" (Benjamini-Hochberg, que controla a proporção de falsas descobertas, menos conservador). Com dois grupos não há pares a ajustar}
 
 \item{mostrar_codigo}{TRUE imprime o código R antes do resultado}
 }
