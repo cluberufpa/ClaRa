@@ -2,7 +2,7 @@
 # Rode a partir da raiz de ClaRa-dados, depois de instalar readxl,
 # digest e usethis. Esses pacotes de preparo não são dependências dos dados.
 
-pasta <- file.path("data-raw", "D001_bagre_racao")
+pasta <- file.path("data-raw", "D01_bagre_racao")
 fonte <- normalizePath(file.path(pasta, "fonte", "dados_brutos_eapadados.xlsx"),
                        winslash = "/", mustWork = TRUE)
 manifesto <- readLines(file.path(pasta, "fonte", "SHA256.txt"))

@@ -1,4 +1,4 @@
-#' D001_bagre_racao - Peso médio final de bagres por ração isoproteica
+#' D01_bagre_racao - Peso médio final de bagres por ração isoproteica
 #'
 #' Adaptado de `EAPADados::isoproteica_bagre`: 19 observações sob quatro
 #' rações comerciais isoproteicas, apresentadas na Tabela 7.4 de Bhujel
@@ -41,7 +41,7 @@
 #' nem indicação de que os dados estejam licenciados sob MIT.
 #'
 #' A preparação reproduzível e o histórico completo estão em
-#' `data-raw/D001_bagre_racao/` no repositório da ClaRa.
+#' `data-raw/D01_bagre_racao/` no repositório da ClaRa.
 #'
 #' @source
 #' Bhujel, R. C. (2011). *Statistics for Aquaculture*. Tabela 7.4, p. 103,

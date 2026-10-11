@@ -1,6 +1,6 @@
 # clara (em desenvolvimento)
 
-* D001: `bagre_racao_isoproteica`, com 19 observações preservadas, documentação, catálogo e preparo reproduzível; curadoria aprovada e autorização dos autores pendente.
+* D01: `bagre_racao_isoproteica`, com 19 observações preservadas, documentação, catálogo e preparo reproduzível; curadoria aprovada e autorização dos autores pendente.
 
 # clara 0.14.0 (11 de outubro de 2026)
 

@@ -1,8 +1,44 @@
 # Dados da ClaRa — acompanhamento da migração
 
+## Mudança de plano — passada 1 (11/10/2026)
+
+Esta seção vence as descrições históricas abaixo. O professor autorizou a
+integração do Núcleo 60 em seis blocos de dez, sem aprovação individual.
+Aplicar decisões anteriores e tradução mínima de fontes de pacotes R;
+curadoria fina fica para a passada 2. Os novos conjuntos entram como
+provisórios. D01 conserva a curadoria aprovada e a autorização da fonte pendente.
+
+Código com dois dígitos (`D01`), registro com até duas palavras
+(`D01_bagre_racao`), objeto sem número e definitivo. D001 foi ajustado
+para D01. A artêmia fictícia não entra; `artemia_fitoesterois` é um conjunto
+próprio. As cópias da proposta anterior foram preservadas em
+`propostas_nao_integradas/artemia/`, fora da fila de registros incorporados.
+
+Bloco 1: bagre, barbo, CPUE de tubarão, Doubs, abalone, salvelino, camarão,
+pinguins, tilápia sensorial e Enobieta. Os demais seguem a ordem do Núcleo 60.
+Um commit por conjunto; merge local por bloco após conferir a main parada
+e limpa. Sem push, aumento de versão ou alterações na Trilha.
+
+Limite de `data/`, incluindo catálogo: 3 MB; compressão xz. Antes de
+incorporar qualquer conjunto acima de 100 KB, apresentar seu tamanho.
+Produtos de verificação ficam em pasta temporária fora do repositório.
+Não marcar como concluído no balanço um conjunto com check pendente.
+
+### Pendências para a curadoria e a integração
+
+- D01: autorização dos autores e confirmação da descrição da replicação.
+- A planilha de revisão original ainda está toda pendente; o balanço dos
+  60 preserva aprovações anteriores em coluna própria. Estas serão
+  respeitadas, mantendo pendências técnicas de unidade e de procedência.
+- Os testes do D01 passaram nas 209 expectativas, sem falhas, avisos ou
+  skips. Depois dos resultados, o processo R encerrou com código
+  -1073741819 (violação de acesso no Windows). A falha de instalação/check
+  é preexistente e não equivale a falha nas expectativas dos testes.
+  Nenhuma função foi alterada para contorná-la.
+
 ## Como revisar o primeiro conjunto
 
-Abra `D001_bagre_racao/bagres_para_revisao.xlsx`. A aba **Dados para revisar**
+Abra `D01_bagre_racao/bagres_para_revisao.xlsx`. A aba **Dados para revisar**
 reproduz somente a aba `src_isoproteica` da fonte, sem mudar nomes, valores ou
 ordem. A aba **Revisão do autor** reúne o contexto e os campos azuis para suas
 observações. Salve a planilha e avise no chat para que as decisões sejam lidas.
@@ -16,7 +52,7 @@ pendente na ficha, na ajuda e no catálogo.
 
 | Conjunto atual | Situação | Data | Código | Registro |
 |---|---|---|---|---|
-| isoproteica_bagre → bagre_racao_isoproteica | Curadoria aprovada; preparo aprovado; integração local autorizada; check e autorização da fonte pendentes | 11/10/2026 | D001 | D001_bagre_racao |
+| isoproteica_bagre → bagre_racao_isoproteica | Curadoria aprovada; preparo aprovado; integração local autorizada; check e autorização da fonte pendentes | 11/10/2026 | D01 | D01_bagre_racao |
 
 ## Planilha de acompanhamento
 
@@ -26,7 +62,7 @@ Essa autorização permite atualizar o acompanhamento, sem alterar dados,
 documentação ou decisões anteriores do EAPADados.
 
 - **Dados prontos**: conjunto, análises úteis, data de conclusão, identificador
-  permanente no formato `D001`, `D002`, ... e nome anterior/origem.
+  permanente no formato `D01`, `D002`, ... e nome anterior/origem.
 - Um conjunto só entra nessa aba após aprovação, documentação e validação na
   ClaRa. A linha correspondente recebe preenchimento verde `#C6E0B4` em
   **Núcleo 60** e **Inventário**; as novas colunas registram a situação, o
@@ -50,20 +86,20 @@ mais recente sem trocar a branch da pasta compartilhada `ClaRa/`.
 
 O pedido em `TRILHA/.claude/worktrees/elated-bhaskara-88c769/docs/`
 `PEDIDO_DADOS_TRILHA_PARA_CLARA.md` orienta a prioridade atual.
-Código, registro e objeto são campos diferentes: `D001`,
-`D001_bagre_racao` e `bagre_racao_isoproteica`. A pasta de preparo usa
+Código, registro e objeto são campos diferentes: `D01`,
+`D01_bagre_racao` e `bagre_racao_isoproteica`. A pasta de preparo usa
 o registro curto; o objeto mantém nome sem prefixo numérico. O catálogo
 informa `nome_eapadados` para a transição de nomes da Trilha.
 
 | Prioridade | Origem no EAPADados | Situação | Colunas indispensáveis |
 |---|---|---|---|
-| 1 | isoproteica_bagre | Ajuste ao contrato da Trilha preparado; D001_bagre_racao | racao (fator), peso_g |
-| 2 | artemia | Proposta D002_artemia_racao; aguarda decisão sobre dado sintético | racao (fator), taxa_crescimento_mg_dia |
+| 1 | isoproteica_bagre | Ajuste ao contrato da Trilha preparado; D01_bagre_racao | racao (fator), peso_g |
+| 2 | artemia | Professor recusou o sintético; fonte real artemia_fitoesterois localizada, disponível para revisão em D002_artemia_racao/artemia_real_para_revisao.xlsx | Contrato anterior: racao e taxa_crescimento_mg_dia. Fonte candidata mede biomassa e peso seco; exige ajustar o contrato na sessão da Trilha após a curadoria. |
 | 3 | morfometria_barbo | Aguarda curadoria individual | altura_maxima_corpo, distancia_dorsal_pelvica, comprimento_cabeca, distancia_pre_peitoral, populacao (fator) |
 | 4 | cpue_tubarao | Aguarda curadoria individual | data Date e resposta numérica; radicais data/ano/mes |
 | 5 | doubs_ambiente | Aguarda curadoria individual | riqueza, trecho (fator) |
 
-Os números posteriores a D001 só serão atribuídos definitivamente na
+Os números posteriores a D01 só serão atribuídos definitivamente na
 incorporação aprovada. Não alterar a Trilha nesta sessão. Só avisar que a
 troca está liberada quando os cinco estiverem integrados e a versão estiver
 atualizada. Não subir a versão nesta correção isolada.

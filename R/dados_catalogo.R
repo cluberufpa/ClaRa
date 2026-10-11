@@ -5,8 +5,8 @@
 #'
 #' @format Um `data.frame` com as colunas:
 #' \describe{
-#'   \item{codigo}{Registro permanente no formato D001, D002, etc.}
-#'   \item{registro}{Registro curto e nome da pasta de preparo, como D001_bagre_racao.}
+#'   \item{codigo}{Registro permanente no formato D01, D002, etc.}
+#'   \item{registro}{Registro curto e nome da pasta de preparo, como D01_bagre_racao.}
 #'   \item{nome_eapadados}{Nome anterior no EAPADados; vazio para outras origens.}
 #'   \item{nome}{Nome do objeto disponível após `library(clara)`.}
 #'   \item{rotulo}{Título curto para seleção.}

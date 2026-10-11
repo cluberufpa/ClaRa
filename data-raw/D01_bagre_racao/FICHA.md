@@ -1,8 +1,8 @@
-# D001 — Bagres: rações isoproteicas
+# D01 — Bagres: rações isoproteicas
 
 Data: 11/10/2026. Conjunto atual: `EAPADados::isoproteica_bagre`.
-Objeto final: `bagre_racao_isoproteica`. Código permanente: `D001`.
-Registro e pasta de preparo: `D001_bagre_racao`.
+Objeto final: `bagre_racao_isoproteica`. Código permanente: `D01`.
+Registro e pasta de preparo: `D01_bagre_racao`.
 Nome antigo no EAPADados: `isoproteica_bagre`.
 Curadoria aprovada pelo professor em 11/10/2026; autorização da fonte pendente.
 
@@ -73,7 +73,7 @@ junção, mudança de formato largo/longo ou cálculo de novas medidas.
 Na raiz de `ClaRa-dados/`, execute:
 
 ```r
-source("data-raw/D001_bagre_racao/preparar.R", encoding = "UTF-8")
+source("data-raw/D01_bagre_racao/preparar.R", encoding = "UTF-8")
 source("data-raw/preparar_catalogo.R", encoding = "UTF-8")
 ```
 
@@ -157,16 +157,16 @@ validação completa só será aplicada quando o check concluir.
 
 ## Convenção anterior de identificação (substituída pelo pedido da Trilha)
 
-Por decisão do professor em 11/10/2026, o registro passa a `D001` e o
-nome completo do objeto a `D001_bagre_racao_isoproteica`. O nome anterior
+Por decisão do professor em 11/10/2026, o registro passa a `D01` e o
+nome completo do objeto a `D01_bagre_racao_isoproteica`. O nome anterior
 sem prefixo foi usado apenas durante o preparo local, antes da publicação.
 Não mudou nenhum valor, categoria, unidade ou tipo de coluna.
 
 ## Ajuste solicitado pela Trilha em 11/10/2026
 
 O professor mandou seguir `PEDIDO_DADOS_TRILHA_PARA_CLARA.md`. Conforme
-esse pedido, o código é `D001`, o registro e a pasta são
-`D001_bagre_racao` e o objeto é `bagre_racao_isoproteica`, sem prefixo.
+esse pedido, o código é `D01`, o registro e a pasta são
+`D01_bagre_racao` e o objeto é `bagre_racao_isoproteica`, sem prefixo.
 O catálogo acrescenta `registro` e `nome_eapadados = "isoproteica_bagre"`.
 A resposta volta ao nome `peso_g`, exigido pelos consumidores atuais da
 Trilha; a ajuda explicita que é peso médio final por gaiola. Valores,
