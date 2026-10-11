@@ -48,6 +48,10 @@ ClaRa/                          o pacote R clara (desde 9/10/2026, v0.9.0)
     figuras/                    figuras gravadas pelos roteiros (ggsave),
                                 com o nome do roteiro como prefixo
   dados_treino/                 dados para testar e estudar as funções
+  data-raw/                    fontes preservadas e curadoria dos dados;
+                                cópia para revisão autorizada em 11/10/2026
+  data/                        dados e catálogo; incorporação dos bagres
+                                aprovada em 11/10/2026, autorização da fonte pendente
     preparar_dados_treino.R     gera todos os CSVs desta pasta
     real_*.rds / real_*.csv     dados reais, exportados do pacote EAPADados
     sint_*.rds / sint_*.csv     dados sintéticos, cada um com uma situação

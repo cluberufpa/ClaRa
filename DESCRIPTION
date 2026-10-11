@@ -19,6 +19,7 @@ Description: Funções em português para estudantes de estatística aplicada,
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: pt-BR
+LazyData: true
 Depends: R (>= 4.3.0)
 Imports:
     broom,
@@ -44,4 +45,6 @@ Collate:
     'clara_medias.R'
     'clara_medianas.R'
     'clara_regressao.R'
+    'dados_bagre_racao_isoproteica.R'
+    'dados_catalogo.R'
 Config/roxygen2/version: 8.1.0

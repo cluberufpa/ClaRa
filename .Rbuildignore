@@ -8,3 +8,5 @@
 ^dados_treino$
 ^Rplots\.pdf$
 ^ferramentas$
+^data-raw$
+^\.git$

@@ -1,3 +1,7 @@
+# clara (em desenvolvimento)
+
+* D-001: `bagre_racao_isoproteica`, com 19 observações preservadas, documentação, catálogo e preparo reproduzível; curadoria aprovada e autorização dos autores pendente.
+
 # clara 0.14.0 (11 de outubro de 2026)
 
 Ajuste do p nas comparações de Dunn (decisão do professor, 11/10/2026),
