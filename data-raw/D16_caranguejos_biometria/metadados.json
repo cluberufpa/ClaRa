@@ -1,0 +1,20 @@
+{
+  "codigo": "D16",
+  "registro": "D16_caranguejos_biometria",
+  "nome": "caranguejos_biometria",
+  "nome_eapadados": "biometria_caranguejos",
+  "rotulo": "Caranguejos de Bragança: biometria por local, sexo e estação",
+  "titulo": "D16 - Caranguejos de Bragança: biometria por local, sexo e estação",
+  "natureza": "real",
+  "origem": "EAPADados::biometria_caranguejos",
+  "unidade_amostral": "registro de indivíduo; identificação da coleta a confirmar",
+  "linhas": 993,
+  "colunas": 5,
+  "analises": "Teste t; ANOVA de dois fatores; Estatística descritiva; Regressão linear",
+  "analise_principal": "ANOVA de dois fatores",
+  "palavras_chave": "caranguejos; biometria",
+  "verbo_clara": "",
+  "licenca": "Não localizada; créditos e autorização a completar",
+  "referencia": "Estudo de campo em Bragança, PA; referência bibliográfica a completar",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}

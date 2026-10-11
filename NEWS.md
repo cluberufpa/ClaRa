@@ -181,3 +181,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D14 `aquicultura_br`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D15 `peixes_neotropicais_biometria`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D16 `caranguejos_biometria`, provisório, com fonte e decisões anteriores registradas.
