@@ -60,4 +60,5 @@ Collate:
     'dados_bacterias_tratamento.R'
     'dados_artemia_fitoesterois.R'
     'dados_aquicultura_br.R'
+    'dados_peixes_neotropicais_biometria.R'
 Config/roxygen2/version: 8.1.0

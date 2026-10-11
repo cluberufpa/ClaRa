@@ -179,3 +179,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D13 `artemia_fitoesterois`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D14 `aquicultura_br`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D15 `peixes_neotropicais_biometria`, provisório, com fonte e decisões anteriores registradas.

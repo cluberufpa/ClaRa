@@ -1,0 +1,20 @@
+{
+  "codigo": "D15",
+  "registro": "D15_peixes_neotropicais",
+  "nome": "peixes_neotropicais_biometria",
+  "nome_eapadados": "bagley_lwr_central_america",
+  "rotulo": "Peixes neotropicais: comprimento e peso",
+  "titulo": "D15 - Peixes neotropicais: comprimento e peso",
+  "natureza": "real",
+  "origem": "EAPADados::bagley_lwr_central_america",
+  "unidade_amostral": "peixe amostrado",
+  "linhas": 306,
+  "colunas": 9,
+  "analises": "Regressão de potência; Exploração por espécie; ANCOVA com logaritmos calculados na análise",
+  "analise_principal": "Regressão de potência",
+  "palavras_chave": "peixes; neotropicais; biometria",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Bagley, Breitman e Johnson (2022); DOI 10.3897/aiep.52.86467; Mendeley DOI 10.17632/kphrvvgwwz.1",
+  "situacao": "provisório"
+}
