@@ -34,6 +34,12 @@ Não marcar como concluído no balanço um conjunto com check pendente.
   132.676 bytes (~133 KB) em xz com identificadores em texto (11/10/2026).
   Em seguida pediu pesquisar uma fonte substituta na internet. A busca
   não revoga a autorização, mas a escolha da fonte permanece em avaliação.
+  Professor escolheu avaliar Cowichan e forneceu XLSX/README, cujos hashes
+  conferem com Dryad. A pedido, versão de revisão com 246 × 8, 3.504 bytes
+  xz, sem ausências nas colunas retidas. Cinco locais permitem estratificação;
+  usar massa inicialmente: um par total/padrão de comprimento conflita na
+  fonte (linha 235). Avaliação e recorte em propostas_nao_integradas/
+  cowichan_amostragem/. A substituição definitiva ainda não foi realizada.
 
 - D09 (`tilapia_sensorial`): 122 × 7, 848 bytes em xz; notas preservadas.
   Confirmar significado, âncoras e sentido da escala; não presumir aceitação.

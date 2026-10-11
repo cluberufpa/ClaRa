@@ -1,1 +1,12 @@
-{}
+{
+  "Cowichan_Data.xlsx": {
+    "bytes": 167014,
+    "sha256": "b116061ee5a4759155a9e746871d7b71512359cdbebd2e3e2157ab40eeb857bd",
+    "origem": "Arquivo baixado pelo professor; hash conferido com Dryad versão 446982"
+  },
+  "README.md": {
+    "bytes": 14518,
+    "sha256": "bd9ec0f560a035682738bb66a49110b5ab323f3a919ccd5805203c1ea7247cee",
+    "origem": "Arquivo baixado pelo professor; hash conferido com Dryad versão 446982"
+  }
+}
