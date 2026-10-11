@@ -185,3 +185,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D16 `caranguejos_biometria`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D17 `salmouras_carbonatos`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D18 `cabritos_acidos_graxos`, provisório, com fonte e decisões anteriores registradas.

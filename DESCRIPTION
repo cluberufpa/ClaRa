@@ -63,4 +63,5 @@ Collate:
     'dados_peixes_neotropicais_biometria.R'
     'dados_caranguejos_biometria.R'
     'dados_salmouras_carbonatos.R'
+    'dados_cabritos_acidos_graxos.R'
 Config/roxygen2/version: 8.1.0

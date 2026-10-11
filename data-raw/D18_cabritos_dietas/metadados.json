@@ -1,0 +1,20 @@
+{
+  "codigo": "D18",
+  "registro": "D18_cabritos_dietas",
+  "nome": "cabritos_acidos_graxos",
+  "nome_eapadados": "cabritos_fa_coltro",
+  "rotulo": "Cabritos: ácidos graxos sob quatro dietas",
+  "titulo": "D18 - Cabritos: ácidos graxos sob quatro dietas",
+  "natureza": "real",
+  "origem": "EAPADados::cabritos_fa_coltro",
+  "unidade_amostral": "animal; valores resumem repetições analíticas conforme origem",
+  "linhas": 32,
+  "colunas": 10,
+  "analises": "PCA; Agrupamento hierárquico; Comparação de dietas",
+  "analise_principal": "PCA",
+  "palavras_chave": "cabritos; acidos; graxos",
+  "verbo_clara": "",
+  "licenca": "Licença específica dos dados não localizada; autorização a confirmar",
+  "referencia": "Coltro et al. (2005); Meat Science 71(2), 358-363; DOI 10.1016/j.meatsci.2005.04.016",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}
