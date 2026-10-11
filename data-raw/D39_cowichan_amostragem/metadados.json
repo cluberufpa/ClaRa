@@ -1,0 +1,20 @@
+{
+  "codigo": "D39",
+  "registro": "D39_cowichan_amostragem",
+  "nome": "cowichan_amostragem",
+  "nome_eapadados": "walleye_erie",
+  "rotulo": "Cowichan: peixes para amostragem",
+  "titulo": "D39 - Cowichan: peixes para amostragem",
+  "natureza": "real",
+  "origem": "Dryad, DOI 10.5061/dryad.6m905qg99; substituição autorizada de walleye_erie",
+  "unidade_amostral": "peixe individual; coleção tratada como população finita didática",
+  "linhas": 246,
+  "colunas": 8,
+  "analises": "Amostragem aleatória simples; Amostragem estratificada proporcional; Estatística descritiva",
+  "analise_principal": "Amostragem simples e estratificada",
+  "palavras_chave": "peixes; amostragem; Cowichan",
+  "verbo_clara": "",
+  "licenca": "CC0-1.0",
+  "referencia": "May, de Haas, Sewell et al. (2026). Intraspecific variation in the bony traits and elemental phenotype of a marine and freshwater fish. Dryad. DOI 10.5061/dryad.6m905qg99; versão 446982",
+  "situacao": "provisório; comprimento do registro 234 a conferir; usar massa inicialmente"
+}

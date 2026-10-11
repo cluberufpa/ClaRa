@@ -94,4 +94,6 @@ Recomendação: candidata adequada para substituir o exemplo de amostragem,
 com base menor, estratos suficientes e CC0. Não substitui análises de idade
 e maturidade do walleye. Usar a base como população finita didática, sem
 atribuir amostragem probabilística ao estudo original. A troca definitiva
-ainda não foi feita; esta avaliação não aumenta o número de objetos do pacote.
+foi autorizada pelo professor após a avaliação e implementada no registro
+D39_cowichan_amostragem; objeto definitivo cowichan_amostragem, 3.500 bytes
+em xz. Esta pasta preserva a avaliação anterior; a ficha vigente é a do D39.
