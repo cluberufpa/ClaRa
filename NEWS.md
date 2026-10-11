@@ -169,3 +169,5 @@ dão os mesmos números e as mesmas figuras.
 * Testes com testthat: os números conferem com `aov()`, `TukeyHSD()`,
   `oneway.test()`, `t.test()`, `kruskal.test()` e `wilcox.test()`, e a
   receita mostrada, rodada sem a ClaRa, dá o mesmo resultado da função.
+
+- Passada 1: D10 `enobieta_baci`, macroinvertebrados para planejamento BACI; fonte completa preservada.

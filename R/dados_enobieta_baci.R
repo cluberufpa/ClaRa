@@ -1,0 +1,124 @@
+#' D10 - Enobieta: macroinvertebrados e planejamento BACI
+#'
+#' Dados reais para estudar o planejamento antes/depois e controle/impacto.
+#' Uma intervenção e uma campanha por fase limitam a inferência causal.
+#'
+#' @format Um `data.frame` com 135 linhas e 94 colunas:
+#' \describe{
+#'   \item{amostra_id}{Identificador textual da amostra Surber.}
+#'   \item{local_id}{Identificador textual do local acompanhado.}
+#'   \item{local_nome}{Nome do local.}
+#'   \item{condicao}{Controle, impacto ou antigo reservatório.}
+#'   \item{periodo}{Antes, durante ou depois da intervenção.}
+#'   \item{ordem_periodo}{Ordem cronológica da campanha.}
+#'   \item{ano}{Ano da campanha.}
+#'   \item{mes}{Mês da campanha.}
+#'   \item{campanha}{Campanha no formato textual AAAA-MM.}
+#'   \item{subamostra_surber}{Número da subamostra, sem pareamento individual entre campanhas.}
+#'   \item{area_surber_m2}{Área amostrada, em metros quadrados.}
+#'   \item{baci_elegivel}{Indica local com observações nas três fases.}
+#'   \item{riqueza_taxons}{Número de táxons com contagem positiva.}
+#'   \item{shannon}{Índice de diversidade de Shannon.}
+#'   \item{densidade_ind_m2}{Densidade de indivíduos por metro quadrado.}
+#'   \item{iaspt}{Índice IASPT preservado da fonte.}
+#'   \item{n_acari}{Nome original: 'Acari'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_amphinemura}{Nome original: 'Amphinemura'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_aphelocheirus}{Nome original: 'Aphelocheirus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_atherix}{Nome original: 'Atherix'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_baetis}{Nome original: 'Baetis '. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_bythinella}{Nome original: 'Bythinella'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_brachycentridae}{Nome original: 'Brachycentridae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_caenis}{Nome original: 'Caenis'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_calopterix}{Nome original: 'Calopterix'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_capnioneura}{Nome original: 'Capnioneura'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_ceratopogonidae}{Nome original: 'Ceratopogonidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_chironomidae}{Nome original: 'Chironomidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_chloroperla}{Nome original: 'Chloroperla'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_cordulegaster}{Nome original: 'Cordulegaster'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_dinocras}{Nome original: 'Dinocras'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_dixella}{Nome original: 'Dixella'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_dugesia}{Nome original: 'Dugesia'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_dupophilus}{Nome original: 'Dupophilus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_echinogammarus}{Nome original: 'Echinogammarus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_elodes}{Nome original: 'Elodes'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_elmis}{Nome original: 'Elmis'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_empididae}{Nome original: 'Empididae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_ephemera}{Nome original: 'Ephemera'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_ephemerella}{Nome original: 'Ephemerella'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_erpobdella}{Nome original: 'Erpobdella'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_esolus}{Nome original: 'Esolus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_glossosoma}{Nome original: 'Glossosoma'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_gomphus}{Nome original: 'Gomphus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_gyrinidae}{Nome original: 'Gyrinidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_habroleptoides}{Nome original: 'Habroleptoides'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_heptagenidae}{Nome original: 'Heptagenidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_holocentropus}{Nome original: 'Holocentropus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_hydraena}{Nome original: 'Hydraena'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_hydrocyphon}{Nome original: 'Hydrocyphon'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_hydrophilidae}{Nome original: 'Hydrophilidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_hydropsyche}{Nome original: 'Hydropsyche'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_hyperrhyacophila}{Nome original: 'Hyperrhyacophila'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_hyporhyacophila}{Nome original: 'Hyporhyacophila'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_isoperla}{Nome original: 'Isoperla'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_laccophilus}{Nome original: 'Laccophilus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_lepidostoma}{Nome original: 'Lepidostoma'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_leptoceridae}{Nome original: 'Leptoceridae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_leuctra}{Nome original: 'Leuctra'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_limnephilidae}{Nome original: 'Limnephilidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_limnius}{Nome original: 'Limnius'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_limoniidae}{Nome original: 'Limoniidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_marthamea}{Nome original: 'Marthamea'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_mesovelia}{Nome original: 'Mesovelia'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_nemoura}{Nome original: 'Nemoura'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_niphargidae}{Nome original: 'Niphargidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_odontocerum}{Nome original: 'Odontocerum'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_oligochaeta}{Nome original: 'Oligochaeta'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_onychogomphus}{Nome original: 'Onychogomphus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_oulimnius}{Nome original: 'Oulimnius'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_pararhyacophila}{Nome original: 'Pararhyacophila'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_perla}{Nome original: 'Perla'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_perlodes}{Nome original: 'Perlodes'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_philopotamus}{Nome original: 'Philopotamus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_phryganidae}{Nome original: 'Phryganidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_pisidium}{Nome original: 'Pisidium'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_planorbidae}{Nome original: 'Planorbidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_plectronemia}{Nome original: 'Plectronemia'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_polycelis}{Nome original: 'Polycelis'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_polycentropus}{Nome original: 'Polycentropus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_potamophilus}{Nome original: 'Potamophilus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_protonemura}{Nome original: 'Protonemura'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_psychodidae}{Nome original: 'Psychodidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_rhagionidae}{Nome original: 'Rhagionidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_rhyacophila}{Nome original: 'Rhyacophila'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_riolus}{Nome original: 'Riolus'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_sericostoma}{Nome original: 'Sericostoma'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_silo_lithax}{Nome original: 'Silo & Lithax'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_simulidae}{Nome original: 'Simulidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_siphonoperla}{Nome original: 'Siphonoperla'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_stenelmis}{Nome original: 'Stenelmis'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_stratiomyidae}{Nome original: 'Stratiomyidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_tabanidae}{Nome original: 'Tabanidae'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#'   \item{n_tipula}{Nome original: 'Tipula'. Contagem de indivíduos por amostra Surber de 0,09 m². Grafia/agrupamento preservados, identificação taxonômica não revalidada.}
+#' }
+#'
+#' @details
+#' Cinco subamostras Surber de 0,09 m² por local e campanha. Os locais são
+#' acompanhados; o mesmo número de subamostra não identifica parcela permanente.
+#' Há 120 amostras de oito locais nas três fases e 15 amostras de antigos
+#' locais de reservatório somente depois, marcadas baci_elegivel = FALSE.
+#' Nenhuma linha foi excluída. Cabeçalhos e categorias da fonte organizada
+#' permanecem iguais. As subamostras não são barragens independentes.
+#' A tabela de substrato é preservada no XLSX completo em
+#' data-raw/D10_enobieta_baci/fonte/; não constitui outro objeto do catálogo.
+#'
+#' @source
+#' Atristain et al. (2024). Dryad, DOI 10.5061/dryad.w3r2280ws.
+#' Artigo: DOI 10.1111/1365-2664.14656. Dados sob CC0 1.0.
+#' Fonte organizada: enobieta_baci_organizado.xlsx, aba macroinvertebrados.
+#'
+#' @examples
+#' with(enobieta_baci, table(condicao, periodo))
+#'
+#' @docType data
+#' @keywords datasets
+"enobieta_baci"
