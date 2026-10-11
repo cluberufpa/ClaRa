@@ -1,6 +1,22 @@
 # clara (em desenvolvimento)
 
-* D001: `bagre_racao_isoproteica`, com 19 observações preservadas, documentação, catálogo e preparo reproduzível; curadoria aprovada e autorização dos autores pendente.
+- Dados: D09 `tilapia_sensorial`, provisório, da literatura; 122 avaliadores, notas pareadas e escala pendente de interpretação.
+
+- Dados: D08 `pinguins`, provisório, adaptado de `EAPADados::pinguins`; fonte preservada.
+
+- Dados: D07 `camarao_vannamei_biometria`, provisório, adaptado de `EAPADados::camarao_vannamei_biometria`; fonte preservada.
+
+- Dados: D06 `salvelino_formalina_remocao`, provisório, adaptado de `EAPADados::salvelino_formalina_remocao`; fonte preservada.
+
+- Dados: D05 `abalone_adultos`, provisório, adaptado de `EAPADados::abalone_adultos`; fonte preservada.
+
+- Dados: D04 `doubs_ambiente`, provisório, adaptado de `EAPADados::doubs_ambiente`; fonte preservada.
+
+- Dados: D03 `cpue_tubarao`, provisório, adaptado de `EAPADados::cpue_tubarao`; fonte preservada.
+
+- Dados: D02 `morfometria_barbo`, provisório, adaptado de `EAPADados::morfometria_barbo`; fonte preservada.
+
+* D01: `bagre_racao_isoproteica`, com 19 observações preservadas, documentação, catálogo e preparo reproduzível; curadoria aprovada e autorização dos autores pendente.
 
 # clara 0.14.0 (11 de outubro de 2026)
 
@@ -153,3 +169,5 @@ dão os mesmos números e as mesmas figuras.
 * Testes com testthat: os números conferem com `aov()`, `TukeyHSD()`,
   `oneway.test()`, `t.test()`, `kruskal.test()` e `wilcox.test()`, e a
   receita mostrada, rodada sem a ClaRa, dá o mesmo resultado da função.
+
+- Passada 1: D10 `enobieta_baci`, macroinvertebrados para planejamento BACI; fonte completa preservada.

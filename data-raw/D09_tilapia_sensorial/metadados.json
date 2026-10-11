@@ -1,0 +1,20 @@
+{
+  "codigo": "D09",
+  "registro": "D09_tilapia_sensorial",
+  "nome": "tilapia_sensorial",
+  "nome_eapadados": "",
+  "rotulo": "Tilápia: avaliação sensorial de filés",
+  "titulo": "D09 - Tilápia: avaliação sensorial de filés",
+  "natureza": "real",
+  "origem": "literatura: Mendeley Data, DOI 10.17632/knsz9r4vby.5",
+  "unidade_amostral": "avaliador; seis notas pareadas de dois atributos e três tratamentos",
+  "linhas": 122,
+  "colunas": 7,
+  "analises": "Friedman; Wilcoxon pareado; Arrumar; Estatística descritiva",
+  "analise_principal": "Friedman",
+  "palavras_chave": "tilapia; sensorial; aroma; sabor; oleos essenciais; avaliador; pareado",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Rucinque, Viegas, Lapa-Guimarães, Ferreira e Leme (2020); Mendeley Data, versão 5, DOI 10.17632/knsz9r4vby.5; artigo DOI 10.1016/j.aquaculture.2020.735902",
+  "situacao": "provisório; significado e sentido da escala pendentes"
+}

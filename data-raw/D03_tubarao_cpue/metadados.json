@@ -1,0 +1,20 @@
+{
+  "codigo": "D03",
+  "registro": "D03_tubarao_cpue",
+  "nome": "cpue_tubarao",
+  "nome_eapadados": "cpue_tubarao",
+  "rotulo": "Tubarão: CPUE por embarcação e data",
+  "titulo": "D03 - Tubarão: CPUE por embarcação e data",
+  "natureza": "real",
+  "origem": "EAPADados::cpue_tubarao",
+  "unidade_amostral": "registro de embarcação e data; desenho a confirmar",
+  "linhas": 424,
+  "colunas": 5,
+  "analises": "Séries temporais; Kruskal-Wallis e Dunn; Estatística descritiva",
+  "analise_principal": "Séries temporais",
+  "palavras_chave": "cpue; tubarao",
+  "verbo_clara": "",
+  "licenca": "Não localizada; créditos e autorização a confirmar",
+  "referencia": "Monitoramento pesqueiro de 1995 a 2007; referência original não localizada",
+  "situacao": "provisório; fonte e autorização a confirmar"
+}

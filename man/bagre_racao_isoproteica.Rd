@@ -3,7 +3,7 @@
 \docType{data}
 \name{bagre_racao_isoproteica}
 \alias{bagre_racao_isoproteica}
-\title{D001_bagre_racao - Peso médio final de bagres por ração isoproteica}
+\title{D01_bagre_racao - Peso médio final de bagres por ração isoproteica}
 \format{
 Um \code{data.frame} com 19 linhas e 2 colunas:
 \describe{
@@ -56,7 +56,7 @@ ClaRa enquanto aguardava a resposta. Isso não é autorização dos autores
 nem indicação de que os dados estejam licenciados sob MIT.
 
 A preparação reproduzível e o histórico completo estão em
-\verb{data-raw/D001_bagre_racao/} no repositório da ClaRa.
+\verb{data-raw/D01_bagre_racao/} no repositório da ClaRa.
 }
 \examples{
 # O peso médio final difere entre as quatro rações?

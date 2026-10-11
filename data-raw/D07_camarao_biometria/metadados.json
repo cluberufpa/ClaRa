@@ -1,0 +1,20 @@
+{
+  "codigo": "D07",
+  "registro": "D07_camarao_biometria",
+  "nome": "camarao_vannamei_biometria",
+  "nome_eapadados": "camarao_vannamei_biometria",
+  "rotulo": "Camarão-branco: biometria e peso",
+  "titulo": "D07 - Camarão-branco: biometria e peso",
+  "natureza": "real",
+  "origem": "EAPADados::camarao_vannamei_biometria",
+  "unidade_amostral": "camarão medido, identificado por base e amostra",
+  "linhas": 170,
+  "colunas": 9,
+  "analises": "Regressão linear simples; Regressão não linear; Estatística descritiva",
+  "analise_principal": "Regressão linear simples",
+  "palavras_chave": "camarao; vannamei; biometria",
+  "verbo_clara": "relacionar_variaveis",
+  "licenca": "CC BY 4.0",
+  "referencia": "Ramírez-Coronel et al. (2024); Mendeley Data, versão 2, DOI 10.17632/h8tcn6ykky.2",
+  "situacao": "provisório"
+}

@@ -1,0 +1,20 @@
+{
+  "codigo": "D10",
+  "registro": "D10_enobieta_baci",
+  "nome": "enobieta_baci",
+  "nome_eapadados": "",
+  "rotulo": "Enobieta: macroinvertebrados e planejamento BACI",
+  "titulo": "D10 - Enobieta: macroinvertebrados e planejamento BACI",
+  "natureza": "real",
+  "origem": "literatura: Dryad, DOI 10.5061/dryad.w3r2280ws",
+  "unidade_amostral": "subamostra Surber de 0,09 m² dentro de local e campanha",
+  "linhas": 135,
+  "colunas": 94,
+  "analises": "Planejamento BA, CI e BACI; Estatística descritiva; Exploração de comunidades",
+  "analise_principal": "Planejamento BACI",
+  "palavras_chave": "enobieta; macroinvertebrados; baci; barragem; planejamento; surber",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0",
+  "referencia": "Atristain et al. (2024); Dryad DOI 10.5061/dryad.w3r2280ws; artigo DOI 10.1111/1365-2664.14656",
+  "situacao": "provisório; estudo de caso com uma intervenção e uma campanha por fase"
+}
