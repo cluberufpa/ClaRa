@@ -1,8 +1,8 @@
-# Bloco 1 — parcial da passada 1 (11/10/2026)
+# Bloco 1 — preparado, check pendente da passada 1 (11/10/2026)
 
-Nove conjuntos preparados e registrados na branch `dados`, com um commit
+Dez conjuntos preparados e registrados na branch `dados`, com um commit
 por conjunto. O D01 já estava na main no formato D001; o ajuste do registro
-está na branch. Os outros oito são incorporações provisórias. A main ainda
+está na branch. Os outros nove são incorporações provisórias. A main ainda
 não recebeu este bloco; nenhuma versão foi aumentada e não houve push.
 
 | Código | Objeto definitivo | Dimensões | Bytes xz |
@@ -16,46 +16,63 @@ não recebeu este bloco; nenhuma versão foi aumentada e não houve push.
 | D07 | camarao_vannamei_biometria | 170 × 9 | 1.588 |
 | D08 | pinguins | 344 × 8 | 2.380 |
 | D09 | tilapia_sensorial | 122 × 7 | 848 |
+| D10 | enobieta_baci | 135 × 94 | 6.936 |
 
-Total de `data/`, incluindo catálogo: **46.216 bytes (0,046 MB)**.
+Total de `data/`, incluindo catálogo: **53.388 bytes (0,053 MB)**.
 Todos os arquivos individuais ficaram abaixo de 100 KB. Compressão xz
 conferida com `tools::checkRdaFiles()` após cada preparo.
 
 ## Conferências
 
 - Documentação gerada em cada incorporação; suíte completa executada a
-  cada conjunto. No estado final: **271 expectativas, zero falhas,
+  cada conjunto. No estado final: **277 expectativas, zero falhas,
   erros, avisos ou skips**.
-- Nove exemplos das ajudas executados; hashes SHA256 das fontes conferidos.
+- Dez exemplos das ajudas executados; hashes SHA256 das fontes conferidos.
 - Valores, ordem e ausências preservados. Aplicada a decisão anterior
   de sexo `femea` → `fêmea` nos pinguins. Corrigidas somente descrições
   de escalas do Doubs conforme ajuda original, sem converter valores.
-- Build parcial aprovado. **Check parcial com 1 ERROR na instalação:**
-  oito arquivos novos `R/dados_*.R` estão ausentes do Collate do DESCRIPTION.
-  O roxygen avisa, mas não grava as inclusões. Campo mantido intacto porque
-  o prompt o proíbe; solicitada autorização para acrescentar só esses nomes.
+- Build aprovado. O professor autorizou acrescentar os arquivos novos ao
+  Collate; nove inclusões realizadas, sem mudar ordem anterior, versão ou
+  dependências. O erro de arquivos ausentes foi resolvido.
+- **Check repetido: 1 ERROR na instalação**, agora em `byte-compile and
+  prepare package for lazy loading`: `lazy loading failed for package clara`.
+  Nenhum erro específico de dados é exibido pelo instalador. O bloco ainda
+  não atende à meta de check e não foi levado à main.
 - Persistiu também a falha preexistente do processo R no encerramento,
   código -1073741819, depois de gravar os resultados de sucesso. Não
   equivale a aprovação da instalação ou do check.
+
+### Diagnóstico isolado do ambiente
+
+R básico com `--vanilla` encerrou com código 0. Carregar apenas `dplyr`
+1.2.1, `rlang` 1.3.0, `vctrs` 0.7.3, `tibble` 3.3.1 ou `tidyselect` 1.2.1
+reproduziu o código Windows 3221225477 (equivalente a -1073741819), sem
+carregar a ClaRa ou seus dados. Isso localiza uma reprodução independente
+no ambiente de pacotes; não estabelece a causa interna da falha nativa.
+
+Foram baixadas cópias binárias novas de `dplyr` 1.2.1 e `rlang` 1.3.0 do
+CRAN para uma biblioteca temporária fora do repositório. A conferência MD5
+da instalação passou, mas a reprodução persistiu com ambas. A biblioteca
+global, o R instalado e os outros projetos não foram alterados. A simples
+reinstalação desses dois pacotes na mesma versão não resolveu o bloqueio.
 
 Logs, resultados de testes, tarball e diretório de check ficam na pasta
 temporária `verificacao-clara` deste chat, fora do repositório. Resíduos
 antigos foram movidos de `data-raw/validacao/` para uma pasta temporária.
 Nenhuma função da ClaRa, teste de análise ou arquivo da Trilha foi alterado.
 
-## Decisões necessárias para fechar o bloco
+## Decisões e seleção do Enobieta
 
-1. Autorizar acrescentar exclusivamente os novos arquivos de documentação
-   ao Collate, preservando sua ordem atual, versão e dependências. A restrição
-   está na seção "Seu espaço de trabalho" do prompt atualizado:
-   "Não mexa em versão, Imports nem Collate". A necessidade está demonstrada
-   pelo erro de instalação acima. Sem a inclusão, os dados não são instaláveis.
-2. Enobieta tem duas tabelas, whitefish quatro e mesocosmos seis, com unidades
-   distintas. Recomendação submetida ao professor: uma tabela por conjunto,
-   com nomes e registros próprios, sem descartar nenhuma; resultariam 69
-   objetos para as 60 entradas do levantamento. A alternativa é manter
-   listas de tabelas, adaptando o catálogo e sua validação. Enobieta ainda
-   não foi incorporado; nenhum código definitivo lhe foi atribuído.
+O professor autorizou as inclusões no Collate. Ao questionar a expansão de
+60 entradas para 69 objetos, pediu conferir o uso previsto para o Enobieta.
+O balanço do levantamento o selecionou para estudo de caso e planejamento
+prospectivo BACI, não como exigência de publicar todas as tabelas como objetos.
+
+Foi incorporada a tabela de macroinvertebrados como `enobieta_baci` (D10),
+com todas as 135 linhas e 94 colunas preservadas. As 2.700 linhas da tabela
+de substrato continuam no XLSX integral da fonte, sem objeto adicional.
+Whitefish e mesocosmos terão suas tabelas avaliadas pelo uso selecionado ao
+chegar sua vez; não está autorizada uma expansão automática para 69 objetos.
 
 ## Pendências de curadoria
 
@@ -69,9 +86,12 @@ Nenhuma função da ClaRa, teste de análise ou arquivo da Trilha foi alterado.
 - D07: denominação anatômica do comprimento, cefalotórax ausente no DB1.
 - D08: manter ausências; selecionar casos completos somente na análise.
 - D09: âncoras e sentido da escala; conferir extração contra o depósito original.
+- D10: uma intervenção e uma campanha por fase; subamostras não são barragens
+  independentes. Taxonomia e escores IASPT para revisão; fonte organizada
+  preservada, sem reextração do XLSX original nesta passada.
 
-O balanço foi atualizado somente nas colunas de acompanhamento dos nove
-conjuntos, com status de branch provisória e identificadores D01-D09.
+O balanço foi atualizado somente nas colunas de acompanhamento dos dez
+conjuntos, com status de branch provisória e identificadores D01-D10.
 Decisões anteriores, estilos e demais abas foram preservados; nenhum
 conjunto foi marcado como concluído ou incluído como pronto enquanto o
 check estiver pendente. A cópia anterior está em `acompanhamento/`.

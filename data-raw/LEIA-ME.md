@@ -28,15 +28,22 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 - D09 (`tilapia_sensorial`): 122 × 7, 848 bytes em xz; notas preservadas.
   Confirmar significado, âncoras e sentido da escala; não presumir aceitação.
-- Parcial do bloco 1: nove conjuntos, 46.216 bytes com catálogo; 271
-  expectativas e nove exemplos passaram; hashes das fontes conferidos.
-  Build aprovado; check parou por falta dos oito novos arquivos de dados
-  no Collate. Sem merge até resolver a inclusão consultada ao professor.
-- Enobieta (duas tabelas), whitefish (quatro) e mesocosmos (seis): organização
-  consultada ao professor. Separar cada tabela produziria 69 objetos nas
-  60 entradas do levantamento; manter listas conservaria 60 objetos, mas
-  exigiria adaptar o contrato do catálogo e a validação. Não aplicar antes
-  da decisão. Nenhuma tabela desses estudos foi descartada ou incorporada.
+- Bloco 1 preparado: dez conjuntos, 53.388 bytes com catálogo; 277
+  expectativas e dez exemplos passaram; hashes das fontes conferidos.
+  Collate atualizado com autorização expressa do professor. Build aprovado;
+  check repetido falhou no carregamento lazy durante a instalação. O processo
+  R encerra com -1073741819 mesmo com `--vanilla`; resultados foram salvos
+  antes do encerramento. A falha foi reproduzida sem ClaRa, carregando
+  somente rlang ou dplyr. Cópias binárias novas nas mesmas versões, em
+  biblioteca temporária, não resolveram. Nenhuma biblioteca global alterada.
+  Sem merge enquanto a instalação estiver pendente.
+- D10 (`enobieta_baci`): 135 × 94, 6.936 bytes em xz; tabela principal de
+  macroinvertebrados para planejamento BACI. Substrato integral preservado
+  no XLSX-fonte, sem outro objeto. Uma intervenção e uma campanha por fase
+  limitam a inferência; revisar taxonomia e IASPT na passada 2.
+- Não expandir automaticamente Enobieta/whitefish/mesocosmos para 69 objetos.
+  Selecionar pelo uso didático previsto; as tabelas auxiliares permanecem
+  preservadas na fonte. Whitefish e mesocosmos ainda não foram incorporados.
 
 - D08 (`pinguins`): fonte palmerpenguins congelada e conferida; 344 × 8;
   2.380 bytes em xz. Aplicada decisão anterior de sexo fêmea/macho;
@@ -66,8 +73,7 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 - D02 (`morfometria_barbo`): fonte curada conferida; 100 × 13; 7.536 bytes
   em xz. Provisório; nenhuma mudança de coluna ou categoria. Revisar a
   correção alométrica na fonte completa e a redundância rio/população.
-  Instalação requer inclusão do arquivo de ajuda em Collate, consultada
-  ao professor por contrariar a restrição literal do prompt.
+  Arquivo incluído em Collate com autorização expressa do professor.
 
 - D01: autorização dos autores e confirmação da descrição da replicação.
 - A planilha de revisão original ainda está toda pendente; o balanço dos
