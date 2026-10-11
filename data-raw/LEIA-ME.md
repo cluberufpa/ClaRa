@@ -68,7 +68,9 @@ Não marcar como concluído no balanço um conjunto com check pendente.
   Propor identificação explícita das estações na passada 2.
 
 - D03 (`cpue_tubarao`): fonte original conferida; 424 × 5; 3.376 bytes
-  em xz. Completar créditos, autorização, unidade da CPUE e desenho da coleta.
+  em xz. Professor confirmou dados próprios, publicados em outro formato
+  (11/10/2026). Uso autorizado; completar referência bibliográfica, créditos,
+  licença específica, unidade da CPUE e desenho da coleta.
   Colunas herdadas em inglês preservadas por decisão da passada 1.
 
 - D02 (`morfometria_barbo`): fonte curada conferida; 100 × 13; 7.536 bytes

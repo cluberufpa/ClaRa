@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Captura por unidade de esforço (CPUE) de tubarão registrada por embarcação,
-#' mês e ano, entre 1995 e 2007. **Dados reais** (fonte e créditos a completar).
+#' mês e ano, entre 1995 e 2007. **Dados reais próprios**, conforme declaração do professor.
 #' É um conjunto de dupla utilidade no ecossistema EAPA: serve de exemplo
 #' canônico para o **teste de Kruskal-Wallis** (comparar a CPUE entre os anos,
 #' com pós-teste de Dunn e letras de significância) e para **análise de série
@@ -18,16 +18,17 @@
 #'   \item{Data}{Data do registro (Date).}
 #' }
 #'
-#' @source Dados reais de monitoramento pesqueiro (fonte e créditos a completar).
+#' @source Dados próprios de monitoramento pesqueiro, publicados em outro formato,
+#' conforme declaração do professor em 11/10/2026; referência a completar.
 #'
 #' @section Migração para a ClaRa:
 #' Adaptado de `EAPADados::cpue_tubarao`. Passada 1: conjunto provisório. Todas as linhas, ordem, colunas e ausências preservadas; nenhuma imputação, filtro novo ou conversão de unidade. O texto herdado descreve adaptações anteriores do EAPADados, que não foram repetidas.
 #'
 #' @section Licença da origem:
-#' Não localizada; créditos e autorização a confirmar. A licença MIT do código da ClaRa não substitui a licença destes dados.
+#' Uso na ClaRa autorizado pelo professor; licença específica a definir. A licença MIT do código da ClaRa não substitui a licença destes dados.
 #'
 #' @section Pendências para a curadoria:
-#' Completar autoria, licença, unidade da CPUE e independência. Manter Vessel, Year, Month, CPUE e Data nesta passada; tradução fica para a passada 2.
+#' Procedência própria confirmada. Completar referência bibliográfica, créditos, licença específica, unidade da CPUE e independência. Manter Vessel, Year, Month, CPUE e Data nesta passada; tradução fica para a passada 2.
 #'
 #' Preparo e fonte congelada: `data-raw/D03_tubarao_cpue/`.
 #'
