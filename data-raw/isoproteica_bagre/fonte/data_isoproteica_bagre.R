@@ -1,0 +1,130 @@
+#' Peso Final de Bagres Alimentados com Rações Comerciais Iso-Proteicas
+#'
+#' @description
+#' Pesos médios finais (g) de bagres (\emph{Ictalurus} spp.) submetidos a
+#' \strong{quatro rações comerciais iso-proteicas} (mesmo teor de proteína
+#' bruta), porém com \strong{níveis de lipídios diferentes}. Os dados reproduzem
+#' a \strong{Tabela 7.4} de Bhujel (2011) e constituem o exemplo clássico de
+#' \strong{Delineamento Inteiramente Casualizado (DIC / CRD)} analisado por
+#' \strong{ANOVA unifatorial} naquele livro.
+#'
+#' No ensaio original, 50 peixes foram estocados em cada gaiola e quatro gaiolas
+#' (réplicas) por ração foram instaladas dentro de um \strong{único tanque de
+#' grande porte} \emph{(single large pond)}, mantendo as demais condições
+#' constantes. Durante o manejo, os peixes de uma gaiola da ração \code{"C"}
+#' (réplica 5) \strong{escaparam}; por isso a ração \code{C} tem apenas 4
+#' réplicas e o conjunto é \strong{desbalanceado}, totalizando
+#' \strong{19 observações}.
+#'
+#' Cada valor de \code{peso_g} é a \strong{média} do peso final dos 50 peixes de
+#' uma gaiola (a gaiola é a unidade experimental, não o peixe individual).
+#'
+#' @format Um data frame (\code{data.frame}) com 19 linhas e 2 variáveis:
+#' \describe{
+#'   \item{racao}{Fator com 4 níveis indicando a ração comercial iso-proteica
+#'     oferecida: \code{"A"}, \code{"B"}, \code{"C"} e \code{"D"}. No livro
+#'     correspondem a \emph{Feed 1, Feed 2, Feed 3} e \emph{Feed 4},
+#'     respectivamente. As rações diferem apenas no nível de lipídios.}
+#'   \item{peso_g}{Numérica contínua: peso médio final dos peixes da gaiola,
+#'     em \strong{gramas (g)}.}
+#' }
+#'
+#' @details
+#' \strong{Desenho experimental.} Delineamento Inteiramente Casualizado (DIC),
+#' fator único (tipo de ração) com 4 níveis e 5 réplicas planejadas por nível
+#' (uma perdida em \code{C}). Modelo:
+#' \deqn{Y_{ij} = m + T_i + R_{ij}}
+#' em que \eqn{m} é a média geral, \eqn{T_i} o efeito da ração \eqn{i} e
+#' \eqn{R_{ij}} o erro aleatório.
+#'
+#' \strong{Hipóteses.}
+#' \eqn{H_0: \mu_A = \mu_B = \mu_C = \mu_D} (as rações não diferem) contra
+#' \eqn{H_1:} ao menos uma média difere.
+#'
+#' \strong{Totais por ração (conferem com o livro).}
+#' \tabular{lrrr}{
+#'   Ração \tab n \tab Total (g) \tab Média (g) \cr
+#'   A (Feed 1) \tab 5 \tab 431 \tab 86,2 \cr
+#'   B (Feed 2) \tab 5 \tab 444 \tab 88,8 \cr
+#'   C (Feed 3) \tab 4 \tab 410 \tab 102,5 \cr
+#'   D (Feed 4) \tab 5 \tab 463 \tab 92,6 \cr
+#'   \strong{Geral} \tab \strong{19} \tab \strong{1748} \tab
+#' }
+#' (O livro arredonda as médias de C e D para 102,6 e 92,5; os totais e os
+#' valores brutos aqui são os exatos da Tabela 7.4.)
+#'
+#' \strong{Resultado esperado da ANOVA (Tabela 7.5 do livro).}
+#' \tabular{lrrrr}{
+#'   Fonte \tab SS \tab df \tab MS \tab F \cr
+#'   Tratamento (ração) \tab 665 \tab 3 \tab 222 \tab 26 \cr
+#'   Erro (resíduo) \tab 128 \tab 15 \tab 9 \tab \cr
+#'   Total \tab 793 \tab 18 \tab \tab
+#' }
+#' Como \eqn{F = 26 > F_{3;15;0,01} = 5,42}, rejeita-se \eqn{H_0}
+#' (\eqn{P < 0,01}): há efeito altamente significativo da ração sobre o
+#' crescimento. Nas comparações múltiplas do livro (LSD/Tukey, valor crítico
+#' de diferença aproximado de 4,0 g): a ração \strong{C (Feed 3)} produz o maior
+#' peso; \strong{D (Feed 4)} supera \strong{A (Feed 1)}; e os pares A-B e B-D
+#' não diferem significativamente.
+#'
+#' \strong{Questões que o conjunto permite explorar.}
+#' \enumerate{
+#'   \item Há diferença significativa entre as médias de peso das quatro rações?
+#'   \item Qual ração proporciona o maior ganho de peso médio?
+#'   \item Como conduzir e interpretar um pós-teste (Tukey HSD / LSD) após a
+#'         ANOVA, em um desenho \strong{desbalanceado}?
+#'   \item Os pressupostos da ANOVA (normalidade dos resíduos e homogeneidade
+#'         de variâncias) estão atendidos?
+#' }
+#' Sugere-se ANOVA unifatorial (\eqn{\alpha = 0,05}) e, se significativa,
+#' comparações múltiplas (Tukey HSD). Lembre-se de que a significância
+#' estatística não basta para a recomendação prática: o livro ressalta que o
+#' \strong{valor econômico} (preço da ração versus ganho de produção) também
+#' deve ser considerado.
+#'
+#' @source
+#' Bhujel, R. C. (2011). \emph{Statistics for Aquaculture} (1st ed.).
+#' Wiley-Blackwell. Capítulo 7 (Experimental designs and analysis of variance),
+#' \strong{Tabela 7.4}, p. 103.
+#'
+#' @references
+#' Bhujel, R. C. (2011). \emph{Statistics for Aquaculture} (1st ed.). Wiley.
+#' (Obra original publicada em 2011.)
+#'
+#' @docType data
+#' @encoding UTF-8
+#' @keywords datasets aquicultura anova dic crd bagre catfish racao
+#' @name isoproteica_bagre
+#' @aliases isoproteica_bagre
+#' @usage data(isoproteica_bagre)
+#'
+#' @examples
+#' data(isoproteica_bagre)
+#' str(isoproteica_bagre)
+#' summary(isoproteica_bagre)
+#'
+#' ## Totais e médias por ração (conferem com a Tabela 7.4):
+#' aggregate(peso_g ~ racao, data = isoproteica_bagre,
+#'           FUN = function(x) c(n = length(x), soma = sum(x), media = mean(x)))
+#'
+#' ## Boxplot com pontos individuais (requer ggplot2):
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   library(ggplot2)
+#'   ggplot(isoproteica_bagre, aes(racao, peso_g, fill = racao)) +
+#'     geom_boxplot(alpha = 0.7, width = 0.6, colour = "white") +
+#'     geom_jitter(width = 0.1, size = 2, alpha = 0.6) +
+#'     labs(title = "Peso final de bagres por ração iso-proteica",
+#'          x = "Ração (A-D)", y = "Peso médio final (g)") +
+#'     theme_minimal()
+#' }
+#'
+#' ## ANOVA unifatorial (reproduz a Tabela 7.5: SS_trat = 665, SS_erro = 128,
+#' ## F ~ 26, P < 0,01):
+#' modelo <- aov(peso_g ~ racao, data = isoproteica_bagre)
+#' summary(modelo)
+#'
+#' ## Comparações múltiplas se a ANOVA for significativa:
+#' if (anova(modelo)[["Pr(>F)"]][1] < 0.05) {
+#'   TukeyHSD(modelo)
+#' }
+"isoproteica_bagre"   # Nome do objeto salvo em .rda - NAO use @export!
