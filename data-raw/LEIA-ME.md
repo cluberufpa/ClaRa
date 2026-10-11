@@ -26,6 +26,15 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- Bloco 2 (D11–D20): vinte conjuntos no catálogo; 70.016 bytes em data/.
+  354 expectativas e os dez novos exemplos passaram. Build aprovado;
+  check continua com falha nativa na instalação. Detalhes e pendências em
+  RELATORIO_BLOCO_02.md; não marcar check como aprovado no balanço.
+- walleye_erie: professor autorizou manter os 33.734 peixes × 12 colunas,
+  132.676 bytes (~133 KB) em xz com identificadores em texto (11/10/2026).
+  Em seguida pediu pesquisar uma fonte substituta na internet. A busca
+  não revoga a autorização, mas a escolha da fonte permanece em avaliação.
+
 - D09 (`tilapia_sensorial`): 122 × 7, 848 bytes em xz; notas preservadas.
   Confirmar significado, âncoras e sentido da escala; não presumir aceitação.
   Professor consultará o artigo. Depois, explicar as medidas e avaliar a

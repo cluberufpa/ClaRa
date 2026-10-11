@@ -12,6 +12,10 @@ if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and not integrado):
 relatorio = Path(sys.argv[1])
 linhas = json.loads(relatorio.read_text(encoding='utf-8'))['catalogo']
 por_nome = {r['nome_eapadados'] or r['nome']: r for r in linhas}
+for r in linhas:
+    origem = re.match(r'^([A-Za-z0-9.]+::[A-Za-z0-9._]+)', r.get('origem', ''))
+    if origem:
+        por_nome[origem.group(1)] = r
 backup = pacote / 'data-raw/acompanhamento/balanco_antes_passada1_20261011.xlsx'
 if not backup.exists():
     shutil.copyfile(balanco, backup)
