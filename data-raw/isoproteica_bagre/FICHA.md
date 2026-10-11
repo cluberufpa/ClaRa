@@ -1,7 +1,7 @@
-# D-001 — Bagres: rações isoproteicas
+# D001 — Bagres: rações isoproteicas
 
 Data: 11/10/2026. Conjunto atual: `EAPADados::isoproteica_bagre`.
-Nome final: `bagre_racao_isoproteica`. Registro permanente: `D-001`.
+Nome final: `D001_bagre_racao_isoproteica`. Registro permanente: `D001`.
 Curadoria aprovada pelo professor em 11/10/2026; autorização da fonte pendente.
 
 ## O que foi autorizado e feito
@@ -88,7 +88,7 @@ O peso médio final dos bagres difere entre as quatro rações? A ajuda mostra:
 
 ```r
 comparar_medias(
-  dados = bagre_racao_isoproteica,
+  dados = D001_bagre_racao_isoproteica,
   resposta = peso_medio_final_g,
   grupos = racao,
   rotulo_resposta = "Peso médio final (g)",
@@ -152,3 +152,10 @@ e autorização da fonte pendentes**. A integração local não significa
 instalação concluída. Não houve instalação global nem push. O acompanhamento
 distingue curadoria aprovada, integração local e check pendente; a marca de
 validação completa só será aplicada quando o check concluir.
+
+## Convenção final de identificação
+
+Por decisão do professor em 11/10/2026, o registro passa a `D001` e o
+nome completo do objeto a `D001_bagre_racao_isoproteica`. O nome anterior
+sem prefixo foi usado apenas durante o preparo local, antes da publicação.
+Não mudou nenhum valor, categoria, unidade ou tipo de coluna.

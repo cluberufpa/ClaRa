@@ -1,10 +1,10 @@
 # Catálogo da migração: rode na raiz do pacote, após preparar os bagres.
 # Este arquivo registra apenas metadados; nunca recalcula os dados.
 novo <- data.frame(
-  codigo = "D-001",
-  nome = "bagre_racao_isoproteica",
+  codigo = "D001",
+  nome = "D001_bagre_racao_isoproteica",
   rotulo = "Bagres: rações isoproteicas",
-  titulo = "D-001 · Peso médio final de bagres por ração isoproteica",
+  titulo = "D001 · Peso médio final de bagres por ração isoproteica",
   natureza = "real",
   origem = "EAPADados::isoproteica_bagre",
   unidade_amostral = "gaiola; peso médio final dos peixes, conforme documentação de origem",

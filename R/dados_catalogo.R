@@ -5,7 +5,7 @@
 #'
 #' @format Um `data.frame` com as colunas:
 #' \describe{
-#'   \item{codigo}{Registro permanente no formato D-001, D-002, etc.}
+#'   \item{codigo}{Registro permanente no formato D001, D002, etc.}
 #'   \item{nome}{Nome do objeto disponível após `library(clara)`.}
 #'   \item{rotulo}{Título curto para seleção.}
 #'   \item{titulo}{Título completo da ajuda, com o registro.}
