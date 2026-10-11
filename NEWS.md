@@ -201,3 +201,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D23 `crabs_morfometria`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D24 `darter_ontario`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D25 `exportacao_pargo`, provisório, com fonte e decisões anteriores registradas.
