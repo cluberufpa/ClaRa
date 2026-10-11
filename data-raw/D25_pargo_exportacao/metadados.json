@@ -1,0 +1,20 @@
+{
+  "codigo": "D25",
+  "registro": "D25_pargo_exportacao",
+  "nome": "exportacao_pargo",
+  "nome_eapadados": "exportacao_pargo",
+  "rotulo": "Pargo: exportação brasileira em formato largo",
+  "titulo": "D25 - Pargo: exportação brasileira em formato largo",
+  "natureza": "real",
+  "origem": "EAPADados::exportacao_pargo",
+  "unidade_amostral": "combinação de país, produto e UF, com medidas anuais em colunas",
+  "linhas": 4,
+  "colunas": 48,
+  "analises": "Arrumar: empilhar, separar e alargar; Séries anuais",
+  "analise_principal": "Arrumar: empilhar, separar e alargar",
+  "palavras_chave": "exportacao; pargo",
+  "verbo_clara": "",
+  "licenca": "Fonte pública Comex Stat; licença específica a confirmar",
+  "referencia": "Comex Stat / MDIC; exportação de pargo, 2005–2025; planilha exportada em 05/07/2026",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}

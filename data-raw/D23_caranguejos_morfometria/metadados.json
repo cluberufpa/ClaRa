@@ -1,0 +1,20 @@
+{
+  "codigo": "D23",
+  "registro": "D23_caranguejos_morfometria",
+  "nome": "crabs_morfometria",
+  "nome_eapadados": "crabs_morfometria",
+  "rotulo": "Caranguejos Leptograpsus: morfometria",
+  "titulo": "D23 - Caranguejos Leptograpsus: morfometria",
+  "natureza": "real",
+  "origem": "EAPADados::crabs_morfometria",
+  "unidade_amostral": "caranguejo individual",
+  "linhas": 200,
+  "colunas": 10,
+  "analises": "Amostragem estratificada; ANCOVA; PCA",
+  "analise_principal": "Amostragem estratificada",
+  "palavras_chave": "crabs; morfometria",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, MASS",
+  "referencia": "MASS::crabs; Campbell e Mahon (1974); Venables e Ripley (2002)",
+  "situacao": "provisório"
+}

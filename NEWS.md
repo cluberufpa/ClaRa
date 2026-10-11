@@ -193,3 +193,23 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D19 `camaroes_sexo`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D20 `cangulo_crescimento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D21 `captura_pescada_amarela`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D22 `captura_pescada_amarela_bruta`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D23 `crabs_morfometria`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D24 `darter_ontario`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D25 `exportacao_pargo`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D26 `gammarus_dieta_temperatura_resumo`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D27 `idades_savel_repetibilidade`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D28 `lagostas_kelp_sexo`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D29 `peixes_morfometria_multivariada`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D30 `peixes_nutricao_portugal`, provisório, com fonte e decisões anteriores registradas.

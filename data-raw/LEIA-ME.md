@@ -26,6 +26,11 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- Bloco 3 (D21–D30): 31 conjuntos no catálogo, incluindo D39 antecipado;
+  163.416 bytes em data/. 439 expectativas e dez exemplos passaram. Build
+  aprovado; check mantém 1 ERROR na instalação. Pendências de fonte,
+  unidades e uso de dados agregados em RELATORIO_BLOCO_03.md. Restam 29.
+
 - Bloco 2 (D11–D20): vinte conjuntos no catálogo; 70.016 bytes em data/.
   354 expectativas e os dez novos exemplos passaram. Build aprovado;
   check continua com falha nativa na instalação. Detalhes e pendências em

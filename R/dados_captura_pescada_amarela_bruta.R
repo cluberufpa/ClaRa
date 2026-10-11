@@ -1,0 +1,42 @@
+#' D22 - Pescada-amarela: base bruta para limpeza
+#'
+#' Dados provisórios da passada 1. Unidade amostral: viagem de pesca, com defeitos didáticos preservados.
+#'
+#' @format Um `data.frame` com 252 linhas e 16 colunas:
+#' \describe{
+#'   \item{Embarcacao}{Identificador da embarcacao (texto; B1 a B7).}
+#'   \item{Tamanho (m)}{Comprimento da embarcacao, em metros (numerico).}
+#'   \item{Precipitação}{Precipitacao acumulada no periodo, em mm (numerico).}
+#'   \item{Mês}{Mes da viagem (texto, em portugues).}
+#'   \item{Ano}{Ano da viagem (inteiro; 2019 a 2021).}
+#'   \item{Período sazonal}{Estacao (texto; com espacos sobrando: "chuvoso", "chuvoso ", "seco", "seco ").}
+#'   \item{Mês/ano}{Mes/ano de referencia (data).}
+#'   \item{Data de Saida}{Data de saida ao mar (data).}
+#'   \item{Data de Chegada}{Data de chegada (texto; contem a entrada invalida "15/10//2020").}
+#'   \item{Dias ao mar}{Duracao da viagem, em dias (inteiro).}
+#'   \item{CPUE pescada}{Captura por unidade de esforco da pescada-amarela (numerico, casas decimais em excesso).}
+#'   \item{CPUE}{Captura por unidade de esforco total (numerico).}
+#'   \item{Pessoal Embarcado}{Numero de tripulantes (inteiro; 8 ou 10).}
+#'   \item{Peso Balanca}{Peso total registrado na balanca, em kg (inteiro).}
+#'   \item{Nome Aparelho Pesca}{Aparelho de pesca (texto; com espacos sobrando: "Espinhel", "Espinhel ", "Rede").}
+#'   \item{Quantidade Aparelho Pesca}{Quantidade/medida do aparelho (inteiro).}
+#' }
+#'
+#' @details
+#' Preservar cabeçalhos e dados intencionalmente defeituosos para treino. Identificar as alterações didáticas inseridas; completar origem, licença e protocolo. CPUE pescada inteiramente ausente, CPUE quase vazia e dias ao mar com ausências; exemplos herdados que prometiam CPUE utilizável não se aplicam.
+#'
+#' @section Adaptações:
+#' Cabeçalhos, categorias, valores, linhas e ordem herdados preservados.
+#'
+#' @source
+#' Dados declarados reais do grupo de pesquisa; autoria/coleta Lucas et al. e referência a completar.
+#' Licença: Autorização e licença específica da fonte a confirmar.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D22_pescada_bruta/.
+#'
+#' @examples
+#' summary(captura_pescada_amarela_bruta)
+#'
+#' @docType data
+#' @keywords datasets
+"captura_pescada_amarela_bruta"

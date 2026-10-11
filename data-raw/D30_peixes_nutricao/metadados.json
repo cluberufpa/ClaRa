@@ -1,0 +1,20 @@
+{
+  "codigo": "D30",
+  "registro": "D30_peixes_nutricao",
+  "nome": "peixes_nutricao_portugal",
+  "nome_eapadados": "peixes_nutricao_portugal",
+  "rotulo": "Peixes: composição nutricional em Portugal",
+  "titulo": "D30 - Peixes: composição nutricional em Portugal",
+  "natureza": "real",
+  "origem": "EAPADados::peixes_nutricao_portugal",
+  "unidade_amostral": "espécie; composição nutricional agregada",
+  "linhas": 40,
+  "colunas": 22,
+  "analises": "PCA; HCA; Perfis nutricionais",
+  "analise_principal": "PCA",
+  "palavras_chave": "peixes; nutricao; portugal",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Jorge, Oliveira e Prieto (2025), Nutritional Composition and Derived Indices of Fish Species Sold in Portugal, Mendeley Data, DOI 10.17632/3wvbgtwkfz.1",
+  "situacao": "provisório"
+}

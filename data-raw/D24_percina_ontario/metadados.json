@@ -1,0 +1,20 @@
+{
+  "codigo": "D24",
+  "registro": "D24_percina_ontario",
+  "nome": "darter_ontario",
+  "nome_eapadados": "darter_ontario",
+  "rotulo": "Percina: idade e comprimento em Ontário",
+  "titulo": "D24 - Percina: idade e comprimento em Ontário",
+  "natureza": "real reconstruída de figura",
+  "origem": "EAPADados::darter_ontario",
+  "unidade_amostral": "registro reconstruído aproximadamente de uma figura de indivíduos",
+  "linhas": 54,
+  "colunas": 3,
+  "analises": "Mann-Whitney; Estatística descritiva",
+  "analise_principal": "Mann-Whitney",
+  "palavras_chave": "darter; ontario",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, FSAdata",
+  "referencia": "Reid (2004), Journal of Freshwater Ecology 19:441–444, Figura 2; FSAdata::DarterOnt",
+  "situacao": "provisório"
+}

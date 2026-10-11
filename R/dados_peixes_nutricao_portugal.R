@@ -1,0 +1,48 @@
+#' D30 - Peixes: composição nutricional em Portugal
+#'
+#' Dados provisórios da passada 1. Unidade amostral: espécie; composição nutricional agregada.
+#'
+#' @format Um `data.frame` com 40 linhas e 22 colunas:
+#' \describe{
+#'   \item{id_base}{Texto: identificador da espécie na base original.}
+#'   \item{nome_comum}{Texto: nome comum do peixe.}
+#'   \item{nome_cientifico}{Texto: nome científico.}
+#'   \item{cluster_autores}{Fator: agrupamento publicado pelos autores (rótulo auxiliar).}
+#'   \item{perfil_nutricional_autores}{Fator: \code{magros}, \code{gordos}, \code{atipicos} (rótulo dos autores).}
+#'   \item{energia_kcal_100g}{Inteiro: energia (kcal/100 g).}
+#'   \item{proteina_g_100g}{Numérico: proteína (g/100 g).}
+#'   \item{lipideos_g_100g}{Numérico: lipídeos (g/100 g).}
+#'   \item{umidade_g_100g}{Numérico: umidade (g/100 g).}
+#'   \item{cinzas_g_100g}{Numérico: cinzas (g/100 g).}
+#'   \item{sfa_g_100g}{Numérico: ácidos graxos saturados (g/100 g).}
+#'   \item{mufa_g_100g}{Numérico: ácidos graxos monoinsaturados (g/100 g).}
+#'   \item{pufa_g_100g}{Numérico: ácidos graxos poli-insaturados (g/100 g).}
+#'   \item{epa_g_100g}{Numérico: EPA (g/100 g).}
+#'   \item{dha_g_100g}{Numérico: DHA (g/100 g).}
+#'   \item{sodio_mg_100g}{Inteiro: sódio (mg/100 g).}
+#'   \item{potassio_mg_100g}{Inteiro: potássio (mg/100 g).}
+#'   \item{calcio_mg_100g}{Numérico: cálcio (mg/100 g).}
+#'   \item{fosforo_mg_100g}{Inteiro: fósforo (mg/100 g).}
+#'   \item{magnesio_mg_100g}{Inteiro: magnésio (mg/100 g).}
+#'   \item{ferro_mg_100g}{Numérico: ferro (mg/100 g).}
+#'   \item{zinco_mg_100g}{Numérico: zinco (mg/100 g).}
+#' }
+#'
+#' @details
+#' cluster_autores e perfil_nutricional_autores são rótulos externos; fora das entradas PCA/HCA para evitar circularidade. Traduções de siglas e atipicos ficam para passada 2. Não excluir espécies atípicas automaticamente.
+#'
+#' @section Adaptações:
+#' Somente id_base convertido em texto pela convenção de identificadores. Siglas e categorias herdadas preservadas.
+#'
+#' @source
+#' Jorge, Oliveira e Prieto (2025), Nutritional Composition and Derived Indices of Fish Species Sold in Portugal, Mendeley Data, DOI 10.17632/3wvbgtwkfz.1.
+#' Licença: CC BY 4.0.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D30_peixes_nutricao/.
+#'
+#' @examples
+#' summary(peixes_nutricao_portugal)
+#'
+#' @docType data
+#' @keywords datasets
+"peixes_nutricao_portugal"
