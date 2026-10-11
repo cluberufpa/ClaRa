@@ -187,3 +187,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D17 `salmouras_carbonatos`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D18 `cabritos_acidos_graxos`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D19 `camaroes_sexo`, provisório, com fonte e decisões anteriores registradas.

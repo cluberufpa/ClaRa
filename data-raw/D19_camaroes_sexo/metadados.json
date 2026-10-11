@@ -1,0 +1,20 @@
+{
+  "codigo": "D19",
+  "registro": "D19_camaroes_sexo",
+  "nome": "camaroes_sexo",
+  "nome_eapadados": "camaroes_sexo",
+  "rotulo": "Camarões: distribuição por sexo e espécie",
+  "titulo": "D19 - Camarões: distribuição por sexo e espécie",
+  "natureza": "real",
+  "origem": "EAPADados::camaroes_sexo",
+  "unidade_amostral": "indivíduo representado por uma linha",
+  "linhas": 170,
+  "colunas": 2,
+  "analises": "Qui-quadrado de independência; Testes de proporções",
+  "analise_principal": "Qui-quadrado de independência",
+  "palavras_chave": "camaroes; sexo",
+  "verbo_clara": "",
+  "licenca": "Dados de livro; referência e autorização pendentes",
+  "referencia": "Livro ainda não identificado na documentação herdada",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}
