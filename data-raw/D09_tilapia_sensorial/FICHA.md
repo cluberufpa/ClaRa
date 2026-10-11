@@ -58,3 +58,5 @@ Cópia `tilapia_sensorial_para_revisao.xlsx`, com abas Dados para revisar, Revis
 O professor consultará o artigo para esclarecer o significado da escala e das notas. Depois da leitura, explicar melhor o que cada medida representa e avaliar a pertinência de cada coluna para a análise pretendida. Uma coluna poderá ser retirada da base de análise se não tiver significado relevante para esse objetivo, mediante decisão do professor.
 
 A coluna específica ainda não foi identificada. Não interpretar esta anotação como autorização para excluir automaticamente o identificador ou qualquer uma das seis notas. Preservar a fonte integral e registrar a justificativa de eventual seleção na curadoria. Revisão e decisão continuam pendentes.
+
+Observação adicional do professor: para Friedman, os tratamentos já podem oferecer respostas suficientes. Conferir o artigo antes de decidir pela seleção de colunas; nenhuma retirada foi aplicada.

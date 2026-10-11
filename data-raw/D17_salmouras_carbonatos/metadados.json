@@ -1,0 +1,20 @@
+{
+  "codigo": "D17",
+  "registro": "D17_salmouras_carbonatos",
+  "nome": "salmouras_carbonatos",
+  "nome_eapadados": "brine_carbonatos",
+  "rotulo": "Salmouras de unidades carbonáticas: composição iônica",
+  "titulo": "D17 - Salmouras de unidades carbonáticas: composição iônica",
+  "natureza": "real",
+  "origem": "EAPADados::brine_carbonatos",
+  "unidade_amostral": "amostra de salmoura ou água de formação",
+  "linhas": 19,
+  "colunas": 8,
+  "analises": "PCA; Agrupamento hierárquico; Padronização",
+  "analise_principal": "PCA",
+  "palavras_chave": "salmouras; carbonatos",
+  "verbo_clara": "",
+  "licenca": "Licença específica não localizada; autorização a confirmar",
+  "referencia": "Davis (2002), Statistics and Data Analysis in Geology; Kansas Geological Survey, BRINE.TXT",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}

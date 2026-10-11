@@ -1,0 +1,20 @@
+{
+  "codigo": "D11",
+  "registro": "D11_puromicina_reacao",
+  "nome": "puromicina_reacao",
+  "nome_eapadados": "",
+  "rotulo": "Puromicina: concentração e velocidade de reação",
+  "titulo": "D11 - Puromicina: concentração e velocidade de reação",
+  "natureza": "real",
+  "origem": "datasets::Puromycin; planilha fornecida pelo professor",
+  "unidade_amostral": "medição de reação; um experimento por condição",
+  "linhas": 23,
+  "colunas": 4,
+  "analises": "Regressão logarítmica; Saturação Michaelis-Menten",
+  "analise_principal": "Regressão logarítmica no intervalo observado",
+  "palavras_chave": "puromicina; reacao",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3 da distribuição R; licença da origem preservada",
+  "referencia": "Treloar (1974); Bates e Watts (1988), apêndice A1.3; datasets::Puromycin, R 4.6.1",
+  "situacao": "provisório"
+}

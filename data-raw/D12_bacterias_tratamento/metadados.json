@@ -1,0 +1,20 @@
+{
+  "codigo": "D12",
+  "registro": "D12_bacterias_tratamento",
+  "nome": "bacterias_tratamento",
+  "nome_eapadados": "",
+  "rotulo": "Bactérias: presença após tratamentos em crianças",
+  "titulo": "D12 - Bactérias: presença após tratamentos em crianças",
+  "natureza": "real",
+  "origem": "MASS::bacteria, cópia preservada no levantamento",
+  "unidade_amostral": "observação de uma criança em uma semana; medidas repetidas",
+  "linhas": 220,
+  "colunas": 6,
+  "analises": "McNemar; Preparo de dados pareados; Regressão logística com estrutura longitudinal",
+  "analise_principal": "McNemar",
+  "palavras_chave": "bacterias; tratamento",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme MASS; não relicenciado como MIT",
+  "referencia": "Amanda Leach via James McBroom; Venables e Ripley (2002); MASS::bacteria, MASS 7.3-65",
+  "situacao": "provisório"
+}
