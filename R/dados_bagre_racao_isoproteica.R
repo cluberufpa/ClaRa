@@ -1,4 +1,4 @@
-#' D001 - Peso médio final de bagres por ração isoproteica
+#' D001_bagre_racao - Peso médio final de bagres por ração isoproteica
 #'
 #' Adaptado de `EAPADados::isoproteica_bagre`: 19 observações sob quatro
 #' rações comerciais isoproteicas, apresentadas na Tabela 7.4 de Bhujel
@@ -8,7 +8,7 @@
 #' \describe{
 #'   \item{racao}{Fator nominal, com níveis A, B, C e D nessa ordem.
 #'     Identifica as quatro rações; os códigos originais foram preservados.}
-#'   \item{peso_medio_final_g}{Peso médio final dos peixes por gaiola, em
+#'   \item{peso_g}{Peso médio final dos peixes por gaiola, em
 #'     gramas, conforme a documentação de origem. Não é ganho de peso nem
 #'     peso individual de cada peixe.}
 #' }
@@ -20,8 +20,8 @@
 #' cada valor é uma média por unidade experimental, não uma réplica de peixe.
 #'
 #' **Adaptações.** A aba `src_isoproteica` da fonte local foi preservada.
-#' `Ração` passou a `racao` e `Peso` a `peso_medio_final_g`; no objeto
-#' anterior, os nomes eram `racao` e `peso_g`. As categorias A a D, os 19
+#' `Ração` passou a `racao` e `Peso` a `peso_g`; esses são
+#' também os nomes do objeto anterior no EAPADados. As categorias A a D, os 19
 #' valores e sua ordem foram mantidos. Nenhuma linha ou coluna foi removida,
 #' nenhum valor foi imputado e não há valores ausentes. Não houve conversão
 #' de unidade nem cálculo de novas medidas. O objeto final é um `data.frame`
@@ -41,7 +41,7 @@
 #' nem indicação de que os dados estejam licenciados sob MIT.
 #'
 #' A preparação reproduzível e o histórico completo estão em
-#' `data-raw/isoproteica_bagre/` no repositório da ClaRa.
+#' `data-raw/D001_bagre_racao/` no repositório da ClaRa.
 #'
 #' @source
 #' Bhujel, R. C. (2011). *Statistics for Aquaculture*. Tabela 7.4, p. 103,
@@ -52,8 +52,8 @@
 #' @examples
 #' # O peso médio final difere entre as quatro rações?
 #' resultado <- comparar_medias(
-#'   dados = D001_bagre_racao_isoproteica,
-#'   resposta = peso_medio_final_g,
+#'   dados = bagre_racao_isoproteica,
+#'   resposta = peso_g,
 #'   grupos = racao,
 #'   rotulo_resposta = "Peso médio final (g)",
 #'   rotulo_grupos = "Ração",
@@ -67,4 +67,4 @@
 #'
 #' @docType data
 #' @keywords datasets
-"D001_bagre_racao_isoproteica"
+"bagre_racao_isoproteica"

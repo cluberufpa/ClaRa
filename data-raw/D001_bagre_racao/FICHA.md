@@ -1,7 +1,9 @@
 # D001 — Bagres: rações isoproteicas
 
 Data: 11/10/2026. Conjunto atual: `EAPADados::isoproteica_bagre`.
-Nome final: `D001_bagre_racao_isoproteica`. Registro permanente: `D001`.
+Objeto final: `bagre_racao_isoproteica`. Código permanente: `D001`.
+Registro e pasta de preparo: `D001_bagre_racao`.
+Nome antigo no EAPADados: `isoproteica_bagre`.
 Curadoria aprovada pelo professor em 11/10/2026; autorização da fonte pendente.
 
 ## O que foi autorizado e feito
@@ -57,7 +59,7 @@ A autorização de publicação da fonte continua pendente; não houve push.
 | Nome na fonte | Nome no EAPADados | Nome final | Unidade | Tipo |
 |---|---|---|---|---|
 | Ração | racao | racao | Não se aplica | Fator nominal |
-| Peso | peso_g | peso_medio_final_g | g, conforme documentação recebida | double |
+| Peso | peso_g | peso_g | g, conforme documentação recebida | double |
 
 O nome da resposta explicita que se trata de peso médio final, não ganho de
 peso nem medição individual. O objeto passou de tibble a `data.frame`
@@ -71,7 +73,7 @@ junção, mudança de formato largo/longo ou cálculo de novas medidas.
 Na raiz de `ClaRa-dados/`, execute:
 
 ```r
-source("data-raw/isoproteica_bagre/preparar.R", encoding = "UTF-8")
+source("data-raw/D001_bagre_racao/preparar.R", encoding = "UTF-8")
 source("data-raw/preparar_catalogo.R", encoding = "UTF-8")
 ```
 
@@ -88,8 +90,8 @@ O peso médio final dos bagres difere entre as quatro rações? A ajuda mostra:
 
 ```r
 comparar_medias(
-  dados = D001_bagre_racao_isoproteica,
-  resposta = peso_medio_final_g,
+  dados = bagre_racao_isoproteica,
+  resposta = peso_g,
   grupos = racao,
   rotulo_resposta = "Peso médio final (g)",
   rotulo_grupos = "Ração",
@@ -153,9 +155,27 @@ instalação concluída. Não houve instalação global nem push. O acompanhamen
 distingue curadoria aprovada, integração local e check pendente; a marca de
 validação completa só será aplicada quando o check concluir.
 
-## Convenção final de identificação
+## Convenção anterior de identificação (substituída pelo pedido da Trilha)
 
 Por decisão do professor em 11/10/2026, o registro passa a `D001` e o
 nome completo do objeto a `D001_bagre_racao_isoproteica`. O nome anterior
 sem prefixo foi usado apenas durante o preparo local, antes da publicação.
 Não mudou nenhum valor, categoria, unidade ou tipo de coluna.
+
+## Ajuste solicitado pela Trilha em 11/10/2026
+
+O professor mandou seguir `PEDIDO_DADOS_TRILHA_PARA_CLARA.md`. Conforme
+esse pedido, o código é `D001`, o registro e a pasta são
+`D001_bagre_racao` e o objeto é `bagre_racao_isoproteica`, sem prefixo.
+O catálogo acrescenta `registro` e `nome_eapadados = "isoproteica_bagre"`.
+A resposta volta ao nome `peso_g`, exigido pelos consumidores atuais da
+Trilha; a ajuda explicita que é peso médio final por gaiola. Valores,
+tipos, categorias e ordem continuam iguais. Nenhum arquivo da Trilha ou
+função da ClaRa foi modificado. A autorização da fonte permanece pendente.
+
+Conferência deste ajuste: 209 expectativas passaram (24 dos dados), sem
+falhas, avisos ou testes ignorados. Comparação direta com o objeto anterior
+confirmou valores e tipos idênticos após renomear a coluna para `peso_g`.
+Dados em xz: 292 bytes; catálogo com os dois campos novos: 736 bytes.
+O processo R continua terminando com código 1, conforme impedimento já
+registrado; não foi declarada instalação/check concluída.
