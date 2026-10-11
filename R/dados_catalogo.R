@@ -5,7 +5,7 @@
 #'
 #' @format Um `data.frame` com as colunas:
 #' \describe{
-#'   \item{codigo}{Registro permanente no formato D01, D002, etc.}
+#'   \item{codigo}{Registro permanente no formato D01, D02, etc.}
 #'   \item{registro}{Registro curto e nome da pasta de preparo, como D01_bagre_racao.}
 #'   \item{nome_eapadados}{Nome anterior no EAPADados; vazio para outras origens.}
 #'   \item{nome}{Nome do objeto disponível após `library(clara)`.}

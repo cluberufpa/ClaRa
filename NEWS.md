@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D03 `cpue_tubarao`, provisório, adaptado de `EAPADados::cpue_tubarao`; fonte preservada.
+
 - Dados: D02 `morfometria_barbo`, provisório, adaptado de `EAPADados::morfometria_barbo`; fonte preservada.
 
 * D01: `bagre_racao_isoproteica`, com 19 observações preservadas, documentação, catálogo e preparo reproduzível; curadoria aprovada e autorização dos autores pendente.

@@ -26,6 +26,10 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- D03 (`cpue_tubarao`): fonte original conferida; 424 × 5; 3.376 bytes
+  em xz. Completar créditos, autorização, unidade da CPUE e desenho da coleta.
+  Colunas herdadas em inglês preservadas por decisão da passada 1.
+
 - D02 (`morfometria_barbo`): fonte curada conferida; 100 × 13; 7.536 bytes
   em xz. Provisório; nenhuma mudança de coluna ou categoria. Revisar a
   correção alométrica na fonte completa e a redundância rio/população.

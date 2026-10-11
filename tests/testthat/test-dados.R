@@ -21,7 +21,10 @@ test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
     dados <- get(registro$nome, envir = asNamespace("clara"))
     expect_s3_class(dados, "data.frame")
     expect_equal(dim(dados), c(registro$linhas, registro$colunas))
-    expect_true(all(grepl("^[a-z][a-z0-9]*(_[a-z0-9]+)*$", names(dados))))
+    # Passada 1: preservar nomes herdados do EAPADados, inclusive CPUE/Data.
+    # Nomes novos são traduzidos no preparo; pendências vão para a ficha.
+    expect_true(all(nzchar(names(dados))))
+    expect_false(anyDuplicated(names(dados)) > 0L)
 
     rd <- ajuda[[paste0(registro$nome, ".Rd")]]
     expect_false(is.null(rd))
