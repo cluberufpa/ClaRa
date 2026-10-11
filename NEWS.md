@@ -173,3 +173,5 @@ dão os mesmos números e as mesmas figuras.
 - Passada 1: D10 `enobieta_baci`, macroinvertebrados para planejamento BACI; fonte completa preservada.
 
 - Dados: D11 `puromicina_reacao`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D12 `bacterias_tratamento`, provisório, com fonte e decisões anteriores registradas.
