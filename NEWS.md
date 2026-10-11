@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D09 `tilapia_sensorial`, provisório, da literatura; 122 avaliadores, notas pareadas e escala pendente de interpretação.
+
 - Dados: D08 `pinguins`, provisório, adaptado de `EAPADados::pinguins`; fonte preservada.
 
 - Dados: D07 `camarao_vannamei_biometria`, provisório, adaptado de `EAPADados::camarao_vannamei_biometria`; fonte preservada.

@@ -26,6 +26,18 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- D09 (`tilapia_sensorial`): 122 × 7, 848 bytes em xz; notas preservadas.
+  Confirmar significado, âncoras e sentido da escala; não presumir aceitação.
+- Parcial do bloco 1: nove conjuntos, 46.216 bytes com catálogo; 271
+  expectativas e nove exemplos passaram; hashes das fontes conferidos.
+  Build aprovado; check parou por falta dos oito novos arquivos de dados
+  no Collate. Sem merge até resolver a inclusão consultada ao professor.
+- Enobieta (duas tabelas), whitefish (quatro) e mesocosmos (seis): organização
+  consultada ao professor. Separar cada tabela produziria 69 objetos nas
+  60 entradas do levantamento; manter listas conservaria 60 objetos, mas
+  exigiria adaptar o contrato do catálogo e a validação. Não aplicar antes
+  da decisão. Nenhuma tabela desses estudos foi descartada ou incorporada.
+
 - D08 (`pinguins`): fonte palmerpenguins congelada e conferida; 344 × 8;
   2.380 bytes em xz. Aplicada decisão anterior de sexo fêmea/macho;
   ausências e ordem preservadas. Revisar casos completos por análise.
