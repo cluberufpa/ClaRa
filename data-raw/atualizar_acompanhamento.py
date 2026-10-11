@@ -68,6 +68,12 @@ for aba in E.fromstring(arquivos['xl/workbook.xml'][1]).findall('m:sheets/m:shee
                         if r['codigo'] == 'D01' else 'Passada 1 provisória integrada na main; check pendente')
         if r['nome_eapadados'] == 'walleye_erie' and r['nome'] == 'cowichan_amostragem':
             situacao += '; fonte substituída por cowichan_amostragem com autorização do professor'
+        if r['situacao'].startswith('revisado'):
+            situacao = ('Revisado; colunas e categorias aprovadas; ' +
+                        ('integrado na main; ' if integrado else 'na branch dados; ') +
+                        'check pendente; ' + r['situacao'].split(';', 1)[1].strip())
+            if r['nome_eapadados'] == 'walleye_erie':
+                situacao += '; substituído por ' + r['nome']
         escrever(row, col_situacao, situacao)
         escrever(row, col_codigo, r['codigo'])
         alterados.append(aba.attrib['name'] + '!' + col_codigo + row.attrib['r'])

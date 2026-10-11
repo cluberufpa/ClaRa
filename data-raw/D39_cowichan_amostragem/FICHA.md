@@ -27,6 +27,10 @@ original. Local: Bear Lake 42, Cowichan Estuary 56, Cowichan Lake 56,
 Cowichan River 54, Mesachie Lake 38. Massa e comprimento completos.
 
 ## Pendências para a curadoria
+Em 11/10/2026, o professor aprovou a organização, as oito colunas e suas
+categorias. Situação no catálogo: revisado, preservando a ressalva abaixo.
+Essa aprovação da curadoria não equivale a check do pacote aprovado.
+
 Professor autorizou remover se o valor for aberrante. Total 51,09 mm não
 é extremo na faixa 36,5–70,92 mm; mantido. Registro 234 / linha Excel 235
 conflita com comprimento padrão 55 mm. Não sabemos qual medida está errada;

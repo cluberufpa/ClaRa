@@ -47,6 +47,8 @@ Não marcar como concluído no balanço um conjunto com check pendente.
   Check mantém 1 ERROR na instalação; falha de encerramento do R persiste.
   Valor 51,09 mm preservado: não é aberrante pelo critério 1,5 IQR, global
   ou dentro de Cowichan Lake. Pendência é conflito total/padrão, não extremo.
+  Professor aprovou colunas e categorias em 11/10/2026; situação revisado,
+  mantendo a ressalva do comprimento e o check do pacote pendente.
 
 - D09 (`tilapia_sensorial`): 122 × 7, 848 bytes em xz; notas preservadas.
   Confirmar significado, âncoras e sentido da escala; não presumir aceitação.
