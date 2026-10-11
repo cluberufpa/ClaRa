@@ -59,4 +59,5 @@ Collate:
     'dados_puromicina_reacao.R'
     'dados_bacterias_tratamento.R'
     'dados_artemia_fitoesterois.R'
+    'dados_aquicultura_br.R'
 Config/roxygen2/version: 8.1.0

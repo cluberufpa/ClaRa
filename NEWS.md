@@ -177,3 +177,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D12 `bacterias_tratamento`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D13 `artemia_fitoesterois`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D14 `aquicultura_br`, provisório, com fonte e decisões anteriores registradas.

@@ -1,0 +1,20 @@
+{
+  "codigo": "D14",
+  "registro": "D14_aquicultura_brasil",
+  "nome": "aquicultura_br",
+  "nome_eapadados": "aquicultura_br",
+  "rotulo": "Aquicultura brasileira: produção por estado e ano",
+  "titulo": "D14 - Aquicultura brasileira: produção por estado e ano",
+  "natureza": "real",
+  "origem": "EAPADados::aquicultura_br; anuários Peixe-BR",
+  "unidade_amostral": "unidade da Federação e ano",
+  "linhas": 216,
+  "colunas": 5,
+  "analises": "Mapas coropléticos; Estatística descritiva; Comparação entre anos",
+  "analise_principal": "Mapas coropléticos",
+  "palavras_chave": "aquicultura; br",
+  "verbo_clara": "",
+  "licenca": "Dados publicados pela Peixe-BR; licença específica de redistribuição a confirmar",
+  "referencia": "Peixe-BR, Anuários da Piscicultura; produção de 2016 a 2023",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}
