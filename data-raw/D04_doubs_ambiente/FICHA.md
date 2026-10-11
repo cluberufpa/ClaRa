@@ -43,3 +43,7 @@ ambiente R não serão contornadas com mudanças nas funções da ClaRa.
 ## Fonte original e escalas conferidas
 
 Fonte congelada: ade4 1.7-24, objeto doubs (RDS e ajuda), GPL (>= 2). Textos GPL-2 e GPL-3 preservados. As 11 variáveis ambientais e a riqueza conferem com essa fonte. As unidades incorretas da ajuda herdada foram corrigidas conforme o manual do ade4, sem conversão dos valores: dfs km × 10; flo m³/s × 100; pH × 10; pho/nit/amm mg/L × 100; oxy/bdo mg/L × 10; slo = ln(declividade em por mil × 100 + 1). har é mg/L de cálcio. Altitude permanece em m.
+
+## Decisão do professor — 11/10/2026
+
+Manter e usar a fonte Doubs na ClaRa. O professor definirá posteriormente o encaminhamento de licenciamento. A licença GPL (>= 2) da fonte permanece registrada; não houve relicenciamento como MIT nem aprovação de nova licença.

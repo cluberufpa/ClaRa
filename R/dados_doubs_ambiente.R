@@ -70,6 +70,10 @@
 #'
 #' Preparo e fonte congelada: `data-raw/D04_doubs_ambiente/`.
 #'
+#' @section Decisão do professor:
+#' Manutenção desta fonte aprovada em 11/10/2026. O encaminhamento de
+#' licenciamento será definido posteriormente; a licença da origem permanece.
+#'
 #' @docType data
 #' @keywords datasets
 #' @examples

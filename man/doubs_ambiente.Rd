@@ -85,6 +85,12 @@ Conferir escalas: pH está multiplicado por 10; não interpretar as demais colun
 Preparo e fonte congelada: \verb{data-raw/D04_doubs_ambiente/}.
 }
 
+\section{Decisão do professor}{
+
+Manutenção desta fonte aprovada em 11/10/2026. O encaminhamento de
+licenciamento será definido posteriormente; a licença da origem permanece.
+}
+
 \examples{
 summary(doubs_ambiente)
 }

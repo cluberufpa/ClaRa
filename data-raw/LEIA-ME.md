@@ -65,6 +65,8 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 - D04 (`doubs_ambiente`): fonte ade4 1.7-24 congelada e conferida; 30 × 13;
   1.112 bytes em xz. Escalas descritas corretamente, sem transformar dados.
   Licença GPL (>= 2) da origem registrada; não substituída pela MIT.
+  Professor decidiu manter a fonte em 11/10/2026; encaminhamento de
+  licenciamento será definido depois.
   Propor identificação explícita das estações na passada 2.
 
 - D03 (`cpue_tubarao`): fonte original conferida; 424 × 5; 3.376 bytes

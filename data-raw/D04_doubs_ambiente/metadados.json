@@ -16,5 +16,5 @@
   "verbo_clara": "",
   "licenca": "GPL (>= 2), conforme ade4 1.7-24; não relicenciado como MIT",
   "referencia": "Verneaux (1973); ade4::doubs; Borcard, Gillet e Legendre (2018), Numerical Ecology with R",
-  "situacao": "provisório; escalas da origem a revisar"
+  "situacao": "provisório; manutenção da fonte aprovada; decisão de licenciamento pendente; escalas a revisar"
 }
