@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D07 `camarao_vannamei_biometria`, provisório, adaptado de `EAPADados::camarao_vannamei_biometria`; fonte preservada.
+
 - Dados: D06 `salvelino_formalina_remocao`, provisório, adaptado de `EAPADados::salvelino_formalina_remocao`; fonte preservada.
 
 - Dados: D05 `abalone_adultos`, provisório, adaptado de `EAPADados::abalone_adultos`; fonte preservada.

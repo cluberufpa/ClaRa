@@ -26,6 +26,10 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- D07 (`camarao_vannamei_biometria`): CSV conferido; 170 × 9; 1.588 bytes
+  em xz. Confirmar a denominação anatômica do comprimento; manter NA de
+  cefalotórax no DB1 e o contexto dos cinco subconjuntos.
+
 - D06 (`salvelino_formalina_remocao`): CSV conferido; 30 × 7; 696 bytes
   em xz. Preservar unidades experimentais e o desenho desequilibrado;
   revisar pressupostos e transformação antes da análise fatorial.
