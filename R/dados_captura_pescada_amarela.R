@@ -1,0 +1,40 @@
+#' D21 - Pescada-amarela: capturas por viagem
+#'
+#' Dados provisórios da passada 1. Unidade amostral: viagem de pesca, com repetição por embarcação e tempo.
+#'
+#' @format Um `data.frame` com 252 linhas e 14 colunas:
+#' \describe{
+#'   \item{embarcacao}{Identificador da embarcacao (fator; B1 a B7).}
+#'   \item{tamanho_m}{Comprimento da embarcacao, em metros (numerico).}
+#'   \item{precipitacao}{Precipitação; unidade herdada mm ainda a confirmar na fonte.}
+#'   \item{mes}{Mês, fator com níveis em ordem de calendário; não é ordered.}
+#'   \item{ano}{Ano da viagem (inteiro; 2019 a 2021).}
+#'   \item{periodo_sazonal}{Estacao do ano (fator: chuvoso, seco).}
+#'   \item{mes_ano}{Mes/ano de referencia (Date).}
+#'   \item{data_saida}{Data de saida ao mar (Date).}
+#'   \item{data_chegada}{Data de chegada (Date).}
+#'   \item{dias_ao_mar}{Duração da viagem, em dias; 239 ausências preservadas.}
+#'   \item{pessoal_embarcado}{Numero de tripulantes (inteiro; 8 ou 10).}
+#'   \item{peso_balanca}{Peso registrado; unidade herdada kg ainda a confirmar na fonte.}
+#'   \item{nome_aparelho_pesca}{Aparelho de pesca (fator: Espinhel, Rede).}
+#'   \item{quantidade_aparelho_pesca}{Quantidade/medida do aparelho (inteiro).}
+#' }
+#'
+#' @details
+#' Completar autoria, local, licença e protocolo. Sem CPUE utilizável: colunas quase vazias retiradas por decisão anterior. dias_ao_mar tem 239 ausências; não calcular CPUE nem imputar esforço automaticamente. Confirmar unidades de precipitação e peso_balanca. Viagens repetidas por embarcação não são réplicas independentes por definição.
+#'
+#' @section Adaptações:
+#' Decisão anterior aprovada na coluna I do Núcleo 60: retirar cpue_pescada e cpue; data_de_saida/data_de_chegada → data_saida/data_chegada. Demais colunas e as 252 viagens mantidas.
+#'
+#' @source
+#' Dados declarados reais do grupo de pesquisa; autoria/coleta Lucas et al. e referência a completar.
+#' Licença: Autorização e licença específica da fonte a confirmar.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D21_pescada_captura/.
+#'
+#' @examples
+#' summary(captura_pescada_amarela)
+#'
+#' @docType data
+#' @keywords datasets
+"captura_pescada_amarela"

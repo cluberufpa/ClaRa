@@ -1,0 +1,20 @@
+{
+  "codigo": "D21",
+  "registro": "D21_pescada_captura",
+  "nome": "captura_pescada_amarela",
+  "nome_eapadados": "captura_pescada_amarela",
+  "rotulo": "Pescada-amarela: capturas por viagem",
+  "titulo": "D21 - Pescada-amarela: capturas por viagem",
+  "natureza": "real declarada; fonte incompleta",
+  "origem": "EAPADados::captura_pescada_amarela",
+  "unidade_amostral": "viagem de pesca, com repetição por embarcação e tempo",
+  "linhas": 252,
+  "colunas": 14,
+  "analises": "Preparo; Descrição de capturas por viagem; Exploração sazonal",
+  "analise_principal": "Preparo",
+  "palavras_chave": "captura; pescada; amarela",
+  "verbo_clara": "",
+  "licenca": "Autorização e licença específica da fonte a confirmar",
+  "referencia": "Dados declarados reais do grupo de pesquisa; autoria/coleta Lucas et al. e referência a completar",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}
