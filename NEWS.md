@@ -195,3 +195,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D20 `cangulo_crescimento`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D21 `captura_pescada_amarela`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D22 `captura_pescada_amarela_bruta`, provisório, com fonte e decisões anteriores registradas.

@@ -1,0 +1,20 @@
+{
+  "codigo": "D22",
+  "registro": "D22_pescada_bruta",
+  "nome": "captura_pescada_amarela_bruta",
+  "nome_eapadados": "captura_pescada_amarela_bruta",
+  "rotulo": "Pescada-amarela: base bruta para limpeza",
+  "titulo": "D22 - Pescada-amarela: base bruta para limpeza",
+  "natureza": "real declarada; defeitos didáticos",
+  "origem": "EAPADados::captura_pescada_amarela_bruta",
+  "unidade_amostral": "viagem de pesca, com defeitos didáticos preservados",
+  "linhas": 252,
+  "colunas": 16,
+  "analises": "Preparo e limpeza de dados",
+  "analise_principal": "Preparo e limpeza de dados",
+  "palavras_chave": "captura; pescada; amarela; bruta",
+  "verbo_clara": "",
+  "licenca": "Autorização e licença específica da fonte a confirmar",
+  "referencia": "Dados declarados reais do grupo de pesquisa; autoria/coleta Lucas et al. e referência a completar",
+  "situacao": "provisório; autorização e licença da fonte pendentes"
+}

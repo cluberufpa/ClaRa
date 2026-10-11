@@ -68,4 +68,5 @@ Collate:
     'dados_cangulo_crescimento.R'
     'dados_cowichan_amostragem.R'
     'dados_captura_pescada_amarela.R'
+    'dados_captura_pescada_amarela_bruta.R'
 Config/roxygen2/version: 8.1.0
