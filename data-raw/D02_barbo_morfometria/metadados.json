@@ -1,0 +1,20 @@
+{
+  "codigo": "D02",
+  "registro": "D02_barbo_morfometria",
+  "nome": "morfometria_barbo",
+  "nome_eapadados": "morfometria_barbo",
+  "rotulo": "Barbo: morfometria corrigida",
+  "titulo": "D02 - Barbo: morfometria corrigida",
+  "natureza": "real",
+  "origem": "EAPADados::morfometria_barbo",
+  "unidade_amostral": "peixe; medidas previamente corrigidas pelo comprimento padrão",
+  "linhas": 100,
+  "colunas": 13,
+  "analises": "Regressão linear simples; PCA; Agrupamento hierárquico",
+  "analise_principal": "Regressão linear simples",
+  "palavras_chave": "morfometria; barbo",
+  "verbo_clara": "relacionar_variaveis",
+  "licenca": "CC BY 4.0",
+  "referencia": "Bánó e Takács (2022); Mendeley Data, DOI 10.17632/c8856zg4hj.1",
+  "situacao": "provisório"
+}

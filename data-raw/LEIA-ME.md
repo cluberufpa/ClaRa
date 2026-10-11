@@ -26,6 +26,12 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- D02 (`morfometria_barbo`): fonte curada conferida; 100 × 13; 7.536 bytes
+  em xz. Provisório; nenhuma mudança de coluna ou categoria. Revisar a
+  correção alométrica na fonte completa e a redundância rio/população.
+  Instalação requer inclusão do arquivo de ajuda em Collate, consultada
+  ao professor por contrariar a restrição literal do prompt.
+
 - D01: autorização dos autores e confirmação da descrição da replicação.
 - A planilha de revisão original ainda está toda pendente; o balanço dos
   60 preserva aprovações anteriores em coluna própria. Estas serão
