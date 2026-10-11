@@ -70,4 +70,5 @@ Collate:
     'dados_captura_pescada_amarela.R'
     'dados_captura_pescada_amarela_bruta.R'
     'dados_crabs_morfometria.R'
+    'dados_darter_ontario.R'
 Config/roxygen2/version: 8.1.0

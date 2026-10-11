@@ -199,3 +199,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D22 `captura_pescada_amarela_bruta`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D23 `crabs_morfometria`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D24 `darter_ontario`, provisório, com fonte e decisões anteriores registradas.
