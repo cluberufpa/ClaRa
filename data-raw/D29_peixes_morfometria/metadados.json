@@ -1,0 +1,20 @@
+{
+  "codigo": "D29",
+  "registro": "D29_peixes_morfometria",
+  "nome": "peixes_morfometria_multivariada",
+  "nome_eapadados": "peixes_morfometria_multivariada",
+  "rotulo": "Peixes: morfometria para análises multivariadas",
+  "titulo": "D29 - Peixes: morfometria para análises multivariadas",
+  "natureza": "real",
+  "origem": "EAPADados::peixes_morfometria_multivariada",
+  "unidade_amostral": "peixe individual com 35 medidas corporais",
+  "linhas": 299,
+  "colunas": 39,
+  "analises": "PCA; HCA; Seleção de variáveis",
+  "analise_principal": "PCA",
+  "palavras_chave": "peixes; morfometria; multivariada",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Raw morphometric data of three freshwater fish species, Mendeley Data, DOI 10.17632/c8856zg4hj.1; créditos herdados Bánó e Takács (2022), completar conferência bibliográfica",
+  "situacao": "provisório"
+}
