@@ -6,8 +6,9 @@ import xml.etree.ElementTree as E
 
 pacote = Path(__file__).resolve().parents[1]
 balanco = pacote.parent / 'EAPADados/nova_estetegia_levantamento/balanco_fase2_60_conjuntos.xlsx'
-if len(sys.argv) != 2:
-    raise SystemExit('Uso: python data-raw/atualizar_acompanhamento.py caminho/do/relatorio_de_verificacao.json')
+integrado = '--integrado' in sys.argv[2:]
+if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and not integrado):
+    raise SystemExit('Uso: python data-raw/atualizar_acompanhamento.py caminho/do/relatorio_de_verificacao.json [--integrado]')
 relatorio = Path(sys.argv[1])
 linhas = json.loads(relatorio.read_text(encoding='utf-8'))['catalogo']
 por_nome = {r['nome_eapadados'] or r['nome']: r for r in linhas}
@@ -58,6 +59,9 @@ for aba in E.fromstring(arquivos['xl/workbook.xml'][1]).findall('m:sheets/m:shee
         r = por_nome[nome]
         situacao = ('Registro D01 ajustado na branch dados; main ainda com D001; autorização e check pendentes'
                     if r['codigo'] == 'D01' else 'Passada 1 provisória na branch dados; check e merge pendentes')
+        if integrado:
+            situacao = ('Integrado na main como D01; autorização da fonte e check pendentes'
+                        if r['codigo'] == 'D01' else 'Passada 1 provisória integrada na main; check pendente')
         escrever(row, col_situacao, situacao)
         escrever(row, col_codigo, r['codigo'])
         alterados.append(aba.attrib['name'] + '!' + col_codigo + row.attrib['r'])

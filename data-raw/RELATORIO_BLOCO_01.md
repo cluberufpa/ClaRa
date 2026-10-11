@@ -2,8 +2,8 @@
 
 Dez conjuntos preparados e registrados na branch `dados`, com um commit
 por conjunto. O D01 já estava na main no formato D001; o ajuste do registro
-está na branch. Os outros nove são incorporações provisórias. A main ainda
-não recebeu este bloco; nenhuma versão foi aumentada e não houve push.
+está na branch. Os outros nove são incorporações provisórias. O professor autorizou expressamente o merge deste bloco na main, mesmo
+com a instalação pendente. Nenhuma versão foi aumentada e não houve push.
 
 | Código | Objeto definitivo | Dimensões | Bytes xz |
 |---|---|---|---:|
@@ -37,7 +37,8 @@ conferida com `tools::checkRdaFiles()` após cada preparo.
 - **Check repetido: 1 ERROR na instalação**, agora em `byte-compile and
   prepare package for lazy loading`: `lazy loading failed for package clara`.
   Nenhum erro específico de dados é exibido pelo instalador. O bloco ainda
-  não atende à meta de check e não foi levado à main.
+  não atende à meta de check. O merge foi autorizado pelo professor
+  apesar dessa pendência; a autorização não equivale a check aprovado.
 - Persistiu também a falha preexistente do processo R no encerramento,
   código -1073741819, depois de gravar os resultados de sucesso. Não
   equivale a aprovação da instalação ou do check.

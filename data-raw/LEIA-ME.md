@@ -36,7 +36,8 @@ Não marcar como concluído no balanço um conjunto com check pendente.
   antes do encerramento. A falha foi reproduzida sem ClaRa, carregando
   somente rlang ou dplyr. Cópias binárias novas nas mesmas versões, em
   biblioteca temporária, não resolveram. Nenhuma biblioteca global alterada.
-  Sem merge enquanto a instalação estiver pendente.
+  O professor autorizou expressamente o merge do bloco 1 com essa pendência.
+  A integração não equivale a aprovação da instalação ou do check.
 - D10 (`enobieta_baci`): 135 × 94, 6.936 bytes em xz; tabela principal de
   macroinvertebrados para planejamento BACI. Substrato integral preservado
   no XLSX-fonte, sem outro objeto. Uma intervenção e uma campanha por fase
