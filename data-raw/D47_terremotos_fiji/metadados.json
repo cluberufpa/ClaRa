@@ -1,0 +1,20 @@
+{
+  "codigo": "D47",
+  "registro": "D47_terremotos_fiji",
+  "nome": "terremotos_fiji",
+  "nome_eapadados": "",
+  "rotulo": "Terremotos: localização de eventos próximos de Fiji",
+  "titulo": "D47 - Terremotos: localização de eventos próximos de Fiji",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "datasets::quakes",
+  "unidade_amostral": "evento sísmico de uma subamostra de mil eventos",
+  "linhas": 1000,
+  "colunas": 5,
+  "analises": "Mapas de pontos; Bolhas proporcionais; Estatística descritiva",
+  "analise_principal": "Mapas de pontos",
+  "palavras_chave": "terremotos; fiji",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme datasets (R 4.6.1)",
+  "referencia": "Harvard PRIM-H, dados fornecidos por John Woodhouse, Department of Geophysics, Harvard; datasets::quakes",
+  "situacao": "provisório"
+}

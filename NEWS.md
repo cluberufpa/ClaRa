@@ -243,3 +243,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D45 `insetos_inseticidas`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D46 `carros_frenagem`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D47 `terremotos_fiji`, provisório, com fonte e decisões anteriores registradas.

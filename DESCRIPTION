@@ -92,4 +92,5 @@ Collate:
     'dados_plantas_absorcao_co2.R'
     'dados_insetos_inseticidas.R'
     'dados_carros_frenagem.R'
+    'dados_terremotos_fiji.R'
 Config/roxygen2/version: 8.1.0
