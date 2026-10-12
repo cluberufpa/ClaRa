@@ -90,4 +90,5 @@ Collate:
     'dados_plantas_crescimento.R'
     'dados_ervilhas_adubacao.R'
     'dados_plantas_absorcao_co2.R'
+    'dados_insetos_inseticidas.R'
 Config/roxygen2/version: 8.1.0

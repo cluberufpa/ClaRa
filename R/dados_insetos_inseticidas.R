@@ -1,0 +1,28 @@
+#' D45 - Insetos: contagens sob seis inseticidas
+#'
+#' Dados provisórios da passada 1. Unidade amostral: unidade experimental agrícola tratada com inseticida.
+#'
+#' @format Um `data.frame` com 72 linhas e 2 colunas:
+#' \describe{
+#'   \item{contagem_insetos}{Contagem de insetos na unidade experimental; zeros preservados.}
+#'   \item{inseticida}{Fator: inseticida_A a inseticida_F, sem composição presumida.}
+#' }
+#'
+#' @details
+#' Preservadas as 72 unidades, 12 por inseticida. A composição dos seis produtos e o protocolo detalhado não são informados na ajuda. Não inventar compostos ou tratar contagem como contínua sem avaliar o método. Dispersão e ajuste dos modelos devem ser avaliados na análise, sem reutilizar estimativas herdadas como garantia.
+#'
+#' @section Adaptações:
+#' count → contagem_insetos; spray → inseticida. Categorias de inseticida: A → inseticida_A, B → inseticida_B, C → inseticida_C, D → inseticida_D, E → inseticida_E, F → inseticida_F. Nenhuma linha excluída, reordenada ou simulada; zeros e ausências preservados. Sem conversão de unidades. Casca data.frame simples; estrutura de medidas repetidas explicada na ficha, sem atributos de groupedData que referenciem cabeçalhos antigos.
+#'
+#' @source
+#' Beall (1942), Biometrika 32:243–262, tabela 7, DOI 10.1093/biomet/32.3-4.243; McNeil (1977); datasets::InsectSprays.
+#' Licença: GPL-2 | GPL-3, conforme datasets (R 4.6.1).
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D45_insetos_inseticidas/.
+#'
+#' @examples
+#' summary(insetos_inseticidas)
+#'
+#' @docType data
+#' @keywords datasets
+"insetos_inseticidas"

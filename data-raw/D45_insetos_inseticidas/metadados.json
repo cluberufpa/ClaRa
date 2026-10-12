@@ -1,0 +1,20 @@
+{
+  "codigo": "D45",
+  "registro": "D45_insetos_inseticidas",
+  "nome": "insetos_inseticidas",
+  "nome_eapadados": "",
+  "rotulo": "Insetos: contagens sob seis inseticidas",
+  "titulo": "D45 - Insetos: contagens sob seis inseticidas",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "datasets::InsectSprays",
+  "unidade_amostral": "unidade experimental agrícola tratada com inseticida",
+  "linhas": 72,
+  "colunas": 2,
+  "analises": "Modelos de contagem; Poisson; Binomial negativa; Kruskal-Wallis",
+  "analise_principal": "Modelos de contagem",
+  "palavras_chave": "insetos; inseticidas",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme datasets (R 4.6.1)",
+  "referencia": "Beall (1942), Biometrika 32:243–262, tabela 7, DOI 10.1093/biomet/32.3-4.243; McNeil (1977); datasets::InsectSprays",
+  "situacao": "provisório"
+}
