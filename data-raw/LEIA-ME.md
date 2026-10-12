@@ -1,5 +1,21 @@
 # Dados da ClaRa — acompanhamento da migração
 
+## Situação técnica atual — após o bloco 6 (11/10/2026)
+
+Os 60 conjuntos estão incorporados. **Build e check completo aprovados:
+0 erros, 0 notas e somente o aviso conhecido de acentos no código.**
+Os 668 testes e os exemplos do pacote instalado passaram. A falha anterior
+de instalação foi isolada no ambiente de execução: faltava a variável
+Windows PROCESSOR_ARCHITECTURE, consultada no encerramento do cli.
+Ao repor o valor nativo AMD64 nesta máquina X64, instalação e lazy loading
+passaram sem modificar dados, funções, versão, dependências ou o R instalado.
+Detalhes em `docs/DIAGNOSTICO_CHECK_WINDOWS_20261011.md` e `CLAUDE.md`.
+
+Os registros de check pendente nos relatórios abaixo são históricos;
+este resultado os atualiza. Curadoria e autorizações continuam pendentes
+conforme cada ficha. Aprovação técnica não muda um conjunto provisório
+para revisado nem o marca como concluído na planilha.
+
 ## Mudança de plano — passada 1 (11/10/2026)
 
 Esta seção vence as descrições históricas abaixo. O professor autorizou a

@@ -98,8 +98,21 @@ faça o mesmo: reescreva o roteiro em `exemplos/`, marque como "Ainda sem
 ClaRa" o que faltar e crie as funções até não sobrar nenhum bloco marcado.
 
 O R desta máquina está em `C:\R\R-4.6.1` (`C:/R/R-4.6.1/bin/Rscript.exe`).
-No Git Bash, um `-e` com várias linhas derruba o Rscript: grave o teste num
-arquivo `.R` e rode o arquivo.
+Grave testes com várias linhas em um arquivo `.R` e rode esse arquivo, para
+evitar problemas de aspas entre shells.
+
+**Ambiente de execução no Windows (diagnóstico de 11/10/2026):** antes de
+rodar R por ferramentas que filtram variáveis de ambiente, confira
+`PROCESSOR_ARCHITECTURE`. O `cli` 3.6.6 consulta essa variável ao encerrar;
+se ela estiver ausente, o processo sofre uma violação de memória
+(`0xc0000005`), inclusive durante a instalação de pacotes. Nesta máquina,
+a arquitetura nativa foi conferida como X64; no PowerShell, prepare o
+processo com `$env:PROCESSOR_ARCHITECTURE = 'AMD64'`. Preserve a variável
+quando ela já existir; em outra máquina, confira a arquitetura nativa antes
+de preencher. Configure também uma localidade válida, por exemplo
+`$env:LC_ALL = 'English_United States.utf8'`. Essas configurações valem para
+o processo e seus filhos; não exigem alteração global do Windows ou do R.
+Detalhes e resultados em `docs/DIAGNOSTICO_CHECK_WINDOWS_20261011.md`.
 
 Os roteiros de `exemplos/` rodam sempre a partir da raiz: carregam a ClaRa
 com `library(clara)` e gravam suas figuras em `exemplos/figuras/`
