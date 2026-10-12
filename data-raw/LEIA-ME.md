@@ -34,6 +34,13 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- Bloco 6 (D52–D60): **60 conjuntos incorporados; nenhum restante**
+  do Núcleo. 232.684 bytes em data/. 668 expectativas e nove exemplos
+  passaram; build aprovado. Check mantém 1 ERROR na instalação.
+  A incorporação da passada 1 terminou; curadoria e validação final ainda
+  pendentes. Apenas D36/D37 são sintéticos. Detalhes em
+  RELATORIO_BLOCO_06.md; prioridades de busca em CANDIDATOS_SUBSTITUICAO.md.
+
 - Bloco 5 (D42–D51): 51 conjuntos no catálogo; 217.680 bytes em
   data/. 602 expectativas e dez exemplos passaram. Build aprovado;
   check mantém 1 ERROR na instalação. Fonte de CO2 corrigida para o
