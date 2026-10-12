@@ -5,7 +5,7 @@
 - Natureza: real; origem: Dryad::whitefish_salinidade.
 - Referência: Yeung e colaboradores (2026), Stress, growth, and osmoregulatory data for the Atlantic Whitefish at different salinities, Dryad v3, DOI 10.5061/dryad.bg79cnpph, File_A.csv.
 - Licença: CC0-1.0. A licença MIT do código não altera a da fonte.
-- Situação: provisório.
+- Situação: provisório; subamostras por tanque, sem pareamento individual.
 
 ## Linhas e de-para
 

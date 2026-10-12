@@ -26,6 +26,13 @@ Não marcar como concluído no balanço um conjunto com check pendente.
 
 ### Pendências para a curadoria e a integração
 
+- Bloco 4 (D31–D38, D40/D41): 41 conjuntos no catálogo; 204.592 bytes
+  em data/. 522 expectativas e dez exemplos passaram. Build aprovado;
+  check mantém 1 ERROR na instalação. Recifes conferidos no CSV primário,
+  referência corrigida. Whitefish e mesocosmos têm uma tabela principal
+  cada e todas as fontes preservadas. Pendências em RELATORIO_BLOCO_04.md.
+  Restam 19 conjuntos do Núcleo 60.
+
 - Bloco 3 (D21–D30): 31 conjuntos no catálogo, incluindo D39 antecipado;
   163.416 bytes em data/. 439 expectativas e dez exemplos passaram. Build
   aprovado; check mantém 1 ERROR na instalação. Pendências de fonte,

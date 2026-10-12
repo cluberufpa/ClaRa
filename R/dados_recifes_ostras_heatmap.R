@@ -33,13 +33,13 @@
 #' }
 #'
 #' @details
-#' Conferir correspondência bibliográfica: o DOI indicado na documentação herdada é de Pine e colaboradores (2026), não Bennett et al. (2025). A comparação nesta passada é com o CSV curado que originou o EAPADados; a reextração primária fica pendente. Unidades de áreas, perímetro e distâncias a confirmar. Medidas de habitat repetidas por recife geram pseudorrepetição. Proposta de retirar avaliador e traduzir categorias ainda não aprovada.
+#' Referência herdada Bennett et al. (2025) corrigida pelos metadados do depósito. Os 301 registros conferem diretamente com o CSV primário sem espécies hiperabundantes; a abundância total difere da versão com elas. Esta seleção é da fonte, não novo filtro da migração. Confirmar quais espécies foram excluídas e justificar o recorte didático na passada 2. Unidades de áreas, perímetro e distâncias a confirmar. Medidas de habitat repetidas por recife geram pseudorrepetição. Propostas de retirar avaliador e traduzir categorias ainda não aprovadas.
 #'
 #' @section Adaptações:
 #' Cabeçalhos, categorias, valores e ordem herdados preservados; nenhuma exclusão nova.
 #'
 #' @source
-#' Pine, Erickson, Bugnot, Gribben e Figueira (2026), Patch design principles for oyster reef restoration: Lessons from fish habitat use in natural remnant systems, Zenodo v2, DOI 10.5281/zenodo.19993470; crédito herdado Bennett et al. (2025) não corresponde ao depósito indicado.
+#' Pine, Erickson, Bugnot, Gribben e Figueira (2026), Patch design principles for oyster reef restoration: Lessons from fish habitat use in natural remnant systems, Zenodo v2, DOI 10.5281/zenodo.19993470, MeanCount.NO.hyperabundants.dat.csv.
 #' Licença: CC BY 4.0, registro Zenodo 19993470.
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D33_ostras_recifes/.

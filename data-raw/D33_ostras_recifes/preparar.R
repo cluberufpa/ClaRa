@@ -19,6 +19,11 @@ s <- read.csv(file.path(fonte,"recifes_ostras_heatmap.csv"),check.names=FALSE,na
 s$id_recife <- as.character(s$id_recife)
 s$id_levantamento <- as.character(s$id_levantamento)
 stopifnot(identical(names(brutos),names(s)),isTRUE(all.equal(normalizar(brutos),normalizar(s),check.attributes=FALSE,tolerance=1e-12)))
+# Conferência independente com o CSV primário; remover apenas o índice de exportação.
+s_primaria <- read.csv(file.path(fonte,"MeanCount.NO.hyperabundants.dat.csv"),check.names=FALSE,row.names=1)
+stopifnot(identical(names(s_primaria),c("ReefID","SurveyID","Site","ReefNo","ReefZone","Season","Year","TapeReader","VideoLength","AvgVis","Pseagrass","Species_Richness_Zone","ShannonsH","TotalAbundance","TwoDArea","shape","iso.index","circle","frac","para","perimeter","perimeterarea.ratio","avg_dist.to.all.nearest.reefs","nearest.neighbour","Rugosity","ThreeDArea")))
+names(s_primaria) <- names(brutos)
+stopifnot(isTRUE(all.equal(normalizar(brutos),normalizar(s_primaria),check.attributes=FALSE,tolerance=1e-12)))
 x <- brutos
 
 # Como no D01, acentos em Latin-1 quando representáveis. Outros caracteres

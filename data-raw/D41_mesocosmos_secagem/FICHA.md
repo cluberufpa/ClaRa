@@ -5,7 +5,7 @@
 - Natureza: real; origem: Dryad::mesocosmos_secagem.
 - Referência: Ward (2023), An analysis of the effects of prior drying and vertebrate colonization on ecological functioning and vertebrate fitness, Dryad v3, DOI 10.5061/dryad.hx3ffbgkn, Fish_Data_Dryad.xlsx.
 - Licença: CC0-1.0. A licença MIT do código não altera a da fonte.
-- Situação: provisório.
+- Situação: provisório; biomassa estimada e duração variável.
 
 ## Linhas e de-para
 
