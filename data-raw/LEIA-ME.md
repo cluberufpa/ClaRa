@@ -14,6 +14,14 @@ para D01. A artêmia fictícia não entra; `artemia_fitoesterois` é um conjunto
 próprio. As cópias da proposta anterior foram preservadas em
 `propostas_nao_integradas/artemia/`, fora da fila de registros incorporados.
 
+Decisão do professor: manter **somente dois conjuntos sintéticos** no
+catálogo da migração: `treino_coletas` (D36) e `treino_desembarque` (D37).
+Sua finalidade é preparar dados e testar as funcionalidades do menu
+Preparar Dados, preservando colunas compostas e o formato largo dos
+exercícios. Ambos ficam identificados como sintéticos de treino. Esta
+autorização não se estende a outros conjuntos sintéticos; se outro for
+identificado, interromper sua incorporação e apresentar a questão ao professor.
+
 Bloco 1: bagre, barbo, CPUE de tubarão, Doubs, abalone, salvelino, camarão,
 pinguins, tilápia sensorial e Enobieta. Os demais seguem a ordem do Núcleo 60.
 Um commit por conjunto; merge local por bloco após conferir a main parada
