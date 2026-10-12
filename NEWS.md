@@ -7,13 +7,25 @@
   e à comparação de peso. Limites na ficha e na ajuda: peixes agrupados em sítios, 113 NA no peso, 3 peixes com
   presença 1 e contagem 0, conferência com o CSV original do Dryad pendente. Catálogo mantém 53 conjuntos.
 
+- D17: `solha_baltico_2008_t4` (Dryad, CC0 1.0, DOI 10.5061/dryad.kb2f352), 179 arrastos ou estações de
+  solha-europeia no quarto trimestre de 2008, substitui o provisório `camarao_ecogreen` por decisão do professor
+  (12/10/2026). A regressão de `log_cpue_g` pelos seis preditores ambientais e espaciais tem R² = 0,646 e VIF máximo
+  4,21; CPUE tem 37 zeros, preservados por `log1p()`. O recorte é didático, não uma base para inferir todo o Báltico.
+  Catálogo mantém 53 conjuntos.
+
+- D04: `lago_vitoria` (Okechi et al. 2025, Dryad, CC0), 217 leituras de água em 25 colunas em português,
+  substitui `doubs_ambiente` (ade4, GPL), por decisão do professor (12/10/2026). Gaiolas de tilápia e controle em
+  quatro locais do Lago Vitória, 2023 e 2024. Todas as linhas, os 81 NA de `profundidade_local_m` e os valores
+  estranhos (24 turbidezes negativas) preservados; limites de dependência entre profundidades e unidades a
+  conferir documentados na ficha e na ajuda. Catálogo mantém 53 conjuntos.
+
 - Retirados do pacote por decisão do professor (12/10/2026): D42
   `plantas_crescimento`, D45 `insetos_inseticidas`, D51 `seguros_sinistros`,
   D53 `navios_incidentes` e D59 `peixes_recrutamento`. D51 e D53 têm
   `larvas_peixes_captura` (D62) como substituto; D59 tem
   `anchova_norte_california` (D61); D42 e D45 saem sem substituto. Fontes e
   receitas em `data-raw/retirados/`. Catálogo com 53 conjuntos (44 internos,
-  oito do FSAdata e um do MASS). Resta sem substituto o D04 `doubs_ambiente`.
+  oito do FSAdata e um do MASS). Resta sem substituto o D04 `doubs_ambiente` (resolvido abaixo).
 
 - Retirados do pacote, sem substituto, por decisão do professor
   (12/10/2026): D11 `puromicina_reacao`, D43 `ervilhas_adubacao`, D46

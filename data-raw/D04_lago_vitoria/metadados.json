@@ -1,0 +1,21 @@
+{
+  "codigo": "D04",
+  "registro": "D04_lago_vitoria",
+  "nome": "lago_vitoria",
+  "nome_eapadados": "",
+  "rotulo": "Lago Vitória: água sob gaiolas de tilápia",
+  "titulo": "D04 - Lago Vitória: água sob gaiolas de tilápia",
+  "natureza": "real",
+  "origem": "Dryad; Okechi et al. (2025), DOI 10.5061/dryad.qfttdz0t5; artigo DOI 10.1016/j.jglr.2025.102576",
+  "unidade_amostral": "leitura em uma profundidade de um perfil de água, em estação de gaiolas ou de controle",
+  "linhas": 217,
+  "colunas": 25,
+  "analises": "PCA; Agrupamento hierárquico; Comparação entre gaiolas e controle",
+  "analise_principal": "PCA",
+  "palavras_chave": "Lago Vitória; tilápia; gaiolas; qualidade da água; PCA; gradiente ambiental",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0; declarada no Dryad",
+  "referencia": "Okechi, J.; Peoples, N.; Nyamweya, C.; Orina, P.; Cooperman, M.; Kaufman, L. (2025). Dryad, DOI 10.5061/dryad.qfttdz0t5; artigo DOI 10.1016/j.jglr.2025.102576",
+  "situacao": "Pronto para exploração; leituras de um mesmo perfil não são independentes; unidades dos nutrientes e da clorofila a conferir no artigo",
+  "fonte_dados": "clara"
+}

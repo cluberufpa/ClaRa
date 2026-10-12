@@ -1,0 +1,21 @@
+{
+  "codigo": "D17",
+  "registro": "D17_solha_baltico_2008_t4",
+  "nome": "solha_baltico_2008_t4",
+  "nome_eapadados": "",
+  "rotulo": "Solha-europeia: CPUE e ambiente no Báltico (2008, 4º trimestre)",
+  "titulo": "D17 - Solha-europeia: CPUE e ambiente no Báltico (2008, 4º trimestre)",
+  "natureza": "real",
+  "origem": "Dryad; Data cod flounder, DOI 10.5061/dryad.kb2f352",
+  "unidade_amostral": "arrasto ou estação de amostragem de solha-europeia; a fonte não fornece identificador único do arrasto",
+  "linhas": 179,
+  "colunas": 9,
+  "analises": "Regressão linear múltipla; Correlação; Colinearidade; Diagnóstico de resíduos",
+  "analise_principal": "Regressão linear múltipla",
+  "palavras_chave": "solha-europeia; Platichthys flesus; Mar Báltico; CPUE; ambiente; regressão múltipla; colinearidade",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0; Dryad",
+  "referencia": "Data cod flounder. Dryad Digital Repository, DOI 10.5061/dryad.kb2f352. Artigo associado: DOI 10.1111/jbi.13510.",
+  "situacao": "Pronto para exploração didática: recorte explícito de 2008, 4º trimestre, com 179 linhas. A resposta usa log1p(CPUE); não usar o recorte para inferência sobre todo o Báltico.",
+  "fonte_dados": "clara"
+}

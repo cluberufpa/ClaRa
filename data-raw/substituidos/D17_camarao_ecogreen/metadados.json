@@ -1,0 +1,21 @@
+{
+  "codigo": "D17",
+  "registro": "D17_camarao_ecogreen",
+  "nome": "camarao_ecogreen",
+  "nome_eapadados": "",
+  "rotulo": "Camarão-branco: crescimento e qualidade da água (eco-green)",
+  "titulo": "D17 - Camarão-branco: crescimento e qualidade da água (eco-green)",
+  "natureza": "real",
+  "origem": "Figshare; Lusiana (2025), DOI 10.6084/m9.figshare.28785923.v1",
+  "unidade_amostral": "registro de crescimento médio com a qualidade média da água do período, em sistema eco-green; unidade exata não informada pela fonte",
+  "linhas": 70,
+  "colunas": 13,
+  "analises": "Correlação; Regressão linear múltipla; Colinearidade",
+  "analise_principal": "Regressão linear múltipla",
+  "palavras_chave": "camarão-branco; Litopenaeus vannamei; eco-green; qualidade da água; crescimento; colinearidade",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0; declarada no Figshare",
+  "referencia": "Lusiana, E. D. (2025). Average shrimp growth and water quality parameters in eco-green aquaculture. Figshare, DOI 10.6084/m9.figshare.28785923.v1",
+  "situacao": "Pronto para exploração com limites: valores médios, só 7 combinações distintas de água, relações fracas; unidades do ganho diário e do Vibrio a conferir",
+  "fonte_dados": "clara"
+}

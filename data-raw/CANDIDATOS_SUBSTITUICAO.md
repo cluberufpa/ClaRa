@@ -124,4 +124,4 @@ branch `codex/substitutos-literatura-20261012`; D44 (`percas_hipoxia`) e D48
 As variantes da outra branch estão em `data-raw/alternativas_codex/`, fora do
 pacote. D51 (`seguros_sinistros`) e D53 (`navios_incidentes`) seguem no
 catálogo mesmo com `larvas_peixes_captura` (D62) já incluído; a retirada deles
-depende de decisão do professor. Restam sem substituto: D04 (doubs), D42 e D45.
+depende de decisão do professor. D04 (doubs) foi substituído em 12/10/2026 por `lago_vitoria` (Okechi et al. 2025, Dryad, CC0). Restam sem substituto: D42 e D45 (já retirados).
