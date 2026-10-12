@@ -27,7 +27,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo tem 61 conjuntos após a inclusão do D61.
+com substituições aprovadas registradas abaixo. O catálogo tem 62 conjuntos (53 internos, oito do FSAdata e um do MASS), após a inclusão do D61 e do D62.
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -44,8 +44,8 @@ As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Avaliar conforme o alcance de bioecologia geral
 
-D11 (reação enzimática), D42 (crescimento de plantas), D44 (absorção de CO2),
-D45 (insetos) e D48 (laranjeiras) têm fenômenos biológicos reais. Não foram
+D11 (reação enzimática), D42 (crescimento de plantas),
+e D45 (insetos) têm fenômenos biológicos reais. Não foram
 classificados automaticamente como fora do domínio amplo indicado.
 D43 (ervilhas), D49 (aveia) e D60 (trigo) são exemplos de planejamento em
 agricultura; fontes aquáticas seriam mais próximas do curso, preservando,
@@ -70,18 +70,18 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 | Código | Objeto | Origem |
 |---|---|---|
 | D11 | puromicina_reacao | datasets::Puromycin |
-| D12 | bacterias_tratamento | MASS::bacteria, cópia preservada no levantamento |
+| D12 (histórico) | bacterias_tratamento, substituído por bufalos_estrongilos | MASS::bacteria, fonte antiga em data-raw/substituidos |
 | D42 | plantas_crescimento | datasets::PlantGrowth |
 | D43 | ervilhas_adubacao | datasets::npk |
-| D44 | plantas_absorcao_co2 | datasets::CO2 |
+| D44 (histórico) | plantas_absorcao_co2, substituído por percas_hipoxia | datasets::CO2, fonte antiga em data-raw/substituidos |
 | D45 | insetos_inseticidas | datasets::InsectSprays |
 | D46 | carros_frenagem | datasets::cars |
 | D47 (histórico) | terremotos_fiji, substituído por pollock_alasca | datasets::quakes, fonte antiga arquivada |
-| D48 | laranjeiras_crescimento | datasets::Orange |
+| D48 (histórico) | laranjeiras_crescimento, substituído por molinesias_crescimento | datasets::Orange, fonte antiga em data-raw/substituidos |
 | D49 | aveia_parcelas | MASS::oats |
 
 | D51 | seguros_sinistros | MASS::Insurance |
-| D52 | paciente_peso | MASS::wtloss |
+| D52 (histórico) | paciente_peso, substituído por secagem_beterraba_gengibre | MASS::wtloss, fonte antiga em data-raw/substituidos |
 | D53 | navios_incidentes | MASS::ships |
 | D54 | haemulon_crescimento | FSAdata::WhiteGrunt2 |
 | D55 | cabezon_maturidade | FSAdata::Cabezon |
@@ -115,3 +115,13 @@ nem afirma que novas fontes já foram encontradas ou validadas.
 ## Substituição aprovada em 11/10/2026
 
 D50 agora é `molinesias_parasitos`, registro `D50_molinesias_parasitos`, fonte Dryad CC0. Substitui `MASS::quine` com autorização do professor. D45/InsectSprays permanece à espera de uma fonte experimental adequada. Parecer em `docs/AVALIACAO_MOLINESIAS_20261011.md`.
+
+## Substituições de 12/10/2026 (fusão das branches)
+
+D12 (`bufalos_estrongilos`) e D52 (`secagem_beterraba_gengibre`) vieram da
+branch `codex/substitutos-literatura-20261012`; D44 (`percas_hipoxia`) e D48
+(`molinesias_crescimento`, 1.178 medições) ficaram com os objetos da `dados`.
+As variantes da outra branch estão em `data-raw/alternativas_codex/`, fora do
+pacote. D51 (`seguros_sinistros`) e D53 (`navios_incidentes`) seguem no
+catálogo mesmo com `larvas_peixes_captura` (D62) já incluído; a retirada deles
+depende de decisão do professor. Restam sem substituto: D04 (doubs), D42 e D45.
