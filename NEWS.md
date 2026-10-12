@@ -1,5 +1,21 @@
 # clara (em desenvolvimento)
 
+- Dados: D12 `bufalos_estrongilos` (418 observações de 216 búfalos, CC0)
+  substitui `bacterias_tratamento` (`MASS::bacteria`) e preserva as linhas sem
+  par para o preparo antes do McNemar.
+
+- Dados: D44 `percas_respirometria` (449 medições de 40 percas, CC0) substitui
+  `plantas_absorcao_co2` (`datasets::CO2`), preservando os três grupos, a ordem
+  de hipóxia e as 23 respostas ausentes.
+
+- Dados: D48 `molinesias_crescimento` (340 medições equilibradas de 34 peixes,
+  CC BY 4.0) substitui `laranjeiras_crescimento` (`datasets::Orange`); mantém
+  D48 e usa as dez idades completas do arquivo-fonte congelado.
+
+- Dados: D52 `secagem_beterraba_gengibre` (594 observações, CC BY 4.0) substitui
+  `paciente_peso` (`MASS::wtloss`), sem atribuir significado aos códigos B/G e
+  C/E nem unidade ao tempo ainda pendente.
+
 - Dados: D50 `molinesias_parasitos` (128 peixes, oito colunas, CC0) substitui `escolares_ausencias` (MASS::quine), mantendo o código D50 por decisão do professor. Objeto antigo retirado do pacote; fontes preservadas no histórico.
 
 - D39: `cowichan_amostragem`, fonte CC0, substitui `walleye_erie` por decisão do professor; 246 peixes e oito colunas. Comprimento do registro 234 a conferir.
