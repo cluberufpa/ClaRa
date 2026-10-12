@@ -233,3 +233,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D40 `whitefish_salinidade`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D41 `mesocosmos_secagem`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D42 `plantas_crescimento`, provisório, com fonte e decisões anteriores registradas.

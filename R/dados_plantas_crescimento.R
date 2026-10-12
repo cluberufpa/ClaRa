@@ -1,0 +1,28 @@
+#' D42 - Plantas: massa seca sob três tratamentos
+#'
+#' Dados provisórios da passada 1. Unidade amostral: unidade do experimento de crescimento de plantas; protocolo detalhado pendente.
+#'
+#' @format Um `data.frame` com 30 linhas e 2 colunas:
+#' \describe{
+#'   \item{massa_seca}{Massa seca medida; unidade não informada na ajuda do pacote.}
+#'   \item{tratamento}{Condição: controle, tratamento_1 ou tratamento_2, sem composição presumida.}
+#' }
+#'
+#' @details
+#' A ajuda não informa espécie, unidade da massa seca nem protocolo completo de randomização. Não inventar gramas, espécie ou composição dos tratamentos. Trinta observações, dez por condição. Confirmar o delineamento na fonte histórica; natureza experimental declarada pelo pacote.
+#'
+#' @section Adaptações:
+#' weight → massa_seca; group → tratamento. Categorias de tratamento: ctrl → controle, trt1 → tratamento_1, trt2 → tratamento_2. Nenhuma linha excluída, reordenada ou simulada; zeros e ausências preservados. Sem conversão de unidades. Casca data.frame simples; estrutura de medidas repetidas explicada na ficha, sem atributos de groupedData que referenciem cabeçalhos antigos.
+#'
+#' @source
+#' Dobson (1983), An Introduction to Statistical Modelling, exemplo da tabela 7.4; datasets::PlantGrowth.
+#' Licença: GPL-2 | GPL-3, conforme datasets (R 4.6.1).
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D42_plantas_crescimento/.
+#'
+#' @examples
+#' summary(plantas_crescimento)
+#'
+#' @docType data
+#' @keywords datasets
+"plantas_crescimento"

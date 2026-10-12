@@ -1,0 +1,35 @@
+_R_e_s_u_l_t_s _f_r_o_m _a_n _E_x_p_e_r_i_m_e_n_t _o_n _P_l_a_n_t _G_r_o_w_t_h
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Results from an experiment to compare yields (as measured by dried
+     weight of plants) obtained under a control and two different
+     treatment conditions.
+
+_U_s_a_g_e:
+
+     PlantGrowth
+     
+_F_o_r_m_a_t:
+
+     A data frame of 30 cases on 2 variables.
+
+       [, 1]  'weight'  numeric 
+       [, 2]  'group'   factor  
+      
+     The levels of 'group' are 'ctrl', 'trt1', and 'trt2'.
+
+_S_o_u_r_c_e:
+
+     Dobson AJ (1983). _An Introduction to Statistical Modelling_.
+     Springer, New York, NY. ISBN 978-0412248603.
+
+_E_x_a_m_p_l_e_s:
+
+     ## One factor ANOVA example from Dobson's book, cf. Table 7.4:
+     require(stats); require(graphics)
+     boxplot(weight ~ group, data = PlantGrowth, main = "PlantGrowth data",
+             ylab = "Dried weight of plants", col = "lightgray",
+             notch = TRUE, varwidth = TRUE)
+     anova(lm(weight ~ group, data = PlantGrowth))
+     

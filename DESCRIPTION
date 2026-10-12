@@ -87,4 +87,5 @@ Collate:
     'dados_truta_riacho_crescimento.R'
     'dados_whitefish_salinidade.R'
     'dados_mesocosmos_secagem.R'
+    'dados_plantas_crescimento.R'
 Config/roxygen2/version: 8.1.0

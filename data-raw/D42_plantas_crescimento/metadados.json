@@ -1,0 +1,20 @@
+{
+  "codigo": "D42",
+  "registro": "D42_plantas_crescimento",
+  "nome": "plantas_crescimento",
+  "nome_eapadados": "",
+  "rotulo": "Plantas: massa seca sob três tratamentos",
+  "titulo": "D42 - Plantas: massa seca sob três tratamentos",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "datasets::PlantGrowth",
+  "unidade_amostral": "unidade do experimento de crescimento de plantas; protocolo detalhado pendente",
+  "linhas": 30,
+  "colunas": 2,
+  "analises": "DIC; ANOVA de um fator",
+  "analise_principal": "DIC",
+  "palavras_chave": "plantas; crescimento",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme datasets (R 4.6.1)",
+  "referencia": "Dobson (1983), An Introduction to Statistical Modelling, exemplo da tabela 7.4; datasets::PlantGrowth",
+  "situacao": "provisório"
+}
