@@ -1,0 +1,20 @@
+{
+  "codigo": "D33",
+  "registro": "D33_ostras_recifes",
+  "nome": "recifes_ostras_heatmap",
+  "nome_eapadados": "recifes_ostras_heatmap",
+  "rotulo": "Recifes de ostras e assembleias de peixes",
+  "titulo": "D33 - Recifes de ostras e assembleias de peixes",
+  "natureza": "real",
+  "origem": "EAPADados::recifes_ostras_heatmap",
+  "unidade_amostral": "levantamento de zona de recife; medidas repetidas por recife",
+  "linhas": 301,
+  "colunas": 26,
+  "analises": "Correlação; Heatmap; PCA; Contagens",
+  "analise_principal": "Correlação",
+  "palavras_chave": "recifes; ostras; heatmap",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0, registro Zenodo 19993470",
+  "referencia": "Pine, Erickson, Bugnot, Gribben e Figueira (2026), Patch design principles for oyster reef restoration: Lessons from fish habitat use in natural remnant systems, Zenodo v2, DOI 10.5281/zenodo.19993470, MeanCount.NO.hyperabundants.dat.csv",
+  "situacao": "provisório; abundância da versão sem espécies hiperabundantes"
+}

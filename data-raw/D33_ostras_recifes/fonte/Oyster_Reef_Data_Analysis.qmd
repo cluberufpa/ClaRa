@@ -1,0 +1,4150 @@
+---
+title: "Oyster_Reef_Data_Analysis"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+#Loading in Packages
+
+```{r}
+library(tidyverse)
+library(glmmTMB)
+library(car)
+library(emmeans)
+library(readxl)
+library(DHARMa)
+library(corrplot)
+library(sjPlot)
+library(marginaleffects)
+library(ggeffects)
+library(viridis)
+library(patchwork)
+```
+
+##Loading in Abundance Data
+
+```{r}
+abund.dat <- read.csv("MeanCount.NO.hyperabundants.dat.csv")
+```
+
+###Mean-Centre Scaling the Varaibles Columns 16 - 27 are the variables that we will be scaling.
+
+```{r}
+abund.dat$ReefZone <- as.factor(abund.dat$ReefZone)
+abund.dat$Season <- as.factor(abund.dat$Season)
+abund.dat$SeasonReefZone <- paste(abund.dat$Season, abund.dat$ReefZone, sep = " ")
+abund.dat$SeasonReefZone <- as.factor(abund.dat$SeasonReefZone)
+```
+
+```{r}
+abund.dat$log.iso.index <- log(abund.dat$iso.index)
+abund.dat[,16:27] <- scale(abund.dat[,16:27])
+```
+
+##Abundance Analysis Per Estuary
+
+###Port Hacking Filtering the dataset to just Port Hacking
+
+```{r}
+PH.abund.dat <- abund.dat %>% 
+  filter(Site == "SY-PH")
+```
+
+Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(PH.abund.dat[,16:27], method = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "lower")
+```
+
+Our cutoff for the correlation matrix is 0.85. We will remove any variables that are correlated above this value.
+
+Fitting the model
+
+```{r}
+PH.abund.model <- glmmTMB(TotalAbundance ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=PH.abund.dat)
+```
+
+Above model doesnt converge, removing tape reader to reduce model complexity
+
+```{r}
+PH.abund.model <- glmmTMB(TotalAbundance ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=PH.abund.dat)
+```
+
+Above model doesnt converge, removing Avg vis
+
+```{r}
+PH.abund.model <- glmmTMB(TotalAbundance ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    (1|Year)+
+                    (1|ReefID)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=PH.abund.dat)
+```
+
+Above model doesnt converge, removing Year
+
+```{r}
+PH.abund.model <- glmmTMB(TotalAbundance ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    (1|ReefID)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=PH.abund.dat)
+
+```
+
+Above model doesnt converge, removiung reef id
+
+```{r}
+PH.abund.model <- glmmTMB(TotalAbundance ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                           # shape*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=PH.abund.dat)
+```
+
+AIC Stepwise Selection
+
+```{r}
+step(PH.abund.model, direction = "both")
+```
+
+Final AIC Model
+
+```{r}
+PH.abund.model.1 <- glmmTMB(TotalAbundance ~ Season + ReefZone + TwoDArea + circle + frac +      perimeterarea.ratio + iso.index + nearest.neighbour + Rugosity +  
+    Season:ReefZone + Season:TwoDArea + ReefZone:TwoDArea + Season:circle +      ReefZone:circle + Season:frac + ReefZone:frac + ReefZone:perimeterarea.ratio +  
+    Season:iso.index + ReefZone:iso.index + Season:nearest.neighbour +      ReefZone:Rugosity + Season:ReefZone:TwoDArea + Season:ReefZone:circle +      Season:ReefZone:frac + offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=PH.abund.dat)
+```
+
+
+Checking model fit
+
+```{r}
+plot(simulateResiduals(PH.abund.model.1))
+
+simulationOutput <- simulateResiduals(PH.abund.model.1)
+plotResiduals(simulationOutput, PH.abund.dat$TwoDArea)
+plotResiduals(simulationOutput, PH.abund.dat$circle)
+plotResiduals(simulationOutput, PH.abund.dat$frac)
+plotResiduals(simulationOutput, PH.abund.dat$Rugosity)
+plotResiduals(simulationOutput, PH.abund.dat$iso.index)
+plotResiduals(simulationOutput, PH.abund.dat$perimeterarea.ratio)
+plotResiduals(simulationOutput, PH.abund.dat$nearest.neighbour)
+
+```
+
+Residual plots seem to be fine
+
+```{r}
+Anova(PH.abund.model.1)
+summary(PH.abund.model.1)
+```
+
+Post Hoc Tests
+
+Season \* ReefZOne \* Frac
+
+```{r}
+emtrends(PH.abund.model.1, eff ~ Season*ReefZone*frac, var = "frac")
+```
+
+Season \* ReefZOne \* circle
+
+```{r}
+emtrends(PH.abund.model.1, eff ~ Season*ReefZone*circle, var = "circle", adjust="none")
+```
+
+Season \* ReefZOne \* TwoDArea
+
+```{r}
+emtrends(PH.abund.model.1, eff ~ Season*ReefZone*TwoDArea, var = "TwoDArea")
+```
+
+ReefZOne \* iso.index
+
+```{r}
+emtrends(PH.abund.model.1, eff ~ ReefZone*iso.index, var = "iso.index")
+```
+
+ReefZOne \* perimeterarea.ratio
+
+```{r}
+emtrends(PH.abund.model.1, eff ~ReefZone*perimeterarea.ratio, var = "perimeterarea.ratio")
+```
+
+Rugosity
+
+```{r}
+emtrends(PH.abund.model.1, eff ~ Rugosity, var = "Rugosity", adjust="none")
+```
+
+frac
+
+```{r}
+emtrends(PH.abund.model.1, eff ~ frac, var = "frac", adjust="none")
+```
+
+Season \* ReefZone emmeans
+
+```{r}
+PH.abund.emmean <- emmeans(PH.abund.model.1,pairwise ~Season*ReefZone)
+PH.abund.emmean
+```
+
+###Towra Point Abundance
+```{r}
+abund.dat <- read.csv("MeanCount.NO.hyperabundants.dat.csv")
+```
+
+```{r}
+abund.dat$ReefZone <- as.factor(abund.dat$ReefZone)
+abund.dat$Season <- as.factor(abund.dat$Season)
+abund.dat$SeasonReefZone <- paste(abund.dat$Season, abund.dat$ReefZone, sep = " ")
+abund.dat$SeasonReefZone <- as.factor(abund.dat$SeasonReefZone)
+abund.dat$log.iso.index <- log(abund.dat$iso.index)
+abund.dat[,16:27] <- scale(abund.dat[,16:27])
+```
+
+```{r}
+TP.abund.dat <- abund.dat %>% 
+  filter(Site == "SY-TP")
+```
+
+Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(TP.abund.dat[,16:27], metho = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "lower")
+
+```
+
+
+Modelling
+
+```{r}
+TP.abund.model.1 <- glmmTMB(TotalAbundance ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=TP.abund.dat)
+AIC(TP.abund.model.1)
+```
+
+AIC Model
+```{r}
+TP.abund.model <- glmmTMB(TotalAbundance ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                  offset(log(VideoLength)),
+                  family=nbinom2,
+                  data=TP.abund.dat)
+AIC(TP.abund.model)
+```
+
+AIC stepwise selection
+```{r}
+step(TP.abund.model, direction = "both")
+```
+
+AIC Model
+
+```{r}
+TP.abund.model.1 <- glmmTMB(TotalAbundance ~ Season + ReefZone + TwoDArea + shape + iso.index +  
+    circle + frac + nearest.neighbour + Season:ReefZone + Season:TwoDArea +  
+    ReefZone:TwoDArea + Season:shape + ReefZone:shape + Season:iso.index +  
+    ReefZone:iso.index + Season:circle + ReefZone:circle + Season:frac +  
+    ReefZone:frac + Season:nearest.neighbour + ReefZone:nearest.neighbour +  
+    Season:ReefZone:TwoDArea + Season:ReefZone:shape + Season:ReefZone:iso.index +  
+    Season:ReefZone:frac + Season:ReefZone:nearest.neighbour +      offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=TP.abund.dat)
+AIC(TP.abund.model.1)
+plot(simulateResiduals(TP.abund.model.1))
+```
+
+Testing to see if the model would be better with random effects included
+
+```{r}
+TP.abund.model.2 <- glmmTMB(TotalAbundance ~ Season + ReefZone + TwoDArea + shape + iso.index +  
+    circle + frac + nearest.neighbour + Season:ReefZone + Season:TwoDArea +  
+    ReefZone:TwoDArea + Season:shape + ReefZone:shape + Season:iso.index +  
+    ReefZone:iso.index + Season:circle + ReefZone:circle + Season:frac +  
+    ReefZone:frac + Season:nearest.neighbour + ReefZone:nearest.neighbour +  
+    Season:ReefZone:TwoDArea + Season:ReefZone:shape + Season:ReefZone:iso.index +  
+    Season:ReefZone:frac + Season:ReefZone:nearest.neighbour +      offset(log(VideoLength))+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=nbinom2(link="log"),
+                  data=TP.abund.dat)
+AIC(TP.abund.model.2)
+```
+
+```{r}
+anova(TP.abund.model.1, TP.abund.model.2)
+```
+
+Model with random factors seems be better performing
+
+Checking Model Fit
+
+```{r}
+plot(simulateResiduals(TP.abund.model.2))
+
+simulationOutput <- simulateResiduals(TP.abund.model.2)
+plotResiduals(simulationOutput, TP.abund.dat$TwoDArea)
+plotResiduals(simulationOutput, TP.abund.dat$circle)
+plotResiduals(simulationOutput, TP.abund.dat$frac)
+plotResiduals(simulationOutput, TP.abund.dat$Rugosity)
+plotResiduals(simulationOutput, TP.abund.dat$iso.index)
+plotResiduals(simulationOutput, TP.abund.dat$perimeterarea.ratio)
+plotResiduals(simulationOutput, TP.abund.dat$nearest.neighbour)
+plotResiduals(simulationOutput, TP.abund.dat$shape)
+```
+
+Above QQ plot and residuals seem fine
+
+Summary Statistics
+
+```{r}
+Anova(TP.abund.model.2, type = "II")
+```
+
+Post Hoc Tests
+
+Season \* Reef Zone \* Nearest Neighbour
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ Season*ReefZone*nearest.neighbour, var = "nearest.neighbour")
+# 
+# emmip(TP.abund.model.2, ~ nearest.neighbour, cov.reduce=range)+
+# theme_classic()+
+#   xlab("Nearest Neighbour Distance")+
+#   labs(tag="N")+ 
+#   theme(plot.title= element_text(hjust=0.5))
+```
+
+Season \* Reef Zone \* Frac
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ Season*ReefZone*frac, var = "frac")
+# 
+# emmip(TP.abund.model.2,  ~ frac, cov.reduce=range)+
+# theme_classic()+
+#   xlab("Fractal Dimension")+
+#   labs(tag="H")+ 
+#   theme(plot.title= element_text(hjust=0.5))+
+#   ylim(3,5)
+```
+
+Season \* Reef Zone \* Shape
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ Season*ReefZone*shape, var = "shape")
+# 
+# emmip(TP.abund.model.2,  ~ shape, cov.reduce=range)+
+# theme_classic()+
+#   xlab("Shape")+
+#   labs(tag="B",title="Towra Point")+ 
+#   theme(plot.title= element_text(hjust=0.5))+
+#   ylim(3,5)
+```
+
+Season \* Reef Zone \* TwoDArea
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ Season*ReefZone*TwoDArea, var = "TwoDArea")
+
+```
+
+Reef Zone \* Circle
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ ReefZone*circle, var = "circle")
+
+# emmip(TP.abund.model.2, ReefZone ~ circle, cov.reduce=range)+
+# theme_classic()+
+#   xlab("Circle Index")+
+#   labs(tag="E")+ 
+#   theme(plot.title= element_text(hjust=0.5))
+```
+
+Season \* Circle
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ Season*circle, var = "circle")
+
+```
+
+Isolation Index
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ iso.index, var = "iso.index")
+
+# emmip(TP.abund.model.2, ~ iso.index, cov.reduce=range)+
+# theme_classic()+
+#   xlab("Isolation Index")+
+#   labs(tag="K")+ 
+#   theme(plot.title= element_text(hjust=0.5))
+```
+
+```{r}
+emtrends(TP.abund.model.2, eff ~ nearest.neighbour, var = "nearest.neighbour")
+```
+
+Emmeans Season Reef Zone
+
+```{r}
+TP.abund.emmean <- emmeans(TP.abund.model.2,pairwise ~Season*ReefZone)
+TP.abund.emmean
+```
+
+###Crookhaven Abundance
+```{r}
+abund.dat <- read.csv("MeanCount.NO.hyperabundants.dat.csv")
+```
+
+```{r}
+abund.dat$ReefZone <- as.factor(abund.dat$ReefZone)
+abund.dat$Season <- as.factor(abund.dat$Season)
+abund.dat$SeasonReefZone <- paste(abund.dat$Season, abund.dat$ReefZone, sep = " ")
+abund.dat$SeasonReefZone <- as.factor(abund.dat$SeasonReefZone)
+```
+
+```{r}
+abund.dat <- read.csv("MeanCount.NO.hyperabundants.dat.csv")
+```
+
+```{r}
+abund.dat$ReefZone <- as.factor(abund.dat$ReefZone)
+abund.dat$Season <- as.factor(abund.dat$Season)
+abund.dat$SeasonReefZone <- paste(abund.dat$Season, abund.dat$ReefZone, sep = " ")
+abund.dat$SeasonReefZone <- as.factor(abund.dat$SeasonReefZone)
+```
+
+```{r}
+CR.abund.dat <- abund.dat %>% 
+  filter(Site == "OP-CR")
+```
+
+Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(CR.abund.dat[,16:27], metho = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "lower")
+
+```
+
+```{r}
+CR.abund.model <- glmmTMB(TotalAbundance ~ Season+ReefZone+
+                            TwoDArea*Season+
+                            TwoDArea*ReefZone+
+                            shape*Season+
+                            shape*ReefZone+
+                            frac*Season+
+                            frac*ReefZone+
+                          iso.index*Season+
+                            iso.index*ReefZone+
+                  circle*Season+
+                  circle*ReefZone+
+                    Rugosity*Season+
+                  Rugosity*ReefZone+
+                    perimeterarea.ratio*Season+
+                  perimeterarea.ratio*ReefZone+
+                    nearest.neighbour*Season+
+                    nearest.neighbour*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=CR.abund.dat)
+```
+
+
+Above model doesn't converge, removing AvgVis
+
+```{r}
+CR.abund.model <- glmmTMB(TotalAbundance ~ Season+ReefZone+
+                            TwoDArea*Season+
+                            TwoDArea*ReefZone+
+                            shape*Season+
+                            shape*ReefZone+
+                            frac*Season+
+                            frac*ReefZone+
+                          iso.index*Season+
+                            iso.index*ReefZone+
+                  circle*Season+
+                  circle*ReefZone+
+                    Rugosity*Season+
+                  Rugosity*ReefZone+
+                    perimeterarea.ratio*Season+
+                  perimeterarea.ratio*ReefZone+
+                    nearest.neighbour*Season+
+                    nearest.neighbour*ReefZone+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=CR.abund.dat)
+```
+
+Above model doesn't converge, removing TapeReader
+
+```{r}
+CR.abund.model <- glmmTMB(TotalAbundance ~ Season+ReefZone+
+                            TwoDArea*Season+
+                            TwoDArea*ReefZone+
+                            shape*Season+
+                            shape*ReefZone+
+                            frac*Season+
+                            frac*ReefZone+
+                          iso.index*Season+
+                            iso.index*ReefZone+
+                  circle*Season+
+                  circle*ReefZone+
+                    Rugosity*Season+
+                  Rugosity*ReefZone+
+                    perimeterarea.ratio*Season+
+                  perimeterarea.ratio*ReefZone+
+                    nearest.neighbour*Season+
+                    nearest.neighbour*ReefZone+
+                    (1|Year)+
+                    (1|ReefID)+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=CR.abund.dat)
+```
+
+Above Model doesn't converge, removing Year
+
+```{r}
+CR.abund.model <- glmmTMB(TotalAbundance ~ Season+ReefZone+
+                            TwoDArea*Season+
+                            TwoDArea*ReefZone+
+                            # shape*Season+
+                            # shape*ReefZone+
+                            frac*Season+
+                            frac*ReefZone+
+                          iso.index*Season+
+                            iso.index*ReefZone+
+                  circle*Season+
+                  circle*ReefZone+
+                    Rugosity*Season+
+                  Rugosity*ReefZone+
+                    perimeterarea.ratio*Season+
+                  perimeterarea.ratio*ReefZone+
+                    nearest.neighbour*Season+
+                    nearest.neighbour*ReefZone+
+                  offset(log(VideoLength)),
+                  family=nbinom2(link="log"),
+                  data=CR.abund.dat)
+```
+
+Stepwise Selection
+
+```{r}
+step(CR.abund.model, direction = "both")
+```
+
+AIC Model
+
+```{r}
+CR.abund.model <- glmmTMB(TotalAbundance ~ Season + ReefZone + TwoDArea + frac + iso.index +      circle + Rugosity + perimeterarea.ratio + nearest.neighbour +  
+    ReefZone:TwoDArea + Season:frac + ReefZone:frac + Season:iso.index +      ReefZone:iso.index + Season:circle + Season:Rugosity + Season:perimeterarea.ratio +      offset(log(VideoLength)),
+                  family=nbinom2,
+                  data=CR.abund.dat)
+```
+
+Model Fit
+
+```{r}
+plot(simulateResiduals(CR.abund.model))
+
+simulationOutput <- simulateResiduals(CR.abund.model)
+plotResiduals(simulationOutput, CR.abund.dat$TwoDArea)
+plotResiduals(simulationOutput, CR.abund.dat$circle)
+plotResiduals(simulationOutput, CR.abund.dat$frac)
+plotResiduals(simulationOutput, CR.abund.dat$Rugosity)
+plotResiduals(simulationOutput, CR.abund.dat$iso.index)
+plotResiduals(simulationOutput, CR.abund.dat$perimeterarea.ratio)
+```
+
+
+```{r}
+testZeroInflation(CR.abund.model)
+```
+
+Summary Statistics
+
+```{r}
+Anova(CR.abund.model, type = "II")
+```
+
+Post Hoc Tests
+
+Season \* perimeterarea.ratio
+
+```{r}
+emtrends(CR.abund.model, eff ~ Season*perimeterarea.ratio, var = "perimeterarea.ratio")
+```
+
+Season \* Rugosity
+
+```{r}
+emtrends(CR.abund.model, eff ~ Season*Rugosity, var = "Rugosity")
+```
+
+Season \* circle
+
+```{r}
+emtrends(CR.abund.model, eff ~ Season*circle, var = "circle")
+```
+
+Season \* iso.index
+
+```{r}
+emtrends(CR.abund.model, eff ~ Season*iso.index, var = "iso.index")
+```
+
+Season \* frac
+
+```{r}
+emtrends(CR.abund.model, eff ~ Season*frac, var = "frac")
+```
+
+ReefZone \* frac
+
+```{r}
+emtrends(CR.abund.model, eff ~ ReefZone*frac, var = "frac")
+```
+
+ReefZone \* TwoDArea
+
+```{r}
+emtrends(CR.abund.model, eff ~ ReefZone*TwoDArea, var = "TwoDArea")
+```
+
+nearest.neighbour
+
+```{r}
+emtrends(CR.abund.model, eff ~ nearest.neighbour, var = "nearest.neighbour")
+```
+
+Emmeans Season
+
+```{r}
+CR.abund.emmean.season <- emmeans(CR.abund.model,pairwise ~Season)
+CR.abund.emmean.season
+```
+
+Emmeans Reef Zone
+
+```{r}
+CR.abund.emmean.reefzone <- emmeans(CR.abund.model,pairwise ~ReefZone)
+CR.abund.emmean.reefzone
+```
+
+Emmeans Season Reef Zone (For plotting purposes only)
+
+```{r}
+CR.abund.emmean <- emmeans(CR.abund.model,pairwise ~Season*ReefZone)
+CR.abund.emmean
+
+```
+
+###Abundance Plot
+
+```{r}
+TP.abund.plot <- as.data.frame(TP.abund.emmean$emmeans)
+PH.abund.plot <-  as.data.frame(PH.abund.emmean$emmeans)
+CR.season.abund.plot <-  as.data.frame(CR.abund.emmean.season$emmeans)
+CR.reefzone.abund.plot <- as.data.frame(CR.abund.emmean.reefzone$emmeans)
+```
+
+Significance Codes for A
+
+```{r}
+library(emmeans)
+library(multcomp)
+
+multcomp::cld(PH.abund.emmean, Letters = LETTERS, alpha=0.05)
+```
+
+```{r}
+# Get the CLD results
+PH.cld <- multcomp::cld(PH.abund.emmean, Letters = letters, alpha = 0.05)
+
+# Convert to dataframe and add to your plot data
+PH.abund.plot <- as.data.frame(PH.cld)
+
+# Now create the plot with significance letters
+A <- ggplot(PH.abund.plot, aes(x = Season, y = emmean, fill = Season)) +
+  geom_col() +
+  geom_errorbar(aes(ymin = emmean - SE, ymax = emmean + SE), width = 0.2) +
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylim(0,7)+
+  ylab(NULL) +
+  xlab(NULL) +
+  facet_wrap("ReefZone") +
+  theme_classic() +
+  scale_fill_manual(values = c("#E69F00", "#56B4E9")) +
+  labs(tag = "A", title = "Port Hacking") +
+  guides(fill = "none") +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        axis.text.y = element_text(colour = "black"),
+        strip.text.x = element_text(margin = margin(0.1,0,0.1,0, "cm")))
+A
+```
+
+Significance Codes for B
+
+```{r}
+TP.cld <- multcomp::cld(TP.abund.emmean, Letters = letters, alpha=0.05)
+```
+
+```{r}
+# Convert to dataframe and add to your plot data
+TP.abund.plot <- as.data.frame(TP.cld)
+
+B <- ggplot(TP.abund.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylim(0,7)+
+  ylab(NULL)+
+  xlab(NULL)+
+  facet_wrap("ReefZone")+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "B", title="Towra Point")+
+  guides(fill="none")+
+  theme(axis.text.x= element_blank(),
+        axis.ticks.x=element_blank(),
+        plot.title= element_text(hjust=0.5),
+        axis.text.y = element_text(colour = "black"))
+B
+```
+
+Significance Codes for C
+
+```{r}
+CR.cld <- multcomp::cld(CR.abund.emmean.season, Letters = letters, alpha=0.05)
+CR.cld
+```
+
+```{r}
+# Convert to dataframe and add to your plot data
+CR.abund.plot <- as.data.frame(CR.cld)
+
+C <- ggplot(CR.abund.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  ylim(0,7)+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "C", title="Crookhaven River")+
+  guides(fill="none")+
+  theme(axis.text.x= element_blank(),
+        axis.ticks.x=element_blank(),
+        plot.title= element_text(hjust=0.5),
+        axis.text.y = element_text(colour = "black"))
+C
+```
+
+```{r}
+CR.reefzone.abund.plot <- multcomp::cld(CR.abund.emmean.reefzone, Letters = letters, alpha=0.05)
+
+CR.reefzone.abund <- ggplot(CR.reefzone.abund.plot, aes(x=ReefZone,y=emmean, fill= ReefZone))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  ylim(0,7)+
+  theme_classic()+
+  scale_fill_manual(values=c("#440154FF","#22A884FF","#FDE725FF"))+
+  labs(tag = "C", title="Crookhaven River")+
+  guides(fill="none")+
+  theme(axis.text.x= element_blank(),
+        axis.ticks.x=element_blank(),
+        plot.title= element_text(hjust=0.5),
+        axis.text.y = element_text(colour = "black"))
+CR.reefzone.abund
+```
+
+##Richness Per Estuary
+
+###Port Hacking Richness
+
+```{r}
+PH.rich.dat <- read.csv("MeanCount.with.hyperabundants.dat.csv")
+```
+
+```{r}
+PH.rich.dat <- PH.rich.dat %>% 
+  filter(Site == "SY-PH")
+
+PH.rich.dat$Site <- as.factor(PH.rich.dat$Site)
+PH.rich.dat$Season <- as.factor(PH.rich.dat$Season)
+PH.rich.dat$ReefZone <- as.factor(PH.rich.dat$ReefZone)
+```
+
+Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(PH.rich.dat[,16:27], metho = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "upper")
+
+```
+
+Modelling
+
+```{r}
+PH.rich.model <- glmmTMB(Species_Richness_Zone ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=gaussian(),
+                  data=PH.rich.dat)
+```
+
+Above model does not converge. Remvoing TapeReader
+
+```{r}
+PH.rich.model <- glmmTMB(Species_Richness_Zone ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID),
+                  family=gaussian(),
+                  data=PH.rich.dat)
+```
+
+Above model still does not converge. Removing Avg Vis
+
+```{r}
+PH.rich.model <- glmmTMB(Species_Richness_Zone ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    Rugosity*Season*ReefZone,
+                  family=gaussian(),
+                  data=PH.rich.dat)
+```
+
+Stepwise Selection
+
+```{r}
+step(PH.rich.model, direction = "both")
+```
+
+AIC Model
+
+```{r}
+PH.rich.model <- glmmTMB(Species_Richness_Zone ~ Season + ReefZone + circle + frac + perimeterarea.ratio +      nearest.neighbour + Rugosity + Season:ReefZone + Season:circle +  
+    Season:frac + Season:perimeterarea.ratio + ReefZone:perimeterarea.ratio +      Season:nearest.neighbour + ReefZone:nearest.neighbour + Season:Rugosity +  
+    ReefZone:Rugosity + Season:ReefZone:perimeterarea.ratio +      Season:ReefZone:nearest.neighbour + Season:ReefZone:Rugosity,
+                  family=gaussian(),
+                  data=PH.rich.dat)
+```
+
+Checking Model Fit
+
+```{r}
+qqnorm(residuals(PH.rich.model))
+scatter.smooth(residuals(PH.rich.model) ~ fitted(PH.rich.model)) # residual plot
+plot(simulateResiduals(PH.rich.model))
+```
+
+Summary Statistics
+
+```{r}
+Anova(PH.rich.model)
+```
+
+Season \* Reef Zone \* Rugosity
+
+```{r}
+emtrends(PH.rich.model, eff ~ Season*ReefZone*Rugosity, var = "Rugosity")
+```
+
+Season \* Reef Zone \* Nearest Neighbour
+
+```{r}
+emtrends(PH.rich.model, eff ~ Season*ReefZone*nearest.neighbour, var = "nearest.neighbour")
+
+```
+
+Season \* Reef Zone \* perimetere area ratio
+
+```{r}
+emtrends(PH.rich.model, eff ~ Season*ReefZone*perimeterarea.ratio, var = "perimeterarea.ratio")
+
+```
+
+Season \* Frac
+
+```{r}
+emtrends(PH.rich.model, eff ~ Season*frac, var = "frac")
+
+```
+
+nearest.neighbour
+
+```{r}
+emtrends(PH.rich.model, eff ~ nearest.neighbour, var = "nearest.neighbour")
+```
+
+Perimeter Area Ratio
+
+```{r}
+emtrends(PH.rich.model, eff ~ perimeterarea.ratio, var = "perimeterarea.ratio")
+```
+
+circle
+
+```{r}
+emtrends(PH.rich.model, eff ~ circle, var = "circle")
+```
+
+Emmeans Season
+
+```{r}
+PH.emmeans.rich.season <- emmeans(PH.rich.model, pairwise~Season)
+PH.emmeans.rich.season
+```
+
+Emmeans ReefZone
+
+```{r}
+PH.emmeans.rich.reefzone <- emmeans(PH.rich.model, pairwise~ReefZone)
+PH.emmeans.rich.reefzone
+```
+
+Emmeans Season \* Reef Zone (for plotting purposes only)
+
+```{r}
+PH.emmeans.rich.seasonreefzone <- emmeans(PH.rich.model, pairwise~Season:ReefZone)
+PH.emmeans.rich.seasonreefzone
+```
+
+###Towra Point Richness
+
+```{r}
+TP.rich.dat <- read.csv("MeanCount.with.hyperabundants.dat.csv")
+```
+
+```{r}
+TP.rich.dat <- TP.rich.dat %>% 
+  filter(Site == "SY-TP")
+
+TP.rich.dat$Site <- as.factor(TP.rich.dat$Site)
+TP.rich.dat$ReefZone <- as.factor(TP.rich.dat$ReefZone)
+TP.rich.dat$Season <- as.factor(TP.rich.dat$Season)
+```
+
+Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(TP.rich.dat[,16:27], metho = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "upper")
+```
+
+Modelling
+
+```{r}
+TP.rich.model <- glmmTMB(Species_Richness_Zone ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=gaussian(),
+                  data=TP.rich.dat)
+```
+
+
+```{r}
+TP.rich.model <- glmmTMB(Species_Richness_Zone ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=gaussian(),
+                  data=TP.rich.dat)
+```
+
+```{r}
+TP.rich.model <- glmmTMB(Species_Richness_Zone ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=gaussian(),
+                  data=TP.rich.dat)
+```
+
+```{r}
+TP.rich.model <- glmmTMB(Species_Richness_Zone ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|ReefID),
+                  family=gaussian(),
+                  data=TP.rich.dat)
+```
+
+```{r}
+TP.rich.model <- glmmTMB(Species_Richness_Zone ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone,
+                  family=gaussian(),
+                  data=TP.rich.dat)
+```
+
+Stepwise Selection
+
+```{r}
+step(TP.rich.model, direction = "both")
+```
+
+AIC Model
+
+```{r}
+TP.rich.model <- glmmTMB(Species_Richness_Zone ~ Season + ReefZone + TwoDArea + shape +  
+    iso.index + circle + frac + Rugosity + nearest.neighbour +  
+    Season:ReefZone + Season:TwoDArea + ReefZone:TwoDArea + ReefZone:shape +  
+    ReefZone:iso.index + Season:circle + ReefZone:circle + Season:frac +  
+    ReefZone:frac + Season:Rugosity + Season:nearest.neighbour +  
+    ReefZone:nearest.neighbour + Season:ReefZone:TwoDArea + Season:ReefZone:frac +      Season:ReefZone:nearest.neighbour,
+                  family= gaussian(),
+                  data=TP.rich.dat)
+```
+
+Checking Model Fit
+
+```{r}
+plot(simulateResiduals(TP.rich.model))
+```
+
+Summary Statistics
+
+```{r}
+Anova(TP.rich.model)
+```
+
+Season \* Reef Zone \* Frac
+
+```{r}
+emtrends(TP.rich.model, eff ~ Season*ReefZone*frac, var = "frac")
+```
+
+Season \* Rugosity
+
+```{r}
+emtrends(TP.rich.model, eff ~ Season*Rugosity, var = "Rugosity")
+```
+
+Reef Zone \* Circle
+
+```{r}
+emtrends(TP.rich.model, eff ~ ReefZone*circle, var = "circle")
+```
+
+Reef ZOne \* Isolation Index
+
+```{r}
+emtrends(TP.rich.model, eff ~ ReefZone*iso.index, var = "iso.index")
+```
+
+Reef Zone \* Shape
+
+```{r}
+emtrends(TP.rich.model, eff ~ ReefZone*shape, var = "shape")
+```
+
+Reef Zone \* TwoD Area
+
+```{r}
+emtrends(TP.rich.model, eff ~ ReefZone*TwoDArea, var = "TwoDArea")
+```
+
+Season \* TwoD Area
+
+```{r}
+emtrends(TP.rich.model, eff ~ Season*TwoDArea, var = "TwoDArea")
+```
+
+Emmeans Season
+
+```{r}
+TP.emmeans.rich.season <- emmeans(TP.rich.model, pairwise~Season)
+TP.emmeans.rich.season
+```
+
+Emmeans Reef Zone
+
+```{r}
+TP.emmeans.rich.reefzone <- emmeans(TP.rich.model, pairwise~ReefZone)
+TP.emmeans.rich.reefzone
+```
+
+Emmeans Season Reef Zone
+
+```{r}
+TP.emmeans.rich.seasonreefzone <- emmeans(TP.rich.model, pairwise~Season:ReefZone)
+```
+
+###Crookhaven Richness
+
+```{r}
+CR.rich.dat <- read.csv("MeanCount.with.hyperabundants.dat.csv")
+```
+
+```{r}
+CR.rich.dat <- CR.rich.dat %>% 
+  filter(Site == "OP-CR")
+
+CR.rich.dat$Site <- as.factor(CR.rich.dat$Site)
+CR.rich.dat$ReefZone <- as.factor(CR.rich.dat$ReefZone)
+CR.rich.dat$Season <- as.factor(CR.rich.dat$Season)
+```
+
+Modelling
+
+```{r}
+CR.rich.model <- glmmTMB(Species_Richness_Zone ~ Season+ReefZone+
+                            TwoDArea*Season+
+                            TwoDArea*ReefZone+
+                            frac*Season+
+                            frac*ReefZone+
+                          iso.index*Season+
+                            iso.index*ReefZone+
+                  circle*Season+
+                  circle*ReefZone+
+                    Rugosity*Season+
+                  Rugosity*ReefZone+
+                    perimeterarea.ratio*Season+
+                  perimeterarea.ratio*ReefZone+
+                    nearest.neighbour*Season+
+                    nearest.neighbour*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=gaussian(),
+                  data=CR.rich.dat)
+```
+
+```{r}
+CR.rich.model <- glmmTMB(Species_Richness_Zone ~ Season+ReefZone+
+                            TwoDArea*Season+
+                            TwoDArea*ReefZone+
+                            frac*Season+
+                            frac*ReefZone+
+                          iso.index*Season+
+                            iso.index*ReefZone+
+                  circle*Season+
+                  circle*ReefZone+
+                    Rugosity*Season+
+                  Rugosity*ReefZone+
+                    perimeterarea.ratio*Season+
+                  perimeterarea.ratio*ReefZone+
+                    nearest.neighbour*Season+
+                    nearest.neighbour*ReefZone,
+                  family=gaussian(),
+                  data=CR.rich.dat)
+```
+
+Stepwise Selection
+
+```{r}
+step(CR.rich.model, direction = "both")
+```
+
+AIC Model
+
+```{r}
+CR.rich.model <- glmmTMB(Species_Richness_Zone ~ Season + ReefZone + TwoDArea + frac +      iso.index + Rugosity + nearest.neighbour + ReefZone:frac +      Season:iso.index + Season:Rugosity + Season:nearest.neighbour,
+                  family= gaussian(),
+                  data=CR.rich.dat)
+```
+
+Checking Model Fit
+
+```{r}
+qqnorm(residuals(CR.rich.model))
+scatter.smooth(residuals(CR.rich.model) ~ fitted(CR.rich.model)) # residual plot
+plot(simulateResiduals(CR.rich.model))
+```
+
+Summary Statistics
+
+```{r}
+Anova(CR.rich.model)
+```
+
+Testing Post Hoc Interactions
+
+Season \* Rugosity
+
+```{r}
+emtrends(CR.rich.model, eff ~ Season*Rugosity, var = "Rugosity")
+```
+
+Season \* iso.index
+
+```{r}
+emtrends(CR.rich.model, eff ~ Season*iso.index, var = "iso.index")
+```
+
+frac
+
+```{r}
+emtrends(CR.rich.model, eff ~ frac, var = "frac")
+```
+
+Emmeans ReefZone
+
+```{r}
+CR.emmeans.rich.reefzone <- emmeans(CR.rich.model, pairwise~ReefZone)
+CR.emmeans.rich.reefzone
+```
+
+Emmeans Season
+
+```{r}
+CR.emmeans.rich.season <- emmeans(CR.rich.model, pairwise~Season)
+CR.emmeans.rich.season
+```
+
+Emmeans Season ReefZone (for plotting purposes only)
+
+```{r}
+CR.emmeans.rich.seasonreefzone <- emmeans(CR.rich.model, pairwise~Season:ReefZone)
+```
+
+###Richness Plots
+
+```{r}
+PH.richness.plot <- as.data.frame(PH.emmeans.rich.seasonreefzone$emmeans)
+TP.richness.plot <- as.data.frame(TP.emmeans.rich.seasonreefzone$emmeans)
+CR.season.richness.plot <- as.data.frame(CR.emmeans.rich.season$emmeans)
+```
+
+Significance Codes for D
+
+```{r}
+PH.cld.richness <- multcomp::cld(PH.emmeans.rich.seasonreefzone, Letters = letters, alpha=0.05)
+PH.cld.richness
+```
+
+```{r}
+# Convert to dataframe and add to your plot data
+PH.cld.richness.plot <- as.data.frame(PH.cld.richness)
+```
+
+```{r}
+D <- ggplot(PH.cld.richness.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+    geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  ylim(0,10)+
+  facet_wrap("ReefZone")+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "D")+
+  guides(fill="none")+
+  theme(axis.text.x= element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y = element_text(colour = "black"),
+         strip.text = element_blank())
+D
+```
+
+Significance Codes for E
+
+```{r}
+TP.cld.richness <- multcomp::cld(TP.emmeans.rich.seasonreefzone, Letters = letters, alpha=0.05)
+TP.cld.richness
+# Convert to dataframe and add to your plot data
+TP.cld.richness.plot <- as.data.frame(TP.cld.richness)
+```
+
+```{r}
+E <- ggplot(TP.cld.richness.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  ylim(0,11)+
+  facet_wrap("ReefZone")+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "E")+
+  guides(fill="none")+
+  theme(axis.text.x= element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y = element_text(colour = "black"),
+         strip.text = element_blank())
+E
+```
+
+Significane Codes for F
+
+```{r}
+
+CR.season.richness.plot
+CR.season.cld.richness <- multcomp::cld(CR.emmeans.rich.season, Letters = letters, alpha=0.05)
+CR.season.cld.richness
+
+# Convert to dataframe and add to your plot data
+CR.season.cld.richness.plot <- as.data.frame(CR.season.cld.richness)
+```
+
+```{r}
+F <- ggplot(CR.season.cld.richness.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  ylim(-1.3,15)+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "F")+
+  guides(fill="none")+
+  theme(
+        axis.text.y = element_text(colour = "black"),
+         strip.text = element_blank())
+F
+```
+
+```{r}
+CR.emmeans.rich.reefzone
+CR.reefzone.cld.richness <- multcomp::cld(CR.emmeans.rich.reefzone, Letters = letters, alpha=0.05)
+CR.reefzone.cld.richness
+```
+
+```{r}
+CR.rich.reefzone.plot <- ggplot(CR.reefzone.cld.richness, aes(x=ReefZone,y=emmean, fill= ReefZone))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  scale_fill_manual(values=c("#440154FF","#22A884FF","#FDE725FF"))+
+  ylab(NULL)+
+  xlab(NULL)+
+  ylim(-1.3,15)+
+  theme_classic()+
+  guides(fill="none")+
+  theme(
+        axis.text.y = element_text(colour = "black"),
+         strip.text = element_blank())
+CR.rich.reefzone.plot
+```
+
+## Diversity Per Estuary
+#### Port Hacking Diversity
+```{r}
+abund.dat <- read.csv("MeanCount.NO.hyperabundants.dat.csv")
+```
+
+```{r}
+abund.dat$ReefZone <- as.factor(abund.dat$ReefZone)
+abund.dat$Season <- as.factor(abund.dat$Season)
+abund.dat$SeasonReefZone <- paste(abund.dat$Season, abund.dat$ReefZone, sep = " ")
+abund.dat$SeasonReefZone <- as.factor(abund.dat$SeasonReefZone)
+```
+
+```{r}
+PH.div.dat <- abund.dat
+```
+
+```{r}
+PH.div.dat <- PH.div.dat %>% 
+  filter(Site == "SY-PH")
+
+PH.div.dat$Site <- as.factor(PH.div.dat$Site)
+PH.div.dat$Season <- as.factor(PH.div.dat$Season)
+PH.div.dat$ReefZone <- as.factor(PH.div.dat$ReefZone)
+```
+
+Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(PH.div.dat[,16:27], method = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "upper")
+
+```
+
+Modelling the data
+
+```{r}
+PH.div.model <- glmmTMB(ShannonsH ~Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                         #shape*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    perimeterarea.ratio*Season*ReefZone+
+                    iso.index*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone,
+                  family=gaussian(),
+                  data=PH.div.dat)
+```
+
+Checking Model Fit
+
+```{r}
+plot(simulateResiduals(PH.div.model))
+```
+
+Distribution family selected correctly, running AIC stepwise selection
+
+```{r}
+step(PH.div.model, direction = "both")
+```
+
+AIC Selected Model
+
+```{r}
+PH.div.model.1 <- glmmTMB(ShannonsH ~ Season + ReefZone + circle + frac + iso.index + Rugosity +      Season:ReefZone + ReefZone:circle + Season:frac + Season:iso.index +  
+    ReefZone:iso.index + Season:Rugosity + ReefZone:Rugosity +      Season:ReefZone:iso.index,
+                  family= gaussian(),
+                  data=PH.div.dat)
+```
+
+Checking if the model would be better with random effects included
+
+```{r}
+PH.div.model.2 <- glmmTMB(ShannonsH ~ Season + ReefZone + circle + frac + iso.index + Rugosity +      Season:ReefZone + ReefZone:circle + Season:frac + Season:iso.index +  
+    ReefZone:iso.index + Season:Rugosity + ReefZone:Rugosity +      Season:ReefZone:iso.index+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family= gaussian(),
+                  data=PH.div.dat)
+```
+
+```{r}
+PH.div.model.2 <- glmmTMB(ShannonsH ~ Season + ReefZone + circle + frac + iso.index + Rugosity +      Season:ReefZone + ReefZone:circle + Season:frac + Season:iso.index +  
+    ReefZone:iso.index + Season:Rugosity + ReefZone:Rugosity +      Season:ReefZone:iso.index+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family= gaussian(),
+                  data=PH.div.dat)
+```
+
+```{r}
+anova(PH.div.model.1, PH.div.model.2)
+```
+
+
+Checking Model Fit
+
+```{r}
+plot(simulateResiduals(PH.div.model.1))
+
+simulationOutput <- simulateResiduals(PH.div.model.1)
+plotResiduals(simulationOutput, PH.div.dat$circle)
+plotResiduals(simulationOutput, PH.div.dat$frac)
+plotResiduals(simulationOutput, PH.div.dat$Rugosity)
+plotResiduals(simulationOutput, PH.div.dat$iso.index)
+```
+
+
+```{r}
+Anova(PH.div.model.1, type = "II")
+```
+
+Looking at Post Hoc Analysis
+
+Season \* Rugosity
+
+```{r}
+emtrends(PH.div.model.1, eff ~ Season*Rugosity, var = "Rugosity")
+```
+
+Season \* Iso Index
+
+```{r}
+emtrends(PH.div.model.1, eff ~ Season*iso.index, var = "iso.index")
+```
+
+Season \* frac
+
+```{r}
+emtrends(PH.div.model.1, eff ~ Season*frac, var = "frac")
+```
+
+Reef Zone \* Circle
+
+```{r}
+emtrends(PH.div.model.1, eff ~ ReefZone*circle, var = "circle")
+```
+
+Emmeans Reef Zone
+
+```{r}
+emmeans(PH.div.model.1, pairwise ~ReefZone)
+
+```
+
+Emmeans Season Reef Zone
+
+```{r}
+PH.div.emmean <- emmeans(PH.div.model.1,pairwise ~Season*ReefZone)
+PH.div.emmean
+```
+
+####Towra Point Diversity Model
+```{r}
+abund.dat <- read.csv("MeanCount.NO.hyperabundants.dat.csv")
+```
+
+```{r}
+abund.dat$ReefZone <- as.factor(abund.dat$ReefZone)
+abund.dat$Season <- as.factor(abund.dat$Season)
+abund.dat$SeasonReefZone <- paste(abund.dat$Season, abund.dat$ReefZone, sep = " ")
+abund.dat$SeasonReefZone <- as.factor(abund.dat$SeasonReefZone)
+abund.dat$log.iso.index <- log(abund.dat$iso.index)
+abund.dat[,16:27] <- scale(abund.dat[,16:27])
+```
+
+```{r}
+TP.div.dat <- abund.dat
+```
+
+```{r}
+TP.div.dat <- TP.div.dat %>% 
+  filter(Site == "SY-TP")
+
+TP.div.dat$Site <- as.factor(TP.div.dat$Site)
+TP.div.dat$ReefZone <- as.factor(TP.div.dat$ReefZone)
+TP.div.dat$Season <- as.factor(TP.div.dat$Season)
+```
+
+Checking Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(TP.div.dat[,16:27], metho = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "lower")
+
+```
+
+```{r}
+TP.div.model <- glmmTMB(ShannonsH ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=gaussian(),
+                  data=TP.div.dat)
+```
+
+```{r}
+TP.div.model <- glmmTMB(ShannonsH ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family=gaussian(),
+                  data=TP.div.dat)
+```
+Above model didnt converge removing TapeReader
+
+```{r}
+TP.div.model <- glmmTMB(ShannonsH ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|Year)+
+                    (1|ReefID),
+                  family=gaussian(),
+                  data=TP.div.dat)
+```
+
+```{r}
+TP.div.model <- glmmTMB(ShannonsH ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone+
+                    (1|Year),
+                  family=gaussian(),
+                  data=TP.div.dat)
+```
+
+```{r}
+TP.div.model <- glmmTMB(ShannonsH ~ Season*ReefZone+
+                            TwoDArea*Season*ReefZone+
+                              shape*Season*ReefZone+
+                          iso.index*Season*ReefZone+
+                  circle*Season*ReefZone+
+                    frac*Season*ReefZone+
+                    Rugosity*Season*ReefZone+
+                    nearest.neighbour*Season*ReefZone,
+                  family=gaussian(),
+                  data=TP.div.dat)
+```
+
+checking model fit
+
+```{r}
+plot(simulateResiduals(TP.div.model))
+```
+
+Distribution Families selected correctly, running AIC stepwise selection
+
+AIC Stepwise Selection
+
+```{r}
+step(TP.div.model, direction = "both")
+```
+
+Fitting Selected Model
+
+```{r}
+TP.div.model.1 <- glmmTMB(ShannonsH ~ Season + ReefZone + TwoDArea + shape + iso.index +  
+    circle + frac + Season:ReefZone + Season:TwoDArea + ReefZone:TwoDArea +  
+    Season:shape + ReefZone:shape + Season:iso.index + ReefZone:iso.index +  
+    Season:circle + ReefZone:circle + Season:frac + ReefZone:frac +  
+    Season:ReefZone:TwoDArea + Season:ReefZone:shape + Season:ReefZone:frac,
+                  family= gaussian(),
+                  data=TP.div.dat)
+```
+
+Checking Model Fit
+
+```{r}
+plot(simulateResiduals(TP.div.model.1))
+```
+
+Checking to see if random effects should be included
+
+```{r}
+TP.div.model.2 <- glmmTMB(ShannonsH ~ Season + ReefZone + TwoDArea + shape + iso.index +  
+    circle + frac + Season:ReefZone + Season:TwoDArea + ReefZone:TwoDArea +  
+    Season:shape + ReefZone:shape + Season:iso.index + ReefZone:iso.index +  
+    Season:circle + ReefZone:circle + Season:frac + ReefZone:frac +  
+    Season:ReefZone:TwoDArea + Season:ReefZone:shape + Season:ReefZone:frac+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family= gaussian(),
+                  data=TP.div.dat)
+```
+
+Checking model fit
+
+```{r}
+plot(simulateResiduals(TP.div.model.2))
+```
+
+```{r}
+anova(TP.div.model.1, TP.div.model.2)
+```
+
+Model 1 is the most parsimonious model
+
+Anova
+
+```{r}
+Anova(TP.div.model.1, type = "II")
+```
+
+Post-Hoc Tests
+
+Season \* Reef Zone \* Frac
+
+```{r}
+emtrends(TP.div.model.1, eff ~ Season*ReefZone*frac, var = "frac")
+```
+
+Season \* Reef ZOne \* Shape
+
+```{r}
+emtrends(TP.div.model.1, eff ~ Season*ReefZone*shape, var = "shape", adjust = "none")
+```
+
+Season \* Reef Zone \* TwoDArea
+
+```{r}
+emtrends(TP.div.model.1, eff ~ Season*ReefZone*TwoDArea, var = "TwoDArea")
+```
+
+Season \* Circle
+
+```{r}
+emtrends(TP.div.model.1, eff ~ Season*circle, var = "circle", adjust="none")
+```
+
+Reef ZOne \* Isolation Index
+
+```{r}
+emtrends(TP.div.model.1, eff ~ ReefZone*iso.index, var = "iso.index")
+```
+
+Season \* Isolation Index
+
+```{r}
+emtrends(TP.div.model.1, eff ~ Season*iso.index, var = "iso.index")
+```
+
+TwoDArea
+
+```{r}
+emtrends(TP.div.model.1, eff ~ TwoDArea, var = "TwoDArea")
+```
+
+Shape
+
+```{r}
+emtrends(TP.div.model.1, eff ~ shape, var = "shape")
+```
+
+Emmeans Season
+
+```{r}
+TP.div.emmean <- emmeans(TP.div.model.1,pairwise ~Season)
+TP.div.emmean
+```
+
+Emmeans Reef Zone
+
+```{r}
+TP.div.emmean.reefzone <- emmeans(TP.div.model.1,pairwise ~ReefZone)
+TP.div.emmean.reefzone
+```
+
+Emmeans Season and Reef Zone (for plotting purposes only)
+
+```{r}
+TP.div.emmean.season.reefzone <- emmeans(TP.div.model.1,pairwise ~Season*ReefZone)
+```
+
+####Crookhaven Diversity
+```{r}
+abund.dat <- read.csv("MeanCount.NO.hyperabundants.dat.csv")
+```
+
+```{r}
+abund.dat$ReefZone <- as.factor(abund.dat$ReefZone)
+abund.dat$Season <- as.factor(abund.dat$Season)
+abund.dat$SeasonReefZone <- paste(abund.dat$Season, abund.dat$ReefZone, sep = " ")
+abund.dat$SeasonReefZone <- as.factor(abund.dat$SeasonReefZone)
+```
+
+```{r}
+CR.div.dat <- abund.dat
+```
+
+Filtering to Crookhaven and removing Centre due to lack of data available for centre in Crookhaven.
+
+```{r}
+CR.div.dat <- CR.div.dat %>% 
+  filter(Site == "OP-CR")
+
+CR.div.dat$Site <- as.factor(CR.div.dat$Site)
+CR.div.dat$ReefZone <- as.factor(CR.div.dat$ReefZone)
+CR.div.dat$Season <- as.factor(CR.div.dat$Season)
+
+```
+
+Checking Correlation Matrix
+
+```{r}
+correlation.matrix <- cor(CR.div.dat[,16:27], metho = "pearson")
+
+corrplot(correlation.matrix, method = "number", type = "upper")
+```
+
+Modelling
+
+```{r}
+CR.div.model <- glmmTMB(ShannonsH~ Season+ReefZone+
+                            TwoDArea*Season+
+                            TwoDArea*ReefZone+
+                            frac*Season+
+                            frac*ReefZone+
+                          iso.index*Season+
+                            iso.index*ReefZone+
+                  circle*Season+
+                  circle*ReefZone+
+                    Rugosity*Season+
+                  Rugosity*ReefZone+
+                    perimeterarea.ratio*Season+
+                  perimeterarea.ratio*ReefZone+
+                    nearest.neighbour*Season+
+                    nearest.neighbour*ReefZone,
+                  family=gaussian(),
+                  data=CR.div.dat)
+```
+
+AIC Stepwise Selection
+
+```{r}
+step(CR.div.model, direction = "both")
+```
+
+```{r}
+CR.div.model <- glmmTMB(ShannonsH ~ Season + ReefZone + TwoDArea + iso.index + circle +      Rugosity + perimeterarea.ratio + nearest.neighbour + Season:TwoDArea +  
+    Season:iso.index + ReefZone:circle + Season:Rugosity + Season:perimeterarea.ratio +      ReefZone:perimeterarea.ratio,
+                  family= gaussian(),
+                  data=CR.div.dat)
+```
+
+```{r}
+CR.div.model.2 <- glmmTMB(ShannonsH ~ Season + ReefZone + TwoDArea + iso.index + circle +      Rugosity + perimeterarea.ratio + nearest.neighbour + Season:TwoDArea +  
+    Season:iso.index + ReefZone:circle + Season:Rugosity + Season:perimeterarea.ratio +      ReefZone:perimeterarea.ratio+
+                    (1|AvgVis)+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family= gaussian(),
+                  data=CR.div.dat)
+```
+
+```{r}
+CR.div.model.2 <- glmmTMB(ShannonsH ~ Season + ReefZone + TwoDArea + iso.index + circle +      Rugosity + perimeterarea.ratio + nearest.neighbour + Season:TwoDArea +  
+    Season:iso.index + ReefZone:circle + Season:Rugosity + Season:perimeterarea.ratio +      ReefZone:perimeterarea.ratio+
+                    (1|Year)+
+                    (1|ReefID)+
+                    (1|TapeReader),
+                  family= gaussian(),
+                  data=CR.div.dat)
+```
+
+```{r}
+anova(CR.div.model, CR.div.model.2)
+```
+
+
+Check Model Fit
+
+```{r}
+plot(simulateResiduals(CR.div.model))
+
+simulationOutput <- simulateResiduals(CR.div.model)
+plotResiduals(simulationOutput, CR.div.dat$circle)
+plotResiduals(simulationOutput, CR.div.dat$frac)
+plotResiduals(simulationOutput, CR.div.dat$Rugosity)
+plotResiduals(simulationOutput, CR.div.dat$iso.index)
+plotResiduals(simulationOutput, CR.div.dat$perimeterarea.ratio)
+plotResiduals(simulationOutput, CR.div.dat$nearest.neighbour)
+
+```
+
+Anova
+
+```{r}
+Anova(CR.div.model, type = "II")
+```
+
+Post Hoc Tests
+
+Season \* Rugosity
+
+```{r}
+emtrends(CR.div.model, eff ~ Season*Rugosity, var = "Rugosity")
+```
+
+ReefZone \* circle
+
+```{r}
+emtrends(CR.div.model, eff ~ ReefZone*circle, var = "circle")
+```
+
+Season:iso.index
+
+```{r}
+emtrends(CR.div.model, eff ~ Season*iso.index, var = "iso.index")
+```
+
+Season:TwoDArea
+
+```{r}
+emtrends(CR.div.model, eff ~ Season*TwoDArea, var = "TwoDArea")
+```
+
+nearest.neighbour
+
+```{r}
+emtrends(CR.div.model, eff ~ nearest.neighbour, var = "nearest.neighbour")
+```
+
+perimeterarea.ratio
+
+```{r}
+emtrends(CR.div.model, eff ~ perimeterarea.ratio, var = "perimeterarea.ratio")
+```
+
+TwoDArea
+
+```{r}
+emtrends(CR.div.model, eff ~ TwoDArea, var = "TwoDArea")
+```
+
+Emmeans Reef Zone
+
+```{r}
+CR.div.emmean.reefzone <- emmeans(CR.div.model,pairwise ~ReefZone)
+CR.div.emmean.reefzone
+```
+
+```{r}
+CR.div.emmean.season <- emmeans(CR.div.model,pairwise ~ Season)
+CR.div.emmean.season
+```
+
+Emmeans Season ReefZone (for plotting purposes only)
+
+```{r}
+CR.div.emmean.season.reefzone <- emmeans(CR.div.model,pairwise ~Season*ReefZone)
+```
+
+###Diversity Plots
+
+```{r}
+PH.div.plot <- as.data.frame(PH.div.emmean$emmeans)
+TP.div.plot <-  as.data.frame(TP.div.emmean.season.reefzone$emmeans)
+CR.div.season.plot <-  as.data.frame(CR.div.emmean.reefzone$emmeans)
+```
+
+Significane Codes for G
+
+```{r}
+PH.cld.div <- multcomp::cld(PH.div.emmean, Letters = letters, alpha=0.05)
+PH.cld.div
+
+# Convert to dataframe and add to your plot data
+PH.cld.div.plot <- as.data.frame(PH.cld.div)
+```
+
+```{r}
+G <- ggplot(PH.cld.div.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+    geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  facet_wrap("ReefZone")+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "G")+
+  guides(fill="none")+
+  theme(
+        axis.ticks.x=element_blank(),
+        axis.text.y = element_text(colour = "black"),
+        axis.text.x = element_text(colour = "black",size= 6),
+         strip.text = element_blank())
+G
+```
+
+Significance Codes for H
+
+```{r}
+TP.cld.div <- multcomp::cld(TP.div.emmean.season.reefzone, Letters = letters, alpha=0.05)
+TP.cld.div
+
+# Convert to dataframe and add to your plot data
+TP.cld.div.plot <- as.data.frame(TP.cld.div)
+```
+
+```{r}
+H <- ggplot(TP.cld.div.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  facet_wrap("ReefZone")+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "H")+
+  guides(fill="none")+
+  theme(
+        axis.ticks.x=element_blank(),
+        axis.text.y = element_text(colour = "black"),
+        axis.text.x = element_text(colour = "black",size= 6),
+         strip.text = element_blank())
+H
+```
+
+Significance Codes for I
+
+```{r}
+CR.cld.div <- multcomp::cld(CR.div.emmean.reefzone, Letters = letters, alpha=0.05)
+CR.cld.div
+
+# Convert to dataframe and add to your plot data
+CR.cld.div.plot <- as.data.frame(CR.cld.div)
+```
+
+```{r}
+I <- ggplot(CR.cld.div.plot, aes(x=ReefZone,y=emmean, fill= ReefZone))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  theme_classic()+
+  scale_fill_manual(values=c("#440154FF","#22A884FF","#FDE725FF"))+
+  labs(tag = "I")+
+  guides(fill="none")+
+  theme(
+        axis.ticks.x=element_blank(),
+        axis.text.y = element_text(colour = "black"),
+        axis.text.x = element_text(colour = "black",size= 6),
+         strip.text = element_blank())
+I
+```
+
+```{r}
+CR.div.season.plot <- as.data.frame(CR.div.season.plot)
+```
+
+```{r}
+CR.div.season <- ggplot(CR.div.season.plot, aes(x=Season,y=emmean, fill= Season))+
+  geom_col()+
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE),width=0.2)+
+  geom_text(aes(label = trimws(.group), y = emmean + SE + 0.2), 
+            size = 4, vjust = 0) +  # Add significance letters
+  ylab(NULL)+
+  xlab(NULL)+
+  theme_classic()+
+  scale_fill_manual(values=c("#E69F00","#56B4E9"))+
+  labs(tag = "I")+
+  guides(fill="none")+
+  theme(
+        axis.ticks.x=element_blank(),
+        axis.text.y = element_text(colour = "black"),
+        axis.text.x = element_text(colour = "black",size= 6),
+         strip.text = element_blank())
+CR.div.season
+```
+
+##Marginal Effects Plots ###Abundance
+
+####Area
+
+```{r}
+my_cols <- c("#440154FF", "#21908CFF", "#B63679FF")  # PH, TP, CR
+# --- Port Hacking ---
+test_ph_2d <- ggeffect(PH.abund.model.1, terms = c("TwoDArea"), condition = c(VideoLength = 60))
+test_ph_2d$group <- factor(test_ph_2d$group, labels = "Port Hacking")
+attr(test_ph_2d, "rawdata")$group <- factor(attr(test_ph_2d, "rawdata")$group, labels = "Port Hacking")
+
+p_ph_2d <- plot(test_ph_2d, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(test_ph_2d, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab("Total Abundance (Predicted)")+
+  xlab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  labs(tag = "A)")+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_text(size = 6, colour = "black"),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+p_ph_2d
+# --- Towra Point ---
+test_tp_2d <- ggeffect(TP.abund.model.2, terms = c("TwoDArea"), condition = c(VideoLength = 60))
+test_tp_2d$group <- factor(test_tp_2d$group, labels = "Towra Point")
+attr(test_tp_2d, "rawdata")$group <- factor(attr(test_tp_2d, "rawdata")$group, labels = "Towra Point")
+
+p_tp_2d <- plot(test_tp_2d, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(test_tp_2d, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(expression(paste("Patch Area (m"^2, ")"))) +
+  ylab(NULL)+
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_text(size = 6, colour = "black"),
+    plot.title   = element_blank()
+  )
+# --- Crookhaven River ---
+test_cr_2d <- ggeffect(CR.abund.model, terms = c("TwoDArea"), condition = c(VideoLength = 60))
+test_cr_2d$group <- factor(test_cr_2d$group, labels = "Crookhaven River")
+attr(test_cr_2d, "rawdata")$group <- factor(attr(test_cr_2d, "rawdata")$group, labels = "Crookhaven River")
+
+p_cr_2d <- plot(test_cr_2d, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(test_cr_2d, "rawdata"),
+             aes(x = x, y = response, color = group),
+             colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_text(size = 6, colour = "black"),
+    plot.title   = element_blank()
+  )+
+  theme(legend.text = element_text(colour = "black"))
+p_cr_2d
+# --- Stitch together ---
+abund.2d <- (p_ph_2d | p_tp_2d | p_cr_2d)
+abund.2d
+```
+
+
+####Shape Index
+
+```{r}
+PH.abund.dat$Site <- "Port Hacking"
+TP.abund.dat$Site <- "Towra Point"
+CR.abund.dat$Site <- "Crookhaven River"
+
+# Bind raw data together
+raw.dat.shape <- rbind(
+  PH.abund.dat %>% dplyr::select(Site, SeasonReefZone, shape, TotalAbundance),
+  TP.abund.dat %>% dplyr::select(Site, SeasonReefZone, shape, TotalAbundance),
+  CR.abund.dat %>% dplyr::select(Site, SeasonReefZone, shape, TotalAbundance)
+)
+
+# --- Port Hacking (raw points only - shape not in model) ---
+p_ph_shape <- ggplot(raw.dat.shape[raw.dat.shape$Site == "Port Hacking", ],
+                     aes(x = shape, y = TotalAbundance)) +
+  geom_point(colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~Site, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  labs(tag = "B)")+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_text(size = 6, colour = "black"),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+
+# --- Towra Point (full model prediction) ---
+test_tp_shape <- ggeffect(TP.abund.model.2, terms = c("shape"), condition = c(VideoLength = 60))
+test_tp_shape$group <- factor(test_tp_shape$group, labels = "Towra Point")
+attr(test_tp_shape, "rawdata")$group <- factor(attr(test_tp_shape, "rawdata")$group, labels = "Towra Point")
+
+p_tp_shape <- plot(test_tp_shape, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(test_tp_shape, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab("Shape Index") +
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_text(size = 6, colour = "black"),
+    plot.title   = element_blank()
+  )
+p_tp_shape
+# --- Crookhaven River (raw points only - shape not in model) ---
+p_cr_shape <- ggplot(raw.dat.shape[raw.dat.shape$Site == "Crookhaven River", ],
+                     aes(x = shape, y = TotalAbundance)) +
+  geom_point(colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~Site, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_text(size = 6, colour = "black"),
+    plot.title   = element_blank()
+  )
+p_cr_shape
+# --- Stitch together ---
+abund.shape <- p_ph_shape | p_tp_shape | p_cr_shape
+abund.shape
+```
+
+####Circle Index Plotting
+```{r}
+plot(predict_response(PH.abund.model.1, terms = c("circle"),  margin = "marginalmeans",condition = c(VideoLength=60)))
+
+# --- Port Hacking ---
+test_ph_circle <- predict_response(PH.abund.model.1, terms = c("circle", "Season", "ReefZone"),  margin = "marginalmeans",condition = c(VideoLength=60))
+test_ph_circle$group <- factor(test_ph_circle$group, labels = levels(test_ph_circle$group))
+attr(test_ph_circle, "rawdata")$group <- factor(attr(test_ph_circle, "rawdata")$group, 
+                                                  labels = levels(attr(test_ph_circle, "rawdata")$group))
+# Filter the main ggeffects object
+test_ph_circle_filtered <- test_ph_circle[test_ph_circle$group == "Summer" & test_ph_circle$facet == "Off", ]
+
+# Filter the rawdata attribute
+attr(test_ph_circle_filtered, "rawdata") <- attr(test_ph_circle_filtered, "rawdata")[
+  attr(test_ph_circle_filtered, "rawdata")$group == "Summer" & 
+  attr(test_ph_circle_filtered, "rawdata")$facet == "Off", ]
+
+
+test_ph_circle_filtered$group <- "Port Hacking"
+
+# Relabel group in the rawdata attribute
+attr(test_ph_circle_filtered, "rawdata")$group <- factor(
+  attr(test_ph_circle_filtered, "rawdata")$group, 
+  labels = "Port Hacking"
+)
+
+
+test_ph_circle$group <- "Port Hacking"
+# Relabel group in the rawdata attribute
+attr(test_ph_circle, "rawdata")$group <- factor(
+  attr(test_ph_circle, "rawdata")$group, 
+  levels = levels(attr(test_ph_circle, "rawdata")$group),
+  labels = c("Port Hacking", "Port Hacking")  # one label per level
+)
+
+
+str(test_ph_circle)
+# Then plot as before
+p_ph_circle <- plot(test_ph_circle_filtered, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(test_ph_circle, "rawdata"),  # <-- full rawdata, not filtered
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab("Total Abundance (Predicted)")+
+  xlab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  labs(tag = "C)")+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+p_ph_circle
+
+# --- Towra Point ---
+test_tp_circle <- predict_response(TP.abund.model.2, terms = c("circle","ReefZone"),  margin = "marginalmeans",condition = c(VideoLength=60))
+test_tp_circle$group <- factor(test_tp_circle$group, labels = levels(test_tp_circle$group))
+attr(test_tp_circle, "rawdata")$group <- factor(attr(test_tp_circle, "rawdata")$group, 
+                                                  labels = levels(attr(test_tp_circle, "rawdata")$group))
+
+
+# Filter the main ggeffects object
+test_tp_circle_filtered <- test_tp_circle[test_tp_circle$group == "Edge" ]
+
+test_tp_circle_filtered$group <- "Towra Point"
+
+# Relabel group in the rawdata attribute
+attr(test_tp_circle_filtered, "rawdata")$group <- factor(
+  attr(test_tp_circle_filtered, "rawdata")$group, 
+  labels = "Towra Point"
+)
+
+
+attr(test_tp_circle, "rawdata")$group <- factor(
+  attr(test_tp_circle, "rawdata")$group, 
+  levels = levels(attr(test_tp_circle, "rawdata")$group),
+  labels = c("Towra Point", "Towra Point", "Towra Point")  # one label per level
+)
+
+p_tp_circle <- plot(test_tp_circle_filtered, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(test_tp_circle, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab("Circle Index") +
+  scale_x_continuous(n.breaks = 3)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size=6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+p_tp_circle
+
+# --- Crookhaven River ---
+test_cr_circle <- predict_response(CR.abund.model, terms = c("circle"),  margin = "marginalmeans",condition = c(VideoLength=60))
+plot(test_cr_circle)
+# test_cr_circle$group <- factor(test_cr_circle$group, labels = levels(test_cr_circle$group))
+# attr(test_cr_circle, "rawdata")$group <- factor(attr(test_cr_circle, "rawdata")$group, 
+#                                                   labels = levels(attr(test_cr_circle, "rawdata")$group))
+
+#relabeling main object
+test_cr_circle$group <- "Crookhaven River"
+
+#relabeling raw data
+# Relabel group in the rawdata attribute
+attr(test_cr_circle, "rawdata")$group <- factor(
+  attr(test_cr_circle, "rawdata")$group, 
+  labels = "Crookhaven River"
+)
+
+p_cr_circle <- plot(test_cr_circle, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(test_cr_circle, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL)+
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+p_cr_circle
+# --- Stitch together ---
+abund.circle <- p_ph_circle | p_tp_circle | p_cr_circle
+abund.circle
+```
+
+####Fractal Dimension
+```{r}
+library(ggeffects)
+library(ggplot2)
+library(patchwork)
+
+my_cols <- c("#440154FF", "#21908CFF", "#B63679FF")  # PH, TP, CR
+
+# --- Port Hacking ---
+test_ph <- ggeffect(PH.abund.model.1, terms = c("frac"), condition = c(VideoLength = 60))
+test_ph$group <- factor(test_ph$group, labels = "Port Hacking")
+attr(test_ph, "rawdata")$group <- factor(attr(test_ph, "rawdata")$group, labels = "Port Hacking")
+
+
+p_ph <- plot(test_ph, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(test_ph, "rawdata"), 
+             aes(x = x, y = response), 
+             colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab(NULL) +
+  scale_x_continuous(n.breaks = 3)+
+  labs(tag = "D)")+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+
+# --- Towra Point ---
+test_tp <- ggeffect(TP.abund.model.2, terms = c("frac"), condition = c(VideoLength = 60))
+test_tp$group <- factor(test_tp$group, labels = "Towra Point")
+attr(test_tp, "rawdata")$group <- factor(attr(test_tp, "rawdata")$group, labels = "Towra Point")
+
+p_tp <- plot(test_tp, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(test_tp, "rawdata"), 
+             aes(x = x, y = response), 
+             colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab("Fractal Dimension") +
+  scale_x_continuous(n.breaks = 3)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Crookhaven River ---
+test_cr <- ggeffect(CR.abund.model, terms = c("frac"), condition = c(VideoLength = 60))
+test_cr$group <- factor(test_cr$group, labels = "Crookhaven River")
+attr(test_cr, "rawdata")$group <- factor(attr(test_cr, "rawdata")$group, labels = "Crookhaven River")
+
+p_cr <- plot(test_cr, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(test_cr, "rawdata"), 
+             aes(x = x, y = response), 
+             colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+abund.frac <- p_ph | p_tp | p_cr
+abund.frac
+```
+
+
+####Isolation Index
+
+```{r}
+# --- Port Hacking ---
+test_ph_iso <- ggeffect(PH.abund.model.1, terms = c("iso.index"), condition = c(VideoLength = 60))
+test_ph_iso$group <- factor(test_ph_iso$group, labels = "Port Hacking")
+attr(test_ph_iso, "rawdata")$group <- factor(attr(test_ph_iso, "rawdata")$group, labels = "Port Hacking")
+
+p_ph_iso <- plot(test_ph_iso, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(test_ph_iso, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab("Total Abundance (Predicted)")+
+  xlab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  labs(tag = "E)")+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+
+# --- Towra Point ---
+test_tp_iso <- ggeffect(TP.abund.model.2, terms = c("iso.index"), condition = c(VideoLength = 60))
+test_tp_iso$group <- factor(test_tp_iso$group, labels = "Towra Point")
+attr(test_tp_iso, "rawdata")$group <- factor(attr(test_tp_iso, "rawdata")$group, labels = "Towra Point")
+
+p_tp_iso <- plot(test_tp_iso, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(test_tp_iso, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab("Isolation Index") +
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Crookhaven River ---
+test_cr_iso <- ggeffect(CR.abund.model, terms = c("iso.index"), condition = c(VideoLength = 60))
+test_cr_iso$group <- factor(test_cr_iso$group, labels = "Crookhaven River")
+attr(test_cr_iso, "rawdata")$group <- factor(attr(test_cr_iso, "rawdata")$group, labels = "Crookhaven River")
+
+p_cr_iso <- plot(test_cr_iso, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(test_cr_iso, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab(NULL) +
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+abund.iso <- p_ph_iso | p_tp_iso | p_cr_iso
+abund.iso
+```
+
+####Perimeter-area ratio
+
+```{r}
+PH.abund.dat$Site <- "Port Hacking"
+TP.abund.dat$Site <- "Towra Point"
+CR.abund.dat$Site <- "Crookhaven River"
+
+# Bind raw data together
+raw.dat.perimeterarea.ratio <- rbind(
+  PH.abund.dat %>% dplyr::select(Site, SeasonReefZone, perimeterarea.ratio, TotalAbundance),
+  TP.abund.dat %>% dplyr::select(Site, SeasonReefZone, perimeterarea.ratio, TotalAbundance),
+  CR.abund.dat %>% dplyr::select(Site, SeasonReefZone, perimeterarea.ratio, TotalAbundance)
+)
+
+# --- Port Hacking ---
+test_ph_par <- ggeffect(PH.abund.model.1, terms = c("perimeterarea.ratio"), condition = c(VideoLength = 60))
+test_ph_par$group <- factor(test_ph_par$group, labels = "Port Hacking")
+attr(test_ph_par, "rawdata")$group <- factor(attr(test_ph_par, "rawdata")$group, labels = "Port Hacking")
+
+p_ph_par <- plot(test_ph_par, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(test_ph_par, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab("Total Abundance (Predicted)")+
+  labs(tag = "G)")+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+
+# --- Towra Point ---
+p_tp_par <- ggplot(raw.dat.perimeterarea.ratio[raw.dat.perimeterarea.ratio$Site == "Towra Point", ],
+                     aes(x = perimeterarea.ratio, y = TotalAbundance)) +
+  geom_point(colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~Site, scales = "free") +
+  xlab("Perimeter:Area Ratio") +
+  ylab(NULL)+
+    theme_classic() +
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+p_tp_par
+# --- Crookhaven River ---
+test_cr_par <- ggeffect(CR.abund.model, terms = c("perimeterarea.ratio"), condition = c(VideoLength = 60))
+test_cr_par$group <- factor(test_cr_par$group, labels = "Crookhaven River")
+attr(test_cr_par, "rawdata")$group <- factor(attr(test_cr_par, "rawdata")$group, labels = "Crookhaven River")
+
+p_cr_par <- plot(test_cr_par, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(test_cr_par, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+abund.par <- p_ph_par | p_tp_par | p_cr_par
+abund.par
+
+```
+
+####Nearest Neighbour Distance
+
+```{r}
+PH.abund.dat$Site <- "Port Hacking"
+TP.abund.dat$Site <- "Towra Point"
+CR.abund.dat$Site <- "Crookhaven River"
+
+# Bind raw data together
+raw.dat.nearest.neighbour <- rbind(
+  PH.abund.dat %>% dplyr::select(Site, SeasonReefZone, nearest.neighbour, TotalAbundance),
+  TP.abund.dat %>% dplyr::select(Site, SeasonReefZone, nearest.neighbour, TotalAbundance),
+  CR.abund.dat %>% dplyr::select(Site, SeasonReefZone, nearest.neighbour, TotalAbundance)
+)
+
+# --- Port Hacking ---
+p_ph_nn <- ggplot(raw.dat.nearest.neighbour[raw.dat.nearest.neighbour$Site == "Port Hacking", ],
+                     aes(x = nearest.neighbour, y = TotalAbundance)) +
+  geom_point(colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~Site, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  labs(tag = "F)")+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+p_ph_nn +  scale_x_continuous(n.breaks = 4)
+
+# --- Towra Point ---
+test_tp_nn <- predict_response(TP.abund.model.2, terms = c("nearest.neighbour"), condition = c(VideoLength = 60))
+test_tp_nn$group <- factor(test_tp_nn$group, labels = "Towra Point")
+attr(test_tp_nn, "rawdata")$group <- factor(attr(test_tp_nn, "rawdata")$group, labels = "Towra Point")
+
+p_tp_nn <- plot(test_tp_nn, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(test_tp_nn, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab("Nearest Neighbour Distance (m)") +
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Crookhaven River ---
+test_cr_nn <- predict_response(CR.abund.model, terms = c("nearest.neighbour"), condition = c(VideoLength = 60))
+test_cr_nn$group <- factor(test_cr_nn$group, labels = "Crookhaven River")
+attr(test_cr_nn, "rawdata")$group <- factor(attr(test_cr_nn, "rawdata")$group, labels = "Crookhaven River")
+
+p_cr_nn <- plot(test_cr_nn, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(test_cr_nn, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  ylab(NULL)+
+  xlab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+abund.nn <- p_ph_nn | p_tp_nn | p_cr_nn
+abund.nn
+```
+
+
+####Rugosity
+
+```{r}
+PH.abund.dat$Site <- "Port Hacking"
+TP.abund.dat$Site <- "Towra Point"
+CR.abund.dat$Site <- "Crookhaven River"
+
+# Bind raw data together
+raw.dat.rugosity <- rbind(
+  PH.abund.dat %>% dplyr::select(Site, SeasonReefZone, Rugosity, TotalAbundance),
+  TP.abund.dat %>% dplyr::select(Site, SeasonReefZone, Rugosity, TotalAbundance),
+  CR.abund.dat %>% dplyr::select(Site, SeasonReefZone, Rugosity, TotalAbundance)
+)
+
+# --- Port Hacking ---
+test_ph_rug <- ggeffect(PH.abund.model.1, terms = c("Rugosity"), condition = c(VideoLength = 60))
+test_ph_rug$group <- factor(test_ph_rug$group, labels = "Port Hacking")
+attr(test_ph_rug, "rawdata")$group <- factor(attr(test_ph_rug, "rawdata")$group, labels = "Port Hacking")
+
+p_ph_rug <- plot(test_ph_rug, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(test_ph_rug, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL)+
+  labs(tag="H)")+
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank(),
+    plot.tag = element_text(size=8)
+  )
+p_ph_rug
+# --- Towra Point ---
+p_tp_rug <- ggplot(raw.dat.rugosity[raw.dat.rugosity$Site == "Towra Point", ],
+                     aes(x = Rugosity, y = TotalAbundance)) +
+  geom_point(colour = my_cols[2], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~Site, scales = "free") +
+  theme_classic() +
+  xlab("Rugosity") +
+  ylab(NULL)+
+  scale_x_continuous(n.breaks = 4)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Crookhaven River ---
+test_cr_rug <- ggeffect(CR.abund.model, terms = c("Rugosity"), condition = c(VideoLength = 60))
+test_cr_rug$group <- factor(test_cr_rug$group, labels = "Crookhaven River")
+attr(test_cr_rug, "rawdata")$group <- factor(attr(test_cr_rug, "rawdata")$group, labels = "Crookhaven River")
+
+p_cr_rug <- plot(test_cr_rug, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(test_cr_rug, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL)+
+  scale_x_continuous(n.breaks = 5)+
+  theme(
+    axis.title.y = element_text(size = 6, colour = "black"),
+    axis.text.y  = element_text(size=6,colour = "black"),
+    axis.title.x = element_text(size = 6, colour = "black"),
+    axis.text.x  = element_text(size=6,colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+abund.rug <- p_ph_rug | p_tp_rug | p_cr_rug
+abund.rug
+```
+
+## Pannelled Plot
+
+
+```{r}
+library(patchwork)
+
+library(patchwork)
+
+
+# Stitch together
+abund.covar.plot <- abund.2d /
+  abund.shape /
+  abund.circle /
+  abund.frac /
+  abund.iso /
+  abund.nn /
+  abund.par /
+  abund.rug +plot_layout(ncol=2)
+
+abund.covar.plot
+```
+
+```{r}
+
+ggsave("Figure5.pdf", plot = abund.covar.plot, width = 18, height = 24, units = "cm",
+       dpi = 600)
+
+```
+
+
+###Richness 
+
+####Circle
+
+```{r}
+my_cols <- c("#440154FF", "#21908CFF", "#B63679FF")  # PH, TP, CR
+
+
+PH.rich.dat$Site <- "Port Hacking"
+TP.rich.dat$Site <- "Towra Point"
+CR.rich.dat$Site <- "Crookhaven River"
+PH.rich.dat$SeasonReefZone <- paste(PH.rich.dat$Season, PH.rich.dat$ReefZone, sep = " ")
+PH.rich.dat$SeasonReefZone <- as.factor(PH.rich.dat$SeasonReefZone)
+TP.rich.dat$SeasonReefZone <- paste(TP.rich.dat$Season, TP.rich.dat$ReefZone, sep = " ")
+TP.rich.dat$SeasonReefZone <- as.factor(TP.rich.dat$SeasonReefZone)
+CR.rich.dat$SeasonReefZone <- paste(CR.rich.dat$Season, CR.rich.dat$ReefZone, sep = " ")
+CR.rich.dat$SeasonReefZone <- as.factor(CR.rich.dat$SeasonReefZone)
+
+# Bind raw data together for circle
+raw.dat.circle <- rbind(
+  PH.rich.dat %>% dplyr::select(Site, SeasonReefZone, circle, Species_Richness_Zone),
+  TP.rich.dat %>% dplyr::select(Site, SeasonReefZone, circle, Species_Richness_Zone),
+  CR.rich.dat %>% dplyr::select(Site, SeasonReefZone, circle, Species_Richness_Zone)
+)
+
+# --- Port Hacking (model predictions) ---
+rich_ph_circle <- ggeffect(PH.rich.model, terms = c("circle"), condition = c(VideoLength = 60))
+rich_ph_circle$group <- factor(rich_ph_circle$group, labels = "Port Hacking")
+attr(rich_ph_circle, "rawdata")$group <- factor(attr(rich_ph_circle, "rawdata")$group, labels = "Port Hacking")
+
+rich_ph_circle_plot <- plot(rich_ph_circle, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(rich_ph_circle, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab("Species Richness (Predicted)") +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_text(size = 10, colour = "black"),
+    plot.title   = element_blank()
+  )
+
+# --- Towra Point (model predictions) ---
+rich_tp_circle <- ggeffect(TP.rich.model, terms = c("circle"), condition = c(VideoLength = 60))
+rich_tp_circle$group <- factor(rich_tp_circle$group, labels = "Towra Point")
+attr(rich_tp_circle, "rawdata")$group <- factor(attr(rich_tp_circle, "rawdata")$group, labels = "Towra Point")
+
+rich_tp_circle_plot <- plot(rich_tp_circle, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(rich_tp_circle, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab("Circle Index") +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_text(size = 10, colour = "black"),
+    plot.title   = element_blank()
+  )
+
+# --- Crookhaven River (raw points only - circle not in model) ---
+rich_cr_circle <- ggplot(raw.dat.circle[raw.dat.circle$Site == "Crookhaven River", ],
+                         aes(x = circle, y = Species_Richness_Zone)) +
+  geom_point(colour = my_cols[3], alpha = 0.6) +
+  facet_wrap(~Site, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_text(size = 10, colour = "black"),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+rich.circle <- rich_ph_circle_plot | rich_tp_circle_plot | rich_cr_circle
+rich.circle
+```
+
+
+####Fractal Dimension
+
+```{r}
+# --- Port Hacking (model predictions) ---
+rich_ph_frac <- ggeffect(PH.rich.model, terms = c("frac"))
+rich_ph_frac$group <- factor(rich_ph_frac$group, labels = "Port Hacking")
+attr(rich_ph_frac, "rawdata")$group <- factor(attr(rich_ph_frac, "rawdata")$group, labels = "Port Hacking")
+
+rich_ph_frac_plot <- plot(rich_ph_frac, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(rich_ph_frac, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab("Species Richness (Predicted)") +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Towra Point (model predictions) ---
+rich_tp_frac <- ggeffect(TP.rich.model, terms = c("frac"), condition = c(VideoLength = 60))
+rich_tp_frac$group <- factor(rich_tp_frac$group, labels = "Towra Point")
+attr(rich_tp_frac, "rawdata")$group <- factor(attr(rich_tp_frac, "rawdata")$group, labels = "Towra Point")
+
+rich_tp_frac_plot <- plot(rich_tp_frac, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(rich_tp_frac, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab("Fractal Dimension") +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Crookhaven River (model predictions) ---
+rich_cr_frac <- ggeffect(CR.rich.model, terms = c("frac"))
+rich_cr_frac$group <- factor(rich_cr_frac$group, labels = "Crookhaven River")
+attr(rich_cr_frac, "rawdata")$group <- factor(attr(rich_cr_frac, "rawdata")$group, labels = "Crookhaven River")
+
+rich_cr_frac_plot <- plot(rich_cr_frac, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(rich_cr_frac, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_blank(),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+rich.frac <- rich_ph_frac_plot | rich_tp_frac_plot | rich_cr_frac_plot
+rich.frac
+```
+
+####Pannelled Plot
+```{r}
+rich.trend.plot <- rich.circle / rich.frac  + plot_annotation(tag_levels = list(c("A)", "", "","B)", "", "")))
+rich.trend.plot
+```
+
+```{r}
+ggsave("Figure6.pdf", plot = rich.trend.plot, width = 18, height = 22, units = "cm",
+       dpi = 600)
+```
+
+
+###Diversity
+
+####Shape
+
+####Circle
+
+```{r}
+# --- Port Hacking (filtered line - Edge only, all raw points) ---
+div_ph_circle <- predict_response(PH.div.model.1, terms = c("circle", "ReefZone"),
+                                  margin = "marginalmeans", condition = c(VideoLength = 60))
+div_ph_circle$group <- factor(div_ph_circle$group, labels = levels(div_ph_circle$group))
+attr(div_ph_circle, "rawdata")$group <- factor(attr(div_ph_circle, "rawdata")$group,
+                                                labels = levels(attr(div_ph_circle, "rawdata")$group))
+
+# Filter the main ggeffects object to Edge only
+div_ph_circle_filtered <- div_ph_circle[div_ph_circle$group == "Edge", ]
+
+# Filter the rawdata attribute to match
+attr(div_ph_circle_filtered, "rawdata") <- attr(div_ph_circle_filtered, "rawdata")[
+  attr(div_ph_circle_filtered, "rawdata")$group == "Edge", ]
+
+# Relabel filtered object group to site name
+div_ph_circle_filtered$group <- "Port Hacking"
+attr(div_ph_circle_filtered, "rawdata")$group <- factor(
+  attr(div_ph_circle_filtered, "rawdata")$group,
+  labels = "Port Hacking"
+)
+
+# Relabel full object group to site name (for raw points)
+div_ph_circle$group <- "Port Hacking"
+attr(div_ph_circle, "rawdata")$group <- factor(
+  attr(div_ph_circle, "rawdata")$group,
+  levels = levels(attr(div_ph_circle, "rawdata")$group),
+  labels = rep("Port Hacking", length(levels(attr(div_ph_circle, "rawdata")$group)))
+)
+
+# Plot filtered line with all raw points
+div_ph_circle_plot <- plot(div_ph_circle_filtered, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(div_ph_circle, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab("Shannon's H (Predicted)") +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_text(size = 10, colour = "black"),
+    plot.title   = element_blank()
+  )
+
+
+
+# --- Towra Point (model predictions) ---
+div_tp_circle <- ggeffect(TP.div.model.1, terms = c("circle"), condition = c(VideoLength = 60))
+div_tp_circle$group <- factor(div_tp_circle$group, labels = "Towra Point")
+attr(div_tp_circle, "rawdata")$group <- factor(attr(div_tp_circle, "rawdata")$group, labels = "Towra Point")
+
+div_tp_circle_plot <- plot(div_tp_circle, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(div_tp_circle, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab("Circle Index") +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_text(size = 10, colour = "black"),
+    plot.title   = element_blank()
+  )
+
+# --- Crookhaven River (filtered line - Edge only, all raw points) ---
+div_cr_circle <- predict_response(CR.div.model, terms = c("circle", "ReefZone"),
+                                  margin = "marginalmeans", condition = c(VideoLength = 60))
+div_cr_circle$group <- factor(div_cr_circle$group, labels = levels(div_cr_circle$group))
+attr(div_cr_circle, "rawdata")$group <- factor(attr(div_cr_circle, "rawdata")$group,
+                                                labels = levels(attr(div_cr_circle, "rawdata")$group))
+
+# Filter the main ggeffects object to Edge only
+div_cr_circle_filtered <- div_cr_circle[div_cr_circle$group == "Edge", ]
+
+# Filter the rawdata attribute to match
+attr(div_cr_circle_filtered, "rawdata") <- attr(div_cr_circle_filtered, "rawdata")[
+  attr(div_cr_circle_filtered, "rawdata")$group == "Edge", ]
+
+# Relabel filtered object group to site name
+div_cr_circle_filtered$group <- "Crookhaven River"
+attr(div_cr_circle_filtered, "rawdata")$group <- factor(
+  attr(div_cr_circle_filtered, "rawdata")$group,
+  labels = "Crookhaven River"
+)
+
+# Relabel full object group to site name (for raw points)
+div_cr_circle$group <- "Crookhaven River"
+attr(div_cr_circle, "rawdata")$group <- factor(
+  attr(div_cr_circle, "rawdata")$group,
+  levels = levels(attr(div_cr_circle, "rawdata")$group),
+  labels = rep("Crookhaven River", length(levels(attr(div_cr_circle, "rawdata")$group)))
+)
+
+# Plot filtered line with all raw points
+div_cr_circle_plot <- plot(div_cr_circle_filtered, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(div_cr_circle, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    strip.text   = element_text(size = 10, colour = "black"),
+    plot.title   = element_blank()
+  )
+
+# --- Stitch together ---
+div.circle <- div_ph_circle_plot | div_tp_circle_plot | div_cr_circle_plot
+div.circle
+```
+
+#### Fractal Dimension
+
+```{r}
+
+
+# --- Port Hacking (model predictions) ---
+div_ph_frac <- ggeffect(PH.div.model.1, terms = c("frac"), condition = c(VideoLength = 60))
+div_ph_frac$group <- factor(div_ph_frac$group, labels = "Port Hacking")
+attr(div_ph_frac, "rawdata")$group <- factor(attr(div_ph_frac, "rawdata")$group, labels = "Port Hacking")
+
+div_ph_frac_plot <- plot(div_ph_frac, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(div_ph_frac, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab("Shannon's H (Predicted)") +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    plot.title   = element_blank(),
+     strip.text   = element_blank()
+  )
+
+# --- Towra Point (model predictions) ---
+div_tp_frac <- ggeffect(TP.div.model.1, terms = c("frac"), condition = c(VideoLength = 60))
+div_tp_frac$group <- factor(div_tp_frac$group, labels = "Towra Point")
+attr(div_tp_frac, "rawdata")$group <- factor(attr(div_tp_frac, "rawdata")$group, labels = "Towra Point")
+
+div_tp_frac_plot <- plot(div_tp_frac, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(div_tp_frac, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab("Fractal Dimension") +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    plot.title   = element_blank(),
+     strip.text   = element_blank()
+  )
+
+# --- Crookhaven River (raw points only - frac not in model) ---
+CR.div.dat$Site <- "Crookhaven River"
+
+div_cr_frac_plot <- ggplot(CR.div.dat,
+                           aes(x = frac, y = ShannonsH)) +
+  geom_point(colour = my_cols[3], alpha = 0.6) +
+  facet_wrap(~Site, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    plot.title   = element_blank(),
+     strip.text   = element_blank()
+  )
+div_cr_frac_plot
+# --- Stitch together ---
+div.frac <- div_ph_frac_plot | div_tp_frac_plot | div_cr_frac_plot
+div.frac
+```
+
+####Isolation Index
+
+```{r}
+# --- Port Hacking (model predictions) ---
+div_ph_iso <- ggeffect(PH.div.model.1, terms = c("iso.index"), condition = c(VideoLength = 60))
+div_ph_iso$group <- factor(div_ph_iso$group, labels = "Port Hacking")
+attr(div_ph_iso, "rawdata")$group <- factor(attr(div_ph_iso, "rawdata")$group, labels = "Port Hacking")
+
+div_ph_iso_plot <- plot(div_ph_iso, show_data = FALSE, show_title = FALSE, colors = my_cols[1]) +
+  geom_point(data = attr(div_ph_iso, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[1], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab("Shannon's H (Predicted)") +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    plot.title   = element_blank(),
+     strip.text   = element_blank()
+  )
+
+# --- Towra Point (model predictions) ---
+div_tp_iso <- ggeffect(TP.div.model.1, terms = c("iso.index"), condition = c(VideoLength = 60))
+div_tp_iso$group <- factor(div_tp_iso$group, labels = "Towra Point")
+attr(div_tp_iso, "rawdata")$group <- factor(attr(div_tp_iso, "rawdata")$group, labels = "Towra Point")
+
+div_tp_iso_plot <- plot(div_tp_iso, show_data = FALSE, show_title = FALSE, colors = my_cols[2]) +
+  geom_point(data = attr(div_tp_iso, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[2], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab("Isolation Index") +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    plot.title   = element_blank(),
+     strip.text   = element_blank()
+  )
+
+# --- Crookhaven River (filtered line - Winter only, all raw points) ---
+div_cr_iso <- predict_response(CR.div.model, terms = c("iso.index", "Season"),
+                               margin = "marginalmeans", condition = c(VideoLength = 60))
+div_cr_iso$group <- factor(div_cr_iso$group, labels = levels(div_cr_iso$group))
+attr(div_cr_iso, "rawdata")$group <- factor(attr(div_cr_iso, "rawdata")$group,
+                                             labels = levels(attr(div_cr_iso, "rawdata")$group))
+
+# Filter the main ggeffects object to Winter only
+div_cr_iso_filtered <- div_cr_iso[div_cr_iso$group == "Winter", ]
+
+# Filter the rawdata attribute to match
+attr(div_cr_iso_filtered, "rawdata") <- attr(div_cr_iso_filtered, "rawdata")[
+  attr(div_cr_iso_filtered, "rawdata")$group == "Winter", ]
+
+# Relabel filtered object group to site name
+div_cr_iso_filtered$group <- "Crookhaven River"
+attr(div_cr_iso_filtered, "rawdata")$group <- factor(
+  attr(div_cr_iso_filtered, "rawdata")$group,
+  labels = "Crookhaven River"
+)
+
+# Relabel full object group to site name (for raw points)
+div_cr_iso$group <- "Crookhaven River"
+attr(div_cr_iso, "rawdata")$group <- factor(
+  attr(div_cr_iso, "rawdata")$group,
+  levels = levels(attr(div_cr_iso, "rawdata")$group),
+  labels = rep("Crookhaven River", length(levels(attr(div_cr_iso, "rawdata")$group)))
+)
+
+# Plot filtered line with all raw points
+div_cr_iso_plot <- plot(div_cr_iso_filtered, show_data = FALSE, show_title = FALSE, colors = my_cols[3]) +
+  geom_point(data = attr(div_cr_iso, "rawdata"),
+             aes(x = x, y = response),
+             colour = my_cols[3], alpha = 0.6) +
+  facet_wrap(~group, scales = "free") +
+  theme_classic() +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(
+    axis.title.y = element_text(size = 8, colour = "black"),
+    axis.text.y  = element_text(colour = "black"),
+    axis.title.x = element_text(size = 8, colour = "black"),
+    axis.text.x  = element_text(colour = "black"),
+    plot.title   = element_blank(),
+     strip.text   = element_blank()
+  )
+
+# --- Stitch together ---
+div.iso <- div_ph_iso_plot | div_tp_iso_plot | div_cr_iso_plot
+div.iso
+
+# --- Stitch together ---
+div.iso <- div_ph_iso_plot | div_tp_iso_plot | div_cr_iso_plot
+div.iso
+```
+
+####Pannelled Plot
+
+```{r}
+div.line.plot <- div.circle / div.frac / div.iso  + plot_annotation(tag_levels = list(c("A)", "", "","B)", "", "","C)", "", "")))
+div.line.plot
+```
+
+```{r}
+ggsave("Figure7.pdf", plot = div.line.plot, width = 18, height = 22, units = "cm",
+       dpi = 600)
+```
+
+#Multivariate Analysis
+
+```{r}
+library(mvabund)
+
+#loading in species file
+species <- read.csv("species.data.csv")
+
+species <- species %>% 
+  mutate(abundance = AverageMeanCount*VideoLength)
+```
+
+##Port Hacking
+
+```{r}
+PH.species <- species %>% 
+  filter(Site == "SY-PH")
+
+PH.species <- as.data.frame(PH.species)
+
+unique(PH.species$ScientificName)
+
+#selecting Reef ID, Season, Reef Zone, Year, ScientificName, and Abundance
+PH.species <- PH.species %>% 
+  select(SurveyID, ScientificName, abundance)
+
+str(PH.species)
+
+PH.species$abundance <- as.numeric(PH.species$abundance)
+
+PH.species <- distinct(PH.species)
+
+# Pivot the dataframe wider
+PH.species <- PH.species %>%
+  pivot_wider(names_from = ScientificName, values_from = abundance, values_fill = 0)
+
+PH.multivar.dat.order <- PH.species$SurveyID
+
+PH.species <- PH.species[,-1]
+
+colnames(PH.species)[23] <- "Sillaginodes punctatus"
+
+dat.mvPH <- mvabund(PH.species)
+```
+
+```{r}
+PH.multivar.dat.order <- as.data.frame(PH.multivar.dat.order)
+colnames(PH.multivar.dat.order) <- "SurveyID"
+PH.multivar.dat.order$SurveyID <- as.factor(PH.multivar.dat.order$SurveyID)
+
+PH.multivar.dat <- left_join(PH.multivar.dat.order, PH.abund.dat, by = "SurveyID")
+```
+
+```{r}
+mod.mvPH <- manyglm(dat.mvPH ~ Season+ReefZone+
+                            TwoDArea+
+                  circle +
+                    frac+
+                    perimeterarea.ratio +
+                    iso.index +
+                    nearest.neighbour +
+                    Rugosity+
+                  offset(log(VideoLength)),
+                  family="negative.binomial",
+                  data=PH.multivar.dat)
+```
+
+```{r}
+step(mod.mvPH, direction = "both")
+```
+
+```{r}
+set.seed(123)
+mod.mvPH <- manyglm(dat.mvPH ~ Season+ReefZone+
+                            TwoDArea+
+                  offset(log(VideoLength)),
+                  family="negative.binomial",
+                  data=PH.multivar.dat)
+vals <- AIC(mod.mvPH)
+sum(vals)
+
+#anova.mvPH <- anova(mod.mvPH, nBoot=1000, p.uni="adjusted",pairwise.comp = ~ReefZone)
+#saveRDS(anova.mvPH, "anova.mvPH.rds")
+#anova.mvPH
+plot(mod.mvPH, which=1:3)
+plot.mvabund(mod.mvPH)
+
+
+```
+
+```{r}
+anova.mvPH <- readRDS("anova.mvPH.rds")
+anova.mvPH
+```
+
+##Towra Point
+
+```{r}
+TP.species <- species %>% 
+  filter(Site == "SY-TP")
+
+TP.species <- as.data.frame(TP.species)
+
+TP.species <- TP.species %>% 
+  select(SurveyID, ScientificName, abundance)
+
+str(TP.species)
+
+TP.species$abundance <- as.numeric(TP.species$abundance)
+
+TP.species <- distinct(TP.species)
+
+TP.species <- TP.species %>%
+  pivot_wider(names_from = ScientificName, values_from = abundance, values_fill = 0)
+
+TP.multivar.dat.order <- TP.species$SurveyID
+
+TP.multivar.dat.order <- as.data.frame(TP.multivar.dat.order)
+
+colnames(TP.species)[3] <- "Abudefduf sexfasciatus"
+
+colnames(TP.species)[34] <- "Sillaginodes punctatus"
+
+TP.species <- TP.species[,-1]
+
+dat.mvTP <- mvabund(TP.species)
+```
+
+```{r}
+TP.multivar.dat.order <- as.data.frame(TP.multivar.dat.order)
+
+colnames(TP.multivar.dat.order) <- "SurveyID"
+
+TP.multivar.dat.order$SurveyID <- as.factor(TP.multivar.dat.order$SurveyID)
+
+TP.multivar.dat <- left_join(TP.multivar.dat.order, TP.abund.dat, by = "SurveyID")
+```
+
+```{r}
+mod.mvTP <- manyglm(dat.mvTP ~ Season + ReefZone+
+                            TwoDArea+
+                  circle +
+                    frac+
+                    perimeterarea.ratio +
+                    iso.index +
+                    nearest.neighbour +
+                    Rugosity+
+                  offset(log(VideoLength)),
+                  family="negative.binomial",
+                  data=TP.multivar.dat)
+
+step(mod.mvTP, direction = "both")
+```
+
+```{r}
+mod.mvTP <- manyglm(dat.mvTP ~ Season + ReefZone + perimeterarea.ratio + iso.index + 
+    nearest.neighbour + offset(log(VideoLength)),
+                  family="negative.binomial",
+                  data=TP.multivar.dat)
+
+vals <- AIC(mod.mvTP)
+sum(vals)
+```
+
+```{r}
+#anova.mvTP <- anova(mod.mvTP, nBoot=1000, p.uni="adjusted",pairwise.comp = ~ReefZone)
+
+#saveRDS(anova.mvTP, "anova.mvTP.rds")
+```
+
+```{r}
+anova.mvTP <- readRDS("anova.mvTP.rds")
+anova.mvTP
+```
+
+##Crookhaven
+
+```{r}
+CR.species <- species %>% 
+  filter(Site == "OP-CR")
+
+CR.species <- as.data.frame(CR.species)
+
+CR.species <- CR.species %>% 
+  select(SurveyID, ScientificName, abundance)
+
+str(CR.species)
+
+CR.species$abundance <- as.numeric(CR.species$abundance)
+
+CR.species <- distinct(CR.species)
+
+CR.species <- CR.species %>%
+  pivot_wider(names_from = ScientificName, values_from = abundance, values_fill = 0)
+
+CR.multivar.dat.order <- CR.species$SurveyID
+
+CR.multivar.dat.order <- as.data.frame(CR.multivar.dat.order)
+
+colnames(CR.species)[3] <- "Abudefduf sexfasciatus"
+
+CR.species <- CR.species[,-1]
+
+dat.mvCR <- mvabund(CR.species)
+```
+
+```{r}
+CR.multivar.dat.order <- as.data.frame(CR.multivar.dat.order)
+
+colnames(CR.multivar.dat.order) <- "SurveyID"
+
+CR.multivar.dat.order$SurveyID <- as.factor(CR.multivar.dat.order$SurveyID)
+
+CR.multivar.dat <- left_join(CR.multivar.dat.order, CR.abund.dat, by = "SurveyID")
+```
+
+```{r}
+mod.mvCR <- manyglm(dat.mvCR ~ Season + ReefZone+
+                            TwoDArea+
+                  circle +
+                    frac+
+                    perimeterarea.ratio +
+                    iso.index +
+                    nearest.neighbour +
+                    Rugosity+
+                  offset(log(VideoLength)),
+                  family="negative.binomial",
+                  data=CR.multivar.dat)
+
+step(mod.mvCR, direction = "both")
+```
+
+```{r}
+mod.mvCR <- manyglm(dat.mvCR ~ Season + ReefZone+
+                            TwoDArea+
+                      iso.index+
+                  offset(log(VideoLength)),
+                  family="negative.binomial",
+                  data=CR.multivar.dat)
+vals <- AIC(mod.mvCR)
+sum(vals)
+```
+
+```{r}
+# anova.mvCR <- anova(mod.mvCR, nBoot=1000, p.uni="adjusted",pairwise.comp = ~ReefZone)
+# saveRDS(anova.mvCR, "anova.mvCR.rds")
+```
+
+```{r}
+anova.mvCR <- readRDS("anova.mvCR.rds")
+anova.mvCR
+```
+
+##Plots
+
+```{r}
+library(vegan)
+```
+
+Port Hacking
+
+```{r}
+set.seed(123)
+PHMultiMDS <- metaMDS(dat.mvPH, distance="bray",k=2,autotransform = FALSE, trymax=100)
+PHMultiMDS
+plot(PHMultiMDS)
+points(PHMultiMDS, display="sites", pch=c(16,8,17,11)[as.numeric(as.factor(PH.multivar.dat$Season))],col=c("red","blue")[as.numeric(as.factor(PH.multivar.dat$Season))])
+legend("topright", legend=c(levels(as.factor(PH.multivar.dat$Season))), pch=c(16,8,17,11),col=c("red","blue"))
+legend("topleft", "2D Stress=0.198")
+PHSeasonMDS <- ordiellipse(PHMultiMDS, as.factor(PH.multivar.dat$Season), col=c("red","blue"),draw="polygon")
+PHSeasonMDS + mtext("A)", side=3, line=1, cex=1.2)  # side=2 places it on the y-axis, adjust `line` and `cex` as needed
+A
+```
+
+```{r}
+library(ggordiplots)
+set.seed(123)
+PHMultiMDS <- metaMDS(dat.mvPH, distance="bray",k=2,autotransform = FALSE, trymax=100)
+NMDS.plot.PH.season <- gg_ordiplot(PHMultiMDS, groups = PH.multivar.dat$Season, 
+                      plot=FALSE)
+
+NMDS.plot.PH.season <- NMDS.plot.PH.season$plot
+
+NMDS.plot.PH.season$layers[[1]]$aes_params$size <- 1
+
+NMDS.plot.PH.season <- NMDS.plot.PH.season+theme_classic()+ 
+  labs(colour = "Season", tag = "A)", title = "Port Hacking")+
+  theme(plot.title = element_text(hjust=0.5))+
+  xlab(NULL)+
+  theme(aspect.ratio=1)+
+  scale_colour_manual(values=c("#E69F00","#56B4E9"))+
+  theme(axis.title.y = element_text(colour = "black"))+
+  theme(axis.text.y = element_text(colour="black"))+
+  theme(axis.title.x = element_text(colour = "black"))+
+  theme(axis.text.x = element_text(colour="black"))+
+  theme(legend.text = element_text(colour="black"))
+```
+
+```{r}
+plot(PHMultiMDS)
+points(PHMultiMDS, display="sites", pch=c(16,8,17,11)[as.numeric(as.factor(PH.multivar.dat$ReefZone))],col=c("red","blue","green")[as.numeric(as.factor(PH.multivar.dat$ReefZone))])
+legend("topright", legend=c(levels(as.factor(PH.multivar.dat$ReefZone))), pch=c(16,8,17,11),col=c("red","blue","green"))
+legend("topleft", "2D Stress=0.198")
+PHZoneMDS <- ordiellipse(PHMultiMDS, as.factor(PH.multivar.dat$ReefZone), col=c("red","blue","green"),draw="polygon")
+PHZoneMDS +mtext("B)", side=3, line=1, cex=1.2)  # side=2 places it on the y-axis, adjust `line` and `cex` as needed
+```
+
+```{r}
+NMDS.plot.PH.reefzone <- gg_ordiplot(PHMultiMDS, groups = PH.multivar.dat$ReefZone, 
+                      plot=FALSE)
+
+NMDS.plot.PH.reefzone <- NMDS.plot.PH.reefzone$plot
+
+NMDS.plot.PH.reefzone$layers[[1]]$aes_params$size <- 1
+
+NMDS.plot.PH.reefzone <- NMDS.plot.PH.reefzone+theme_classic()+ 
+  labs(colour = "Reef Zone", tag = "D)")+
+  theme(aspect.ratio=1)+
+  scale_color_viridis(discrete = TRUE, option = "D")+
+  theme(axis.title.y = element_text(colour = "black"))+
+  theme(axis.text.y = element_text(colour="black"))+
+  theme(axis.title.x = element_text(colour = "black"))+
+  theme(axis.text.x = element_text(colour="black"))+
+  theme(legend.text = element_text(colour="black"))
+```
+
+Towra Point
+
+```{r}
+set.seed(123)
+TPMultiMDS <- metaMDS(dat.mvTP, distance="bray",k=2,autotransform = FALSE, trymax=100)
+TPMultiMDS
+plot(TPMultiMDS)
+points(TPMultiMDS, pch=c(16,8)[as.numeric(as.factor(TP.multivar.dat$Season))],col=c("red","blue")[as.numeric(as.factor(TP.multivar.dat$Season))])
+legend("topright", legend=c(levels(as.factor(TP.multivar.dat$Season))), pch=c(16,8,17,11),col=c("red","blue"))
+legend("topleft", "2D Stress=0.178")
+TPSeasonMDS <- ordiellipse(TPMultiMDS, as.factor(TP.multivar.dat$Season), col=c("red","blue"),draw="polygon")
+TPSeasonMDS  +mtext("C)", side=3, line=1, cex=1.2)  # side=2 places it on the y-axis, adjust `line` and `cex` as needed
+```
+
+```{r}
+set.seed(123)
+TPMultiMDS <- metaMDS(dat.mvTP, distance="bray",k=2,autotransform = FALSE, trymax=100)
+
+NMDS.plot.TP.season <- gg_ordiplot(TPMultiMDS, groups = TP.multivar.dat$Season, 
+                      plot=FALSE)
+
+NMDS.plot.TP.season <- NMDS.plot.TP.season$plot
+
+NMDS.plot.TP.season$layers[[1]]$aes_params$size <- 1
+
+NMDS.plot.TP.season <- NMDS.plot.TP.season+theme_classic()+ 
+  labs(colour = "Season", tag = "B)", title= "Towra Point")+
+  theme(plot.title = element_text(hjust=0.5))+
+  ylab(NULL)+
+  xlab(NULL)+
+  theme(aspect.ratio=1)+
+  scale_colour_manual(values=c("#E69F00","#56B4E9"))+
+  theme(axis.title.y = element_text(colour = "black"))+
+  theme(axis.text.y = element_text(colour="black"))+
+  theme(axis.title.x = element_text(colour = "black"))+
+  theme(axis.text.x = element_text(colour="black"))+
+  theme(legend.text = element_text(colour="black"))
+```
+
+```{r}
+plot(TPMultiMDS)
+points(TPMultiMDS, display="sites", pch=c(16,8,17,11)[as.numeric(as.factor(TP.multivar.dat$ReefZone))],col=c("red","blue","green")[as.numeric(as.factor(TP.multivar.dat$ReefZone))])
+legend("topright", legend=c(levels(as.factor(TP.multivar.dat$ReefZone))), pch=c(16,8,17,11),col=c("red","blue","green"))
+legend("topleft", "2D Stress=0.178")
+TPZoneMDS <- ordiellipse(TPMultiMDS, as.factor(TP.multivar.dat$ReefZone), col=c("red","blue","green"),draw="polygon")
+TPZoneMDS +mtext("D)", side=3, line=1, cex=1.2)  # side=2 places it on the y-axis, adjust `line` and `cex` as needed
+```
+
+```{r}
+NMDS.plot.TP.reefzone <- gg_ordiplot(TPMultiMDS, groups = TP.multivar.dat$ReefZone, 
+                      plot=FALSE)
+
+NMDS.plot.TP.reefzone <- NMDS.plot.TP.reefzone$plot
+
+NMDS.plot.TP.reefzone$layers[[1]]$aes_params$size <- 1
+
+NMDS.plot.TP.reefzone <- NMDS.plot.TP.reefzone+theme_classic()+ 
+  labs(colour = "Reef Zone", tag = "E)")+
+  ylab(NULL)+
+  theme(aspect.ratio=1)+
+  scale_color_viridis(discrete = TRUE, option = "D")+
+  theme(axis.title.y = element_text(colour = "black"))+
+  theme(axis.text.y = element_text(colour="black"))+
+  theme(axis.title.x = element_text(colour = "black"))+
+  theme(axis.text.x = element_text(colour="black"))+
+  theme(legend.text = element_text(colour="black"))
+
+```
+
+Crookhaven
+
+```{r}
+set.seed(1234)
+CRMultiMDS <- metaMDS(dat.mvCR, distance="bray",k=2,autotransform = FALSE, trymax=100)
+CRMultiMDS
+plot(CRMultiMDS)
+points(CRMultiMDS, display="sites", pch=c(16,8,17,11)[as.numeric(as.factor(CR.multivar.dat$Season))],col=c("red","blue")[as.numeric(as.factor(CR.multivar.dat$Season))])
+legend("topright", legend=c(levels(as.factor(CR.multivar.dat$Season))), pch=c(16,8,17,11),col=c("red","blue"))
+legend("topleft", "2D Stress=0.179")
+CRSeasonMDS <- ordiellipse(CRMultiMDS, as.factor(CR.multivar.dat$Season), col=c("red","blue"),draw="polygon")
+CRSeasonMDS +mtext("E)", side=3, line=1, cex=1.2)  # side=2 places it on the y-axis, adjust `line` and `cex` as needed
+```
+
+```{r}
+set.seed(1234)
+CRMultiMDS <- metaMDS(dat.mvCR, distance="bray",k=2,autotransform = FALSE, trymax=100)
+
+
+NMDS.plot.CR.season <- gg_ordiplot(CRMultiMDS, groups = CR.multivar.dat$Season, 
+                      plot=FALSE)
+
+
+NMDS.plot.CR.season <- NMDS.plot.CR.season$plot
+
+NMDS.plot.CR.season$layers[[1]]$aes_params$size <- 1
+
+NMDS.plot.CR.season <- NMDS.plot.CR.season+theme_classic()+ 
+  labs(colour = "Season", tag = "C)", title="Crookhaven River")+
+  theme(plot.title = element_text(hjust=0.5))+
+  ylab(NULL)+
+  xlab(NULL)+
+  theme(aspect.ratio=1)+
+  scale_colour_manual(values=c("#E69F00","#56B4E9"))+
+  theme(axis.title.y = element_text(colour = "black"))+
+  theme(axis.text.y = element_text(colour="black"))+
+  theme(axis.title.x = element_text(colour = "black"))+
+  theme(axis.text.x = element_text(colour="black"))+
+  theme(legend.text = element_text(colour="black"))
+NMDS.plot.CR.season
+```
+
+```{r}
+plot(CRMultiMDS)
+points(CRMultiMDS, display="sites", pch=c(16,8,17,11)[as.numeric(as.factor(CR.multivar.dat$ReefZone))],col=c("red","blue","green")[as.numeric(as.factor(CR.multivar.dat$ReefZone))])
+legend("topright", legend=c(levels(as.factor(CR.multivar.dat$ReefZone))), pch=c(16,8,17,11),col=c("red","blue","green"))
+legend("topleft", "2D Stress=0.179")
+CRZoneMDS <- ordiellipse(CRMultiMDS, as.factor(CR.multivar.dat$ReefZone), col=c("red","blue","green"),draw="polygon")
+
+CRZoneMDS <- CRZoneMDS + 
+# Adding a side title using mtext()
+mtext("F)", side=3, line=1, cex=1.2)  # side=2 places it on the y-axis, adjust `line` and `cex` as needed
+
+plot(CRZoneMDS)
+```
+
+```{r}
+NMDS.plot.CR.reefzone <- gg_ordiplot(CRMultiMDS, groups = CR.multivar.dat$ReefZone, 
+                      plot=FALSE)
+
+NMDS.plot.CR.reefzone <- NMDS.plot.CR.reefzone$plot
+NMDS.plot.CR.reefzone$layers[[1]]$aes_params$size <- 1
+
+NMDS.plot.CR.reefzone <- NMDS.plot.CR.reefzone+
+  theme_classic()+
+  labs(colour = "Reef Zone", tag = "F)")+
+  ylab(NULL)+
+  theme(aspect.ratio=1)+
+  scale_color_viridis(discrete = TRUE, option = "D")+
+  theme(axis.title.y = element_text(colour = "black"))+
+  theme(axis.text.y = element_text(colour="black"))+
+  theme(axis.title.x = element_text(colour = "black"))+
+  theme(axis.text.x = element_text(colour="black"))+
+  theme(legend.text = element_text(colour="black"))
+
+```
+
+Stitching together all the plots
+
+```{r}
+library(patchwork)
+
+
+(NMDS.plot.PH.season | NMDS.plot.TP.season | NMDS.plot.CR.season) /
+(NMDS.plot.PH.reefzone | NMDS.plot.TP.reefzone | NMDS.plot.CR.reefzone)+ plot_layout(guides="collect", widths= c(1,1,1,1,1,1)) + theme(legend.position = "right")
+```
+
+#Heatmap Table Abundance Net Effect Table
+
+```{r}
+# Create the data frame
+abundance.net.effect.dat <- data.frame(
+  Metric = c("Area", "Shape", "Circle", "Fractal Dimension", 
+             "Isolation Index", "Rugosity", "Perimeter-area Ratio", 
+             "Nearest Neighbour Distance"),
+  Port_Hacking = c(0.327, NA, -0.1, -0.202, -708, -0.296, 0.307, NA),
+  Towra_Point = c(-2.45, 0.863, -0.314, -3.013, 1.14, NA, NA, -1.068),
+  Crookhaven = c(-1, NA, 1.595, -1, 1, 1, 1, -1.626)
+)
+
+# Reshape data to long format for ggplot2
+abundance.long <- abundance.net.effect.dat %>%
+  pivot_longer(cols = -Metric, 
+               names_to = "Location", 
+               values_to = "Value")
+
+
+
+# Define the desired order
+metric_order <- c("Area", "Shape", "Circle", "Fractal Dimension", 
+                  "Isolation Index", "Rugosity", "Perimeter-area Ratio", 
+                  "Nearest Neighbour Distance")
+
+
+location_order <- c("Port_Hacking", "Towra_Point", "Crookhaven")
+
+# Convert both to factors with specified levels
+abundance.long <- abundance.long %>%
+  mutate(Metric = factor(Metric, levels = metric_order),
+         Location = factor(Location, levels = location_order))
+
+
+# Create heatmap
+abundance.heatmap.plot <- ggplot(abundance.long, aes(x = Location, y = Metric)) +
+  geom_tile(aes(fill = case_when(
+    is.na(Value) ~ "NA",
+    Value > 0 ~ "Increase",
+    Value < 0 ~ "Decrease",
+    Value == 0 ~ "No change"
+  )), color = "black", linewidth = 0.5) +
+  scale_fill_manual(values = c("Increase" = "steelblue1", 
+                                "Decrease" = "darkorange1",
+                                "No change" = "grey80",
+                                "NA" = "grey80"),
+                    name = "Direction") +
+  geom_text(aes(label = case_when(
+    is.na(Value) ~ "",
+    Value > 0 ~ "↑",
+    Value < 0 ~ "↓",
+    Value == 0 ~ "—",
+    TRUE ~ ""
+  )), size = 5) +
+  theme_minimal() +
+  scale_y_discrete(limits = rev(metric_order))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title = element_blank(),
+        panel.grid = element_blank()) +
+  theme(legend.position = "none")+
+  labs(title = "Net Effect of Each Reef Characteristic on Abundance Across Sites")
+abundance.heatmap.plot
+```
+
+Richness Net Effect Table
+
+```{r}
+# Create the data frame
+richness.net.effect.dat <- data.frame(
+  Metric = c("Area", "Shape", "Circle", "Fractal Dimension", 
+             "Isolation Index", "Rugosity", "Perimeter-area Ratio", 
+             "Nearest Neighbour Distance"),
+  Port_Hacking = c(NA, NA, "2.13*", "-8.47", NA, "5.761*", "0.826", "-1.7813"),
+  Towra_Point = c("-0.014491", "12.398", "10.99", "-71.93666667", "-0.0234", "-1", NA, NA),
+  Crookhaven = c(NA, NA, NA, "-24.4*", "3.775", "1", NA, NA)
+)
+
+
+
+# Reshape data to long format for ggplot2
+richness.long <- richness.net.effect.dat %>%
+  pivot_longer(cols = -Metric, 
+               names_to = "Location", 
+               values_to = "Value")
+
+
+
+# Define the desired order
+metric_order <- c("Area", "Shape", "Circle", "Fractal Dimension", 
+                  "Isolation Index", "Rugosity", "Perimeter-area Ratio", 
+                  "Nearest Neighbour Distance")
+
+
+location_order <- c("Port_Hacking", "Towra_Point", "Crookhaven")
+
+# Convert both to factors with specified levels
+richness.long <- richness.long %>%
+  mutate(Metric = factor(Metric, levels = metric_order),
+         Location = factor(Location, levels = location_order))
+
+
+# Create heatmap
+richness.heatmap.plot <- ggplot(richness.long, aes(x = Location, y = Metric)) +
+  geom_tile(aes(fill = case_when(
+    is.na(Value) ~ "NA",
+    Value > 0 ~ "Increase",
+    Value < 0 ~ "Decrease",
+    Value == 0 ~ "No change"
+  )), color = "black", linewidth = 0.5) +
+  scale_fill_manual(values = c("Increase" = "steelblue1", 
+                                "Decrease" = "darkorange1",
+                                "No change" = "grey80",
+                                "NA" = "grey80"),
+                    name = "Direction") +
+  geom_text(aes(label = case_when(
+    is.na(Value) ~ "",
+    Value > 0 ~ "↑",
+    Value < 0 ~ "↓",
+    Value == 0 ~ "—",
+    TRUE ~ ""
+  )), size = 5) +
+  theme_minimal() +
+  scale_y_discrete(limits = rev(metric_order))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title = element_blank(),
+        panel.grid = element_blank()) +
+  theme(legend.position = "none")+
+  labs(title = "Net Effect of Each Reef Characteristic on Richness Across Sites")
+richness.heatmap.plot
+```
+
+Diversity Net Effect Table
+
+```{r}
+# Create the data frame (with values as characters to preserve asterisks)
+diversity.net.effect.dat <- data.frame(
+  Metric = c("Area", "Shape", "Circle", "Fractal Dimension", 
+             "Isolation Index", "Rugosity", "Perimeter-area Ratio", 
+             "Nearest Neighbour Distance"),
+  Port_Hacking = c(NA, NA, "-0.1261", "-1", "-145.7", "0.0165", NA, NA),
+  Towra_Point = c("-1.23", "0.604", "0.162*", "-2.3*", "-0.013", NA, NA, NA),
+  Crookhaven = c("0.0965", NA, "0.164*", NA, "-3.9", "-1", "0.2760933", "0.158")
+)
+
+
+
+# Reshape data to long format for ggplot2
+diversity.long <- diversity.net.effect.dat %>%
+  pivot_longer(cols = -Metric, 
+               names_to = "Location", 
+               values_to = "Value")
+
+
+
+# Define the desired order
+metric_order <- c("Area", "Shape", "Circle", "Fractal Dimension", 
+                  "Isolation Index", "Rugosity", "Perimeter-area Ratio", 
+                  "Nearest Neighbour Distance")
+
+
+location_order <- c("Port_Hacking", "Towra_Point", "Crookhaven")
+
+# Convert both to factors with specified levels
+diversity.long <- diversity.long %>%
+  mutate(Metric = factor(Metric, levels = metric_order),
+         Location = factor(Location, levels = location_order))
+
+
+# Create heatmap
+diversity.heatmap.plot <- ggplot(diversity.long, aes(x = Location, y = Metric)) +
+  geom_tile(aes(fill = case_when(
+    is.na(Value) ~ "NA",
+    Value > 0 ~ "Increase",
+    Value < 0 ~ "Decrease",
+    Value == 0 ~ "No change"
+  )), color = "black", linewidth = 0.5) +
+  scale_fill_manual(values = c("Increase" = "steelblue1", 
+                                "Decrease" = "darkorange1",
+                                "No change" = "grey80",
+                                "NA" = "grey80"),
+                    name = "Direction") +
+  geom_text(aes(label = case_when(
+    is.na(Value) ~ "",
+    Value > 0 ~ "↑",
+    Value < 0 ~ "↓",
+    Value == 0 ~ "—",
+    TRUE ~ ""
+  )), size = 5) +
+  theme_minimal() +
+  scale_y_discrete(limits = rev(metric_order))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title = element_blank(),
+        panel.grid = element_blank()) +
+  theme(legend.position = "none")+
+  labs(title = "Net Effect of Each Reef Characteristic on Diversity Across Sites")
+diversity.heatmap.plot
+
+```
+
+```{r}
+library(patchwork)
+heatmap.plot <- abundance.heatmap.plot + richness.heatmap.plot + diversity.heatmap.plot + plot_layout(ncol = 1, widths = c(1,1,1))+ plot_annotation(tag_levels ="A", tag_suffix = ")")
+heatmap.plot
+```

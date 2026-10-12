@@ -1,0 +1,20 @@
+{
+  "codigo": "D34",
+  "registro": "D34_snapper_idades",
+  "nome": "snapper_hg",
+  "nome_eapadados": "snapper_hg",
+  "rotulo": "Snapper: comprimento e idade atribuída",
+  "titulo": "D34 - Snapper: comprimento e idade atribuída",
+  "natureza": "real extraída de tabelas",
+  "origem": "EAPADados::snapper_hg",
+  "unidade_amostral": "registro com comprimento e idade atribuída, extraído de tabelas",
+  "linhas": 1331,
+  "colunas": 6,
+  "analises": "Amostragem didática; Crescimento; Idade-comprimento",
+  "analise_principal": "Amostragem didática",
+  "palavras_chave": "snapper; hg",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, FSAdata",
+  "referencia": "Davies e Walsh (2002), tabelas 2, 3 e 5, levantamentos KAH8810/KAH0012; FSAdata::SnapperHG1",
+  "situacao": "provisório"
+}

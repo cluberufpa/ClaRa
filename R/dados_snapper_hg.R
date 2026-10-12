@@ -1,0 +1,32 @@
+#' D34 - Snapper: comprimento e idade atribuída
+#'
+#' Dados provisórios da passada 1. Unidade amostral: registro com comprimento e idade atribuída, extraído de tabelas.
+#'
+#' @format Um `data.frame` com 1331 linhas e 6 colunas:
+#' \describe{
+#'   \item{id_peixe}{Texto: posição do registro na fonte original, preservada após filtro de idade.}
+#'   \item{levantamento}{Código do levantamento/local de amostragem.}
+#'   \item{comprimento_cm}{Comprimento medido, em centímetros.}
+#'   \item{idade_anos}{Idade atribuída; código 20 corresponde a 19 anos ou mais.}
+#'   \item{tem_idade_atribuida}{Indica se o registro possui idade atribuída.}
+#'   \item{classe_comprimento}{Classe de comprimento criada por quartis.}
+#' }
+#'
+#' @details
+#' A fonte foi recriada de tabelas; os peixes sem idade simulados pelo FSAdata não entram. O grupo idade 20 significa 19 anos ou mais, não idade exata 20. O subconjunto envelhecido não é amostra aleatória ou proporcional da população. Quartis herdados preservados; sua renomeação ainda pendente.
+#'
+#' @section Adaptações:
+#' Somente id_peixe convertido em texto. Filtro anterior de idade preservado; não reinseridos registros simulados sem idade. Quartis mantidos.
+#'
+#' @source
+#' Davies e Walsh (2002), tabelas 2, 3 e 5, levantamentos KAH8810/KAH0012; FSAdata::SnapperHG1.
+#' Licença: GPL-2 | GPL-3, FSAdata.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D34_snapper_idades/.
+#'
+#' @examples
+#' summary(snapper_hg)
+#'
+#' @docType data
+#' @keywords datasets
+"snapper_hg"

@@ -1,0 +1,20 @@
+{
+  "codigo": "D35",
+  "registro": "D35_tilapia_microalgas",
+  "nome": "tilapia_microalgas",
+  "nome_eapadados": "tilapia_microalgas",
+  "rotulo": "Tilápia: dietas com microalgas",
+  "titulo": "D35 - Tilápia: dietas com microalgas",
+  "natureza": "real",
+  "origem": "EAPADados::tilapia_microalgas",
+  "unidade_amostral": "tanque experimental; 15 tanques, três por dieta",
+  "linhas": 15,
+  "colunas": 32,
+  "analises": "ANOVA de tratamentos; PCA exploratória",
+  "analise_principal": "ANOVA de tratamentos",
+  "palavras_chave": "tilapia; microalgas",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Amira et al. (2021), Mendeley Data, DOI 10.17632/hv5fg5r869.1",
+  "situacao": "provisório"
+}

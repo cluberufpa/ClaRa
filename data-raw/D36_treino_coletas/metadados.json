@@ -1,0 +1,20 @@
+{
+  "codigo": "D36",
+  "registro": "D36_treino_coletas",
+  "nome": "treino_coletas",
+  "nome_eapadados": "treino_coletas",
+  "rotulo": "Coletas: DADOS SINTÉTICOS DE TREINO",
+  "titulo": "D36 - Coletas: DADOS SINTÉTICOS DE TREINO",
+  "natureza": "sintético de treino autorizado",
+  "origem": "EAPADados::treino_coletas",
+  "unidade_amostral": "registro fictício de coleta para praticar separação de colunas",
+  "linhas": 15,
+  "colunas": 5,
+  "analises": "Preparo: separar colunas",
+  "analise_principal": "Preparo: separar colunas",
+  "palavras_chave": "treino; coletas",
+  "verbo_clara": "",
+  "licenca": "MIT + file LICENSE, EAPADados 0.1.14",
+  "referencia": "Dados fictícios do ecossistema EAPA; planilha de treino e script de importação preservados",
+  "situacao": "provisório"
+}

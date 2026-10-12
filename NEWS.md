@@ -213,3 +213,23 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D29 `peixes_morfometria_multivariada`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D30 `peixes_nutricao_portugal`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D31 `qfasa_predadores`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D32 `qfasa_presas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D33 `recifes_ostras_heatmap`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D34 `snapper_hg`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D35 `tilapia_microalgas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D36 `treino_coletas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D37 `treino_desembarque`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D38 `truta_riacho_crescimento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D40 `whitefish_salinidade`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D41 `mesocosmos_secagem`, provisório, com fonte e decisões anteriores registradas.
