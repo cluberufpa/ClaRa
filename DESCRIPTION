@@ -89,7 +89,7 @@ Collate:
     'dados_mesocosmos_secagem.R'
     'dados_plantas_crescimento.R'
     'dados_ervilhas_adubacao.R'
-    'dados_plantas_absorcao_co2.R'
+    'dados_percas_respirometria.R'
     'dados_insetos_inseticidas.R'
     'dados_carros_frenagem.R'
     'dados_terremotos_fiji.R'
