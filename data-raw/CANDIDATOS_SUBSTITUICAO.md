@@ -27,7 +27,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo tem 62 conjuntos (53 internos, oito do FSAdata e um do MASS), após a inclusão do D61 e do D62.
+com substituições aprovadas registradas abaixo. O catálogo tem 58 conjuntos (49 internos, oito do FSAdata e um do MASS), depois da retirada de D11, D43, D46 e D49 em 12/10/2026, após a inclusão do D61 e do D62.
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -69,16 +69,16 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 
 | Código | Objeto | Origem |
 |---|---|---|
-| D11 | puromicina_reacao | datasets::Puromycin |
+| D11 (retirado) | puromicina_reacao | datasets::Puromycin; retirado do pacote, fonte em data-raw/retirados |
 | D12 (histórico) | bacterias_tratamento, substituído por bufalos_estrongilos | MASS::bacteria, fonte antiga em data-raw/substituidos |
 | D42 | plantas_crescimento | datasets::PlantGrowth |
-| D43 | ervilhas_adubacao | datasets::npk |
+| D43 (retirado) | ervilhas_adubacao | datasets::npk; retirado do pacote, fonte em data-raw/retirados |
 | D44 (histórico) | plantas_absorcao_co2, substituído por percas_hipoxia | datasets::CO2, fonte antiga em data-raw/substituidos |
 | D45 | insetos_inseticidas | datasets::InsectSprays |
-| D46 | carros_frenagem | datasets::cars |
+| D46 (retirado) | carros_frenagem | datasets::cars; retirado do pacote, fonte em data-raw/retirados |
 | D47 (histórico) | terremotos_fiji, substituído por pollock_alasca | datasets::quakes, fonte antiga arquivada |
 | D48 (histórico) | laranjeiras_crescimento, substituído por molinesias_crescimento | datasets::Orange, fonte antiga em data-raw/substituidos |
-| D49 | aveia_parcelas | MASS::oats |
+| D49 (retirado) | aveia_parcelas | MASS::oats; retirado do pacote, fonte em data-raw/retirados |
 
 | D51 | seguros_sinistros | MASS::Insurance |
 | D52 (histórico) | paciente_peso, substituído por secagem_beterraba_gengibre | MASS::wtloss, fonte antiga em data-raw/substituidos |

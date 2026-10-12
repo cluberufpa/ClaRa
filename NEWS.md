@@ -1,5 +1,12 @@
 # clara (em desenvolvimento)
 
+- Retirados do pacote, sem substituto, por decisão do professor
+  (12/10/2026): D11 `puromicina_reacao`, D43 `ervilhas_adubacao`, D46
+  `carros_frenagem` e D49 `aveia_parcelas` (todos de pacotes GPL, fora do
+  contexto de pesca e aquicultura). Objetos, ajuda e linhas do catálogo
+  removidos; fontes e receitas preservadas em `data-raw/retirados/`. Catálogo
+  com 58 conjuntos (49 internos, oito do FSAdata e um do MASS).
+
 - Fusão das branches `dados` e `codex/substitutos-literatura-20261012`
   (12/10/2026). D12 `bufalos_estrongilos` (418 × 6, CC0) substitui
   `bacterias_tratamento` (MASS::bacteria) e D52 `secagem_beterraba_gengibre`
