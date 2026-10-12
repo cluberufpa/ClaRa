@@ -259,3 +259,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D53 `navios_incidentes`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D54 `haemulon_crescimento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D55 `cabezon_maturidade`, provisório, com fonte e decisões anteriores registradas.

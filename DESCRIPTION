@@ -100,4 +100,5 @@ Collate:
     'dados_paciente_peso.R'
     'dados_navios_incidentes.R'
     'dados_haemulon_crescimento.R'
+    'dados_cabezon_maturidade.R'
 Config/roxygen2/version: 8.1.0
