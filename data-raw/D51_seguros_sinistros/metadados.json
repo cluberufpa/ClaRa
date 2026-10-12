@@ -1,0 +1,20 @@
+{
+  "codigo": "D51",
+  "registro": "D51_seguros_sinistros",
+  "nome": "seguros_sinistros",
+  "nome_eapadados": "",
+  "rotulo": "Seguros: sinistros e número de segurados",
+  "titulo": "D51 - Seguros: sinistros e número de segurados",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "MASS::Insurance",
+  "unidade_amostral": "célula agregada de distrito, classe do automóvel e faixa etária",
+  "linhas": 64,
+  "colunas": 5,
+  "analises": "Modelos de contagem; Poisson com exposição e offset",
+  "analise_principal": "Modelos de contagem",
+  "palavras_chave": "seguros; sinistros",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme MASS 7.3-65",
+  "referencia": "Baxter, Coutts e Ross (1980), Applications of linear models in motor insurance, 21st International Congress of Actuaries, Zurich:11–29; Aitkin et al. (1989); MASS::Insurance",
+  "situacao": "provisório"
+}

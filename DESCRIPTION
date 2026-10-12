@@ -96,4 +96,5 @@ Collate:
     'dados_laranjeiras_crescimento.R'
     'dados_aveia_parcelas.R'
     'dados_escolares_ausencias.R'
+    'dados_seguros_sinistros.R'
 Config/roxygen2/version: 8.1.0

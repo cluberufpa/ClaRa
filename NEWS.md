@@ -251,3 +251,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D49 `aveia_parcelas`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D50 `escolares_ausencias`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D51 `seguros_sinistros`, provisório, com fonte e decisões anteriores registradas.
