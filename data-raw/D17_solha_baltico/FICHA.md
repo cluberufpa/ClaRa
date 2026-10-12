@@ -17,7 +17,7 @@ linhas em que `year == 2008` e `quarter == 4`. Esta é uma curadoria didática,
 definida antes dos exercícios; não é uma amostra para tirar conclusões sobre
 todo o Mar Báltico.
 
-`source("data-raw/D17_solha_baltico_2008_t4/preparar.R")`, na raiz do pacote,
+`source("data-raw/D17_solha_baltico/preparar.R")`, na raiz do pacote,
 confere o hash, extrai o ZIP, recria o recorte, o objeto e a linha D17 do
 catálogo. Não há imputação, arredondamento nem exclusão dentro desse recorte.
 

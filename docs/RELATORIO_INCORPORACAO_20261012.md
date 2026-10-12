@@ -12,6 +12,15 @@ anteriores foram movidas para `data-raw/substituidos/`, como histórico.
 | Molinésias, crescimento | D48 | `laranjeiras_crescimento` (`datasets::Orange`) | `molinesias_crescimento` | 340 × 4 | CC BY 4.0 | `e27bf81` |
 | Secagem de vegetais | D52 | `paciente_peso` (`MASS::wtloss`) | `secagem_beterraba_gengibre` | 594 × 8 | CC BY 4.0 | `624d2c5` |
 
+## Atualização posterior do D12
+
+Por decisão do professor em 12/10/2026, `bufalos_estrongilos` foi substituído por
+`erva_marinha_lesoes` (180 × 5, CC0), mantendo D12. O novo conjunto tem 90 plantas
+focais de *Zostera marina* em dois momentos; o início sem lesão é condição declarada
+do delineamento e a cobertura final observada define presença/ausência. A fonte e a
+receita ficam em `data-raw/D12_erva_lesoes/`; a receita anterior foi movida
+para `data-raw/substituidos/D12_bufalos_estrongilos/`.
+
 ## O que foi feito diferente do combinado
 
 - D48 usa o recorte equilibrado recomendado no aprofundamento: 34 peixes nas

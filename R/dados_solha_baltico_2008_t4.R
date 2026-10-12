@@ -40,7 +40,7 @@
 #' Data cod flounder. Dryad Digital Repository,
 #' \doi{10.5061/dryad.kb2f352}, CC0 1.0. Artigo associado:
 #' \doi{10.1111/jbi.13510}. Fonte e preparo:
-#' `data-raw/D17_solha_baltico_2008_t4/`.
+#' `data-raw/D17_solha_baltico/`.
 #'
 #' @examples
 #' solha <- carregar_dados("solha_baltico_2008_t4")

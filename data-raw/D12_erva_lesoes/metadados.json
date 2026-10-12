@@ -1,0 +1,21 @@
+{
+  "codigo": "D12",
+  "registro": "D12_erva_lesoes",
+  "nome": "erva_marinha_lesoes",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Erva-marinha: lesões antes e depois da ação de herbívoros",
+  "titulo": "D12 - Erva-marinha: aparecimento de lesões",
+  "natureza": "real",
+  "origem": "Murray et al. (2024); Dryad 10.25338/B8805V",
+  "unidade_amostral": "observação antes ou depois de uma planta focal de erva-marinha em mesocosmo; as duas linhas pertencem à mesma planta",
+  "linhas": 180,
+  "colunas": 5,
+  "analises": "McNemar; Preparo de dados pareados; comparação descritiva entre tratamentos",
+  "analise_principal": "McNemar",
+  "palavras_chave": "erva-marinha; zostera; lesoes; doenca; pareado; isopode",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0",
+  "referencia": "Murray, N. A.; DuBois, K.; Stachowicz, J. J. (2024), Journal of Ecology, DOI 10.1111/1365-2745.14312; dados Dryad DOI 10.25338/B8805V; conferido em 12/10/2026",
+  "situacao": "curado"
+}

@@ -34,9 +34,17 @@
   removidos; fontes e receitas preservadas em `data-raw/retirados/`. Catálogo
   com 58 conjuntos (49 internos, oito do FSAdata e um do MASS).
 
+- D12 passa a `erva_marinha_lesoes` (180 × 5, CC0), substituindo
+  `bufalos_estrongilos`. São 90 plantas focais de *Zostera marina*, realmente
+  pareadas antes/depois; a fonte declara que elas começaram sem lesões e registra
+  sua cobertura final. As categorias são `controle`, `dano_artificial` e
+  `isopode_herbivoro`. A ficha explica que a resposta binária descreve
+  aparecimento de lesões e que plantas do mesmo mesocosmo não são réplicas
+  independentes para comparar tratamentos.
+
 - Fusão das branches `dados` e `codex/substitutos-literatura-20261012`
-  (12/10/2026). D12 `bufalos_estrongilos` (418 × 6, CC0) substitui
-  `bacterias_tratamento` (MASS::bacteria) e D52 `secagem_beterraba_gengibre`
+  (12/10/2026). D12 `bufalos_estrongilos` (418 × 6, CC0) substituiu
+  temporariamente `bacterias_tratamento` (MASS::bacteria) e D52 `secagem_beterraba_gengibre`
   (594 × 8, CC BY 4.0) substitui `paciente_peso` (MASS::wtloss); os códigos D
   foram mantidos. Fontes GPL antigas em `data-raw/substituidos/`. Para D44 e
   D48 valem os objetos da `dados` (`percas_hipoxia` e `molinesias_crescimento`,

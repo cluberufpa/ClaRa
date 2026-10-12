@@ -34,7 +34,7 @@ As prioridades abaixo são sugestões para avaliação do professor.
 
 | Registro e objeto | Tema atual | O que procurar na fonte substituta |
 |---|---|---|
-| D12 bacterias_tratamento | Tratamento clínico em crianças | Resolvido: `bufalos_estrongilos` (CC0, 418 linhas) mantém pares e linhas sem par para McNemar |
+| D12 bacterias_tratamento | Tratamento clínico em crianças | Resolvido: `erva_marinha_lesoes` (CC0, 180 linhas): 90 plantas focais realmente pareadas, antes/depois do aparecimento de lesões |
 | D46 carros_frenagem | Frenagem de carros históricos | Duas medidas contínuas em organismos/ambiente aquático, suficientes para comparar curva linear e quadrática; replicação identificada |
 | D47 pollock_alasca | Pesca de pesquisa | Resolvido: NOAA CC0, 523 lances; substituição aprovada em 12/10/2026. Dois pontos costeiros a conferir |
 | D50 molinesias_parasitos | Bioecologia de peixes | Resolvido: substituição do quine aprovada em 11/10/2026, fonte Dryad CC0; curadoria fina pendente |
@@ -70,7 +70,7 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 | Código | Objeto | Origem |
 |---|---|---|
 | D11 (retirado) | puromicina_reacao | datasets::Puromycin; retirado do pacote, fonte em data-raw/retirados |
-| D12 (histórico) | bacterias_tratamento, substituído por bufalos_estrongilos | MASS::bacteria, fonte antiga em data-raw/substituidos |
+| D12 (histórico) | bacterias_tratamento, depois bufalos_estrongilos, substituídos por erva_marinha_lesoes | MASS::bacteria, fontes antigas em data-raw/substituidos |
 | D42 (retirado) | plantas_crescimento | datasets::PlantGrowth; retirado do pacote, fonte em data-raw/retirados |
 | D43 (retirado) | ervilhas_adubacao | datasets::npk; retirado do pacote, fonte em data-raw/retirados |
 | D44 (histórico) | plantas_absorcao_co2, substituído por percas_hipoxia | datasets::CO2, fonte antiga em data-raw/substituidos |
@@ -119,7 +119,8 @@ D50 agora é `molinesias_parasitos`, registro `D50_molinesias_parasitos`, fonte 
 ## Substituições de 12/10/2026 (fusão das branches)
 
 D12 (`bufalos_estrongilos`) e D52 (`secagem_beterraba_gengibre`) vieram da
-branch `codex/substitutos-literatura-20261012`; D44 (`percas_hipoxia`) e D48
+branch `codex/substitutos-literatura-20261012`; D12 foi depois substituído por
+`erva_marinha_lesoes`. D44 (`percas_hipoxia`) e D48
 (`molinesias_crescimento`, 1.178 medições) ficaram com os objetos da `dados`.
 As variantes da outra branch estão em `data-raw/alternativas_codex/`, fora do
 pacote. D51 (`seguros_sinistros`) e D53 (`navios_incidentes`) seguem no

@@ -23,7 +23,7 @@ para rastreabilidade.}
 Data cod flounder. Dryad Digital Repository,
 \doi{10.5061/dryad.kb2f352}, CC0 1.0. Artigo associado:
 \doi{10.1111/jbi.13510}. Fonte e preparo:
-\verb{data-raw/D17_solha_baltico_2008_t4/}.
+\verb{data-raw/D17_solha_baltico/}.
 }
 \usage{
 solha_baltico_2008_t4

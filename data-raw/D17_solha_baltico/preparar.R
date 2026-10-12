@@ -1,5 +1,5 @@
 # Executar na raiz do pacote. Substituição autorizada em 12/10/2026.
-pasta <- "data-raw/D17_solha_baltico_2008_t4"
+pasta <- "data-raw/D17_solha_baltico"
 codigo <- "D17"
 nome <- "solha_baltico_2008_t4"
 anteriores <- c("salmouras_carbonatos", "camarao_ecogreen", nome)

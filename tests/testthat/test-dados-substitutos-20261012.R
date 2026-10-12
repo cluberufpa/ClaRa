@@ -1,9 +1,20 @@
-test_that("D12 búfalos preserva o pareamento e as linhas sem par", {
-  expect_identical(dim(bufalos_estrongilos), c(418L, 6L))
-  expect_identical(levels(bufalos_estrongilos$tratamento), c("controle", "fenbendazol"))
-  expect_identical(levels(bufalos_estrongilos$momento), c("antes", "depois"))
-  expect_equal(length(unique(bufalos_estrongilos$id_bufalo)), 216L)
-  expect_equal(sum(is.na(bufalos_estrongilos$presenca_ovos_estrongilos)), 6L)
+test_that("D12 erva-marinha preserva as plantas focais pareadas", {
+  x <- erva_marinha_lesoes
+  expect_identical(dim(x), c(180L, 5L))
+  expect_type(x$id_planta, "character")
+  expect_identical(levels(x$tratamento), c(
+    "controle", "dano_artificial", "isopode_herbivoro"
+  ))
+  expect_identical(levels(x$momento), c("antes", "depois"))
+  expect_equal(length(unique(x$id_planta)), 90L)
+  expect_false(anyNA(x))
+  expect_true(all(table(x$id_planta) == 2L))
+  expect_true(all(x$presenca_lesao[x$momento == "antes"] == 0L))
+  expect_equal(sum(x$presenca_lesao[x$momento == "depois"]), 69L)
+  expect_identical(as.integer(table(
+    x$tratamento[x$momento == "depois"],
+    x$presenca_lesao[x$momento == "depois"]
+  )), c(7L, 5L, 9L, 23L, 25L, 21L))
 })
 
 test_that("D52 secagem conserva códigos e séries", {
