@@ -213,3 +213,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D29 `peixes_morfometria_multivariada`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D30 `peixes_nutricao_portugal`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D31 `qfasa_predadores`, provisório, com fonte e decisões anteriores registradas.

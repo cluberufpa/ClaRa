@@ -77,4 +77,5 @@ Collate:
     'dados_lagostas_kelp_sexo.R'
     'dados_peixes_morfometria_multivariada.R'
     'dados_peixes_nutricao_portugal.R'
+    'dados_qfasa_predadores.R'
 Config/roxygen2/version: 8.1.0

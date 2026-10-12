@@ -1,0 +1,96 @@
+#' D31 - Predadores: assinaturas de ácidos graxos
+#'
+#' Dados provisórios da passada 1. Unidade amostral: assinatura lipídica de biópsia; 10 amostras de apenas 4 animais.
+#'
+#' @format Um `data.frame` com 10 linhas e 70 colunas:
+#' \describe{
+#'   \item{id_amostra}{Texto: código original da amostra.}
+#'   \item{id_animal}{Texto: código original do animal; apenas quatro animais.}
+#'   \item{grupo_amostra}{Grupo original T/T1/T2, sem expansão não documentada.}
+#'   \item{biopsia}{Código da biópsia, A/B/C.}
+#'   \item{c12.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c13.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{Iso14}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c14.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c14.1w9}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c14.1w7}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c14.1w5}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{Iso15}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{Anti15}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c15.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c15.1w8}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c15.1w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{Iso16}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.1w11}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.1w9}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.1w7}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c7Mec16.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.1w5}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.2w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{Iso17}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.2w4}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.3w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c17.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.3w4}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c17.1}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.4w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c16.4w1}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.1w13}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.1w11}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.1w9}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.1w7}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.1w5}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.2d5.11}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.2w7}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.2w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.2w4}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.3w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.3w4}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.3w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.3w1}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.4w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c18.4w1}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.0}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.1w11}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.1w9}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.1w7}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.2w9}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.2w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.3w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.4w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.3w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.4w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c20.5w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.1w11}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.1w9}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.1w7}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.2w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c21.5w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.4w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.5w6}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.4w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.5w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c22.6w3}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#'   \item{c24.1w9}{Código original de ácido graxo; unidade/escala a confirmar na fonte.}
+#' }
+#'
+#' @details
+#' São quatro animais com biópsias repetidas, não dez réplicas independentes. Grupos T/T1/T2 não têm significado explicado na ajuda primária. Preservados os códigos de ácidos: c7Mec16.0 difere de c7Me16.0 nas presas. Não unir painéis nem aplicar QFASA sem conferir a lista FA e os coeficientes. Dados composicionais; PCA/HCA exploratórias exigem seleção justificada e tratamento de escala.
+#'
+#' @section Adaptações:
+#' Decisão anterior aprovada: SampleCode/AnimalCode/SampleGroup/Biopsy → id_amostra/id_animal/grupo_amostra/biopsia. Os 66 códigos de ácidos e todos os valores são preservados, sem normalização ou corte.
+#'
+#' @source
+#' Stewart e colaboradores, QFASA 1.2.1, objeto predatorFAs; CRAN.
+#' Licença: MIT + file LICENSE, QFASA 1.2.1.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D31_predadores_lipideos/.
+#'
+#' @examples
+#' summary(qfasa_predadores)
+#'
+#' @docType data
+#' @keywords datasets
+"qfasa_predadores"
