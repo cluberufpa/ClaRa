@@ -261,3 +261,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D54 `haemulon_crescimento`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D55 `cabezon_maturidade`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D56 `ruffe_biometria`, provisório, com fonte e decisões anteriores registradas.
