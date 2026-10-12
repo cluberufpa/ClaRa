@@ -1,0 +1,31 @@
+#' D53 - Navios: incidentes e exposição ao serviço
+#'
+#' Dados provisórios da passada 1. Unidade amostral: célula agregada de tipo de navio, período de construção e operação.
+#'
+#' @format Um `data.frame` com 40 linhas e 5 colunas:
+#' \describe{
+#'   \item{tipo_navio}{Fator: códigos originais A a E, tipos sem composição detalhada.}
+#'   \item{periodo_construcao}{Fator: intervalos 1960_1964, 1965_1969, 1970_1974 e 1975_1979.}
+#'   \item{periodo_operacao}{Fator: intervalos 1960_1974 e 1975_1979.}
+#'   \item{servico_meses}{Meses de serviço agregados, exposição; seis zeros preservados.}
+#'   \item{incidentes}{Número de incidentes de dano na célula.}
+#' }
+#'
+#' @details
+#' Quarenta células agregadas de frota, não 40 navios individuais. Seis células com serviço zero preservadas; log(servico_meses) só pode ser aplicado no ramo de análise após tratar a exposição zero. Não retirar zeros da base. Períodos são intervalos categóricos, não anos pontuais. A ajuda não diz que são embarcações pesqueiras. Avaliar dispersão, sem assumir estimativas herdadas de Poisson/NB. Candidato à substituição por incidentes ou capturas com esforço/exposição no domínio pesqueiro.
+#'
+#' @section Adaptações:
+#' type → tipo_navio; year → periodo_construcao; period → periodo_operacao; service → servico_meses; incidents → incidentes. Códigos year 60/65/70/75 e period 60/75 expandidos para intervalos categóricos da ajuda. Exposição zero permanece na base; filtro só no ramo analítico com offset. Todas as linhas e sua ordem preservadas, sem imputação, exclusão ou simulação. Unidades originais mantidas.
+#'
+#' @source
+#' McCullagh e Nelder (1983), Generalized Linear Models, seção 6.3.2, p. 137; MASS::ships.
+#' Licença: GPL-2 | GPL-3, MASS 7.3-65.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D53_navios_incidentes/.
+#'
+#' @examples
+#' summary(navios_incidentes)
+#'
+#' @docType data
+#' @keywords datasets
+"navios_incidentes"

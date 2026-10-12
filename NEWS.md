@@ -255,3 +255,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D51 `seguros_sinistros`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D52 `paciente_peso`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D53 `navios_incidentes`, provisório, com fonte e decisões anteriores registradas.

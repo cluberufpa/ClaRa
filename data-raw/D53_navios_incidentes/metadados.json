@@ -1,0 +1,20 @@
+{
+  "codigo": "D53",
+  "registro": "D53_navios_incidentes",
+  "nome": "navios_incidentes",
+  "nome_eapadados": "",
+  "rotulo": "Navios: incidentes e exposição ao serviço",
+  "titulo": "D53 - Navios: incidentes e exposição ao serviço",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "MASS::ships",
+  "unidade_amostral": "célula agregada de tipo de navio, período de construção e operação",
+  "linhas": 40,
+  "colunas": 5,
+  "analises": "Poisson; Modelos de contagem com exposição/offset",
+  "analise_principal": "Poisson",
+  "palavras_chave": "navios; incidentes",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, MASS 7.3-65",
+  "referencia": "McCullagh e Nelder (1983), Generalized Linear Models, seção 6.3.2, p. 137; MASS::ships",
+  "situacao": "provisório"
+}

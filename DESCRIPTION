@@ -98,4 +98,5 @@ Collate:
     'dados_escolares_ausencias.R'
     'dados_seguros_sinistros.R'
     'dados_paciente_peso.R'
+    'dados_navios_incidentes.R'
 Config/roxygen2/version: 8.1.0
