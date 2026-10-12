@@ -1,5 +1,7 @@
 # clara (em desenvolvimento)
 
+- Dados: D50 `molinesias_parasitos` (128 peixes, oito colunas, CC0) substitui `escolares_ausencias` (MASS::quine), mantendo o código D50 por decisão do professor. Objeto antigo retirado do pacote; fontes preservadas no histórico.
+
 - D39: `cowichan_amostragem`, fonte CC0, substitui `walleye_erie` por decisão do professor; 246 peixes e oito colunas. Comprimento do registro 234 a conferir.
 
 - Dados: D09 `tilapia_sensorial`, provisório, da literatura; 122 avaliadores, notas pareadas e escala pendente de interpretação.

@@ -1,5 +1,21 @@
 # Dados da ClaRa — acompanhamento da migração
 
+## Substituição aprovada — D50 (11/10/2026)
+
+`molinesias_parasitos` substitui `escolares_ausencias` (MASS::quine),
+mantendo o código D50, conforme autorização do professor. Novo registro:
+`D50_molinesias_parasitos`; 128 peixes, oito colunas; fonte Dryad CC0.
+O catálogo continua com 60 conjuntos. D45/InsectSprays permanece.
+As fontes antigas estão preservadas em `substituidos/D50_escolares_ausencias/`.
+O novo objeto conserva zeros, extremos e NA; curadoria fina provisória.
+
+Build e check completo desta substituição: 0 erros, 0 notas e somente o
+aviso conhecido de acentos nas funções. Os 669 testes passaram. Conferidos
+carregamento por `clara::molinesias_parasitos` e `data()`, igualdade com os
+valores originais e preservação dos outros 59 registros do catálogo.
+O RDA ocupa 1.728 bytes; a pasta `data/`, 233.904 bytes. Scripts, biblioteca
+temporária, tar.gz e logs de verificação ficaram fora de `data-raw/`.
+
 ## Situação técnica atual — após o bloco 6 (11/10/2026)
 
 Os 60 conjuntos estão incorporados. **Build e check completo aprovados:

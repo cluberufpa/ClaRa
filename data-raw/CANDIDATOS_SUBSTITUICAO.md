@@ -3,7 +3,7 @@
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-não uma decisão de retirar conjuntos. Os 60 objetos integrados permanecem.
+com substituições aprovadas registradas abaixo. O catálogo mantém 60 conjuntos.
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -13,7 +13,7 @@ As prioridades abaixo são sugestões para avaliação do professor.
 | D12 bacterias_tratamento | Tratamento clínico em crianças | Resposta binária observada nos mesmos organismos em dois ou mais momentos, com ID, tratamento e tempo; pares para McNemar |
 | D46 carros_frenagem | Frenagem de carros históricos | Duas medidas contínuas em organismos/ambiente aquático, suficientes para comparar curva linear e quadrática; replicação identificada |
 | D47 terremotos_fiji | Geofísica | Estações ou ocorrências aquáticas reais com coordenadas, convenção geográfica explícita e quantidade para pontos/bolhas |
-| D50 escolares_ausencias | Ausência escolar | Contagens reais com covariáveis categóricas e delineamento conhecido; exposição disponível quando necessária |
+| D50 molinesias_parasitos | Bioecologia de peixes | Resolvido: substituição do quine aprovada em 11/10/2026, fonte Dryad CC0; curadoria fina pendente |
 | D51 seguros_sinistros | Seguros de automóveis | Contagens agregadas com denominador/esforço observado e grupos; preservar exercício de exposição/offset |
 | D52 paciente_peso | Série de peso humano | Série de crescimento ou redução de massa com tempo, unidade e organismo identificados, adequada a curva não linear e com dependência documentada |
 | D53 navios_incidentes | Danos em frota sem identificação como pesqueira | Captura ou incidentes em embarcações/atividade pesqueira com esforço/exposição e fatores claros |
@@ -53,7 +53,7 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 | D47 | terremotos_fiji | datasets::quakes |
 | D48 | laranjeiras_crescimento | datasets::Orange |
 | D49 | aveia_parcelas | MASS::oats |
-| D50 | escolares_ausencias | MASS::quine |
+
 | D51 | seguros_sinistros | MASS::Insurance |
 | D52 | paciente_peso | MASS::wtloss |
 | D53 | navios_incidentes | MASS::ships |
@@ -85,3 +85,7 @@ EAPADados; essas têm procedência detalhada nas fichas e fontes congeladas.
 
 Esta lista organiza a busca do professor; não registra uma busca na internet
 nem afirma que novas fontes já foram encontradas ou validadas.
+
+## Substituição aprovada em 11/10/2026
+
+D50 agora é `molinesias_parasitos`, registro `D50_molinesias_parasitos`, fonte Dryad CC0. Substitui `MASS::quine` com autorização do professor. D45/InsectSprays permanece à espera de uma fonte experimental adequada. Parecer em `docs/AVALIACAO_MOLINESIAS_20261011.md`.
