@@ -219,3 +219,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D32 `qfasa_presas`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D33 `recifes_ostras_heatmap`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D34 `snapper_hg`, provisório, com fonte e decisões anteriores registradas.

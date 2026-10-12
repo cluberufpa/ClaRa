@@ -80,4 +80,5 @@ Collate:
     'dados_qfasa_predadores.R'
     'dados_qfasa_presas.R'
     'dados_recifes_ostras_heatmap.R'
+    'dados_snapper_hg.R'
 Config/roxygen2/version: 8.1.0
