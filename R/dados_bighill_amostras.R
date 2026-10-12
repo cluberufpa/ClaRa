@@ -16,15 +16,23 @@
 #' @section Adaptações:
 #' UID → id_amostra; date → data; loc → localizacao; effort → esforco_min. id_amostra em texto, mantendo códigos e ausências originais. localizacao em texto, mantendo códigos e ausências originais. data convertido de mês/dia/ano para Date, sem perda de datas.  Todas as linhas e sua ordem preservadas, sem imputação, exclusão ou simulação. Unidades originais mantidas.
 #'
+#' @section Leitura do pacote:
+#' Adaptado de `FSAdata::BGHRsample`, versão 0.4.1. Autoria do pacote: Derek Ogle.
+#' As observações são lidas na hora por `carregar_dados("bighill_amostras")`.
+#' Não há cópia deste conjunto em data/ da ClaRa.
+#'
 #' @source
 #' Dados obtidos diretamente de Ben Neely; Introductory Fisheries Analyses with R; FSAdata::BGHRsample.
-#' Licença: GPL (>= 2), FSAdata 0.4.1.
+#' Licença do pacote fornecedor: GPL (>= 2).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D57_bighill_amostras/.
 #'
 #' @examples
-#' summary(bighill_amostras)
+#' if (requireNamespace("FSAdata", quietly = TRUE)) {
+#'   dados <- carregar_dados("bighill_amostras")
+#'   summary(dados)
+#' }
 #'
-#' @docType data
+#' @name bighill_amostras
 #' @keywords datasets
-"bighill_amostras"
+NULL

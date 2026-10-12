@@ -23,15 +23,23 @@
 #' @section Adaptações:
 #' fish.id → id_peixe; month → mes; day → dia; year → ano; indiv → id_individuo; location → localizacao; length → comprimento_total_mm; weight → peso_g; sex → sexo; maturity → maturidade; age → idade_anos. id_peixe em texto, mantendo códigos e ausências originais. id_individuo em texto, mantendo códigos e ausências originais. localizacao em texto, mantendo códigos e ausências originais. Categorias de sexo: female → femea, male → macho, unknown → desconhecido. Categorias de maturidade: developing → em_desenvolvimento, immature → imaturo, mature → maduro, nearly.ripe → quase_maduro, nearly.spent → quase_esgotado, recovering → em_recuperacao, ripe → pronto_desova, running → em_desova, spent → esgotado, unknown → desconhecido, yoy → jovem_ano.  Todas as linhas e sua ordem preservadas, sem imputação, exclusão ou simulação. Unidades originais mantidas.
 #'
+#' @section Leitura do pacote:
+#' Adaptado de `FSAdata::RuffeSLRH92`, versão 0.4.1. Autoria do pacote: Derek Ogle.
+#' As observações são lidas na hora por `carregar_dados("ruffe_biometria")`.
+#' Não há cópia deste conjunto em data/ da ClaRa.
+#'
 #' @source
 #' US Geological Survey, Lake Superior Biological Station, Ashland, Wisconsin, coleção pessoal; FSAdata::RuffeSLRH92.
-#' Licença: GPL (>= 2), FSAdata 0.4.1.
+#' Licença do pacote fornecedor: GPL (>= 2).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D56_ruffe_biometria/.
 #'
 #' @examples
-#' summary(ruffe_biometria)
+#' if (requireNamespace("FSAdata", quietly = TRUE)) {
+#'   dados <- carregar_dados("ruffe_biometria")
+#'   summary(dados)
+#' }
 #'
-#' @docType data
+#' @name ruffe_biometria
 #' @keywords datasets
-"ruffe_biometria"
+NULL

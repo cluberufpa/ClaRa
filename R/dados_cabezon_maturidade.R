@@ -17,15 +17,23 @@
 #' @section Adaptações:
 #' date → data; length → comprimento_total_cm; age → idade; maturity → maturidade; stage → estagio_maturidade. data convertido de mês/dia/ano para Date, sem perda de datas. Categorias de maturidade: Immature → imatura, Mature → madura, Unknown → desconhecida.  Todas as linhas e sua ordem preservadas, sem imputação, exclusão ou simulação. Unidades originais mantidas.
 #'
+#' @section Leitura do pacote:
+#' Adaptado de `FSAdata::Cabezon`, versão 0.4.1. Autoria do pacote: Derek Ogle.
+#' As observações são lidas na hora por `carregar_dados("cabezon_maturidade")`.
+#' Não há cópia deste conjunto em data/ da ClaRa.
+#'
 #' @source
 #' Hannah, Blume e Thompson (2009), Length and age at maturity of female yelloweye rockfish and cabezon from Oregon waters based on histological evaluation of maturity, ODFW Information Reports 2009-04; dados obtidos de Bob Hanna, conforme FSAdata::Cabezon.
-#' Licença: GPL (>= 2), FSAdata 0.4.1.
+#' Licença do pacote fornecedor: GPL (>= 2).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D55_cabezon_maturidade/.
 #'
 #' @examples
-#' summary(cabezon_maturidade)
+#' if (requireNamespace("FSAdata", quietly = TRUE)) {
+#'   dados <- carregar_dados("cabezon_maturidade")
+#'   summary(dados)
+#' }
 #'
-#' @docType data
+#' @name cabezon_maturidade
 #' @keywords datasets
-"cabezon_maturidade"
+NULL

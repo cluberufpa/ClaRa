@@ -18,15 +18,26 @@
 #' @section Adaptações:
 #' Somente id_peixe convertido em texto. Filtro anterior de idade preservado; não reinseridos registros simulados sem idade. Quartis mantidos.
 #'
+#' @section De-para da receita:
+#' survey -> levantamento (texto); len -> comprimento_cm (numérico); age -> idade_anos (numérico). id_peixe é a posição original, em texto. Classes por cut nos quartis de todos os 18.420 registros ANTES do filtro !is.na(age), que retém 1.331; tem_idade_atribuida é TRUE. A classe preservada depende dessa ordem e inclui na sua definição os registros sem idade presentes na fonte.
+#'
+#' @section Leitura do pacote:
+#' Adaptado de `FSAdata::SnapperHG1`, versão 0.4.1. Autoria do pacote: Derek Ogle.
+#' As observações são lidas na hora por `carregar_dados("snapper_hg")`.
+#' Não há cópia deste conjunto em data/ da ClaRa.
+#'
 #' @source
 #' Davies e Walsh (2002), tabelas 2, 3 e 5, levantamentos KAH8810/KAH0012; FSAdata::SnapperHG1.
-#' Licença: GPL-2 | GPL-3, FSAdata.
+#' Licença do pacote fornecedor: GPL (>= 2).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D34_snapper_idades/.
 #'
 #' @examples
-#' summary(snapper_hg)
+#' if (requireNamespace("FSAdata", quietly = TRUE)) {
+#'   dados <- carregar_dados("snapper_hg")
+#'   summary(dados)
+#' }
 #'
-#' @docType data
+#' @name snapper_hg
 #' @keywords datasets
-"snapper_hg"
+NULL

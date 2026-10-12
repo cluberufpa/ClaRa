@@ -21,3 +21,7 @@ Amostragem estratificada; ANCOVA; PCA. Principal: Amostragem estratificada. Exem
 ## Pendências para a curadoria
 
 Classes de quartis mantidas, fora de PCA; renomeação fina pendente. Sexo e estratos preservados. Não confundir caranguejos Leptograpsus com a outra base de caranguejos. ANCOVA exige verificar interação, forma funcional e diagnósticos, sem prometer adequação automática.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `MASS::crabs`, versão validada 7.3-65; licença GPL-2 | GPL-3. Autoria do pacote: Brian Ripley e Bill Venables. Use `carregar_dados("crabs_morfometria")`; `data()` e `clara::crabs_morfometria` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

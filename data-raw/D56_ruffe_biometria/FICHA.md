@@ -21,3 +21,7 @@ Frequência de comprimento; Relação peso-comprimento; Crescimento; Maturidade.
 ## Pendências para a curadoria
 
 738 linhas preservadas, inclusive identificadores repetidos da fonte. fish.id é número decimal: convertido em texto sem arredondar ou criar nova chave; indiv também pode repetir. Confirmar unidade amostral e duplicatas com a fonte antes de usar como identificador único. Idade por escamas disponível em apenas 12 registros (726 NA), peso com 2 NA; não sustenta ajuste de crescimento a todas as 738 linhas. Sexo desconhecido e estágio jovem do ano não significam ausência. Códigos de localização preservados em texto, sem inferir coordenadas. Rever significado biológico dos estágios traduzidos, sobretudo quase maduro/esgotado e jovem do ano.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `FSAdata::RuffeSLRH92`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("ruffe_biometria")`; `data()` e `clara::ruffe_biometria` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

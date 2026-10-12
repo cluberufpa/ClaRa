@@ -1,5 +1,11 @@
 # Busca de substitutos — orientação para a curadoria (11/10/2026)
 
+Atualização de 12/10/2026: os oito conjuntos do FSAdata e `MASS::crabs`
+foram convertidos para leitura na hora na branch dados (v0.15.0), mantendo
+nomes e códigos. A lista histórica abaixo identifica procedência, não cópias
+que devam ser recriadas. As demais buscas não foram alteradas nesta rodada.
+Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
+
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,

@@ -2,6 +2,8 @@
 # O JSON de cada conjunto contém uma linha, com o mesmo contrato do D01.
 registrar_catalogo <- function(arquivo) {
   novo <- as.data.frame(jsonlite::fromJSON(arquivo), stringsAsFactors = FALSE)
+  # Metadados anteriores à leitura externa continuam sendo da própria ClaRa.
+  if (!is.element("fonte_dados", names(novo))) novo$fonte_dados <- "clara"
   novo$linhas <- as.integer(novo$linhas)
   novo$colunas <- as.integer(novo$colunas)
   for (coluna in names(novo)[vapply(novo, is.character, logical(1))]) {

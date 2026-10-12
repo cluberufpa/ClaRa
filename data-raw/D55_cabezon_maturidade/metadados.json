@@ -14,7 +14,8 @@
   "analise_principal": "Maturidade",
   "palavras_chave": "cabezon; maturidade",
   "verbo_clara": "",
-  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Hannah, Blume e Thompson (2009), Length and age at maturity of female yelloweye rockfish and cabezon from Oregon waters based on histological evaluation of maturity, ODFW Information Reports 2009-04; dados obtidos de Bob Hanna, conforme FSAdata::Cabezon",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "fonte_dados": "FSAdata"
 }

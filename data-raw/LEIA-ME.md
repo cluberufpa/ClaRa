@@ -1,5 +1,20 @@
 # Dados da ClaRa — acompanhamento da migração
 
+## Leitura de dados externos — branch dados, versão 0.15.0 (12/10/2026)
+
+Oito conjuntos do FSAdata e `MASS::crabs` passam a ser lidos na hora por
+`carregar_dados()`, com receitas visíveis em `R/dados_pacotes.R`. O catálogo
+mantém 60 registros e ganha `fonte_dados`: 51 clara, oito FSAdata, um MASS.
+Retiradas as nove cópias de `data/` e as cópias binárias das respectivas fontes.
+Fichas, registros, referências e de-para permanecem. Os nove retornos foram
+conferidos com `identical()` contra os objetos anteriores, inclusive os quatro
+que passaram pelo EAPADados. Não executar receitas históricas para recriar cópias.
+
+Check completo: 0 erros, 0 notas, aviso conhecido de acentos; 686 testes
+passaram, sem skips com os fornecedores instalados. Instalação sem FSAdata
+também conferida. Main e push aguardam as decisões do professor.
+Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
+
 ## Substituição aprovada — D50 (11/10/2026)
 
 `molinesias_parasitos` substitui `escolares_ausencias` (MASS::quine),

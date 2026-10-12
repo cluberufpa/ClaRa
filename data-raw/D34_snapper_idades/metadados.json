@@ -6,7 +6,7 @@
   "rotulo": "Snapper: comprimento e idade atribuída",
   "titulo": "D34 - Snapper: comprimento e idade atribuída",
   "natureza": "real extraída de tabelas",
-  "origem": "EAPADados::snapper_hg",
+  "origem": "FSAdata::SnapperHG1",
   "unidade_amostral": "registro com comprimento e idade atribuída, extraído de tabelas",
   "linhas": 1331,
   "colunas": 6,
@@ -14,7 +14,8 @@
   "analise_principal": "Amostragem didática",
   "palavras_chave": "snapper; hg",
   "verbo_clara": "",
-  "licenca": "GPL-2 | GPL-3, FSAdata",
+  "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Davies e Walsh (2002), tabelas 2, 3 e 5, levantamentos KAH8810/KAH0012; FSAdata::SnapperHG1",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "fonte_dados": "FSAdata"
 }

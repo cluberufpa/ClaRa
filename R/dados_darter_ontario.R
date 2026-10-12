@@ -15,15 +15,26 @@
 #' @section Adaptações:
 #' Cabeçalhos, categorias, valores, linhas e ordem herdados preservados.
 #'
+#' @section De-para da receita:
+#' age -> idade_anos (inteiro); tl -> comprimento_total_mm (numérico); river -> rio (fator Salmon/Trent). Sem filtro de linhas.
+#'
+#' @section Leitura do pacote:
+#' Adaptado de `FSAdata::DarterOnt`, versão 0.4.1. Autoria do pacote: Derek Ogle.
+#' As observações são lidas na hora por `carregar_dados("darter_ontario")`.
+#' Não há cópia deste conjunto em data/ da ClaRa.
+#'
 #' @source
 #' Reid (2004), Journal of Freshwater Ecology 19:441–444, Figura 2; FSAdata::DarterOnt.
-#' Licença: GPL-2 | GPL-3, FSAdata.
+#' Licença do pacote fornecedor: GPL (>= 2).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D24_percina_ontario/.
 #'
 #' @examples
-#' summary(darter_ontario)
+#' if (requireNamespace("FSAdata", quietly = TRUE)) {
+#'   dados <- carregar_dados("darter_ontario")
+#'   summary(dados)
+#' }
 #'
-#' @docType data
+#' @name darter_ontario
 #' @keywords datasets
-"darter_ontario"
+NULL

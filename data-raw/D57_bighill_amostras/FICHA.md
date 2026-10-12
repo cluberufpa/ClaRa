@@ -21,3 +21,7 @@ Preparar dados; Relacionar amostras e peixes; Esforço e CPUE. Principal: Prepar
 ## Pendências para a curadoria
 
 Vinte amostras, todas com 10 minutos de esforço; loc é código, não coordenada. UID permite relação com bighill_peixes; não unir nem repetir o esforço por peixe nesta base. Ao estimar CPUE, somar contagem por amostra antes de dividir pelo esforço; incluir amostras sem captura da espécie. Datas da fonte em mês/dia/ano. Relação entre as tabelas e eventual agregação ficam para o exercício, sem criar um conjunto derivado na passada 1.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `FSAdata::BGHRsample`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("bighill_amostras")`; `data()` e `clara::bighill_amostras` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

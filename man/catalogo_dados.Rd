@@ -10,7 +10,8 @@ Um \code{data.frame} com as colunas:
 \item{codigo}{Registro permanente no formato D01, D02, etc.}
 \item{registro}{Registro curto e nome da pasta de preparo, como D01_bagre_racao.}
 \item{nome_eapadados}{Nome anterior no EAPADados; vazio para outras origens.}
-\item{nome}{Nome do objeto disponível após \code{library(clara)}.}
+\item{nome}{Nome aceito por \code{carregar_dados()}; dados externos não são objetos copiados na ClaRa.}
+\item{fonte_dados}{Fornecedor do conjunto: clara, FSAdata ou MASS.}
 \item{rotulo}{Título curto para seleção.}
 \item{titulo}{Título completo da ajuda, com o registro.}
 \item{natureza}{Natureza do dado: real, agregado, reconstruido ou sintetico.}
@@ -39,6 +40,7 @@ Os registros não são renumerados nem reutilizados. O catálogo inclui
 pendências explicitamente: presença no pacote não confirma licença da
 fonte. Textos em português usam codificação Latin-1 declarada, preservando
 os acentos sem strings marcadas como UTF-8 nos arquivos de dados.
+Os nove conjuntos externos são lidos e traduzidos por \code{carregar_dados()}.
 }
 \examples{
 catalogo_dados[, c("codigo", "nome", "analise_principal", "situacao")]

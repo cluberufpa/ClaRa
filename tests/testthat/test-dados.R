@@ -6,6 +6,8 @@ test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
   expect_true(all(grepl("^D[0-9]{2}_[a-z]+(?:_[a-z]+)?$", catalogo_dados$registro, perl = TRUE)))
   expect_true(all(startsWith(catalogo_dados$registro, paste0(catalogo_dados$codigo, "_"))))
   expect_true("nome_eapadados" %in% names(catalogo_dados))
+  expect_true("fonte_dados" %in% names(catalogo_dados))
+  expect_true(all(is.element(catalogo_dados$fonte_dados, c("clara", "FSAdata", "MASS"))))
 
   # No desenvolvimento lemos as páginas recém-geradas; no check, a ajuda
   # instalada. Não usamos uma instalação antiga para conferir dados novos.
@@ -18,7 +20,9 @@ test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
   }
   for (i in seq_len(nrow(catalogo_dados))) {
     registro <- catalogo_dados[i, ]
-    dados <- get(registro$nome, envir = asNamespace("clara"))
+    # Os nove externos têm testes próprios, com dependências opcionais.
+    if (registro$fonte_dados != "clara") next
+    dados <- carregar_dados(registro$nome)
     expect_s3_class(dados, "data.frame")
     expect_equal(dim(dados), c(registro$linhas, registro$colunas))
     # Passada 1: preservar nomes herdados do EAPADados, inclusive CPUE/Data.

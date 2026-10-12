@@ -6,7 +6,7 @@
   "rotulo": "Percina: idade e comprimento em Ontário",
   "titulo": "D24 - Percina: idade e comprimento em Ontário",
   "natureza": "real reconstruída de figura",
-  "origem": "EAPADados::darter_ontario",
+  "origem": "FSAdata::DarterOnt",
   "unidade_amostral": "registro reconstruído aproximadamente de uma figura de indivíduos",
   "linhas": 54,
   "colunas": 3,
@@ -14,7 +14,8 @@
   "analise_principal": "Mann-Whitney",
   "palavras_chave": "darter; ontario",
   "verbo_clara": "",
-  "licenca": "GPL-2 | GPL-3, FSAdata",
+  "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Reid (2004), Journal of Freshwater Ecology 19:441–444, Figura 2; FSAdata::DarterOnt",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "fonte_dados": "FSAdata"
 }

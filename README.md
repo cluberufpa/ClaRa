@@ -1,5 +1,29 @@
 # ClaRa: o R escrito com clareza
 
+## Carregar os dados de estudo
+
+```r
+library(clara)
+bagres <- carregar_dados("bagre_racao_isoproteica")
+catalogo_dados[, c("codigo", "nome", "fonte_dados")]
+```
+
+Na versão 0.15.0, oito conjuntos do FSAdata e os caranguejos de MASS são lidos
+do pacote de origem e traduzidos na hora. Instale o fornecedor uma vez, se
+necessário, e carregue o conjunto pelo nome da ClaRa:
+
+```r
+install.packages("FSAdata")
+snapper <- carregar_dados("snapper_hg")
+caranguejos <- carregar_dados("crabs_morfometria")
+```
+
+Para esses nove conjuntos, use `carregar_dados()` em vez de `data()` ou
+`clara::nome`. Os nomes e os códigos D permanecem, assim como suas páginas de
+ajuda. As observações continuam sob a licença do fornecedor. Os outros
+conjuntos seguem disponíveis na ClaRa e também podem ser lidos pela nova função.
+
+
 A ClaRa é um jeito de escrever R pensado para quem está começando na
 Estatística Aplicada à Pesca e Aquicultura. Cada função responde a uma
 pergunta da pesquisa, em português. Por trás dela roda R comum, no estilo do

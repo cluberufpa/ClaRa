@@ -1,7 +1,7 @@
 Package: clara
 Type: Package
 Title: O R Escrito com Clareza: Análises por Pergunta da Pesquisa
-Version: 0.14.0
+Version: 0.15.0
 Authors@R: c(
     person("Evaldo", "Martins da Silva", email = "cluber.ufpa@gmail.com",
            role = c("aut", "cre")),
@@ -34,6 +34,8 @@ Imports:
     stringr,
     withr
 Suggests:
+    FSAdata,
+    MASS,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
@@ -45,6 +47,8 @@ Collate:
     'clara_medias.R'
     'clara_medianas.R'
     'clara_regressao.R'
+    'dados_pacotes.R'
+    'clara_dados.R'
     'dados_bagre_racao_isoproteica.R'
     'dados_catalogo.R'
     'dados_abalone_adultos.R'

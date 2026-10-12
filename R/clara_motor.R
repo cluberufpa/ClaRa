@@ -106,6 +106,7 @@ ordem_da_ajuda <- c(
   "comparar_medias", "grafico_medias", "grafico_boxplot", "grafico_pares",
   "comparar_medianas", "grafico_medianas",
   "relacionar_variaveis", "grafico_reta",
+  "carregar_dados",
   "medir_efeito", "escrever_resultados", "exibir_teste", "exibir_resumo",
   "grafico_residuos", "grafico_qq",
   "salvar_tabelas", "salvar_figuras", "registrar_ambiente",

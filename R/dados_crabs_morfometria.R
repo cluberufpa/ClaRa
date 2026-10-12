@@ -22,15 +22,26 @@
 #' @section Adaptações:
 #' Somente id_caranguejo convertido em texto pela convenção de identificadores. Não aplicadas propostas pendentes de mudar os quartis.
 #'
+#' @section De-para da receita:
+#' sp -> forma_cor (B -> azul, O -> laranja); sex -> sexo (M -> macho, F -> fêmea); index -> indice_no_grupo; FL -> largura_lobo_frontal_mm; RW -> largura_posterior_mm; CL -> comprimento_carapaca_mm; CW -> largura_carapaca_mm; BD -> profundidade_corpo_mm. ID pela ordem original; classes por cut nos quartis, com include.lowest=TRUE.
+#'
+#' @section Leitura do pacote:
+#' Adaptado de `MASS::crabs`, versão 7.3-65. Autoria do pacote: Brian Ripley e Bill Venables.
+#' As observações são lidas na hora por `carregar_dados("crabs_morfometria")`.
+#' Não há cópia deste conjunto em data/ da ClaRa.
+#'
 #' @source
 #' MASS::crabs; Campbell e Mahon (1974); Venables e Ripley (2002).
-#' Licença: GPL-2 | GPL-3, MASS.
+#' Licença do pacote fornecedor: GPL-2 | GPL-3.
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D23_caranguejos_morfometria/.
 #'
 #' @examples
-#' summary(crabs_morfometria)
+#' if (requireNamespace("MASS", quietly = TRUE)) {
+#'   dados <- carregar_dados("crabs_morfometria")
+#'   summary(dados)
+#' }
 #'
-#' @docType data
+#' @name crabs_morfometria
 #' @keywords datasets
-"crabs_morfometria"
+NULL

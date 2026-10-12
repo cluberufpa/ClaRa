@@ -14,7 +14,8 @@
   "analise_principal": "Preparar dados",
   "palavras_chave": "bighill; amostras",
   "verbo_clara": "",
-  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Dados obtidos diretamente de Ben Neely; Introductory Fisheries Analyses with R; FSAdata::BGHRsample",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "fonte_dados": "FSAdata"
 }

@@ -21,3 +21,7 @@ Mann-Whitney; Estatística descritiva. Principal: Mann-Whitney. Exemplo da ajuda
 ## Pendências para a curadoria
 
 São registros reconstruídos da Figura 2, não planilha primária individual. Manter quatro linhas com valores repetidos. Mann-Whitney exige lidar com empates; interpretar formas das distribuições e seletividade da captura.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `FSAdata::DarterOnt`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("darter_ontario")`; `data()` e `clara::darter_ontario` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

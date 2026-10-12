@@ -21,3 +21,7 @@ Preparar dados; Agregação de capturas; Relação peso-comprimento; CPUE. Princ
 ## Pendências para a curadoria
 
 266 linhas não equivalem necessariamente a 266 peixes: contagem varia de 1 a 3 e deve ser somada para captura. fishID tem 81 ausências e é local à amostra, não chave global; peso tem 91 NA. Manter todas as linhas e não expandir contagens em réplicas fictícias. UID referencia bighill_amostras; esforço fica naquela tabela e não deve ser somado após repetição por peixe. Códigos de espécie 116/118/122 preservados como texto; nomes comuns ingleses da ajuda não são inferidos como novos nomes científicos.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `FSAdata::BGHRfish`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("bighill_peixes")`; `data()` e `clara::bighill_peixes` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

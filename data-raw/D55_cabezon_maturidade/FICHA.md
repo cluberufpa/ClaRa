@@ -21,3 +21,7 @@ Maturidade; Regressão logística; Crescimento; von Bertalanffy. Principal: Matu
 ## Pendências para a curadoria
 
 Dados declarados obtidos diretamente dos pesquisadores, relativos apenas a fêmeas de Newport e Depoe Bay, Oregon. Preservados 226 valores ausentes de idade e categoria Unknown (desconhecida) de maturidade, que a descrição resumida não lista. Não codificar desconhecida como imatura ou madura nem excluir da base; selecionar respostas conhecidas no ramo logístico. Datas lidas como mês/dia/ano. Estágios 1 a 7 mantidos como códigos; não converter automaticamente em escala contínua. Confirmar unidade da idade em anos na fonte e seleção de indivíduos com leitura de otólito.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `FSAdata::Cabezon`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("cabezon_maturidade")`; `data()` e `clara::cabezon_maturidade` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

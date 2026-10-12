@@ -21,3 +21,7 @@ Amostragem didática; Crescimento; Idade-comprimento. Principal: Amostragem did�
 ## Pendências para a curadoria
 
 A fonte foi recriada de tabelas; os peixes sem idade simulados pelo FSAdata não entram. O grupo idade 20 significa 19 anos ou mais, não idade exata 20. O subconjunto envelhecido não é amostra aleatória ou proporcional da população. Quartis herdados preservados; sua renomeação ainda pendente.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `FSAdata::SnapperHG1`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("snapper_hg")`; `data()` e `clara::snapper_hg` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

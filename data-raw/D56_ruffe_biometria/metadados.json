@@ -14,7 +14,8 @@
   "analise_principal": "Frequência de comprimento",
   "palavras_chave": "ruffe; biometria",
   "verbo_clara": "",
-  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "US Geological Survey, Lake Superior Biological Station, Ashland, Wisconsin, coleção pessoal; FSAdata::RuffeSLRH92",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "fonte_dados": "FSAdata"
 }

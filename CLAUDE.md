@@ -204,6 +204,19 @@ Regras que saem desse desenho:
   e temperatura). Ainda é pergunta sobre médias, com interação: pode ser
   `comparar_medias(grupos = c(racao, temperatura))` ou um verbo próprio.
 
+## Carregar dados (v0.15.0, pedido de 12/10/2026)
+
+`carregar_dados("nome")` é a porta de entrada dos 60 conjuntos do catálogo.
+O nome foi confirmado pelo professor. Os dados internos continuam em `data/`;
+oito conjuntos do FSAdata e `MASS::crabs` são lidos na hora e traduzidos pelas
+receitas em `R/dados_pacotes.R`. A função fica em `R/clara_dados.R`.
+`fonte_dados` indica o fornecedor; FSAdata e MASS são opcionais em Suggests.
+Para os nove externos, `data()` e `clara::nome` foram substituídos pela função.
+As páginas de ajuda, nomes e registros D ficam. Não recriar cópias binárias
+nas pastas de fontes; os `preparar.R` desses nove somente carregam e conferem.
+O check usa uma biblioteca temporária, sem resíduos em `data-raw/`.
+A versão 0.15.0 aguarda o sim do professor para merge na main; não alterar TRILHA.
+
 ## Como o aluno usa (v0.7)
 
 ```r

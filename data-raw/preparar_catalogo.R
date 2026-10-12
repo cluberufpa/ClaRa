@@ -19,6 +19,7 @@ novo <- data.frame(
   licenca = "Não localizada; autorização dos autores pendente",
   referencia = "Bhujel, R. C. (2011). Statistics for Aquaculture. Tabela 7.4, p. 103; conforme documentação do EAPADados",
   situacao = "Curadoria aprovada; autorização da fonte pendente",
+  fonte_dados = "clara",
   stringsAsFactors = FALSE
 )
 

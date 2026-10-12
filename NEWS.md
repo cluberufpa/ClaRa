@@ -1,4 +1,12 @@
-# clara (em desenvolvimento)
+# clara 0.15.0
+
+- `carregar_dados()` oferece uma porta de entrada para os 60 conjuntos do catálogo.
+- Oito conjuntos do FSAdata e `MASS::crabs` passam a ser lidos e traduzidos na hora. Retiradas as nove cópias de `data/` e as cópias binárias das respectivas pastas de fontes; códigos D e nomes preservados.
+- Catálogo com `fonte_dados` (`clara`, `FSAdata` ou `MASS`); fornecedores opcionais em Suggests. Mensagens em português explicam como instalar o fornecedor quando necessário.
+- Receitas conferidas contra os nove objetos anteriores com `identical()`, inclusive os quatro que passaram pelo EAPADados. Preservados filtro de idade e quartis anteriores ao filtro em `snapper_hg`.
+- Para esses nove conjuntos, substituir `data(nome, package = "clara")` ou `clara::nome` por `carregar_dados("nome")`. Ajuda e referências continuam disponíveis.
+
+# clara 0.14.0 (11 de outubro de 2026)
 
 - Dados: D50 `molinesias_parasitos` (128 peixes, oito colunas, CC0) substitui `escolares_ausencias` (MASS::quine), mantendo o código D50 por decisão do professor. Objeto antigo retirado do pacote; fontes preservadas no histórico.
 
@@ -22,7 +30,6 @@
 
 * D01: `bagre_racao_isoproteica`, com 19 observações preservadas, documentação, catálogo e preparo reproduzível; curadoria aprovada e autorização dos autores pendente.
 
-# clara 0.14.0 (11 de outubro de 2026)
 
 Ajuste do p nas comparações de Dunn (decisão do professor, 11/10/2026),
 pedido pela Trilha, cuja tela do Kruskal-Wallis oferece Bonferroni, Holm e

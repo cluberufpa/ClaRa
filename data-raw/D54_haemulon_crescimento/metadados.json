@@ -14,7 +14,8 @@
   "analise_principal": "Crescimento",
   "palavras_chave": "haemulon; crescimento",
   "verbo_clara": "",
-  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Araujo e Martins (2007), Age, growth and mortality of white grunt (Haemulon plumierii) from the central coast of Brazil, Scientia Marina 71:793–800, figura 6; FSAdata::WhiteGrunt2",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "fonte_dados": "FSAdata"
 }

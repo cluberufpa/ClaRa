@@ -21,3 +21,7 @@ Crescimento; von Bertalanffy; Comparação por sexo. Principal: Crescimento. Exe
 ## Pendências para a curadoria
 
 465 pontos reconstruídos aproximadamente da figura 6, conforme a ajuda. Não apresentar como planilha bruta individual dos autores nem como dados sintéticos simulados. A precisão de 0,1 ano e os comprimentos refletem a reconstrução; revisar digitalização antes de interpretar erros finos ou repetidos. Confirmar fonte primária e preferir dados originais do estudo se disponíveis. Contexto pesqueiro adequado, embora distribuído por pacote.
+
+## Leitura na hora (12/10/2026)
+
+Fornecedor: `FSAdata::WhiteGrunt2`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("haemulon_crescimento")`; `data()` e `clara::haemulon_crescimento` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.

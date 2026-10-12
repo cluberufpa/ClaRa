@@ -15,15 +15,23 @@
 #' @section Adaptações:
 #' age → idade_anos; tl → comprimento_total_mm; sex → sexo. Categorias de sexo: female → femea, male → macho.  Todas as linhas e sua ordem preservadas, sem imputação, exclusão ou simulação. Unidades originais mantidas.
 #'
+#' @section Leitura do pacote:
+#' Adaptado de `FSAdata::WhiteGrunt2`, versão 0.4.1. Autoria do pacote: Derek Ogle.
+#' As observações são lidas na hora por `carregar_dados("haemulon_crescimento")`.
+#' Não há cópia deste conjunto em data/ da ClaRa.
+#'
 #' @source
 #' Araujo e Martins (2007), Age, growth and mortality of white grunt (Haemulon plumierii) from the central coast of Brazil, Scientia Marina 71:793–800, figura 6; FSAdata::WhiteGrunt2.
-#' Licença: GPL (>= 2), FSAdata 0.4.1.
+#' Licença do pacote fornecedor: GPL (>= 2).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D54_haemulon_crescimento/.
 #'
 #' @examples
-#' summary(haemulon_crescimento)
+#' if (requireNamespace("FSAdata", quietly = TRUE)) {
+#'   dados <- carregar_dados("haemulon_crescimento")
+#'   summary(dados)
+#' }
 #'
-#' @docType data
+#' @name haemulon_crescimento
 #' @keywords datasets
-"haemulon_crescimento"
+NULL
