@@ -253,3 +253,21 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D50 `escolares_ausencias`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D51 `seguros_sinistros`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D52 `paciente_peso`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D53 `navios_incidentes`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D54 `haemulon_crescimento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D55 `cabezon_maturidade`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D56 `ruffe_biometria`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D57 `bighill_amostras`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D58 `bighill_peixes`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D59 `peixes_recrutamento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D60 `trigo_quadrado_latino`, provisório, com fonte e decisões anteriores registradas.

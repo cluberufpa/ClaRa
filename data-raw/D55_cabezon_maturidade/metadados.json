@@ -1,0 +1,20 @@
+{
+  "codigo": "D55",
+  "registro": "D55_cabezon_maturidade",
+  "nome": "cabezon_maturidade",
+  "nome_eapadados": "",
+  "rotulo": "Cabezon: comprimento, idade e maturidade de fêmeas",
+  "titulo": "D55 - Cabezon: comprimento, idade e maturidade de fêmeas",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "FSAdata::Cabezon",
+  "unidade_amostral": "fêmea de Scorpaenichthys marmoratus coletada no Oregon",
+  "linhas": 525,
+  "colunas": 5,
+  "analises": "Maturidade; Regressão logística; Crescimento; von Bertalanffy",
+  "analise_principal": "Maturidade",
+  "palavras_chave": "cabezon; maturidade",
+  "verbo_clara": "",
+  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "referencia": "Hannah, Blume e Thompson (2009), Length and age at maturity of female yelloweye rockfish and cabezon from Oregon waters based on histological evaluation of maturity, ODFW Information Reports 2009-04; dados obtidos de Bob Hanna, conforme FSAdata::Cabezon",
+  "situacao": "provisório"
+}

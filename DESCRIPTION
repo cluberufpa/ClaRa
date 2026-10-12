@@ -97,4 +97,13 @@ Collate:
     'dados_aveia_parcelas.R'
     'dados_escolares_ausencias.R'
     'dados_seguros_sinistros.R'
+    'dados_paciente_peso.R'
+    'dados_navios_incidentes.R'
+    'dados_haemulon_crescimento.R'
+    'dados_cabezon_maturidade.R'
+    'dados_ruffe_biometria.R'
+    'dados_bighill_amostras.R'
+    'dados_bighill_peixes.R'
+    'dados_peixes_recrutamento.R'
+    'dados_trigo_quadrado_latino.R'
 Config/roxygen2/version: 8.1.0

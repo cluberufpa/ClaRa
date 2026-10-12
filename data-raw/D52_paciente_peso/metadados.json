@@ -1,0 +1,20 @@
+{
+  "codigo": "D52",
+  "registro": "D52_paciente_peso",
+  "nome": "paciente_peso",
+  "nome_eapadados": "",
+  "rotulo": "Paciente: peso durante programa de redução",
+  "titulo": "D52 - Paciente: peso durante programa de redução",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "MASS::wtloss",
+  "unidade_amostral": "medição ao longo do tempo de um único paciente",
+  "linhas": 52,
+  "colunas": 2,
+  "analises": "Curva exponencial assintótica; Regressão não linear",
+  "analise_principal": "Curva exponencial assintótica",
+  "palavras_chave": "paciente; peso",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, MASS 7.3-65",
+  "referencia": "Dr. T. Davies, Adelaide; Venables e Ripley (2002), Modern Applied Statistics with S.; MASS::wtloss",
+  "situacao": "provisório"
+}

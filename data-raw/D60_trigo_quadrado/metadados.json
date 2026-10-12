@@ -1,0 +1,20 @@
+{
+  "codigo": "D60",
+  "registro": "D60_trigo_quadrado",
+  "nome": "trigo_quadrado_latino",
+  "nome_eapadados": "",
+  "rotulo": "Trigo: operadores em quadrado latino",
+  "titulo": "D60 - Trigo: operadores em quadrado latino",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "agridat::cochran.latin",
+  "unidade_amostral": "medição em combinação de parcela, sequência e operador do quadrado latino",
+  "linhas": 36,
+  "colunas": 4,
+  "analises": "Planejamento experimental; Quadrado latino",
+  "analise_principal": "Planejamento experimental",
+  "palavras_chave": "trigo; quadrado; latino",
+  "verbo_clara": "",
+  "licenca": "MIT + file LICENSE, agridat 1.26",
+  "referencia": "Cochran e Cox (1957), Experimental Designs, 2ª ed., Wiley; agridat::cochran.latin",
+  "situacao": "provisório"
+}

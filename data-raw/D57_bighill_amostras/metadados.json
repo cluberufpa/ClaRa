@@ -1,0 +1,20 @@
+{
+  "codigo": "D57",
+  "registro": "D57_bighill_amostras",
+  "nome": "bighill_amostras",
+  "nome_eapadados": "",
+  "rotulo": "Big Hill: amostras e esforço de pesca elétrica",
+  "titulo": "D57 - Big Hill: amostras e esforço de pesca elétrica",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "FSAdata::BGHRsample",
+  "unidade_amostral": "amostra de pesca elétrica no reservatório Big Hill, maio de 2014",
+  "linhas": 20,
+  "colunas": 4,
+  "analises": "Preparar dados; Relacionar amostras e peixes; Esforço e CPUE",
+  "analise_principal": "Preparar dados",
+  "palavras_chave": "bighill; amostras",
+  "verbo_clara": "",
+  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "referencia": "Dados obtidos diretamente de Ben Neely; Introductory Fisheries Analyses with R; FSAdata::BGHRsample",
+  "situacao": "provisório"
+}

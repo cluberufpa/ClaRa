@@ -1,0 +1,20 @@
+{
+  "codigo": "D56",
+  "registro": "D56_ruffe_biometria",
+  "nome": "ruffe_biometria",
+  "nome_eapadados": "",
+  "rotulo": "Ruffe: biometria e maturidade no rio St. Louis",
+  "titulo": "D56 - Ruffe: biometria e maturidade no rio St. Louis",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "FSAdata::RuffeSLRH92",
+  "unidade_amostral": "registro de peixe Gymnocephalus cernuus capturado em 1992",
+  "linhas": 738,
+  "colunas": 11,
+  "analises": "Frequência de comprimento; Relação peso-comprimento; Crescimento; Maturidade",
+  "analise_principal": "Frequência de comprimento",
+  "palavras_chave": "ruffe; biometria",
+  "verbo_clara": "",
+  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "referencia": "US Geological Survey, Lake Superior Biological Station, Ashland, Wisconsin, coleção pessoal; FSAdata::RuffeSLRH92",
+  "situacao": "provisório"
+}

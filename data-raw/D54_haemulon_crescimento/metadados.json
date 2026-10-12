@@ -1,0 +1,20 @@
+{
+  "codigo": "D54",
+  "registro": "D54_haemulon_crescimento",
+  "nome": "haemulon_crescimento",
+  "nome_eapadados": "",
+  "rotulo": "Haemulon plumierii: idade, comprimento e sexo",
+  "titulo": "D54 - Haemulon plumierii: idade, comprimento e sexo",
+  "natureza": "real reconstruído aproximadamente de figura",
+  "origem": "FSAdata::WhiteGrunt2",
+  "unidade_amostral": "ponto reconstruído aproximadamente de figura de idade e comprimento",
+  "linhas": 465,
+  "colunas": 3,
+  "analises": "Crescimento; von Bertalanffy; Comparação por sexo",
+  "analise_principal": "Crescimento",
+  "palavras_chave": "haemulon; crescimento",
+  "verbo_clara": "",
+  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "referencia": "Araujo e Martins (2007), Age, growth and mortality of white grunt (Haemulon plumierii) from the central coast of Brazil, Scientia Marina 71:793–800, figura 6; FSAdata::WhiteGrunt2",
+  "situacao": "provisório"
+}
