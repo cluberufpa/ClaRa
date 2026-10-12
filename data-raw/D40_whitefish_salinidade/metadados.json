@@ -1,0 +1,20 @@
+{
+  "codigo": "D40",
+  "registro": "D40_whitefish_salinidade",
+  "nome": "whitefish_salinidade",
+  "nome_eapadados": "",
+  "rotulo": "Whitefish: condição e fisiologia sob salinidade",
+  "titulo": "D40 - Whitefish: condição e fisiologia sob salinidade",
+  "natureza": "real",
+  "origem": "Dryad::whitefish_salinidade",
+  "unidade_amostral": "peixe amostrado nos dias 174 ou 252; subamostra de tanque, sem pareamento entre dias",
+  "linhas": 59,
+  "colunas": 11,
+  "analises": "Exploração por salinidade e ocasião; Planejamento com subamostras por tanque",
+  "analise_principal": "Exploração por salinidade e ocasião",
+  "palavras_chave": "whitefish; salinidade",
+  "verbo_clara": "",
+  "licenca": "CC0-1.0",
+  "referencia": "Yeung e colaboradores (2026), Stress, growth, and osmoregulatory data for the Atlantic Whitefish at different salinities, Dryad v3, DOI 10.5061/dryad.bg79cnpph, File_A.csv",
+  "situacao": "provisório"
+}

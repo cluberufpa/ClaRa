@@ -85,4 +85,5 @@ Collate:
     'dados_treino_coletas.R'
     'dados_treino_desembarque.R'
     'dados_truta_riacho_crescimento.R'
+    'dados_whitefish_salinidade.R'
 Config/roxygen2/version: 8.1.0
