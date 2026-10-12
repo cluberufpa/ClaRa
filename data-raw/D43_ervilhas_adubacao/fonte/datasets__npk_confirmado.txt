@@ -1,0 +1,56 @@
+_C_l_a_s_s_i_c_a_l _N, _P, _K _F_a_c_t_o_r_i_a_l _E_x_p_e_r_i_m_e_n_t
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     A classical N, P, K (nitrogen, phosphate, potassium) factorial
+     experiment on the growth of peas conducted on 6 blocks. Each half
+     of a fractional factorial design confounding the NPK interaction
+     was used on 3 of the plots.
+
+_U_s_a_g_e:
+
+     npk
+     
+_F_o_r_m_a_t:
+
+     The 'npk' data frame has 24 rows and 5 columns:
+
+     'block'
+          which block (label 1 to 6).
+
+     'N'
+          indicator (0/1) for the application of nitrogen.
+
+     'P'
+          indicator (0/1) for the application of phosphate.
+
+     'K'
+          indicator (0/1) for the application of potassium.
+
+     'yield'
+          Yield of peas, in pounds/plot (the plots were (1/70) acre).
+
+_S_o_u_r_c_e:
+
+     Imperial College, London, M.Sc. exercise sheet.
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Venables WN, Ripley BD (2002). _Modern Applied Statistics with S_,
+     series Statistics and Computing. Springer, New York, NY.
+     doi:10.1007/978-0-387-21706-2
+     <https://doi.org/10.1007/978-0-387-21706-2>.
+
+_E_x_a_m_p_l_e_s:
+
+     options(contrasts = c("contr.sum", "contr.poly"))
+     npk.aov <- aov(yield ~ block + N*P*K, npk)
+     npk.aov
+     summary(npk.aov)
+     coef(npk.aov)
+     options(contrasts = c("contr.treatment", "contr.poly"))
+     npk.aov1 <- aov(yield ~ block + N + K, data = npk)
+     summary.lm(npk.aov1)
+     se.contrast(npk.aov1, list(N=="0", N=="1"), data = npk)
+     model.tables(npk.aov1, type = "means", se = TRUE)
+     
