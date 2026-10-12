@@ -269,3 +269,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D58 `bighill_peixes`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D59 `peixes_recrutamento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D60 `trigo_quadrado_latino`, provisório, com fonte e decisões anteriores registradas.
