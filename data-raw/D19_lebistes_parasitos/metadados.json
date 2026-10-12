@@ -10,7 +10,7 @@
   "unidade_amostral": "um lebiste selvagem (Poecilia reticulata); peixes agrupados em sítios de rio",
   "linhas": 4715,
   "colunas": 9,
-  "analises": "Qui-quadrado de independência; Teste de proporções; Comparação de peso por grupo; Kruskal-Wallis",
+  "analises": "Qui-quadrado de independência; Qui-quadrado de aderência (razão sexual 1:1); Teste de proporções; Comparação de peso por grupo; Kruskal-Wallis",
   "analise_principal": "Qui-quadrado de independência",
   "palavras_chave": "lebiste; guppy; Poecilia reticulata; Gyrodactylus; sexo; parasitismo; tabela de contingência",
   "verbo_clara": "",

@@ -10,7 +10,7 @@
   "unidade_amostral": "pinguim amostrado",
   "linhas": 344,
   "colunas": 8,
-  "analises": "Estatística descritiva; Teste t; ANOVA de um fator; ANCOVA; PCA",
+  "analises": "Estatística descritiva; Teste t; ANOVA de um fator; ANCOVA; PCA; Teste de variâncias; PERMANOVA",
   "analise_principal": "Estatística descritiva",
   "palavras_chave": "pinguins",
   "verbo_clara": "comparar_medias",

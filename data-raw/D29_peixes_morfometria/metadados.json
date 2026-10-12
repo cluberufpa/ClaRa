@@ -10,7 +10,7 @@
   "unidade_amostral": "peixe individual com 35 medidas corporais",
   "linhas": 299,
   "colunas": 39,
-  "analises": "PCA; HCA; Seleção de variáveis",
+  "analises": "PCA; HCA; Seleção de variáveis; PERMANOVA",
   "analise_principal": "PCA",
   "palavras_chave": "peixes; morfometria; multivariada",
   "verbo_clara": "",
