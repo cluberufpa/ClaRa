@@ -4,7 +4,9 @@ fonte <- file.path(pasta, "fonte")
 for (linha in readLines(file.path(fonte, "SHA256.txt"))) {
   partes <- strsplit(linha, "  ", fixed = TRUE)[[1]]
   arquivo <- file.path(fonte, partes[2])
-  stopifnot(identical(digest::digest(file = arquivo, algo = "sha256"), partes[1]))
+  hash <- digest::digest(readBin(arquivo, "raw", n = file.info(arquivo)$size),
+                         algo = "sha256", serialize = FALSE)
+  stopifnot(identical(hash, partes[1]))
 }
 brutos <- read.csv(file.path(fonte, "texas2022_parasite_20260421.csv"),
                    na.strings = c("", "NA"), stringsAsFactors = FALSE)
@@ -29,10 +31,11 @@ destino <- "data/molinesias_parasitos.rda"
 save(molinesias_parasitos, file = destino, compress = "xz", version = 2)
 stopifnot(file.info(destino)$size <= 100000)
 
-# Reutilizar apenas D50, preservando integralmente os outros 59 registros.
+# Reutilizar apenas D50, preservando integralmente todos os demais registros.
 e <- new.env(parent = emptyenv())
 load("data/catalogo_dados.rda", e)
 catalogo_dados <- e$catalogo_dados
+antes <- nrow(catalogo_dados)
 i <- which(catalogo_dados$codigo == "D50")
 stopifnot(length(i) == 1L,
           catalogo_dados$nome[i] %in% c("escolares_ausencias", "molinesias_parasitos"))
@@ -46,7 +49,7 @@ for (n in names(novo)[vapply(novo, is.character, logical(1))]) {
 }
 stopifnot(setequal(names(novo), names(catalogo_dados)))
 catalogo_dados[i, ] <- novo[names(catalogo_dados)]
-stopifnot(nrow(catalogo_dados) == 60L, !anyDuplicated(catalogo_dados$codigo),
+stopifnot(nrow(catalogo_dados) == antes, !anyDuplicated(catalogo_dados$codigo),
           !anyDuplicated(catalogo_dados$nome))
 save(catalogo_dados, file = "data/catalogo_dados.rda", compress = "xz", version = 2)
 stopifnot(sum(file.info(list.files("data", full.names = TRUE))$size) <= 3000000)

@@ -1,3 +1,5 @@
+> Histórico: substituído por D18_truta_dietas em 12/10/2026. Não reativar no catálogo.
+
 # D18 — Cabritos: ácidos graxos sob quatro dietas
 
 - Registro: `D18_cabritos_dietas`; objeto definitivo: `cabritos_acidos_graxos`; nome_eapadados: `cabritos_fa_coltro`.

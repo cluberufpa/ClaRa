@@ -1,6 +1,18 @@
+# clara (em desenvolvimento)
+
+- D44/D48: `percas_hipoxia` (449 medições, 40 peixes, CC0) e `molinesias_crescimento` (1178 medições, 34 peixes, CC BY 4.0) substituem CO2 e Orange por decisão do autor. Fontes arquivadas, preparo reproduzível, colunas em português, NA preservados e limites de medidas repetidas documentados. Catálogo permanece com 61 registros.
+
+- D47: `pollock_alasca` (NOAA/DisMAP, CC0), 523 lances de 2023 e oito colunas em português, substitui `terremotos_fiji`. Coordenadas WGS84, profundidade, CPUE kg/ha, estratos e 91 zeros preservados; fonte antiga arquivada. Dois pontos junto à costa exigem conferência cartográfica, sem deslocamento ou exclusão. Catálogo mantém 61 registros.
+
+- D61: `larvas_peixes_captura`, Dryad CC0, 58 eventos e sete colunas em português. Esforço reconstruído de horas e minutos; todos os eventos preservados. Inclusão autorizada em 12/10/2026, catálogo com 61 registros. D51 e D53 preservados. Fonte, preparo e limites do delineamento documentados.
+
+# clara 0.16.0
+
+- D18: `truta_acidos_graxos` (Happel et al., Mendeley Data V2, CC BY 4.0) substitui `cabritos_acidos_graxos`, por decisão do autor. Semana 12, 21 aquários, sete dietas e 27 ácidos; 31 colunas. Fontes originais e preparo em R preservados. Catálogo tem 61 conjuntos após a inclusão do D61. Biplot exploratório aprovado como referência para futura reprodução em R.
+
 # clara 0.15.0
 
-- `carregar_dados()` oferece uma porta de entrada para os 60 conjuntos do catálogo.
+- `carregar_dados()` oferece uma porta de entrada para os 61 conjuntos do catálogo.
 - Oito conjuntos do FSAdata e `MASS::crabs` passam a ser lidos e traduzidos na hora. Retiradas as nove cópias de `data/` e as cópias binárias das respectivas pastas de fontes; códigos D e nomes preservados.
 - Catálogo com `fonte_dados` (`clara`, `FSAdata` ou `MASS`); fornecedores opcionais em Suggests. Mensagens em português explicam como instalar o fornecedor quando necessário.
 - Receitas conferidas contra os nove objetos anteriores com `identical()`, inclusive os quatro que passaram pelo EAPADados. Preservados filtro de idade e quartis anteriores ao filtro em `snapper_hg`.

@@ -1,10 +1,33 @@
+## Total atual — conferência de 12/10/2026
+
+O catálogo ativo de `ClaRa-dados` contém **61 conjuntos**: 52 internos, oito carregados do FSAdata e um do MASS. O objeto `catalogo_dados` é o índice desses conjuntos e não entra nessa contagem. O total passou de 60 para 61 pela inclusão de `D61_larvas_captura`; as substituições de D44 e D48 mantêm o total. As referências a 60 nas seções históricas abaixo descrevem a migração anterior à inclusão de D61.
+
+A utilidade didática dos novos conjuntos está registrada nas fichas: D44, fisiologia de peixes, curvas de resposta à hipóxia e planejamento de medidas repetidas; D48, crescimento individual, curvas não lineares e efeito da cobertura temporal sobre os ajustes.
+
+## D44 e D48 — substituições autorizadas em 12/10/2026
+
+`percas_hipoxia` substitui `plantas_absorcao_co2` (D44); `molinesias_crescimento` substitui `laranjeiras_crescimento` (D48). Respectivamente, 449 medições de 40 peixes (Dryad/Zenodo, CC0) e 1178 medições de 34 peixes (Figshare, CC BY 4.0). Todos os valores observados e os NA da resposta das percas foram preservados. Os registros antigos estão em `data-raw/substituidos/`; nomes antigos saem do catálogo ativo. O total permanece em 61 registros. Fichas e ajudas explicam dependência, cobertura e limites dos grupos. A incorporação não acrescenta motores de medidas repetidas ou curvas não lineares à ClaRa.
+
+# Substituição D47 — 12/10/2026
+
+`D47_pollock_alasca/`: `pollock_alasca`, 523 lances × 8 colunas, NOAA/DisMAP
+CC0, substitui `terremotos_fiji` por autorização do professor. Catálogo
+mantém 61 registros. Fonte, coordenadas WGS84, CPUE kg/ha e 91 zeros
+preservados. Dois pontos costeiros a conferir (`-22483`, `-22558`), sem
+deslocamento ou exclusão. Fontes e objeto antigos em
+`substituidos/D47_terremotos_fiji/`. Veja a ficha do novo D47.
+
+# Inclusão D61 — 12/10/2026
+
+`D61_larvas_captura/`: `larvas_peixes_captura`, 58 eventos × 7 colunas, fonte Dryad CC0. Inclusão e arrumação autorizadas pelo professor. Catálogo atual: **61 registros** (52 internos, oito FSAdata, um MASS). D51 e D53 continuam; registros não reutilizados. O Núcleo 60 abaixo é o histórico da migração inicial. Preparo, de-para e limites na ficha do D61.
+
 # Dados da ClaRa — acompanhamento da migração
 
 ## Leitura de dados externos — branch dados, versão 0.15.0 (12/10/2026)
 
 Oito conjuntos do FSAdata e `MASS::crabs` passam a ser lidos na hora por
 `carregar_dados()`, com receitas visíveis em `R/dados_pacotes.R`. O catálogo
-mantém 60 registros e ganha `fonte_dados`: 51 clara, oito FSAdata, um MASS.
+passou a 61 registros após a inclusão do D61: 52 clara, oito FSAdata, um MASS.
 Retiradas as nove cópias de `data/` e as cópias binárias das respectivas fontes.
 Fichas, registros, referências e de-para permanecem. Os nove retornos foram
 conferidos com `identical()` contra os objetos anteriores, inclusive os quatro
@@ -20,7 +43,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 `molinesias_parasitos` substitui `escolares_ausencias` (MASS::quine),
 mantendo o código D50, conforme autorização do professor. Novo registro:
 `D50_molinesias_parasitos`; 128 peixes, oito colunas; fonte Dryad CC0.
-O catálogo continua com 60 conjuntos. D45/InsectSprays permanece.
+Na data da substituição, o catálogo tinha 60 conjuntos. A inclusão posterior do D61 o elevou a 61. D45/InsectSprays permanece.
 As fontes antigas estão preservadas em `substituidos/D50_escolares_ausencias/`.
 O novo objeto conserva zeros, extremos e NA; curadoria fina provisória.
 

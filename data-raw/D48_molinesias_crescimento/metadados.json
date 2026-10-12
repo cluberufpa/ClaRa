@@ -1,0 +1,22 @@
+{
+  "codigo": "D48",
+  "registro": "D48_molinesias_crescimento",
+  "nome": "molinesias_crescimento",
+  "nome_eapadados": "",
+  "rotulo": "Molinésias: crescimento individual",
+  "titulo": "D48 - Molinésias: crescimento individual",
+  "natureza": "real",
+  "origem": "Figshare; Scherer et al. (2023), DOI 10.6084/m9.figshare.23971599.v1",
+  "unidade_amostral": "medição de comprimento por peixe; 34 fêmeas clonais acompanhadas desde o nascimento",
+  "linhas": 1178,
+  "colunas": 4,
+  "analises": "Crescimento não linear; Curvas individuais; Medidas repetidas",
+  "analise_principal": "Crescimento não linear",
+  "palavras_chave": "molinésias; Poecilia formosa; crescimento; von Bertalanffy; medidas repetidas",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0; declarada nos metadados Figshare",
+  "referencia": "Scherer, U.; Ehlman, S. M.; Bierbach, D.; Krause, J.; Wolf, M. (2023). Figshare DOI 10.6084/m9.figshare.23971599.v1; artigo DOI 10.1038/s41467-023-43069-6; correção DOI 10.1038/s41467-026-71983-y",
+  "situacao": "Pronto para exploração; usar com limite de delineamento: medidas repetidas por peixe e ocasiões ausentes sem imputação",
+  "fonte_dados": "clara"
+}
+

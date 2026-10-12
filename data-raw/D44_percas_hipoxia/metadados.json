@@ -1,0 +1,22 @@
+{
+  "codigo": "D44",
+  "registro": "D44_percas_hipoxia",
+  "nome": "percas_hipoxia",
+  "nome_eapadados": "",
+  "rotulo": "Percas: consumo de oxigênio sob hipóxia",
+  "titulo": "D44 - Percas: consumo de oxigênio sob hipóxia",
+  "natureza": "real",
+  "origem": "Dryad; Ekström (2021), DOI 10.5061/dryad.tmpg4f4z3; arquivo obtido no espelho Zenodo 4591899",
+  "unidade_amostral": "medição por peixe durante redução progressiva de oxigênio; 40 peixes, três grupos",
+  "linhas": 449,
+  "colunas": 4,
+  "analises": "Curvas de resposta; Medidas repetidas; Exploração de hipóxia",
+  "analise_principal": "Curvas de resposta à hipóxia",
+  "palavras_chave": "percas; Perca fluviatilis; hipóxia; oxigênio; medidas repetidas",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0; declarada no Dryad e no espelho Zenodo",
+  "referencia": "Ekström, A. (2021). Dryad DOI 10.5061/dryad.tmpg4f4z3; artigo Ekström et al., DOI 10.1242/jeb.241554",
+  "situacao": "Pronto para exploração; usar com limite de delineamento: medidas repetidas, saturação associada ao tempo e NA da resposta preservados",
+  "fonte_dados": "clara"
+}
+

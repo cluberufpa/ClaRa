@@ -1,3 +1,19 @@
+## D44 e D48 — substituições autorizadas em 12/10/2026
+
+`percas_hipoxia` substitui `plantas_absorcao_co2` (D44); `molinesias_crescimento` substitui `laranjeiras_crescimento` (D48). Respectivamente, 449 medições de 40 peixes (Dryad/Zenodo, CC0) e 1178 medições de 34 peixes (Figshare, CC BY 4.0). Todos os valores observados e os NA da resposta das percas foram preservados. Os registros antigos estão em `data-raw/substituidos/`; nomes antigos saem do catálogo ativo. O total permanece em 61 registros. Fichas e ajudas explicam dependência, cobertura e limites dos grupos. A incorporação não acrescenta motores de medidas repetidas ou curvas não lineares à ClaRa.
+
+# Atualização — D47, coordenadas de pesca (12/10/2026)
+
+`pollock_alasca` substitui `terremotos_fiji` no D47: NOAA/DisMAP CC0,
+523 lances de 2023, coordenadas WGS84, CPUE e profundidade. Substituição
+autorizada pelo professor; fonte antiga preservada no histórico.
+Dois pontos costeiros mantidos e identificados na ficha para conferência;
+os 54 estratos são códigos, não uma escala numérica. Catálogo: 61 registros.
+
+# Atualização — larvas com esforço (12/10/2026)
+
+Incluído `D61_larvas_captura`, objeto `larvas_peixes_captura`: fonte Dryad CC0, 58 eventos, esforço variável e contagens de larvas. Cobre a necessidade didática de offset de D51/D53; os dois registros antigos permanecem, pois a autorização foi para incluir. Catálogo atual com 61 registros. Veja a ficha do D61 para delineamento incompleto e dependência temporal.
+
 # Busca de substitutos — orientação para a curadoria (11/10/2026)
 
 Atualização de 12/10/2026: os oito conjuntos do FSAdata e `MASS::crabs`
@@ -9,7 +25,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo mantém 60 conjuntos.
+com substituições aprovadas registradas abaixo. O catálogo tem 61 conjuntos após a inclusão do D61.
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -18,7 +34,7 @@ As prioridades abaixo são sugestões para avaliação do professor.
 |---|---|---|
 | D12 bacterias_tratamento | Tratamento clínico em crianças | Resposta binária observada nos mesmos organismos em dois ou mais momentos, com ID, tratamento e tempo; pares para McNemar |
 | D46 carros_frenagem | Frenagem de carros históricos | Duas medidas contínuas em organismos/ambiente aquático, suficientes para comparar curva linear e quadrática; replicação identificada |
-| D47 terremotos_fiji | Geofísica | Estações ou ocorrências aquáticas reais com coordenadas, convenção geográfica explícita e quantidade para pontos/bolhas |
+| D47 pollock_alasca | Pesca de pesquisa | Resolvido: NOAA CC0, 523 lances; substituição aprovada em 12/10/2026. Dois pontos costeiros a conferir |
 | D50 molinesias_parasitos | Bioecologia de peixes | Resolvido: substituição do quine aprovada em 11/10/2026, fonte Dryad CC0; curadoria fina pendente |
 | D51 seguros_sinistros | Seguros de automóveis | Contagens agregadas com denominador/esforço observado e grupos; preservar exercício de exposição/offset |
 | D52 paciente_peso | Série de peso humano | Série de crescimento ou redução de massa com tempo, unidade e organismo identificados, adequada a curva não linear e com dependência documentada |
@@ -32,8 +48,10 @@ classificados automaticamente como fora do domínio amplo indicado.
 D43 (ervilhas), D49 (aveia) e D60 (trigo) são exemplos de planejamento em
 agricultura; fontes aquáticas seriam mais próximas do curso, preservando,
 respectivamente, fatorial fracionado em blocos, parcelas subdivididas e
-quadrado latino. D17 (salmouras) e D18 (nutrição de cabritos), herdados do
-EAPADados, também podem entrar na avaliação temática. Nenhum foi removido.
+quadrado latino. D17 (salmouras), herdado do EAPADados, permanece na avaliação temática.
+D18 foi substituído por `truta_acidos_graxos` em 12/10/2026: sete dietas,
+21 aquários, semana 12 e fonte Mendeley Data CC BY 4.0. Fontes dos cabritos
+preservadas apenas como histórico.
 
 ## Pacote de origem não decide sozinho a qualidade
 
@@ -56,7 +74,7 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 | D44 | plantas_absorcao_co2 | datasets::CO2 |
 | D45 | insetos_inseticidas | datasets::InsectSprays |
 | D46 | carros_frenagem | datasets::cars |
-| D47 | terremotos_fiji | datasets::quakes |
+| D47 (histórico) | terremotos_fiji, substituído por pollock_alasca | datasets::quakes, fonte antiga arquivada |
 | D48 | laranjeiras_crescimento | datasets::Orange |
 | D49 | aveia_parcelas | MASS::oats |
 

@@ -1,0 +1,54 @@
+#' D48 - Molinésias: crescimento individual
+#'
+#' Comprimentos observados de 34 fêmeas clonais de Poecilia formosa,
+#' acompanhadas desde o nascimento até 280 dias.
+#'
+#' @format Um `data.frame` com 1178 linhas e 4 colunas:
+#' \describe{
+#'   \item{id_peixe}{Identificador original do peixe, como texto.}
+#'   \item{id_mae}{Identificador original da mãe: m1, m2 ou m4, como texto.}
+#'   \item{idade_dias}{Idade desde o nascimento, em dias inteiros.}
+#'   \item{comprimento_padrao_cm}{Comprimento padrão observado, em centímetros.}
+#' }
+#'
+#' @details
+#' Cada peixe tem 30 a 38 medições. As linhas do mesmo peixe não são
+#' independentes. A mãe indica parentesco, não um tratamento aleatorizado.
+#' Há 40 idades distintas: 0 a 259 em passos de sete dias, depois 273 e 280.
+#' O dia 266 não consta na fonte. Não há NA nas células selecionadas,
+#' mas faltam ocasiões de medição; suas causas não foram identificadas.
+#' Não completar essas ocasiões nem interpretar ausência como mortalidade.
+#'
+#' Curvas individuais de von Bertalanffy e Gompertz são caminhos de estudo.
+#' Ajustes independentes por linha ignoram a dependência dentro do peixe;
+#' inferência conjunta requer um modelo apropriado. A inclusão deste
+#' conjunto não acrescenta um motor de medidas repetidas à ClaRa.
+#'
+#' @section Adaptações:
+#' Preservados todos os valores observados, identificadores e ordem das linhas.
+#' Selecionadas quatro variáveis e traduzidos seus nomes. O índice do CSV,
+#' os comprimentos previstos e os limites de confiança da fonte foram omitidos.
+#' O recorte opcional do exemplo seleciona dez idades com todos os peixes:
+#' são 340 linhas, sem imputação, com intervalos desiguais. Para estimar
+#' parâmetros de crescimento, preferir o conjunto completo.
+#'
+#' @source
+#' Scherer, U.; Ehlman, S. M.; Bierbach, D.; Krause, J.; Wolf, M. (2023).
+#' Figshare, \doi{10.6084/m9.figshare.23971599.v1}, arquivo de crescimento
+#' 42593824. Licença CC BY 4.0. Artigo: \doi{10.1038/s41467-023-43069-6}.
+#' Correção: \doi{10.1038/s41467-026-71983-y}, sobre ensaios comportamentais;
+#' segundo os autores, não altera os resultados.
+#' Fonte e preparo: data-raw/D48_molinesias_crescimento/.
+#'
+#' @examples
+#' molinesias <- carregar_dados("molinesias_crescimento")
+#' summary(table(molinesias$id_peixe))
+#' # Dez idades com medição em todos os 34 peixes.
+#' idades <- as.integer(names(which(table(molinesias$idade_dias) == 34L)))
+#' molinesias_10 <- molinesias[molinesias$idade_dias %in% idades, ]
+#' dim(molinesias_10)
+#'
+#' @docType data
+#' @keywords datasets
+"molinesias_crescimento"
+

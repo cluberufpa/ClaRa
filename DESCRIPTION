@@ -1,7 +1,7 @@
 Package: clara
 Type: Package
 Title: O R Escrito com Clareza: Análises por Pergunta da Pesquisa
-Version: 0.15.0
+Version: 0.16.0
 Authors@R: c(
     person("Evaldo", "Martins da Silva", email = "cluber.ufpa@gmail.com",
            role = c("aut", "cre")),
@@ -67,7 +67,7 @@ Collate:
     'dados_peixes_neotropicais_biometria.R'
     'dados_caranguejos_biometria.R'
     'dados_salmouras_carbonatos.R'
-    'dados_cabritos_acidos_graxos.R'
+    'dados_truta_acidos_graxos.R'
     'dados_camaroes_sexo.R'
     'dados_cangulo_crescimento.R'
     'dados_cowichan_amostragem.R'
@@ -93,11 +93,11 @@ Collate:
     'dados_mesocosmos_secagem.R'
     'dados_plantas_crescimento.R'
     'dados_ervilhas_adubacao.R'
-    'dados_plantas_absorcao_co2.R'
+    'dados_percas_hipoxia.R'
     'dados_insetos_inseticidas.R'
     'dados_carros_frenagem.R'
-    'dados_terremotos_fiji.R'
-    'dados_laranjeiras_crescimento.R'
+    'dados_pollock_alasca.R'
+    'dados_molinesias_crescimento.R'
     'dados_aveia_parcelas.R'
     'dados_molinesias_parasitos.R'
     'dados_seguros_sinistros.R'
@@ -110,4 +110,5 @@ Collate:
     'dados_bighill_peixes.R'
     'dados_peixes_recrutamento.R'
     'dados_trigo_quadrado_latino.R'
+    'dados_larvas_peixes_captura.R'
 Config/roxygen2/version: 8.1.0

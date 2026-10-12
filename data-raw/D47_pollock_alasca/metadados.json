@@ -1,0 +1,21 @@
+{
+  "codigo": "D47",
+  "registro": "D47_pollock_alasca",
+  "nome": "pollock_alasca",
+  "nome_eapadados": "",
+  "rotulo": "Pollock: CPUE e profundidade no Alasca",
+  "titulo": "D47 - Pollock: CPUE e profundidade no Alasca",
+  "natureza": "real",
+  "origem": "NOAA/NMFS DisMAP; GOA Sample Locations CURRENT, consulta em 12/10/2026",
+  "unidade_amostral": "lance de arrasto de pesquisa para pollock; Golfo do Alasca, 2023",
+  "linhas": 523,
+  "colunas": 8,
+  "analises": "Mapas de pontos; Bolhas proporcionais; Estatística descritiva; Dispersão CPUE por profundidade",
+  "analise_principal": "Mapas de pontos",
+  "palavras_chave": "pollock; Alasca; pesca; arrasto; CPUE; profundidade; coordenadas; mapas",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0; NOAA InPort 69743, Access Information / Data License",
+  "referencia": "NOAA/NMFS OST (2026), Survey Catch-per-unit-effort CURRENT, InPort 69743; AFSC, dados de 2023; relatório DOI 10.25923/gbb1-x748",
+  "situacao": "Pronto para exploração; usar com limite de delineamento: dependência espacial, estratos codificados e dois pontos costeiros a conferir",
+  "fonte_dados": "clara"
+}

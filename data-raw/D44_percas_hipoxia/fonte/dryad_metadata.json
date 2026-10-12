@@ -1,0 +1,94 @@
+{
+  "_links": {
+    "self": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.tmpg4f4z3"
+    },
+    "stash:versions": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.tmpg4f4z3/versions"
+    },
+    "stash:version": {
+      "href": "/api/v2/versions/108906"
+    },
+    "stash:download": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.tmpg4f4z3/download"
+    },
+    "curies": [
+      {
+        "name": "stash",
+        "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+        "templated": "true"
+      }
+    ]
+  },
+  "identifier": "doi:10.5061/dryad.tmpg4f4z3",
+  "id": 64602,
+  "storageSize": 100748,
+  "relatedPublicationISSN": "0022-0949",
+  "title": "Data from: Cardiorespiratory adjustments to chronic environmental warming improves hypoxia tolerance in European perch",
+  "authors": [
+    {
+      "firstName": "Andreas",
+      "lastName": "Ekström",
+      "email": "andreas.ekstrom@bioenv.gu.se",
+      "affiliation": "University of Gothenburg",
+      "affiliationROR": "https://ror.org/01tm6cn81",
+      "affiliations": [
+        {
+          "organization": "University of Gothenburg",
+          "identifier": "https://ror.org/01tm6cn81"
+        }
+      ],
+      "orcid": "0000-0002-9966-8160"
+    }
+  ],
+  "abstract": "<p>Aquatic hypoxia will become increasingly prevalent in the future as a result of eutrophication combined with climate warming. While short-term warming typically constrains fish hypoxia tolerance, many fishes cope with warming by adjusting physiological traits through thermal acclimation. Yet, little is known about how such adjustments affect tolerance to hypoxia. We examined European perch (Perca fluviatilis) from the Biotest enclosure (23°C, Biotest population), a unique ∼1 km2 ecosystem artificially warmed by cooling water from a nuclear power plant, and an adjacent reference site (16–18°C, reference population). Specifically, we evaluated how acute and chronic warming affect routine oxygen consumption rate (Ṁ O2, routine) and cardiovascular performance in acute hypoxia, alongside assessment of the thermal acclimation of the aerobic contribution to hypoxia tolerance (critical O2 tension for Ṁ O2, routine: Pcrit) and absolute hypoxia tolerance (O2 tension at loss of equilibrium; PLOE). Chronic adjustments (possibly across lifetime or generations) alleviated energetic costs of warming in Biotest perch by depressing Ṁ O2, routine and cardiac output, and by increasing blood O2 carrying capacity relative to reference perch acutely warmed to 23°C. These adjustments were associated with improved maintenance of cardiovascular function and Ṁ O2, routine in hypoxia (i.e. reduced Pcrit). However, while Pcrit was only partially thermally compensated in Biotest perch, they had superior absolute hypoxia tolerance (i.e. lowest PLOE) relative to reference perch irrespective of temperature. We show that European perch can thermally adjust physiological traits to safeguard and even improve hypoxia tolerance during chronic environmental warming. This points to cautious optimism that eurythermal fish species may be resilient to the imposition of impaired hypoxia tolerance with climate warming.</p>\r\n",
+  "funders": [
+    {
+      "organization": "Swedish Research Council for Environment Agricultural Sciences and Spatial Planning",
+      "identifierType": "ror",
+      "identifier": "https://ror.org/03pjs1y45",
+      "awardNumber": ""
+    },
+    {
+      "organization": "Swedish Research Council*",
+      "identifier": "",
+      "awardNumber": ""
+    },
+    {
+      "organization": "Helge Ax:son Johnsons Stiftelse",
+      "identifierType": "ror",
+      "identifier": "https://ror.org/0527w1g58",
+      "awardNumber": ""
+    },
+    {
+      "organization": "Swedish Research Council",
+      "identifierType": "ror",
+      "identifier": "https://ror.org/03zttf063"
+    }
+  ],
+  "fieldOfScience": "Biological sciences",
+  "relatedWorks": [
+    {
+      "relationship": "primary_article",
+      "identifierType": "DOI",
+      "identifier": "https://doi.org/10.1242/jeb.241554"
+    }
+  ],
+  "versionNumber": 2,
+  "versionStatus": "submitted",
+  "curationStatus": "Published",
+  "versionChanges": "metadata_changed",
+  "publicationDate": "2021-03-09",
+  "lastModificationDate": "2021-03-09",
+  "visibility": "public",
+  "sharingLink": "http://datadryad.org/dataset/doi:10.5061/dryad.tmpg4f4z3",
+  "changedFields": [
+    "none"
+  ],
+  "license": "https://spdx.org/licenses/CC0-1.0.html",
+  "metrics": {
+    "views": 179,
+    "downloads": 7,
+    "citations": 1
+  }
+}

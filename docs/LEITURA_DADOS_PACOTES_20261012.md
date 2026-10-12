@@ -4,7 +4,7 @@ Pedido executado na branch `dados`, conforme `TRILHA/docs/PEDIDO_RETIRAR_FSADATA
 
 ## Resultado
 
-O catálogo permanece com 60 registros: **51 conjuntos fornecidos pela ClaRa, oito pelo FSAdata e um pelo MASS**. Códigos D, registros, nomes, linhas, colunas, tipos, categorias e ordem das observações foram preservados. Os outros 51 registros mantêm todos os campos anteriores; apenas recebem `fonte_dados = "clara"`.
+Na data desta mudança, o catálogo tinha 60 registros: **51 conjuntos fornecidos pela ClaRa, oito pelo FSAdata e um pelo MASS**. Após a inclusão posterior do D61, ele tem 61: 52 da ClaRa, oito do FSAdata e um do MASS. Códigos D, registros, nomes, linhas, colunas, tipos, categorias e ordem das observações foram preservados. Os outros 51 registros mantêm todos os campos anteriores; apenas recebem `fonte_dados = "clara"`.
 
 `carregar_dados("nome")` lê os dados próprios da ClaRa ou confere o pacote opcional, lê seu objeto e aplica a tradução registrada em `R/dados_pacotes.R`. Não instala pacotes automaticamente e só oferece nomes presentes no catálogo. A função aparece na ajuda da ClaRa, preservando a ordem anterior das análises.
 
