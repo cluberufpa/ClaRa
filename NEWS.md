@@ -225,3 +225,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D35 `tilapia_microalgas`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D36 `treino_coletas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D37 `treino_desembarque`, provisório, com fonte e decisões anteriores registradas.

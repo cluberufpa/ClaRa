@@ -1,0 +1,20 @@
+{
+  "codigo": "D37",
+  "registro": "D37_treino_desembarque",
+  "nome": "treino_desembarque",
+  "nome_eapadados": "treino_desembarque",
+  "rotulo": "Desembarques: DADOS SINTÉTICOS DE TREINO",
+  "titulo": "D37 - Desembarques: DADOS SINTÉTICOS DE TREINO",
+  "natureza": "sintético de treino autorizado",
+  "origem": "EAPADados::treino_desembarque",
+  "unidade_amostral": "combinação fictícia de porto e espécie, com anos em colunas",
+  "linhas": 12,
+  "colunas": 8,
+  "analises": "Arrumar: largo para longo",
+  "analise_principal": "Arrumar: largo para longo",
+  "palavras_chave": "treino; desembarque",
+  "verbo_clara": "",
+  "licenca": "MIT + file LICENSE, EAPADados 0.1.14",
+  "referencia": "Dados fictícios do ecossistema EAPA; planilha de treino e script de importação preservados",
+  "situacao": "provisório"
+}
