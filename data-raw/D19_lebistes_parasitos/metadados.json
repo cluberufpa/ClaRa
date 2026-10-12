@@ -1,0 +1,21 @@
+{
+  "codigo": "D19",
+  "registro": "D19_lebistes_parasitos",
+  "nome": "lebistes_parasitos",
+  "nome_eapadados": "",
+  "rotulo": "Lebistes: sexo e infecção por Gyrodactylus",
+  "titulo": "D19 - Lebistes: sexo e infecção por Gyrodactylus",
+  "natureza": "real",
+  "origem": "Dryad; Walsman et al. (2022), DOI 10.5061/dryad.k3j9kd59h",
+  "unidade_amostral": "um lebiste selvagem (Poecilia reticulata); peixes agrupados em sítios de rio",
+  "linhas": 4715,
+  "colunas": 9,
+  "analises": "Qui-quadrado de independência; Teste de proporções; Comparação de peso por grupo; Kruskal-Wallis",
+  "analise_principal": "Qui-quadrado de independência",
+  "palavras_chave": "lebiste; guppy; Poecilia reticulata; Gyrodactylus; sexo; parasitismo; tabela de contingência",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0; declarada nos metadados do Dryad",
+  "referencia": "Walsman, J.; Janecka, M.; Clark, D.; Kramp, R.; Rovenolt, F. et al. (2022). Data from: Shoaling guppies evade predation but have deadlier parasites. Dryad, DOI 10.5061/dryad.k3j9kd59h; artigo DOI 10.1038/s41559-022-01772-5",
+  "situacao": "Pronto para exploração com limites: peixes agrupados em sítios (dependência), 113 NA no peso, conferência com o CSV original do Dryad pendente",
+  "fonte_dados": "clara"
+}

@@ -67,7 +67,7 @@ Collate:
     'dados_caranguejos_biometria.R'
     'dados_salmouras_carbonatos.R'
     'dados_truta_acidos_graxos.R'
-    'dados_camaroes_sexo.R'
+    'dados_lebistes_parasitos.R'
     'dados_cangulo_crescimento.R'
     'dados_cowichan_amostragem.R'
     'dados_captura_pescada_amarela.R'

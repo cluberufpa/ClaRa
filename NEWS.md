@@ -1,5 +1,12 @@
 # clara (em desenvolvimento)
 
+- D19: `lebistes_parasitos` (Walsman et al. 2022, Dryad, CC0), 4715 lebistes selvagens (*Poecilia reticulata*) com sexo,
+  peso e infecção por *Gyrodactylus*, substitui `camaroes_sexo` (tabela de livro sem referência) por decisão do
+  professor (12/10/2026). Dados individuais para o qui-quadrado de independência: a tabela de contingência é
+  montada pelo aluno depois do preparo (sexo × presença, 3 × 2, χ² = 200,3). Também serve ao teste de proporções
+  e à comparação de peso. Limites na ficha e na ajuda: peixes agrupados em sítios, 113 NA no peso, 3 peixes com
+  presença 1 e contagem 0, conferência com o CSV original do Dryad pendente. Catálogo mantém 53 conjuntos.
+
 - Retirados do pacote por decisão do professor (12/10/2026): D42
   `plantas_crescimento`, D45 `insetos_inseticidas`, D51 `seguros_sinistros`,
   D53 `navios_incidentes` e D59 `peixes_recrutamento`. D51 e D53 têm
