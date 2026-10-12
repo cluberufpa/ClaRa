@@ -103,4 +103,5 @@ Collate:
     'dados_cabezon_maturidade.R'
     'dados_ruffe_biometria.R'
     'dados_bighill_amostras.R'
+    'dados_bighill_peixes.R'
 Config/roxygen2/version: 8.1.0

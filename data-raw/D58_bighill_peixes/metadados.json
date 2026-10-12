@@ -1,0 +1,20 @@
+{
+  "codigo": "D58",
+  "registro": "D58_bighill_peixes",
+  "nome": "bighill_peixes",
+  "nome_eapadados": "",
+  "rotulo": "Big Hill: peixes e contagens por amostra",
+  "titulo": "D58 - Big Hill: peixes e contagens por amostra",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "FSAdata::BGHRfish",
+  "unidade_amostral": "registro individual ou agrupado de espécie e comprimento dentro de amostra",
+  "linhas": 266,
+  "colunas": 6,
+  "analises": "Preparar dados; Agregação de capturas; Relação peso-comprimento; CPUE",
+  "analise_principal": "Preparar dados",
+  "palavras_chave": "bighill; peixes",
+  "verbo_clara": "",
+  "licenca": "GPL (>= 2), FSAdata 0.4.1",
+  "referencia": "Dados obtidos diretamente de Ben Neely; Introductory Fisheries Analyses with R; FSAdata::BGHRfish",
+  "situacao": "provisório"
+}
