@@ -3,7 +3,7 @@
 \docType{data}
 \name{larvas_peixes_captura}
 \alias{larvas_peixes_captura}
-\title{D61 - Larvas de peixes: captura e esforço em armadilhas luminosas}
+\title{D62 - Larvas de peixes: captura e esforço em armadilhas luminosas}
 \format{
 Um \code{data.frame} com 58 linhas e 7 colunas:
 \describe{
@@ -23,7 +23,7 @@ and ontogenetic structure around Santa Catalina Island, CA. Dryad.
 \doi{10.7291/D1S38T}. Arquivo Dale_Light_Trap_Data_Dryad.csv.
 Licença CC0 1.0, declarada nos metadados do Dryad.
 Artigo associado: \doi{10.5343/bms.2024.0135}.
-Fontes e preparo: data-raw/D61_larvas_captura/.
+Fontes e preparo: data-raw/D62_larvas_captura/.
 }
 \usage{
 larvas_peixes_captura

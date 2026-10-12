@@ -1,0 +1,20 @@
+{
+  "codigo": "D61",
+  "registro": "D61_anchova_norte",
+  "nome": "anchova_norte_california",
+  "nome_eapadados": "anchova_norte_california",
+  "rotulo": "Anchova-do-norte: desembarques mensais na Califórnia",
+  "titulo": "D61 - Anchova-do-norte: desembarques mensais na Califórnia",
+  "natureza": "real, agregado",
+  "origem": "California Department of Fish and Game, distribuído pelo NOAA ERDDAP; EAPADados::anchova_norte_california",
+  "unidade_amostral": "mês de desembarque agregado em todos os portos da Califórnia, janeiro de 1971 a dezembro de 1991",
+  "linhas": 252,
+  "colunas": 6,
+  "analises": "Séries temporais; Decomposição; Autocorrelação; Tendência",
+  "analise_principal": "Séries temporais",
+  "palavras_chave": "anchova; desembarque; california; série temporal; sazonalidade",
+  "verbo_clara": "",
+  "licenca": "Dados distribuídos pelo NOAA ERDDAP com permissão de uso e redistribuição gratuita; licença Creative Commons não nomeada",
+  "referencia": "California Fish Market Catch Landings, Short List, 1928–2002, Monthly. California Department of Fish and Game; NOAA Southwest Fisheries Science Center, ERDDAP. https://coastwatch.pfeg.noaa.gov/erddap/info/erdCAMarCatSM/index.html",
+  "situacao": "curado; categoria de mercado, não estoque biológico; sem verbo temporal próprio na ClaRa"
+}

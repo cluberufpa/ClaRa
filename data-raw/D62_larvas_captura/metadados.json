@@ -1,10 +1,10 @@
 {
-  "codigo": "D61",
-  "registro": "D61_larvas_captura",
+  "codigo": "D62",
+  "registro": "D62_larvas_captura",
   "nome": "larvas_peixes_captura",
   "nome_eapadados": "",
   "rotulo": "Larvas de peixes: captura e esforço",
-  "titulo": "D61 - Larvas de peixes: captura e esforço",
+  "titulo": "D62 - Larvas de peixes: captura e esforço",
   "natureza": "real",
   "origem": "Dryad; Dale et al. (2025), DOI 10.7291/D1S38T",
   "unidade_amostral": "evento de armadilha luminosa; repetição temporal por local",

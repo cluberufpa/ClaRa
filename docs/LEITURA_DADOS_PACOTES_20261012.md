@@ -1,3 +1,5 @@
+> Atualização após conciliação de registros (12/10/2026): o catálogo consolidado contém 62 conjuntos (53 internos, oito FSAdata, um MASS). D61 é anchova-do-norte; larvas de peixes passam a D62. Quantidades anteriores abaixo são históricas. Ver docs/CONCILIACAO_D61_D62_20261012.md.
+
 # Dados de pacotes lidos na hora — ClaRa 0.15.0
 
 Pedido executado na branch `dados`, conforme `TRILHA/docs/PEDIDO_RETIRAR_FSADATA_DA_CLARA.md`. Nome `carregar_dados()` confirmado pelo professor. **Merge na main aguardando o sim previsto no passo 9; sem push nesta rodada.**

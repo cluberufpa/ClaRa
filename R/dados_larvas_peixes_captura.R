@@ -1,4 +1,4 @@
-#' D61 - Larvas de peixes: captura e esforço em armadilhas luminosas
+#' D62 - Larvas de peixes: captura e esforço em armadilhas luminosas
 #'
 #' Contagens reais de larvas de peixes, somadas entre espécies, em três
 #' enseadas de Santa Catalina, Califórnia, EUA, em 2018 e 2019.
@@ -45,7 +45,7 @@
 #' \doi{10.7291/D1S38T}. Arquivo Dale_Light_Trap_Data_Dryad.csv.
 #' Licença CC0 1.0, declarada nos metadados do Dryad.
 #' Artigo associado: \doi{10.5343/bms.2024.0135}.
-#' Fontes e preparo: data-raw/D61_larvas_captura/.
+#' Fontes e preparo: data-raw/D62_larvas_captura/.
 #'
 #' @examples
 #' larvas <- carregar_dados("larvas_peixes_captura")

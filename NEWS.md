@@ -1,10 +1,15 @@
 # clara (em desenvolvimento)
 
+- Corrige a colisão provisória de registros entre checkouts: D61 permanece
+  `anchova_norte_california`; `larvas_peixes_captura` passa a D62. Ambos
+  preservados no catálogo consolidado, agora com 62 conjuntos (53 internos,
+  oito FSAdata e um MASS). Fichas, preparo, ajuda e testes atualizados.
+
 - D44/D48: `percas_hipoxia` (449 medições, 40 peixes, CC0) e `molinesias_crescimento` (1178 medições, 34 peixes, CC BY 4.0) substituem CO2 e Orange por decisão do autor. Fontes arquivadas, preparo reproduzível, colunas em português, NA preservados e limites de medidas repetidas documentados. Catálogo permanece com 61 registros.
 
 - D47: `pollock_alasca` (NOAA/DisMAP, CC0), 523 lances de 2023 e oito colunas em português, substitui `terremotos_fiji`. Coordenadas WGS84, profundidade, CPUE kg/ha, estratos e 91 zeros preservados; fonte antiga arquivada. Dois pontos junto à costa exigem conferência cartográfica, sem deslocamento ou exclusão. Catálogo mantém 61 registros.
 
-- D61: `larvas_peixes_captura`, Dryad CC0, 58 eventos e sete colunas em português. Esforço reconstruído de horas e minutos; todos os eventos preservados. Inclusão autorizada em 12/10/2026, catálogo com 61 registros. D51 e D53 preservados. Fonte, preparo e limites do delineamento documentados.
+- D62: `larvas_peixes_captura`, Dryad CC0, 58 eventos e sete colunas em português. Esforço reconstruído de horas e minutos; todos os eventos preservados. Inclusão autorizada em 12/10/2026, catálogo com 61 registros. D51 e D53 preservados. Fonte, preparo e limites do delineamento documentados.
 
 # clara 0.16.0
 

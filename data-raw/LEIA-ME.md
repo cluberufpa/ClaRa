@@ -1,8 +1,14 @@
-## Total atual — conferência de 12/10/2026
+## Total atual — registros conciliados em 12/10/2026
 
-O catálogo ativo de `ClaRa-dados` contém **61 conjuntos**: 52 internos, oito carregados do FSAdata e um do MASS. O objeto `catalogo_dados` é o índice desses conjuntos e não entra nessa contagem. O total passou de 60 para 61 pela inclusão de `D61_larvas_captura`; as substituições de D44 e D48 mantêm o total. As referências a 60 nas seções históricas abaixo descrevem a migração anterior à inclusão de D61.
+O catálogo consolidado de `ClaRa-dados` contém **62 conjuntos**: 53 internos, oito carregados do FSAdata e um do MASS. `catalogo_dados` é o índice e não entra nessa contagem. São 62 códigos e 62 nomes únicos, de D01 a D62.
 
-A utilidade didática dos novos conjuntos está registrada nas fichas: D44, fisiologia de peixes, curvas de resposta à hipóxia e planejamento de medidas repetidas; D48, crescimento individual, curvas não lineares e efeito da cobertura temporal sobre os ajustes.
+**D61 = `anchova_norte_california`** (252 meses de desembarques); **D62 = `larvas_peixes_captura`** (58 eventos de armadilhas com contagem e esforço). São conjuntos distintos. A colisão provisória de D61 entre os checkouts foi corrigida mantendo anchova no D61 e movendo larvas para D62, sem alterar suas observações. Ambos estão presentes nesta branch. O checkout `ClaRa` conserva D61/anchova e recebe D62 quando esta branch for integrada.
+
+O núcleo inicial tinha 60 conjuntos; as duas inclusões elevam o total a 62. Referências a 60 ou 61 nas notas anteriores descrevem etapas da migração, não o total consolidado. Conferência e validação: `docs/CONCILIACAO_D61_D62_20261012.md`.
+
+A utilidade didática de D44/percas e D48/molinésias está registrada nas respectivas fichas: curvas de resposta à hipóxia e medidas repetidas; crescimento individual, curvas não lineares e cobertura temporal.
+
+## Histórico anterior à conciliação
 
 ## D44 e D48 — substituições autorizadas em 12/10/2026
 

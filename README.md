@@ -2,6 +2,11 @@
 
 ## Carregar os dados de estudo
 
+O catálogo consolidado reúne **62 conjuntos**: 53 internos, oito do FSAdata
+e um do MASS. D61 é `anchova_norte_california` (desembarques mensais);
+D62 é `larvas_peixes_captura` (contagens e esforço em armadilhas).
+São conjuntos distintos, com registros próprios.
+
 ```r
 library(clara)
 bagres <- carregar_dados("bagre_racao_isoproteica")

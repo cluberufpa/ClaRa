@@ -1,5 +1,5 @@
 # Executar na raiz do pacote. A fonte permanece intacta em fonte/.
-pasta <- "data-raw/D61_larvas_captura"
+pasta <- "data-raw/D62_larvas_captura"
 arquivo <- file.path(pasta, "fonte", "Dale_Light_Trap_Data_Dryad.csv")
 hash <- digest::digest(readBin(arquivo, "raw", n = file.info(arquivo)$size),
                        algo = "sha256", serialize = FALSE)

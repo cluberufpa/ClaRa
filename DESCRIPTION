@@ -110,5 +110,6 @@ Collate:
     'dados_bighill_peixes.R'
     'dados_peixes_recrutamento.R'
     'dados_trigo_quadrado_latino.R'
+    'dados_anchova_norte_california.R'
     'dados_larvas_peixes_captura.R'
 Config/roxygen2/version: 8.1.0

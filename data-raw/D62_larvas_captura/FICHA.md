@@ -1,8 +1,13 @@
-# D61 — Larvas de peixes: captura e esforço
+# D62 — Larvas de peixes: captura e esforço
 
 Inclusão e arrumação autorizadas pelo professor em 12/10/2026.
-Registro `D61_larvas_captura`; objeto `larvas_peixes_captura`; 58 × 7.
+Registro `D62_larvas_captura`; objeto `larvas_peixes_captura`; 58 × 7.
 Novo registro: D51 e D53 continuam disponíveis, sem reutilização de códigos.
+
+Conciliação de 12/10/2026: este conjunto recebeu provisoriamente D61 em
+outro checkout, mas D61 também identificava a série de desembarques de
+anchova-do-norte. Por serem conjuntos distintos, larvas passa definitivamente
+a D62, com os mesmos 58 eventos e valores. Anchova permanece D61.
 
 ## Fonte e licença
 

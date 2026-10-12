@@ -1,3 +1,5 @@
+> Atualização após conciliação de registros (12/10/2026): o catálogo consolidado contém 62 conjuntos (53 internos, oito FSAdata, um MASS). D61 é anchova-do-norte; larvas de peixes passam a D62. Quantidades anteriores abaixo são históricas. Ver docs/CONCILIACAO_D61_D62_20261012.md.
+
 # Incorporação do pollock — 12/10/2026
 
 Por autorização do professor, **`pollock_alasca` substitui `terremotos_fiji`

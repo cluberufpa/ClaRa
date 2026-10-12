@@ -1,3 +1,5 @@
+> Atualização após conciliação de registros (12/10/2026): o catálogo consolidado contém 62 conjuntos (53 internos, oito FSAdata, um MASS). D61 é anchova-do-norte; larvas de peixes passam a D62. Quantidades anteriores abaixo são históricas. Ver docs/CONCILIACAO_D61_D62_20261012.md.
+
 ## D44 e D48 — substituições autorizadas em 12/10/2026
 
 `percas_hipoxia` substitui `plantas_absorcao_co2` (D44); `molinesias_crescimento` substitui `laranjeiras_crescimento` (D48). Respectivamente, 449 medições de 40 peixes (Dryad/Zenodo, CC0) e 1178 medições de 34 peixes (Figshare, CC BY 4.0). Todos os valores observados e os NA da resposta das percas foram preservados. Os registros antigos estão em `data-raw/substituidos/`; nomes antigos saem do catálogo ativo. O total permanece em 61 registros. Fichas e ajudas explicam dependência, cobertura e limites dos grupos. A incorporação não acrescenta motores de medidas repetidas ou curvas não lineares à ClaRa.

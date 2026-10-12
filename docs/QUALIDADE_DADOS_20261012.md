@@ -27,7 +27,7 @@ ficha nem a leitura do delineamento original.
 
 | Grupo de qualidade | Registros | Evidência preservada | Limite que não pode ser apagado |
 |---|---|---|---|
-| Rastreáveis e prontos para exploração com limite de delineamento | D18 `truta_acidos_graxos`, D44 `percas_hipoxia`, D47 `pollock_alasca`, D48 `molinesias_crescimento`, D61 `larvas_peixes_captura` | Fonte congelada, hash, receita de preparo, de-para e dados/ausências preservados | Respectivamente: poucos aquários por dieta; medidas repetidas; dependência espacial; medidas repetidas; dependência temporal e calendário incompleto. |
+| Rastreáveis e prontos para exploração com limite de delineamento | D18 `truta_acidos_graxos`, D44 `percas_hipoxia`, D47 `pollock_alasca`, D48 `molinesias_crescimento`, D62 `larvas_peixes_captura` | Fonte congelada, hash, receita de preparo, de-para e dados/ausências preservados | Respectivamente: poucos aquários por dieta; medidas repetidas; dependência espacial; medidas repetidas; dependência temporal e calendário incompleto. |
 | Fonte forte, curadoria analítica ainda pendente | D50 `molinesias_parasitos` | Dryad CC0, arquivo preservado e preparo reprodutível | Local, espécie e sexo não são completamente cruzados; grupos são desbalanceados e colunas derivadas exigem revisão fina. |
 
 O D47 preserva dois pontos que interceptam o contorno terrestre generalizado.
@@ -46,7 +46,4 @@ histórico, não insumo para recriar o catálogo atual:
 - D48: `data-raw/substituidos/D48_laranjeiras_crescimento/`;
 - D50: `data-raw/substituidos/D50_escolares_ausencias/`.
 
-Após a inclusão de D61, o catálogo contém 61 registros: 52 distribuídos pela
-ClaRa, oito lidos do FSAdata e um do MASS. Receitas de substituição verificam
-que não alteram a quantidade total de registros; a receita de inclusão do D61
-é a única que a aumenta nesta rodada.
+Após a conciliação de registros, o catálogo contém 62 conjuntos: 53 distribuídos pela ClaRa, oito lidos do FSAdata e um do MASS. D61 é anchova-do-norte (252 meses); D62 é larvas de peixes (58 eventos). São inclusões distintas. As substituições não alteram o total. Veja docs/CONCILIACAO_D61_D62_20261012.md.

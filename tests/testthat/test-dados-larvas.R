@@ -15,11 +15,11 @@ test_that("larvas preservam contagens, duração e delineamento da fonte", {
   expect_equal(sum(x$ano == "2018" & x$estacao == "Primavera"), 0L)
   registro <- catalogo_dados[catalogo_dados$nome == "larvas_peixes_captura", ]
   expect_equal(nrow(registro), 1L)
-  expect_identical(registro$codigo, "D61")
+  expect_identical(registro$codigo, "D62")
   expect_identical(registro$fonte_dados, "clara")
   expect_match(registro$licenca, "CC0")
   # No check os fontes de data-raw ficam fora do tarball.
-  fonte <- test_path("..", "..", "data-raw", "D61_larvas_captura", "fonte",
+  fonte <- test_path("..", "..", "data-raw", "D62_larvas_captura", "fonte",
                      "Dale_Light_Trap_Data_Dryad.csv")
   if (file.exists(fonte)) {
     brutos <- read.csv(fonte)
