@@ -223,3 +223,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D34 `snapper_hg`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D35 `tilapia_microalgas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D36 `treino_coletas`, provisório, com fonte e decisões anteriores registradas.
