@@ -227,3 +227,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D36 `treino_coletas`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D37 `treino_desembarque`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D38 `truta_riacho_crescimento`, provisório, com fonte e decisões anteriores registradas.

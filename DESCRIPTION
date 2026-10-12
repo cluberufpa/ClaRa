@@ -84,4 +84,5 @@ Collate:
     'dados_tilapia_microalgas.R'
     'dados_treino_coletas.R'
     'dados_treino_desembarque.R'
+    'dados_truta_riacho_crescimento.R'
 Config/roxygen2/version: 8.1.0

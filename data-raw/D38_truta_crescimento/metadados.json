@@ -1,0 +1,20 @@
+{
+  "codigo": "D38",
+  "registro": "D38_truta_crescimento",
+  "nome": "truta_riacho_crescimento",
+  "nome_eapadados": "truta_riacho_crescimento",
+  "rotulo": "Truta-de-riacho: ração, temperatura e crescimento",
+  "titulo": "D38 - Truta-de-riacho: ração, temperatura e crescimento",
+  "natureza": "real",
+  "origem": "EAPADados::truta_riacho_crescimento",
+  "unidade_amostral": "peixe individual agrupado em tanque",
+  "linhas": 69,
+  "colunas": 8,
+  "analises": "ANCOVA candidata; Ração e temperatura",
+  "analise_principal": "ANCOVA candidata",
+  "palavras_chave": "truta; riacho; crescimento",
+  "verbo_clara": "",
+  "licenca": "CC0-1.0",
+  "referencia": "Rutledge, Nislow, Fuller, McCormick, Chen e Chadwick (2025), Dryad, DOI 10.5061/dryad.v6wwpzh86",
+  "situacao": "provisório"
+}
