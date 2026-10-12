@@ -12,7 +12,7 @@
 Todas as linhas e sua ordem preservadas. Ausências mantidas; nenhuma imputação.
 Eth → origem_cultural; Sex → sexo; Age → etapa_escolar; Lrn → classe_aprendizagem; Days → dias_ausencia. Categorias de origem_cultural: A → aborigene, N → nao_aborigene. Categorias de sexo: F → feminino, M → masculino. Categorias de etapa_escolar: F0 → primario, F1 → F1, F2 → F2, F3 → F3. Categorias de classe_aprendizagem: AL → aprendizagem_media, SL → aprendizagem_lenta. Nenhuma linha excluída, reordenada ou simulada; zeros e ausências preservados. Sem conversão de unidades. Casca data.frame simples; estrutura de medidas repetidas explicada na ficha, sem atributos de groupedData que referenciem cabeçalhos antigos.
 
-As fontes usadas no preparo estão preservadas integralmente em `fonte/`, com SHA256. Objeto primário recapturado da distribuição R/MASS e comparado à cópia do levantamento, antes das adaptações. Exceção D44: o levantamento guardava outro objeto; correção da fonte registrada em fonte/CORRECAO_FONTE.md. Não houve reextração independente das publicações históricas.
+As fontes usadas no preparo estão preservadas integralmente em `fonte/`, com SHA256. Objeto primário recapturado da distribuição R/MASS e comparado à cópia do levantamento, antes das adaptações. Exceção D44: o levantamento guardava outro objeto; correção da fonte registrada em data-raw/D44_plantas_absorcao/fonte/CORRECAO_FONTE.md. Não houve reextração independente das publicações históricas.
 
 ## Uso didático
 
