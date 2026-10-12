@@ -1,0 +1,20 @@
+{
+  "codigo": "D32",
+  "registro": "D32_presas_lipideos",
+  "nome": "qfasa_presas",
+  "nome_eapadados": "qfasa_presas",
+  "rotulo": "Presas: assinaturas de ácidos graxos",
+  "titulo": "D32 - Presas: assinaturas de ácidos graxos",
+  "natureza": "real",
+  "origem": "EAPADados::qfasa_presas",
+  "unidade_amostral": "amostra de presa com assinatura lipídica",
+  "linhas": 302,
+  "colunas": 70,
+  "analises": "PCA; HCA; Assinaturas lipídicas",
+  "analise_principal": "PCA",
+  "palavras_chave": "qfasa; presas",
+  "verbo_clara": "",
+  "licenca": "MIT + file LICENSE, QFASA 1.2.1",
+  "referencia": "Stewart e colaboradores, QFASA 1.2.1, objeto preyFAs; CRAN",
+  "situacao": "provisório"
+}
