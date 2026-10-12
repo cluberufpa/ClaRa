@@ -247,3 +247,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D47 `terremotos_fiji`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D48 `laranjeiras_crescimento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D49 `aveia_parcelas`, provisório, com fonte e decisões anteriores registradas.

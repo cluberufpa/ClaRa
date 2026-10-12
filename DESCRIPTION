@@ -94,4 +94,5 @@ Collate:
     'dados_carros_frenagem.R'
     'dados_terremotos_fiji.R'
     'dados_laranjeiras_crescimento.R'
+    'dados_aveia_parcelas.R'
 Config/roxygen2/version: 8.1.0
