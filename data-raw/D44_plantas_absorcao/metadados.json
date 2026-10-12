@@ -1,0 +1,20 @@
+{
+  "codigo": "D44",
+  "registro": "D44_plantas_absorcao",
+  "nome": "plantas_absorcao_co2",
+  "nome_eapadados": "",
+  "rotulo": "Plantas: absorção de CO2 e resfriamento",
+  "titulo": "D44 - Plantas: absorção de CO2 e resfriamento",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "datasets::CO2",
+  "unidade_amostral": "medição em uma planta sob concentração de CO2; sete medições por planta",
+  "linhas": 84,
+  "colunas": 5,
+  "analises": "Medidas repetidas por planta; Curvas de resposta; Planejamento fatorial",
+  "analise_principal": "Medidas repetidas por planta",
+  "palavras_chave": "plantas; absorcao; co2",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme datasets (R 4.6.1)",
+  "referencia": "Potvin, Lechowicz e Tardif (1990), Ecology 71:1389–1400, DOI 10.2307/1938276; Pinheiro e Bates (2000), apêndice A.5; datasets::CO2",
+  "situacao": "provisório"
+}

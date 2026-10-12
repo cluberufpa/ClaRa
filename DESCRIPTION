@@ -89,4 +89,5 @@ Collate:
     'dados_mesocosmos_secagem.R'
     'dados_plantas_crescimento.R'
     'dados_ervilhas_adubacao.R'
+    'dados_plantas_absorcao_co2.R'
 Config/roxygen2/version: 8.1.0

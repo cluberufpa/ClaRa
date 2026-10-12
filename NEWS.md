@@ -237,3 +237,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D42 `plantas_crescimento`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D43 `ervilhas_adubacao`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D44 `plantas_absorcao_co2`, provisório, com fonte e decisões anteriores registradas.
