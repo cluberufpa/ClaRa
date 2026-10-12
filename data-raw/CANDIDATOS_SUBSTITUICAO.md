@@ -27,7 +27,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo tem 58 conjuntos (49 internos, oito do FSAdata e um do MASS), depois da retirada de D11, D43, D46 e D49 em 12/10/2026, após a inclusão do D61 e do D62.
+com substituições aprovadas registradas abaixo. O catálogo tem 53 conjuntos (44 internos, oito do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62.
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -71,24 +71,24 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 |---|---|---|
 | D11 (retirado) | puromicina_reacao | datasets::Puromycin; retirado do pacote, fonte em data-raw/retirados |
 | D12 (histórico) | bacterias_tratamento, substituído por bufalos_estrongilos | MASS::bacteria, fonte antiga em data-raw/substituidos |
-| D42 | plantas_crescimento | datasets::PlantGrowth |
+| D42 (retirado) | plantas_crescimento | datasets::PlantGrowth; retirado do pacote, fonte em data-raw/retirados |
 | D43 (retirado) | ervilhas_adubacao | datasets::npk; retirado do pacote, fonte em data-raw/retirados |
 | D44 (histórico) | plantas_absorcao_co2, substituído por percas_hipoxia | datasets::CO2, fonte antiga em data-raw/substituidos |
-| D45 | insetos_inseticidas | datasets::InsectSprays |
+| D45 (retirado) | insetos_inseticidas | datasets::InsectSprays; retirado do pacote, fonte em data-raw/retirados |
 | D46 (retirado) | carros_frenagem | datasets::cars; retirado do pacote, fonte em data-raw/retirados |
 | D47 (histórico) | terremotos_fiji, substituído por pollock_alasca | datasets::quakes, fonte antiga arquivada |
 | D48 (histórico) | laranjeiras_crescimento, substituído por molinesias_crescimento | datasets::Orange, fonte antiga em data-raw/substituidos |
 | D49 (retirado) | aveia_parcelas | MASS::oats; retirado do pacote, fonte em data-raw/retirados |
 
-| D51 | seguros_sinistros | MASS::Insurance |
+| D51 (retirado) | seguros_sinistros | MASS::Insurance; retirado do pacote, fonte em data-raw/retirados |
 | D52 (histórico) | paciente_peso, substituído por secagem_beterraba_gengibre | MASS::wtloss, fonte antiga em data-raw/substituidos |
-| D53 | navios_incidentes | MASS::ships |
+| D53 (retirado) | navios_incidentes | MASS::ships; retirado do pacote, fonte em data-raw/retirados |
 | D54 | haemulon_crescimento | FSAdata::WhiteGrunt2 |
 | D55 | cabezon_maturidade | FSAdata::Cabezon |
 | D56 | ruffe_biometria | FSAdata::RuffeSLRH92 |
 | D57 | bighill_amostras | FSAdata::BGHRsample |
 | D58 | bighill_peixes | FSAdata::BGHRfish |
-| D59 | peixes_recrutamento | astsa::rec |
+| D59 (retirado) | peixes_recrutamento | astsa::rec; retirado do pacote, fonte em data-raw/retirados |
 | D60 | trigo_quadrado_latino | agridat::cochran.latin |
 
 O quadro não pretende listar todas as reexportações indiretas pelo

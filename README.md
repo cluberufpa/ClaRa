@@ -2,7 +2,7 @@
 
 ## Carregar os dados de estudo
 
-O catálogo consolidado reúne **58 conjuntos**: 49 internos, oito do FSAdata
+O catálogo consolidado reúne **53 conjuntos**: 44 internos, oito do FSAdata
 e um do MASS. D61 é `anchova_norte_california` (desembarques mensais);
 D62 é `larvas_peixes_captura` (contagens e esforço em armadilhas).
 São conjuntos distintos, com registros próprios.

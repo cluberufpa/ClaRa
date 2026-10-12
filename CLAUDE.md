@@ -206,7 +206,7 @@ Regras que saem desse desenho:
 
 ## Carregar dados (v0.15.0, pedido de 12/10/2026)
 
-`carregar_dados("nome")` é a porta de entrada dos 58 conjuntos do catálogo.
+`carregar_dados("nome")` é a porta de entrada dos 53 conjuntos do catálogo.
 O nome foi confirmado pelo professor. Os dados internos continuam em `data/`;
 oito conjuntos do FSAdata e `MASS::crabs` são lidos na hora e traduzidos pelas
 receitas em `R/dados_pacotes.R`. A função fica em `R/clara_dados.R`.

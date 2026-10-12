@@ -1,5 +1,13 @@
 # clara (em desenvolvimento)
 
+- Retirados do pacote por decisão do professor (12/10/2026): D42
+  `plantas_crescimento`, D45 `insetos_inseticidas`, D51 `seguros_sinistros`,
+  D53 `navios_incidentes` e D59 `peixes_recrutamento`. D51 e D53 têm
+  `larvas_peixes_captura` (D62) como substituto; D59 tem
+  `anchova_norte_california` (D61); D42 e D45 saem sem substituto. Fontes e
+  receitas em `data-raw/retirados/`. Catálogo com 53 conjuntos (44 internos,
+  oito do FSAdata e um do MASS). Resta sem substituto o D04 `doubs_ambiente`.
+
 - Retirados do pacote, sem substituto, por decisão do professor
   (12/10/2026): D11 `puromicina_reacao`, D43 `ervilhas_adubacao`, D46
   `carros_frenagem` e D49 `aveia_parcelas` (todos de pacotes GPL, fora do
