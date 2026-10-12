@@ -1,0 +1,20 @@
+{
+  "codigo": "D48",
+  "registro": "D48_molinesias_crescimento",
+  "nome": "molinesias_crescimento",
+  "nome_eapadados": "",
+  "rotulo": "Molinésias: crescimento individual ao longo do tempo",
+  "titulo": "D48 - Molinésias: crescimento individual",
+  "natureza": "real",
+  "origem": "Figshare 10.6084/m9.figshare.23971599.v1, arquivo growth.csv",
+  "unidade_amostral": "medição de comprimento padrão de uma fêmea identificada em uma idade",
+  "linhas": 340,
+  "colunas": 4,
+  "analises": "Curva de von Bertalanffy; Crescimento individual; Medidas repetidas",
+  "analise_principal": "Curva de von Bertalanffy",
+  "palavras_chave": "molinesias; crescimento; longitudinal; von_bertalanffy",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Scherer, Ehlman, Bierbach, Krause e Wolf (2023), Figshare, DOI 10.6084/m9.figshare.23971599.v1; artigo DOI 10.1038/s41467-023-43069-6; licença conferida em 12/10/2026",
+  "situacao": "provisório"
+}
