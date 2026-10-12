@@ -79,4 +79,5 @@ Collate:
     'dados_peixes_nutricao_portugal.R'
     'dados_qfasa_predadores.R'
     'dados_qfasa_presas.R'
+    'dados_recifes_ostras_heatmap.R'
 Config/roxygen2/version: 8.1.0

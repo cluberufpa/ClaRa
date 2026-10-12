@@ -217,3 +217,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D31 `qfasa_predadores`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D32 `qfasa_presas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D33 `recifes_ostras_heatmap`, provisório, com fonte e decisões anteriores registradas.
