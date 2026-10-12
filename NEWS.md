@@ -1,5 +1,16 @@
 # clara (em desenvolvimento)
 
+- Fusão das branches `dados` e `codex/substitutos-literatura-20261012`
+  (12/10/2026). D12 `bufalos_estrongilos` (418 × 6, CC0) substitui
+  `bacterias_tratamento` (MASS::bacteria) e D52 `secagem_beterraba_gengibre`
+  (594 × 8, CC BY 4.0) substitui `paciente_peso` (MASS::wtloss); os códigos D
+  foram mantidos. Fontes GPL antigas em `data-raw/substituidos/`. Para D44 e
+  D48 valem os objetos da `dados` (`percas_hipoxia` e `molinesias_crescimento`,
+  com 1.178 medições); as variantes da outra branch (`percas_respirometria` e
+  o recorte equilibrado de 340 medições das molinésias) ficam arquivadas em
+  `data-raw/alternativas_codex/`, fora do pacote. Relatório da outra branch em
+  `docs/RELATORIO_INCORPORACAO_20261012.md`.
+
 - Corrige a colisão provisória de registros entre checkouts: D61 permanece
   `anchova_norte_california`; `larvas_peixes_captura` passa a D62. Ambos
   preservados no catálogo consolidado, agora com 62 conjuntos (53 internos,

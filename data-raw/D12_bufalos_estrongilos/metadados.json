@@ -1,0 +1,20 @@
+{
+  "codigo": "D12",
+  "registro": "D12_bufalos_estrongilos",
+  "nome": "bufalos_estrongilos",
+  "nome_eapadados": "bufalos_estrongilos",
+  "rotulo": "Búfalos-africanos: ovos de estrongilídeos antes e depois de vermifugação",
+  "titulo": "D12 - Búfalos-africanos: ovos de estrongilídeos",
+  "natureza": "real",
+  "origem": "EAPADados::bufalos_estrongilos; Dryad/Zenodo 10.5061/dryad.q2m38",
+  "unidade_amostral": "observação de um búfalo identificado antes ou depois da intervenção; medidas pareadas quando há os dois momentos",
+  "linhas": 418,
+  "colunas": 6,
+  "analises": "McNemar; Preparo de dados pareados; comparação descritiva com grupo-controle",
+  "analise_principal": "McNemar",
+  "palavras_chave": "bufalos; estrongilos; tratamento; pareado",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0",
+  "referencia": "Ezenwa e Jolles (2015), Science, DOI 10.1126/science.1261714; dados Dryad/Zenodo, DOI 10.5061/dryad.q2m38; conferido em 12/10/2026",
+  "situacao": "provisório"
+}

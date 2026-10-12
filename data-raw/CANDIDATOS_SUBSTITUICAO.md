@@ -34,12 +34,12 @@ As prioridades abaixo são sugestões para avaliação do professor.
 
 | Registro e objeto | Tema atual | O que procurar na fonte substituta |
 |---|---|---|
-| D12 bacterias_tratamento | Tratamento clínico em crianças | Resposta binária observada nos mesmos organismos em dois ou mais momentos, com ID, tratamento e tempo; pares para McNemar |
+| D12 bacterias_tratamento | Tratamento clínico em crianças | Resolvido: `bufalos_estrongilos` (CC0, 418 linhas) mantém pares e linhas sem par para McNemar |
 | D46 carros_frenagem | Frenagem de carros históricos | Duas medidas contínuas em organismos/ambiente aquático, suficientes para comparar curva linear e quadrática; replicação identificada |
 | D47 pollock_alasca | Pesca de pesquisa | Resolvido: NOAA CC0, 523 lances; substituição aprovada em 12/10/2026. Dois pontos costeiros a conferir |
 | D50 molinesias_parasitos | Bioecologia de peixes | Resolvido: substituição do quine aprovada em 11/10/2026, fonte Dryad CC0; curadoria fina pendente |
 | D51 seguros_sinistros | Seguros de automóveis | Contagens agregadas com denominador/esforço observado e grupos; preservar exercício de exposição/offset |
-| D52 paciente_peso | Série de peso humano | Série de crescimento ou redução de massa com tempo, unidade e organismo identificados, adequada a curva não linear e com dependência documentada |
+| D52 paciente_peso | Série de peso humano | Resolvido: `secagem_beterraba_gengibre` (CC BY 4.0, 594 linhas); unidade do tempo e códigos B/G, C/E seguem pendentes |
 | D53 navios_incidentes | Danos em frota sem identificação como pesqueira | Captura ou incidentes em embarcações/atividade pesqueira com esforço/exposição e fatores claros |
 
 ## Avaliar conforme o alcance de bioecologia geral

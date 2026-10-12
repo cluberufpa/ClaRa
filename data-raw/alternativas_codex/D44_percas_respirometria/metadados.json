@@ -1,0 +1,20 @@
+{
+  "codigo": "D44",
+  "registro": "D44_percas_respirometria",
+  "nome": "percas_respirometria",
+  "nome_eapadados": "",
+  "rotulo": "Percas: consumo de oxigênio durante hipóxia",
+  "titulo": "D44 - Percas: consumo de oxigênio durante hipóxia",
+  "natureza": "real",
+  "origem": "Dryad 10.5061/dryad.tmpg4f4z3; planilha Zenodo 4591899",
+  "unidade_amostral": "medição repetida de consumo de oxigênio de uma perca identificada em um nível de saturação de ar",
+  "linhas": 449,
+  "colunas": 4,
+  "analises": "Medidas repetidas; Curva de resposta assintótica; comparação exploratória de grupos",
+  "analise_principal": "Medidas repetidas",
+  "palavras_chave": "percas; respirometria; hipoxia; oxigenio",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0",
+  "referencia": "Ekström et al. (2021), Journal of Experimental Biology, DOI 10.1242/jeb.241554; dados Dryad DOI 10.5061/dryad.tmpg4f4z3 e Zenodo 4591899; conferido em 12/10/2026",
+  "situacao": "provisório"
+}
