@@ -102,4 +102,5 @@ Collate:
     'dados_haemulon_crescimento.R'
     'dados_cabezon_maturidade.R'
     'dados_ruffe_biometria.R'
+    'dados_bighill_amostras.R'
 Config/roxygen2/version: 8.1.0
