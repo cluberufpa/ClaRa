@@ -95,4 +95,5 @@ Collate:
     'dados_terremotos_fiji.R'
     'dados_laranjeiras_crescimento.R'
     'dados_aveia_parcelas.R'
+    'dados_escolares_ausencias.R'
 Config/roxygen2/version: 8.1.0

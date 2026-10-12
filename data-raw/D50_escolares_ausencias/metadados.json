@@ -1,0 +1,20 @@
+{
+  "codigo": "D50",
+  "registro": "D50_escolares_ausencias",
+  "nome": "escolares_ausencias",
+  "nome_eapadados": "",
+  "rotulo": "Escolares: dias de ausência em Walgett",
+  "titulo": "D50 - Escolares: dias de ausência em Walgett",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "MASS::quine",
+  "unidade_amostral": "criança com número de dias ausente em um ano escolar",
+  "linhas": 146,
+  "colunas": 5,
+  "analises": "Modelos de contagem; Binomial negativa; Superdispersão",
+  "analise_principal": "Modelos de contagem",
+  "palavras_chave": "escolares; ausencias",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme MASS 7.3-65",
+  "referencia": "S. Quine, citado em Aitkin (1978), The analysis of unbalanced cross classifications, Journal of the Royal Statistical Society A 141:195–223; Venables e Ripley (2002); MASS::quine",
+  "situacao": "provisório"
+}
