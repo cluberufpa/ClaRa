@@ -1,0 +1,20 @@
+{
+  "codigo": "D52",
+  "registro": "D52_secagem_vegetais",
+  "nome": "secagem_beterraba_gengibre",
+  "nome_eapadados": "secagem_beterraba_gengibre",
+  "rotulo": "Secagem de beterraba e gengibre sob diferentes condições",
+  "titulo": "D52 - Secagem de beterraba e gengibre",
+  "natureza": "real",
+  "origem": "EAPADados::secagem_beterraba_gengibre; Mendeley Data 10.17632/zkvb73tn79.1",
+  "unidade_amostral": "uma amostra de produto acompanhada numa réplica de secagem",
+  "linhas": 594,
+  "colunas": 8,
+  "analises": "Curva exponencial assintótica; Regressão não linear; comparação de séries",
+  "analise_principal": "Curva exponencial assintótica",
+  "palavras_chave": "secagem; beterraba; gengibre; decaimento",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Granella (2025), Drying kinetics (MR) data and AI model scripts for ethanol-pretreated beetroot and ginger, Mendeley Data, DOI 10.17632/zkvb73tn79.1; conferido em 12/10/2026",
+  "situacao": "provisório"
+}

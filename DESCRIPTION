@@ -97,7 +97,7 @@ Collate:
     'dados_aveia_parcelas.R'
     'dados_molinesias_parasitos.R'
     'dados_seguros_sinistros.R'
-    'dados_paciente_peso.R'
+    'dados_secagem_beterraba_gengibre.R'
     'dados_navios_incidentes.R'
     'dados_haemulon_crescimento.R'
     'dados_cabezon_maturidade.R'
