@@ -7,10 +7,14 @@ import xml.etree.ElementTree as E
 pacote = Path(__file__).resolve().parents[1]
 balanco = pacote.parent / 'EAPADados/nova_estetegia_levantamento/balanco_fase2_60_conjuntos.xlsx'
 integrado = '--integrado' in sys.argv[2:]
-if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and not integrado):
-    raise SystemExit('Uso: python data-raw/atualizar_acompanhamento.py caminho/do/relatorio_de_verificacao.json [--integrado]')
+check_aprovado = '--check-aprovado' in sys.argv[2:]
+if len(sys.argv) not in (2, 3, 4) or set(sys.argv[2:]) - {'--integrado', '--check-aprovado'} or (check_aprovado and not integrado):
+    raise SystemExit('Uso: python data-raw/atualizar_acompanhamento.py caminho/do/relatorio_de_verificacao.json [--integrado [--check-aprovado]]')
 relatorio = Path(sys.argv[1])
-linhas = json.loads(relatorio.read_text(encoding='utf-8'))['catalogo']
+verificacao = json.loads(relatorio.read_text(encoding='utf-8'))
+if check_aprovado and verificacao.get('check_aprovado') is not True:
+    raise SystemExit('O relatório deve confirmar check_aprovado = true após conferir o log completo.')
+linhas = verificacao['catalogo']
 por_nome = {r['nome_eapadados'] or r['nome']: r for r in linhas}
 for r in linhas:
     origem = re.match(r'^([A-Za-z0-9.]+::[A-Za-z0-9._]+)', r.get('origem', ''))
@@ -74,6 +78,11 @@ for aba in E.fromstring(arquivos['xl/workbook.xml'][1]).findall('m:sheets/m:shee
                         'check pendente; ' + r['situacao'].split(';', 1)[1].strip())
             if r['nome_eapadados'] == 'walleye_erie':
                 situacao += '; substituído por ' + r['nome']
+        if check_aprovado:
+            situacao = situacao.replace('autorização da fonte e check pendentes', 'autorização da fonte pendente; check aprovado')
+            situacao = situacao.replace('check pendente', 'check aprovado')
+            if not r['situacao'].startswith('revisado') and r['codigo'] != 'D01':
+                situacao += '; curadoria pendente'
         escrever(row, col_situacao, situacao)
         escrever(row, col_codigo, r['codigo'])
         alterados.append(aba.attrib['name'] + '!' + col_codigo + row.attrib['r'])
@@ -106,4 +115,4 @@ with zipfile.ZipFile(temporario) as depois:
         if nome not in modificados:
             assert dados == depois.read(nome), nome
 temporario.replace(balanco)
-print(json.dumps({'celulas_identificador': alterados, 'estilos_preservados': True, 'conclusoes_marcadas': 0}, ensure_ascii=True))
+print(json.dumps({'celulas_identificador': alterados, 'estilos_preservados': True, 'conclusoes_marcadas': 0, 'check_aprovado': check_aprovado}, ensure_ascii=True))
