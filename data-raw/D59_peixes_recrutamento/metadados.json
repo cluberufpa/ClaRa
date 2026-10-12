@@ -1,0 +1,20 @@
+{
+  "codigo": "D59",
+  "registro": "D59_peixes_recrutamento",
+  "nome": "peixes_recrutamento",
+  "nome_eapadados": "",
+  "rotulo": "Peixes: índice mensal de recrutamento",
+  "titulo": "D59 - Peixes: índice mensal de recrutamento",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "astsa::rec",
+  "unidade_amostral": "mês da série de índice de recrutamento, janeiro de 1950 a setembro de 1987",
+  "linhas": 453,
+  "colunas": 2,
+  "analises": "Séries temporais; Autocorrelação; Tendência",
+  "analise_principal": "Séries temporais",
+  "palavras_chave": "peixes; recrutamento",
+  "verbo_clara": "",
+  "licenca": "GPL (>= 2), astsa 2.5",
+  "referencia": "Roy Mendelssohn, Pacific Fisheries Environmental Laboratory, NOAA, comunicação pessoal, conforme astsa::rec; Shumway e Stoffer, Time Series Analysis and Its Applications",
+  "situacao": "provisório"
+}
