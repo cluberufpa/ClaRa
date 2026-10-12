@@ -93,4 +93,5 @@ Collate:
     'dados_insetos_inseticidas.R'
     'dados_carros_frenagem.R'
     'dados_terremotos_fiji.R'
+    'dados_laranjeiras_crescimento.R'
 Config/roxygen2/version: 8.1.0

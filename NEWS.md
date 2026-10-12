@@ -245,3 +245,5 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D46 `carros_frenagem`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D47 `terremotos_fiji`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D48 `laranjeiras_crescimento`, provisório, com fonte e decisões anteriores registradas.
