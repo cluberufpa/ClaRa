@@ -1,0 +1,20 @@
+{
+  "codigo": "D46",
+  "registro": "D46_carros_frenagem",
+  "nome": "carros_frenagem",
+  "nome_eapadados": "",
+  "rotulo": "Carros: velocidade e distância de parada",
+  "titulo": "D46 - Carros: velocidade e distância de parada",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "datasets::cars",
+  "unidade_amostral": "registro histórico de velocidade e distância de parada de automóvel",
+  "linhas": 50,
+  "colunas": 2,
+  "analises": "Regressão linear; Modelo quadrático; Comparação de curvas",
+  "analise_principal": "Regressão linear",
+  "palavras_chave": "carros; frenagem",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme datasets (R 4.6.1)",
+  "referencia": "Ezekiel (1930), Methods of Correlation Analysis; McNeil (1977); dados coletados na década de 1920; datasets::cars",
+  "situacao": "provisório"
+}

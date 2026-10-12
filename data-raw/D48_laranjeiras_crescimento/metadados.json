@@ -1,0 +1,20 @@
+{
+  "codigo": "D48",
+  "registro": "D48_laranjeiras_crescimento",
+  "nome": "laranjeiras_crescimento",
+  "nome_eapadados": "",
+  "rotulo": "Laranjeiras: crescimento da circunferência do tronco",
+  "titulo": "D48 - Laranjeiras: crescimento da circunferência do tronco",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "datasets::Orange",
+  "unidade_amostral": "medição em árvore ao longo do tempo; cinco árvores, sete tempos cada",
+  "linhas": 35,
+  "colunas": 3,
+  "analises": "Curva logística; Exploração longitudinal",
+  "analise_principal": "Curva logística",
+  "palavras_chave": "laranjeiras; crescimento",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme datasets (R 4.6.1)",
+  "referencia": "Draper e Smith (1998), Applied Regression Analysis, exercício 24.N; Pinheiro e Bates (2000); datasets::Orange",
+  "situacao": "provisório"
+}

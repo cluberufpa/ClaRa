@@ -233,3 +233,23 @@ dão os mesmos números e as mesmas figuras.
 - Dados: D40 `whitefish_salinidade`, provisório, com fonte e decisões anteriores registradas.
 
 - Dados: D41 `mesocosmos_secagem`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D42 `plantas_crescimento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D43 `ervilhas_adubacao`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D44 `plantas_absorcao_co2`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D45 `insetos_inseticidas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D46 `carros_frenagem`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D47 `terremotos_fiji`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D48 `laranjeiras_crescimento`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D49 `aveia_parcelas`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D50 `escolares_ausencias`, provisório, com fonte e decisões anteriores registradas.
+
+- Dados: D51 `seguros_sinistros`, provisório, com fonte e decisões anteriores registradas.

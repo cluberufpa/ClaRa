@@ -1,0 +1,30 @@
+#' D49 - Aveia: variedades e nitrogênio em parcelas subdivididas
+#'
+#' Dados provisórios da passada 1. Unidade amostral: subparcela de 1/80 acre, aninhada em parcela principal e bloco.
+#'
+#' @format Um `data.frame` com 72 linhas e 4 colunas:
+#' \describe{
+#'   \item{bloco}{Fator: bloco, códigos romanos I a VI.}
+#'   \item{variedade}{Fator: cultivar Golden.rain, Marvellous ou Victory; nomes próprios originais.}
+#'   \item{dose_nitrogenio}{Fator: doses 0.0cwt, 0.2cwt, 0.4cwt ou 0.6cwt; aplicação em cwt/acre.}
+#'   \item{producao_quartos_libra}{Produção em unidades de um quarto de libra por subparcela de 1/80 acre.}
+#' }
+#'
+#' @details
+#' Seis blocos, três parcelas principais por bloco e quatro subparcelas por parcela. Variedade atribuída à parcela principal; nitrogênio à subparcela. Não usar o mesmo erro para ambos os fatores nem ANOVA de dois fatores simples como se fossem 72 unidades independentes. Preservadas doses categóricas cwt/acre e produção em quartos de libra; não converter sem definir o padrão de cwt. Nomes de cultivares são próprios e permanecem originais.
+#'
+#' @section Adaptações:
+#' B → bloco; V → variedade; N → dose_nitrogenio; Y → producao_quartos_libra. Nenhuma linha excluída, reordenada ou simulada; zeros e ausências preservados. Sem conversão de unidades. Casca data.frame simples; estrutura de medidas repetidas explicada na ficha, sem atributos de groupedData que referenciem cabeçalhos antigos.
+#'
+#' @source
+#' Yates (1935), Complex experiments, Journal of the Royal Statistical Society Supplement 2:181–247; Yates (1970); Venables e Ripley (2002); MASS::oats.
+#' Licença: GPL-2 | GPL-3, conforme MASS 7.3-65.
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D49_aveia_parcelas/.
+#'
+#' @examples
+#' summary(aveia_parcelas)
+#'
+#' @docType data
+#' @keywords datasets
+"aveia_parcelas"

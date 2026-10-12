@@ -1,0 +1,20 @@
+{
+  "codigo": "D49",
+  "registro": "D49_aveia_parcelas",
+  "nome": "aveia_parcelas",
+  "nome_eapadados": "",
+  "rotulo": "Aveia: variedades e nitrogênio em parcelas subdivididas",
+  "titulo": "D49 - Aveia: variedades e nitrogênio em parcelas subdivididas",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "MASS::oats",
+  "unidade_amostral": "subparcela de 1/80 acre, aninhada em parcela principal e bloco",
+  "linhas": 72,
+  "colunas": 4,
+  "analises": "Planejamento em parcelas subdivididas; ANOVA com estratos de erro",
+  "analise_principal": "Planejamento em parcelas subdivididas",
+  "palavras_chave": "aveia; parcelas",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme MASS 7.3-65",
+  "referencia": "Yates (1935), Complex experiments, Journal of the Royal Statistical Society Supplement 2:181–247; Yates (1970); Venables e Ripley (2002); MASS::oats",
+  "situacao": "provisório"
+}

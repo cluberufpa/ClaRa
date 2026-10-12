@@ -1,0 +1,31 @@
+#' D47 - Terremotos: localização de eventos próximos de Fiji
+#'
+#' Dados provisórios da passada 1. Unidade amostral: evento sísmico de uma subamostra de mil eventos.
+#'
+#' @format Um `data.frame` com 1000 linhas e 5 colunas:
+#' \describe{
+#'   \item{latitude_graus}{Latitude do evento em graus, original da fonte.}
+#'   \item{longitude_graus}{Longitude do evento em graus; convenção original, inclusive valores acima de 180.}
+#'   \item{profundidade_km}{Profundidade do evento em quilômetros.}
+#'   \item{magnitude}{Magnitude reportada; escala e critério de seleção a conferir.}
+#'   \item{estacoes_detectoras}{Número de estações que reportaram o evento.}
+#' }
+#'
+#' @details
+#' Subamostra de 1.000 de 5.000 eventos, com critério de magnitude da fonte e ocorrências desde 1964; não é censo mundial ou série temporal com datas. Longitudes originais maiores que 180 graus preservadas; confirmar convenção ao mapear. A ajuda usa MB e Richter; não reinterpretar como magnitude de momento. Eventos próximos podem ter dependência espacial. Tema geofísico para ensinar mapas, sem contexto pesqueiro inventado.
+#'
+#' @section Adaptações:
+#' lat → latitude_graus; long → longitude_graus; depth → profundidade_km; mag → magnitude; stations → estacoes_detectoras. Nenhuma linha excluída, reordenada ou simulada; zeros e ausências preservados. Sem conversão de unidades. Casca data.frame simples; estrutura de medidas repetidas explicada na ficha, sem atributos de groupedData que referenciem cabeçalhos antigos.
+#'
+#' @source
+#' Harvard PRIM-H, dados fornecidos por John Woodhouse, Department of Geophysics, Harvard; datasets::quakes.
+#' Licença: GPL-2 | GPL-3, conforme datasets (R 4.6.1).
+#' A licença MIT do código não substitui os termos da origem dos dados.
+#' Fontes e preparo: data-raw/D47_terremotos_fiji/.
+#'
+#' @examples
+#' summary(terremotos_fiji)
+#'
+#' @docType data
+#' @keywords datasets
+"terremotos_fiji"

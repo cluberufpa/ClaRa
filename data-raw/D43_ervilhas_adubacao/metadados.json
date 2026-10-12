@@ -1,0 +1,20 @@
+{
+  "codigo": "D43",
+  "registro": "D43_ervilhas_adubacao",
+  "nome": "ervilhas_adubacao",
+  "nome_eapadados": "",
+  "rotulo": "Ervilhas: adubação NPK em blocos",
+  "titulo": "D43 - Ervilhas: adubação NPK em blocos",
+  "natureza": "real conforme documentação do pacote",
+  "origem": "datasets::npk",
+  "unidade_amostral": "parcela de 1/70 acre em experimento fatorial fracionado, com seis blocos",
+  "linhas": 24,
+  "colunas": 5,
+  "analises": "Planejamento em blocos; Fatorial 2³ com confundimento",
+  "analise_principal": "Planejamento em blocos",
+  "palavras_chave": "ervilhas; adubacao",
+  "verbo_clara": "",
+  "licenca": "GPL-2 | GPL-3, conforme datasets (R 4.6.1)",
+  "referencia": "Imperial College, London, folha de exercícios de mestrado; Venables e Ripley (2002); datasets::npk",
+  "situacao": "provisório"
+}
