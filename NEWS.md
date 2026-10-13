@@ -68,6 +68,16 @@
   tabela. Fonte e receita em `data-raw/D60_vacas_fistuladas/`; o trigo foi para `data-raw/substituidos/`.
   Catálogo mantém 53 conjuntos.
 
+- D12 passa a `garoupa_pcr_histologia` (123 x 4, CC BY 3.0 Austrália), substituindo `ovinos_caprinos_fmdv`, por
+  decisão do professor (13/10/2026): o exemplo de McNemar passa a ser de pesca e aquicultura. Reconstrução, a partir das
+  Tabelas 32 e 34 do relatório FRDC 2010/034 (Bowater 2015), do PCR e da histologia para *Streptococcus agalactiae*
+  nos mesmos juvenis de garoupa-de-Queensland em desafio por coabitação, em duas réplicas (74 e 49 peixes). Só as
+  contagens são reais; a ficha, a ajuda e o catálogo (`natureza`) dizem isso. McNemar com discordância de um lado só
+  (2 contra 50; p = 7,1e-11): o PCR detecta mais positivos, o que não é sensibilidade absoluta. A réplica 1
+  é a planilha do professor, na ordem dela. Os resultados por peixe e por órgão estão nos Apêndices 8 e 9 do relatório e
+  podem tornar o conjunto real. Fonte e receita em `data-raw/D12_garoupa_pcr/`; os ovinos foram para
+  `data-raw/substituidos/`. O D12 segue um só conjunto no catálogo.
+
 - D12 passa a `ovinos_caprinos_fmdv` (418 x 11, CC0 para os dados; artigo CC BY 4.0), substituindo
   `cabras_toxoplasma`, que reconstruía linhas a partir de tabelas publicadas. Dados individuais reais de
   Gubbins et al. (2025, *Veterinary Research* 56:76): 418 pares de soro e swab oral por rRT-PCR para o vírus

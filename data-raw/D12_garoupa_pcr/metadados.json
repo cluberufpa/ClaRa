@@ -1,0 +1,21 @@
+{
+  "codigo": "D12",
+  "registro": "D12_garoupa_pcr",
+  "nome": "garoupa_pcr_histologia",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Garoupa: PCR e histologia para Streptococcus agalactiae nos mesmos peixes",
+  "titulo": "D12 - Garoupa: PCR e histologia nos mesmos peixes",
+  "natureza": "reconstruído a partir de tabelas publicadas",
+  "origem": "Bowater (2015), relatório FRDC 2010/034, Tabelas 32 e 34 (p. 123-124)",
+  "unidade_amostral": "um juvenil de garoupa-de-Queensland (Epinephelus lanceolatus) com os resultados de PCR e de histologia; as linhas são reconstruídas das contagens publicadas",
+  "linhas": 123,
+  "colunas": 4,
+  "analises": "McNemar; Tabela 2 x 2 de pares; Comparação de métodos diagnósticos; Preparo de dados pareados",
+  "analise_principal": "McNemar",
+  "palavras_chave": "garoupa; Epinephelus lanceolatus; Streptococcus agalactiae; PCR; histologia; pareado; diagnostico; aquicultura; coabitacao",
+  "verbo_clara": "",
+  "licenca": "CC BY 3.0 Austrália",
+  "referencia": "Bowater, R. O. (2015). Investigation of an emerging bacterial disease in wild Queensland grouper, marine fish and stingrays, with production of diagnostic tools to reduce the spread of disease to other states of Australia. FRDC Project No. 2010/034. Department of Agriculture, Fisheries and Forestry, Brisbane. Tabelas 32 e 34. https://www.frdc.com.au/sites/default/files/products/2010-034-DLD.pdf; conferido em 13/10/2026",
+  "situacao": "curado com limites: linhas reconstruídas a partir das tabelas publicadas, só as contagens são reais; peixes compartilhavam tanques"
+}

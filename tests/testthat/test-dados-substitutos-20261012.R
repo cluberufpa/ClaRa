@@ -1,28 +1,25 @@
-test_that("D12 ovinos e caprinos reproduz o recorte pareado de soro e swab oral", {
-  x <- ovinos_caprinos_fmdv
-  expect_identical(dim(x), c(418L, 11L))
-  expect_identical(names(x), c("id_animal", "id_local", "data_coleta", "visita", "especie",
-    "idade_meses", "sexo", "origem_animal", "pcr_soro", "pcr_swab_oral", "elisa_nsp"))
-  expect_type(x$id_animal, "character")
-  expect_s3_class(x$data_coleta, "Date")
-  expect_identical(levels(x$pcr_soro), c("negativo", "positivo"))
-  expect_identical(levels(x$especie), c("ovino", "caprino"))
-  expect_equal(sum(is.na(x$elisa_nsp)), 2L)
-  expect_false(anyNA(x[setdiff(names(x), "elisa_nsp")]))
-  expect_equal(length(unique(x$id_animal)), 323L)
-  expect_false(anyDuplicated(x[c("id_animal", "visita")]) > 0L)
-  # Tabela 2 x 2 do recorte completo (linhas = soro, colunas = swab).
-  tab <- table(x$pcr_soro, x$pcr_swab_oral)
-  expect_equal(as.integer(tab), c(400L, 9L, 8L, 1L))
-  expect_equal(mcnemar.test(tab)$p.value, 1)
-  # Uma coleta por animal: 308, 8, 6 e 1.
-  y <- x[order(x$id_animal, x$data_coleta), ]
-  y <- y[!duplicated(y$id_animal), ]
-  expect_equal(nrow(y), 323L)
-  expect_equal(as.integer(table(y$pcr_soro, y$pcr_swab_oral)), c(308L, 8L, 6L, 1L))
-  # O ELISA contra a PCR do soro: discordância de um lado só.
-  e <- table(x$elisa_nsp, x$pcr_soro)
-  expect_lt(mcnemar.test(e)$p.value, 1e-30)
+test_that("D12 garoupa reproduz as tabelas 2 x 2 publicadas de PCR e histologia", {
+  x <- garoupa_pcr_histologia
+  expect_identical(dim(x), c(123L, 4L))
+  expect_identical(names(x), c("id_peixe", "replica", "histologia", "pcr"))
+  expect_type(x$id_peixe, "character")
+  expect_false(anyNA(x))
+  expect_false(anyDuplicated(x$id_peixe) > 0L)
+  expect_identical(levels(x$replica), c("1", "2"))
+  expect_identical(levels(x$pcr), c("negativo", "positivo"))
+  expect_identical(as.integer(table(x$replica)), c(74L, 49L))
+  tab <- function(r) {
+    y <- x[x$replica == r, ]
+    table(y$histologia, y$pcr)
+  }
+  # Tabela 32 (réplica 1): histologia nas linhas, PCR nas colunas, negativo primeiro.
+  expect_equal(as.integer(tab("1")), c(4L, 2L, 50L, 18L))
+  # Tabela 34 (réplica 2).
+  expect_equal(as.integer(tab("2")), c(3L, 3L, 28L, 15L))
+  m1 <- mcnemar.test(tab("1"))
+  expect_equal(unname(m1$statistic), 42.48077, tolerance = 1e-6)
+  expect_equal(m1$p.value, 7.138e-11, tolerance = 1e-3)
+  expect_lt(mcnemar.test(tab("2"))$p.value, 1e-4)
 })
 
 test_that("D52 secagem conserva códigos e séries", {
