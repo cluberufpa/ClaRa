@@ -1,0 +1,21 @@
+{
+  "codigo": "D52",
+  "registro": "D52_secagem_bagre",
+  "nome": "secagem_bagre",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Bagre-africano: perda de massa na secagem a 80 °C em secador a gás",
+  "titulo": "D52 - Bagre-africano: curva de secagem a 80 °C",
+  "natureza": "real",
+  "origem": "Data in Brief; Ohijeagbon et al. (2018), DOI 10.1016/j.dib.2018.03.072, Tabelas 1 e 2 (80 °C)",
+  "unidade_amostral": "um lote de bagres eviscerados pesado de hora em hora (uma curva, dez pesagens)",
+  "linhas": 10,
+  "colunas": 6,
+  "analises": "Regressão não linear; curva de decaimento; comparação de modelos (Lewis, Page, Henderson-Pabis); comparação com a reta",
+  "analise_principal": "Regressão não linear",
+  "palavras_chave": "secagem; bagre-africano; Clarias gariepinus; tecnologia do pescado; cinética de secagem; regressão não linear; Page; Lewis; decaimento",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Ohijeagbon, I. O.; Lasode, O. A.; Adebayo, S.; Ajayi, O. O.; Omotosho, O. A. (2018). Data on drying kinetics of a semi-automated gas-fired fish dryer. Data in Brief 18:641-647. DOI 10.1016/j.dib.2018.03.072; conferido em 13/10/2026",
+  "situacao": "curado; uma só curva, sem réplicas; a umidade publicada não fecha com as massas e fica só para discussão"
+}

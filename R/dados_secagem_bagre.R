@@ -1,0 +1,49 @@
+#' D52 - Bagre-africano: curva de secagem a 80 °C
+#'
+#' Perda de massa de um lote de bagres-africanos (*Clarias gariepinus*) eviscerados num
+#' secador a gás regulado em 80 °C, pesado de hora em hora durante nove horas. A massa
+#' cai depressa no começo e cada vez mais devagar depois: é a curva de secagem que se
+#' descreve com os modelos de camada fina, como o de Lewis e o de Page.
+#'
+#' @format Um `data.frame` com 10 linhas (uma por pesagem) e 6 colunas:
+#' \describe{
+#'   \item{tempo_min}{Inteiro: tempo desde o início da secagem, em minutos (0 a 540).}
+#'   \item{massa_peixe_kg}{Massa do lote de peixes, em kg; a resposta.}
+#'   \item{temperatura_secador_c}{Temperatura medida dentro do secador, em °C.}
+#'   \item{gas_consumido_kg}{Gás (GLP) consumido desde a pesagem anterior, em kg; vazio no tempo 0.}
+#'   \item{energia_mj}{Energia utilizada, em MJ, como publicada.}
+#'   \item{umidade_publicada}{Umidade publicada pelos autores, em kg de água por kg de peixe seco; não fecha com as massas (ver Detalhes).}
+#' }
+#'
+#' @details Com a massa relativa, `massa_peixe_kg / 8.53`, o modelo de Page,
+#' `exp(-(k * tempo_min)^n)`, ajusta melhor que o de Lewis, `exp(-k * tempo_min)`, e
+#' que a reta (AIC -50,2; -27,1; -43,1), com k = 0,00242 por minuto e n = 1,42.
+#'
+#' É uma só curva, sem réplicas: serve para ajustar e comparar modelos, não para
+#' comparar temperaturas. As dez pesagens não mostram o patamar final; com assíntota
+#' livre, ele converge para zero. Não extrapole além de 540 min nem trate o patamar
+#' estimado como massa seca.
+#'
+#' `umidade_publicada` é mantida para discussão sobre dados derivados: o artigo a
+#' rotula como base seca, mas o valor inicial (0,770) parece base úmida e o final é
+#' 0,000. Não a use no ajuste.
+#'
+#' @section Adaptações:
+#' Colunas de 80 °C das Tabelas 1 e 2 do artigo, transcritas sem alterar valores, com
+#' nomes traduzidos. As curvas de 100 °C e 120 °C do mesmo artigo ficaram de fora.
+#' Ocupa o D52, antes `secagem_beterraba_gengibre` (vegetais) e, antes dele,
+#' `paciente_peso`.
+#'
+#' @source Ohijeagbon, I. O.; Lasode, O. A.; Adebayo, S.; Ajayi, O. O.; Omotosho, O. A.
+#' (2018). Data on drying kinetics of a semi-automated gas-fired fish dryer.
+#' *Data in Brief* 18:641-647. \doi{10.1016/j.dib.2018.03.072}. Licença CC BY 4.0,
+#' conferida em 13/10/2026. Fonte e preparo em `data-raw/D52_secagem_bagre/`.
+#'
+#' @examples
+#' secagem_bagre$massa_relativa <- secagem_bagre$massa_peixe_kg / 8.53
+#' page <- nls(massa_relativa ~ exp(-(k * tempo_min)^n), data = secagem_bagre,
+#'             start = list(k = 0.002, n = 1))
+#' coef(page)
+#' @docType data
+#' @keywords datasets
+"secagem_bagre"

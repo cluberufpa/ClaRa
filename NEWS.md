@@ -1,5 +1,12 @@
 # clara (em desenvolvimento)
 
+- D52 passa a `secagem_bagre` (10 x 6, CC BY 4.0), por decisão do professor (13/10/2026): o código vago volta a
+  ter uma curva de secagem, agora de pescado. Ohijeagbon et al. (2018, *Data in Brief* 18:641-647): um lote de
+  bagres-africanos eviscerados num secador a gás a 80 °C, pesado de hora em hora de 0 a 540 min (8,53 -> 2,03 kg).
+  Com a massa relativa, o modelo de Page vence o de Lewis e a reta (k = 0,00242 por minuto, n = 1,42). É uma só
+  curva, sem réplicas: ensina o primeiro `nls()` e a comparação de modelos, não o efeito da temperatura. A
+  umidade publicada não fecha com as massas e fica só para discussão. Catálogo com 53 conjuntos.
+
 - Sai o D52 `secagem_beterraba_gengibre` (13/10/2026), por decisão do professor: é de vegetais, e há muitos
   estudos de secagem de pescado. O conjunto ensinava regressão não linear com curvas de secagem (razão de umidade
   ao longo do tempo). O código D52 fica vago até a busca de um substituto com pescado

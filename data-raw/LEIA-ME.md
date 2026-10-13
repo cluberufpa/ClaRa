@@ -1,10 +1,10 @@
 ## Total atual — registros conciliados em 13/10/2026
 
-O catálogo consolidado de `ClaRa-dados` contém **52 conjuntos**: 43 internos, oito carregados do FSAdata e um do MASS. `catalogo_dados` é o índice e não entra nessa contagem. Os registros ativos vão de D01 a D62, com códigos intermediários retirados.
+O catálogo consolidado de `ClaRa-dados` contém **53 conjuntos**: 44 internos, oito carregados do FSAdata e um do MASS. `catalogo_dados` é o índice e não entra nessa contagem. Os registros ativos vão de D01 a D62, com códigos intermediários retirados.
 
 **D61 = `anchova_norte_california`** (252 meses de desembarques); **D62 = `larvas_peixes_captura`** (58 eventos de armadilhas com contagem e esforço). São conjuntos distintos. A colisão provisória de D61 entre os checkouts foi corrigida mantendo anchova no D61 e movendo larvas para D62, sem alterar suas observações. Ambos estão presentes nesta branch. O checkout `ClaRa` conserva D61/anchova e recebe D62 quando esta branch for integrada.
 
-Em 13/10/2026 o D60 passou a `esgana_gata_ruido` (quadrado latino com peixes), e o D63, `gatos_cardiacos`, que entrou e saiu no mesmo dia sem chegar a um commit, foi para `substituidos/`. No mesmo dia saiu o D52, `secagem_beterraba_gengibre` (vegetais), e o código fica vago até haver curvas de secagem de pescado. Referências a 60, 61 ou 62 nas notas históricas abaixo descrevem outras etapas ou checkouts e não o total deste catálogo. Conferência anterior: `docs/CONCILIACAO_D61_D62_20261012.md`.
+Em 13/10/2026 o D60 passou a `esgana_gata_ruido` (quadrado latino com peixes), e o D63, `gatos_cardiacos`, que entrou e saiu no mesmo dia sem chegar a um commit, foi para `substituidos/`. No mesmo dia saiu o D52, `secagem_beterraba_gengibre` (vegetais), e o código passou a `secagem_bagre`, uma curva de secagem de bagre-africano a 80 °C (Ohijeagbon et al. 2018, CC BY 4.0). Referências a 60, 61 ou 62 nas notas históricas abaixo descrevem outras etapas ou checkouts e não o total deste catálogo. Conferência anterior: `docs/CONCILIACAO_D61_D62_20261012.md`.
 
 A utilidade didática de D44/percas e D48/molinésias está registrada nas respectivas fichas: curvas de resposta à hipóxia e medidas repetidas; crescimento individual, curvas não lineares e cobertura temporal.
 

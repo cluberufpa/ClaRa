@@ -22,6 +22,24 @@ test_that("D12 garoupa reproduz as tabelas 2 x 2 publicadas de PCR e histologia"
   expect_lt(mcnemar.test(tab("2"))$p.value, 1e-4)
 })
 
+test_that("D52 bagre reproduz a curva de 80 °C e o ajuste de Page", {
+  x <- secagem_bagre
+  expect_identical(dim(x), c(10L, 6L))
+  expect_identical(names(x), c("tempo_min", "massa_peixe_kg", "temperatura_secador_c",
+    "gas_consumido_kg", "energia_mj", "umidade_publicada"))
+  expect_identical(x$tempo_min, seq(0L, 540L, by = 60L))
+  expect_true(all(diff(x$massa_peixe_kg) < 0))
+  expect_identical(x$massa_peixe_kg[c(1, 10)], c(8.53, 2.03))
+  expect_identical(which(is.na(x)), 31L)
+  x$massa_relativa <- x$massa_peixe_kg / 8.53
+  page <- nls(massa_relativa ~ exp(-(k * tempo_min)^n), data = x,
+              start = list(k = 0.002, n = 1))
+  expect_equal(unname(coef(page)), c(0.002416, 1.421), tolerance = 1e-3)
+  lewis <- nls(massa_relativa ~ exp(-k * tempo_min), data = x, start = list(k = 0.002))
+  expect_lt(AIC(page), AIC(lm(massa_relativa ~ tempo_min, data = x)))
+  expect_lt(AIC(page), AIC(lewis))
+})
+
 test_that("D60 esgana-gata é um quadrado latino 4 x 4 repetido em 144 peixes", {
   x <- esgana_gata_ruido
   expect_identical(dim(x), c(576L, 11L))
