@@ -2,7 +2,7 @@
 # D60 substitui trigo_quadrado_latino (agridat::cochran.latin) por decisão do professor em
 # 12/10/2026: um quadrado latino com dados de produção animal, transferível à aquicultura
 # (ensaio de cruzamento de dietas, com animais ou tanques nas linhas e períodos nas colunas).
-pasta <- "data-raw/D60_vacas_fistuladas"
+pasta <- "data-raw/substituidos/D60_vacas_fistuladas"
 fonte <- file.path(pasta, "fonte")
 for (linha in readLines(file.path(fonte, "SHA256.txt"))) {
   partes <- strsplit(linha, "  ", fixed = TRUE)[[1]]

@@ -1,5 +1,14 @@
 # clara (em desenvolvimento)
 
+- D60 passa a `esgana_gata_ruido` (576 x 11, CC0), por decisão do professor (13/10/2026): o quadrado latino
+  passa a ter peixes. Matchette e Herbert-Read (2021, *Animal Behaviour* 177:39-48; Dryad 10.5061/dryad.sj3tx962p):
+  144 esgana-gatas focais, cada uma sob quatro ruídos visuais (estático, lento, médio, rápido) em quatro períodos;
+  sequência x período forma um quadrado latino 4 x 4, repetido em 36 peixes por sequência. O período foi
+  reconstruído pela Tabela A1 do artigo. Nas médias das 16 células, ruído F = 16,2 (p = 0,003); com o peixe como
+  bloco, F = 10,1 (p = 2e-6). Saem `suinos_castracao` (D60) e o exercício `gatos_cardiacos` (D63), que nunca
+  chegaram a um commit; as curadorias e a de `vacas_fistuladas` ficam em `data-raw/substituidos/`. O catálogo
+  fica com 53 conjuntos.
+
 - Arrumação leve de 25 conjuntos (12/10/2026), sem alterar valores nem linhas; script em
   `data-raw/arrumacao_leve_20261012.R`, aplicado depois dos `preparar.R` (que ainda geram a versão anterior).
   Removidas colunas constantes ou que repetiam outra: `area_surber_m2` (enobieta_baci), `arquivo_origem`

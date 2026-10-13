@@ -1,0 +1,21 @@
+{
+  "codigo": "D60",
+  "registro": "D60_guppies_quadrado_latino",
+  "nome": "guppies_quadrado_latino",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Guppies: coesão em quadrado latino 4 x 4",
+  "titulo": "D60 - Guppies: temperatura e turbidez em quadrado latino",
+  "natureza": "derivado",
+  "origem": "Allibhai et al. (2023), Data_for_models.csv, Dryad 10.5061/dryad.j3tx95xjv",
+  "unidade_amostral": "média dos ensaios de um grupo de guppies em uma etapa e tratamento",
+  "linhas": 16,
+  "colunas": 5,
+  "analises": "Quadrado latino 4 x 4; ANOVA didática com duas blocagens; delineamento experimental",
+  "analise_principal": "Quadrado latino",
+  "palavras_chave": "quadrado latino; guppies; peixes; temperatura; turbidez; coesão; blocagem",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0 (Dryad)",
+  "referencia": "Allibhai I, Zanghi C, How MJ, Ioannou CC (2023). Increased water temperature and turbidity act independently to alter social behavior in guppies (Poecilia reticulata). Ecology and Evolution 13:e9958. doi:10.1002/ece3.9958. Dados: doi:10.5061/dryad.j3tx95xjv",
+  "situacao": "curado; 16 médias derivadas de 94 ensaios reais; ANOVA agregada apenas didática, diferente do modelo misto publicado"
+}

@@ -10,4 +10,4 @@
 - Os códigos 1/2 da planilha foram resolvidos pelas médias da Tabela 4 (oferta 1 = 20 kg; suplemento 1 = milho úmido). A receita compara as médias de pH, N-NH3 e AGV com o artigo.
 - Limites: 4 vacas e 16 observações (6 graus de liberdade no resíduo), sem efeito de dieta; possível efeito residual entre períodos que o quadrado simples não controla; a AGV tinha 25 ausências no bruto.
 - Para a aula: comparar a ANOVA de um fator (ignora vaca e período), a de blocos em uma direção e a do quadrado; mostrar o ganho do bloqueio de período; discutir a pseudo-replicação dos horários.
-- Reproduzir na raiz: `source("data-raw/D60_vacas_fistuladas/preparar.R")`.
+- Receita histórica: `source("data-raw/substituidos/D60_vacas_fistuladas/preparar.R")`. Ela recria o objeto antigo e substitui temporariamente o registro D60; não a execute para a versão ativa.

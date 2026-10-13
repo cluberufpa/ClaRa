@@ -1,0 +1,21 @@
+{
+  "codigo": "D63",
+  "registro": "D63_gatos_cardiacos",
+  "nome": "gatos_cardiacos",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Gatos: substâncias cardíacas em quadrado latino",
+  "titulo": "D63 - Gatos: tolerância a substâncias cardíacas em quadrado latino",
+  "natureza": "reconstruido",
+  "origem": "Costa, Estatística Experimental com o uso do software R, cap. 5, Tabela 5.9",
+  "unidade_amostral": "um gato em uma combinação de técnica, período do dia, dia e substância",
+  "linhas": 16,
+  "colunas": 5,
+  "analises": "Exercício de quadrado latino; ANOVA com blocos em duas direções; diagnóstico de resíduos",
+  "analise_principal": "Exercício complementar de quadrado latino",
+  "palavras_chave": "quadrado latino; gatos; substância cardíaca; dose; blocagem; exercício",
+  "verbo_clara": "",
+  "licenca": "uso didático local; licença de redistribuição não informada na fonte",
+  "referencia": "Costa, S. Estatística Experimental com o uso do software R, cap. 5, Tabela 5.9; valores reconstruídos da tabela, conferidos em 13/10/2026",
+  "situacao": "curado como exercício complementar; fonte primária e licença não informadas no livro"
+}

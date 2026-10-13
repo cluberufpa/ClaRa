@@ -1,0 +1,21 @@
+{
+  "codigo": "D60",
+  "registro": "D60_esgana_ruido",
+  "nome": "esgana_gata_ruido",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Esgana-gata: ruído visual e distância ao cardume em quadrado latino 4 x 4",
+  "titulo": "D60 - Esgana-gata: ruído visual em quadrado latino 4 x 4",
+  "natureza": "real",
+  "origem": "Dryad; Matchette e Herbert-Read (2021), DOI 10.5061/dryad.sj3tx962p; artigo DOI 10.1016/j.anbehav.2021.04.017",
+  "unidade_amostral": "um peixe focal sob um nível de ruído visual (144 peixes, quatro medidas cada)",
+  "linhas": 576,
+  "colunas": 11,
+  "analises": "Quadrado latino; ANOVA com blocos em duas direções; quadrados latinos repetidos; ensaio cruzado (crossover); medidas repetidas; Planejamento experimental",
+  "analise_principal": "Quadrado latino",
+  "palavras_chave": "quadrado latino; esgana-gata; Gasterosteus aculeatus; ruído visual; cardume; comportamento; ensaio cruzado; crossover; medidas repetidas; blocagem",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0",
+  "referencia": "Matchette, S. R.; Herbert-Read, J. E. (2021). Dynamic visual noise promotes social attraction, but does not affect group size preference, in a shoaling fish. Animal Behaviour 177:39-48. DOI 10.1016/j.anbehav.2021.04.017; dados no Dryad, DOI 10.5061/dryad.sj3tx962p (versão de 20/05/2021); conferido em 13/10/2026",
+  "situacao": "curado; período reconstruído pela Tabela A1 do artigo; as quatro medidas de cada peixe não são independentes"
+}

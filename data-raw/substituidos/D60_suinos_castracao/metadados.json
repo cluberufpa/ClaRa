@@ -1,0 +1,21 @@
+{
+  "codigo": "D60",
+  "registro": "D60_suinos_castracao",
+  "nome": "suinos_castracao",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Suínos: castração em quadrados latinos repetidos",
+  "titulo": "D60 - Suínos: idade de castração em quadrados latinos repetidos",
+  "natureza": "reconstruido",
+  "origem": "Costa, Estatística Experimental com o uso do software R, cap. 5, Tabelas 5.1 e 5.6",
+  "unidade_amostral": "um leitão em uma combinação de leitegada, posição de peso inicial e tratamento",
+  "linhas": 32,
+  "colunas": 5,
+  "analises": "Quadrado latino repetido; ANOVA com blocos em duas direções; Planejamento experimental",
+  "analise_principal": "Quadrado latino repetido",
+  "palavras_chave": "quadrado latino; suínos; leitões; castração; ganho de peso; leitegada; blocagem",
+  "verbo_clara": "",
+  "licenca": "uso didático local; licença de redistribuição não informada na fonte",
+  "referencia": "Costa, S. Estatística Experimental com o uso do software R, cap. 5, Tabelas 5.1, 5.6 e 5.8; valores reconstruídos das tabelas, conferidos em 13/10/2026",
+  "situacao": "curado para uso didático; fonte primária, protocolo de randomização e licença não informados no livro"
+}

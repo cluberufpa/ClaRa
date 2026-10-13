@@ -1,0 +1,36 @@
+#' D63 - Gatos: tolerância a substâncias cardíacas em quadrado latino
+#'
+#' Exercício complementar de quadrado latino 4 x 4. Dezesseis gatos receberam
+#' uma de quatro substâncias cardíacas. As linhas combinam técnica e período do
+#' dia, as colunas são dias de medição e a resposta é o logaritmo decimal da dose
+#' na qual se observou o efeito especificado.
+#'
+#' @format Um `data.frame` com 16 linhas e 5 colunas:
+#' \describe{
+#'   \item{combinacao_tecnica_periodo}{Fator de bloqueio nas linhas: I/II e AM/PM.}
+#'   \item{dia}{Fator de bloqueio nas colunas: dia 1 a dia 4.}
+#'   \item{substancia}{Fator de tratamento: A, B, C ou D.}
+#'   \item{log10_dose_ug}{Logaritmo decimal da dose, em microgramas, que produziu o efeito especificado; variável de resposta.}
+#'   \item{id_celula}{Identificador da célula do quadrado, de 1 a 16.}
+#' }
+#'
+#' @details Este é deliberadamente um **exercício complementar**, não o exemplo
+#' principal da ClaRa. Sua matriz é um quadrado latino 4 x 4 perfeito, útil para
+#' reconhecer o balanceamento, calcular a ANOVA e verificar resíduos. Porém, as
+#' linhas combinam dois aspectos operacionais (técnica e AM/PM); o modelo simples
+#' não separa seus efeitos. Com apenas 16 gatos, restam 6 graus de liberdade para
+#' o resíduo. Nos valores publicados, a evidência de diferença entre substâncias
+#' é fraca (F = 0,29; gl = 3 e 6).
+#'
+#' @source Costa, S. *Estatística Experimental com o uso do software R*, cap.
+#' 5, Tabela 5.9; o livro atribui o exemplo a Gener (UNESP Jaboticabal), citando
+#' Rao, P. V., *Statistical Research Methods in the Life Sciences*. Dados
+#' transcritos para exercício didático; a fonte primária e a licença de
+#' redistribuição não são informadas.
+#'
+#' @examples
+#' summary(aov(log10_dose_ug ~ substancia + combinacao_tecnica_periodo + dia,
+#'   data = gatos_cardiacos))
+#' @docType data
+#' @keywords datasets
+"gatos_cardiacos"
