@@ -22,7 +22,7 @@
 #'
 #' @source
 #' Abundance, Size Structure, and Sex Ratio Variation of West Coast Rock Lobster (Jasus lalandii) in Cultivated and Natural Kelp Forests off Lüderitz, Namibia; depósito Mendeley, identificador a completar.
-#' Licença: Licença específica do depósito Mendeley a confirmar.
+#' Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados de pesquisa e coleta do grupo, sem licença pública.
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D28_lagostas_kelp/.
 #'

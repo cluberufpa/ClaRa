@@ -19,7 +19,7 @@
 #'
 #' @source
 #' Peixe-BR, Anuários da Piscicultura; produção de 2016 a 2023.
-#' Licença: Dados publicados pela Peixe-BR; licença específica de redistribuição a confirmar.
+#' Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados públicos de acesso livre da revista Peixe-BR (informado pelo professor).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D14_aquicultura_brasil/.
 #'

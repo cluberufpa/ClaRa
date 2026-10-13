@@ -16,7 +16,7 @@ Um \code{data.frame} com 993 linhas e 5 colunas:
 }
 \source{
 Estudo de campo em Bragança, PA; referência bibliográfica a completar.
-Licença: Não localizada; créditos e autorização a completar.
+Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados de pesquisa e coleta do grupo, sem licença pública.
 A licença MIT do código não substitui os termos da origem dos dados.
 Fontes e preparo: data-raw/D16_caranguejos_biometria/.
 }

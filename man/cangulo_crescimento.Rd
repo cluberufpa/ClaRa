@@ -18,7 +18,7 @@ Um \code{data.frame} com 16 linhas e 7 colunas:
 }
 \source{
 Fonte específica não identificada na documentação herdada.
-Licença: Não localizada; origem e autorização a confirmar.
+Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados de pesquisa e coleta do grupo, sem licença pública.
 A licença MIT do código não substitui os termos da origem dos dados.
 Fontes e preparo: data-raw/D20_cangulo_biometria/.
 }

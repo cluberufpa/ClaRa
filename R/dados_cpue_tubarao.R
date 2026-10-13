@@ -25,7 +25,7 @@
 #' Adaptado de `EAPADados::cpue_tubarao`. Passada 1: conjunto provisório. Todas as linhas, ordem, colunas e ausências preservadas; nenhuma imputação, filtro novo ou conversão de unidade. O texto herdado descreve adaptações anteriores do EAPADados, que não foram repetidas.
 #'
 #' @section Licença da origem:
-#' Uso na ClaRa autorizado pelo professor; licença específica a definir. A licença MIT do código da ClaRa não substitui a licença destes dados.
+#' Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados próprios do professor, sem licença pública. A licença MIT do código da ClaRa não substitui a licença destes dados.
 #'
 #' @section Pendências para a curadoria:
 #' Procedência própria confirmada. Completar referência bibliográfica, créditos, licença específica, unidade da CPUE e independência. Manter Vessel, Year, Month, CPUE e Data nesta passada; tradução fica para a passada 2.

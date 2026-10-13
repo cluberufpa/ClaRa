@@ -28,7 +28,7 @@
 #'
 #' @source
 #' Dados declarados reais do grupo de pesquisa; autoria/coleta Lucas et al. e referência a completar.
-#' Licença: Autorização e licença específica da fonte a confirmar.
+#' Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados de pesquisa e coleta do grupo, sem licença pública.
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D21_pescada_captura/.
 #'

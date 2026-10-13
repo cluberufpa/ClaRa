@@ -62,7 +62,7 @@ test_that("os bagres preservam as observações e a pendência de autorização"
                    c(86, 83, 91, 84, 87, 88, 87, 94, 86, 89,
                      105, 104, 102, 99, 94, 91, 89, 92, 97))
   expect_false(anyNA(bagre_racao_isoproteica))
-  expect_match(catalogo_dados$licenca[catalogo_dados$codigo == "D01"], "pendente")
+  expect_match(catalogo_dados$licenca[catalogo_dados$codigo == "D01"], "autorizado pelo professor")
 })
 
  test_that("a Trilha encontra os bagres pelo nome anterior sem mudar as colunas", {

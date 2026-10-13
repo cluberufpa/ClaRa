@@ -37,7 +37,7 @@ Adaptado de \code{EAPADados::cpue_tubarao}. Passada 1: conjunto provisório. Tod
 
 \section{Licença da origem}{
 
-Uso na ClaRa autorizado pelo professor; licença específica a definir. A licença MIT do código da ClaRa não substitui a licença destes dados.
+Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados próprios do professor, sem licença pública. A licença MIT do código da ClaRa não substitui a licença destes dados.
 }
 
 \section{Pendências para a curadoria}{

@@ -1,5 +1,13 @@
 # clara (em desenvolvimento)
 
+- Licenças dos dez conjuntos que estavam sem licença resolvida (D01, D03, D14, D16, D20, D21, D22, D25, D28, D61)
+  passam a "uso interno na Trilha e na ClaRa autorizado pelo professor" (12/10/2026), por decisão do professor:
+  são dados de pesquisa e coleta do grupo ou de fonte pública (D14: revista Peixe-BR, de acesso livre; D25: Comex
+  Stat, do governo federal; D61: CDFW/NOAA ERDDAP). A natureza pública de D14 e D25 é informação do professor, não
+  conferida na fonte. Nenhum foi retirado. **Atenção antes de publicar no CRAN:** a autorização vale para o uso
+  interno do grupo; nenhum desses dez declara licença aberta nomeada (CC, MIT etc.). Confira antes de distribuir o
+  pacote fora do grupo.
+
 - D19: `lebistes_parasitos` (Walsman et al. 2022, Dryad, CC0), 4715 lebistes selvagens (*Poecilia reticulata*) com sexo,
   peso e infecção por *Gyrodactylus*, substitui `camaroes_sexo` (tabela de livro sem referência) por decisão do
   professor (12/10/2026). Dados individuais para o qui-quadrado de independência: a tabela de contingência é

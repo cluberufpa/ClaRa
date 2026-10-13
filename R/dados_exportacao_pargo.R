@@ -62,7 +62,7 @@
 #'
 #' @source
 #' Comex Stat / MDIC; exportação de pargo, 2005–2025; planilha exportada em 05/07/2026.
-#' Licença: Fonte pública Comex Stat; licença específica a confirmar.
+#' Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados públicos do governo federal (Comex Stat), de acesso livre (informado pelo professor).
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D25_pargo_exportacao/.
 #'
