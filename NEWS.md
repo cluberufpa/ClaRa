@@ -34,13 +34,13 @@
   removidos; fontes e receitas preservadas em `data-raw/retirados/`. Catálogo
   com 58 conjuntos (49 internos, oito do FSAdata e um do MASS).
 
-- D12 passa a `erva_marinha_lesoes` (180 × 5, CC0), substituindo
-  `bufalos_estrongilos`. São 90 plantas focais de *Zostera marina*, realmente
-  pareadas antes/depois; a fonte declara que elas começaram sem lesões e registra
-  sua cobertura final. As categorias são `controle`, `dano_artificial` e
-  `isopode_herbivoro`. A ficha explica que a resposta binária descreve
-  aparecimento de lesões e que plantas do mesmo mesocosmo não são réplicas
-  independentes para comparar tratamentos.
+- D12 passa a `cabras_toxoplasma` (106 x 4, CC BY 4.0), substituindo `erva_marinha_lesoes`, cujo "antes" era
+  constante e deixava o McNemar sem tabela 2 x 2. Reconstrução, a partir das Tabelas 1 a 4 de Dahmane et al.
+  (2025, *Pathogens*), do ELISA do soro e das PCR do sangue e do leite para *Toxoplasma gondii* nas mesmas 106
+  cabras; só as contagens são reais, e a ficha, a ajuda e o catálogo (`natureza`) dizem isso. Três comparações
+  pareadas: sangue x leite (7, 9, 8, 82; discordantes equilibrados, p = 1) e ELISA x PCR (discordância de um só
+  lado, p < 1e-6). Fonte e receita em `data-raw/D12_cabras_toxoplasma/`; a da erva-marinha foi para
+  `data-raw/substituidos/`. Catálogo mantém 53 conjuntos.
 
 - Fusão das branches `dados` e `codex/substitutos-literatura-20261012`
   (12/10/2026). D12 `bufalos_estrongilos` (418 × 6, CC0) substituiu

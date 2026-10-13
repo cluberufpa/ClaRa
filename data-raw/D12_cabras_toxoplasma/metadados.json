@@ -1,0 +1,21 @@
+{
+  "codigo": "D12",
+  "registro": "D12_cabras_toxoplasma",
+  "nome": "cabras_toxoplasma",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Cabras: Toxoplasma por ELISA do soro e PCR do sangue e do leite",
+  "titulo": "D12 - Cabras: Toxoplasma em sangue, leite e soro",
+  "natureza": "reconstruído a partir de tabelas publicadas",
+  "origem": "Dahmane et al. (2025), Pathogens 14(2):174, DOI 10.3390/pathogens14020174; tabelas 1 a 4",
+  "unidade_amostral": "uma cabra leiteira; as três colunas são os resultados de testes diferentes na mesma cabra",
+  "linhas": 106,
+  "colunas": 4,
+  "analises": "McNemar; Tabela 2 x 2 de pares; Concordância (kappa); Preparo de dados pareados",
+  "analise_principal": "McNemar",
+  "palavras_chave": "cabra; Toxoplasma gondii; PCR; ELISA; sangue; leite; pareado; diagnostico",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Dahmane, A.; Vismarra, A.; Passebosc-Faure, K.; Reghaissia, N.; Baroudi, D.; Samari, H.; Semeraro, M.; Yera, H.; Laatamna, A. (2025). First Molecular Detection of Toxoplasma gondii DNA in Blood and Milk of Goats from Algeria. Pathogens 14(2):174. DOI 10.3390/pathogens14020174; conferido em 12/10/2026",
+  "situacao": "curado com limites: linhas reconstruídas a partir das tabelas publicadas; só as contagens são reais"
+}

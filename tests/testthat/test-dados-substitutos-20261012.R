@@ -1,20 +1,19 @@
-test_that("D12 erva-marinha preserva as plantas focais pareadas", {
-  x <- erva_marinha_lesoes
-  expect_identical(dim(x), c(180L, 5L))
-  expect_type(x$id_planta, "character")
-  expect_identical(levels(x$tratamento), c(
-    "controle", "dano_artificial", "isopode_herbivoro"
-  ))
-  expect_identical(levels(x$momento), c("antes", "depois"))
-  expect_equal(length(unique(x$id_planta)), 90L)
+test_that("D12 cabras reproduz as tabelas 2 x 2 publicadas", {
+  x <- cabras_toxoplasma
+  expect_identical(dim(x), c(106L, 4L))
+  expect_identical(names(x), c("id_cabra", "elisa_soro", "pcr_sangue", "pcr_leite"))
   expect_false(anyNA(x))
-  expect_true(all(table(x$id_planta) == 2L))
-  expect_true(all(x$presenca_lesao[x$momento == "antes"] == 0L))
-  expect_equal(sum(x$presenca_lesao[x$momento == "depois"]), 69L)
-  expect_identical(as.integer(table(
-    x$tratamento[x$momento == "depois"],
-    x$presenca_lesao[x$momento == "depois"]
-  )), c(7L, 5L, 9L, 23L, 25L, 21L))
+  expect_false(anyDuplicated(x$id_cabra) > 0L)
+  expect_identical(levels(x$pcr_sangue), c("negativo", "positivo"))
+  tab <- function(a, b) matrix(table(factor(a, c("positivo", "negativo")), factor(b, c("positivo", "negativo"))), 2)
+  expect_equal(c(tab(x$pcr_sangue, x$pcr_leite)), c(7, 8, 9, 82))
+  expect_equal(c(tab(x$elisa_soro, x$pcr_leite)), c(13, 2, 38, 53))
+  expect_equal(c(tab(x$elisa_soro, x$pcr_sangue)), c(15, 1, 36, 54))
+  seropos <- x[x$elisa_soro == "positivo", ]
+  expect_equal(c(tab(seropos$pcr_sangue, seropos$pcr_leite)), c(6, 7, 9, 29))
+  # O McNemar roda, com discordantes equilibrados no sangue x leite.
+  expect_equal(mcnemar.test(table(x$pcr_sangue, x$pcr_leite))$p.value, 1)
+  expect_lt(mcnemar.test(table(x$elisa_soro, x$pcr_leite))$p.value, 1e-6)
 })
 
 test_that("D52 secagem conserva códigos e séries", {

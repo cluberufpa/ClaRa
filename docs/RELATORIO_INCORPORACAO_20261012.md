@@ -15,11 +15,11 @@ anteriores foram movidas para `data-raw/substituidos/`, como histórico.
 ## Atualização posterior do D12
 
 Por decisão do professor em 12/10/2026, `bufalos_estrongilos` foi substituído por
-`erva_marinha_lesoes` (180 × 5, CC0), mantendo D12. O novo conjunto tem 90 plantas
-focais de *Zostera marina* em dois momentos; o início sem lesão é condição declarada
-do delineamento e a cobertura final observada define presença/ausência. A fonte e a
-receita ficam em `data-raw/D12_erva_lesoes/`; a receita anterior foi movida
-para `data-raw/substituidos/D12_bufalos_estrongilos/`.
+`erva_marinha_lesoes`, e esta, no mesmo dia, por `cabras_toxoplasma` (106 × 4, CC BY 4.0): na
+erva-marinha o "antes" era constante e a tabela de pares degenerava (`mcnemar.test()` não rodava).
+O novo conjunto reconstrói as linhas a partir das Tabelas 1 a 4 de Dahmane et al. (2025); só as
+contagens são reais. A fonte e a receita ficam em `data-raw/D12_cabras_toxoplasma/`; as anteriores,
+em `data-raw/substituidos/`.
 
 ## O que foi feito diferente do combinado
 
