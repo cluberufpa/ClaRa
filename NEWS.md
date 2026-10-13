@@ -59,13 +59,14 @@
   removidos; fontes e receitas preservadas em `data-raw/retirados/`. Catálogo
   com 58 conjuntos (49 internos, oito do FSAdata e um do MASS).
 
-- D12 passa a `cabras_toxoplasma` (106 x 4, CC BY 4.0), substituindo `erva_marinha_lesoes`, cujo "antes" era
-  constante e deixava o McNemar sem tabela 2 x 2. Reconstrução, a partir das Tabelas 1 a 4 de Dahmane et al.
-  (2025, *Pathogens*), do ELISA do soro e das PCR do sangue e do leite para *Toxoplasma gondii* nas mesmas 106
-  cabras; só as contagens são reais, e a ficha, a ajuda e o catálogo (`natureza`) dizem isso. Três comparações
-  pareadas: sangue x leite (7, 9, 8, 82; discordantes equilibrados, p = 1) e ELISA x PCR (discordância de um só
-  lado, p < 1e-6). Fonte e receita em `data-raw/D12_cabras_toxoplasma/`; a da erva-marinha foi para
-  `data-raw/substituidos/`. Catálogo mantém 53 conjuntos.
+- D12 passa a `ovinos_caprinos_fmdv` (418 x 11, CC0 para os dados; artigo CC BY 4.0), substituindo
+  `cabras_toxoplasma`, que reconstruía linhas a partir de tabelas publicadas. Dados individuais reais de
+  Gubbins et al. (2025, *Veterinary Research* 56:76): 418 pares de soro e swab oral por rRT-PCR para o vírus
+  da febre aftosa em ovinos e caprinos do norte da Nigéria, 323 animais (152 linhas de animais repetidos).
+  McNemar com discordantes nos dois sentidos (8 e 9; p = 1; o artigo relata p > 0,9 e kappa = 0,08), uma coleta
+  por animal para discutir independência (308, 8, 6, 1) e ELISA NSP contra PCR para o contraste (p ~ 1e-36).
+  Planilha de partida montada pelo professor, fonte e receita em `data-raw/D12_ovinos_fmdv/`; as cabras e a
+  erva-marinha foram para `data-raw/substituidos/`. Catálogo mantém 53 conjuntos.
 
 - Fusão das branches `dados` e `codex/substitutos-literatura-20261012`
   (12/10/2026). D12 `bufalos_estrongilos` (418 × 6, CC0) substituiu

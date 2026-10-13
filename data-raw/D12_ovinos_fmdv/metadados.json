@@ -1,0 +1,21 @@
+{
+  "codigo": "D12",
+  "registro": "D12_ovinos_fmdv",
+  "nome": "ovinos_caprinos_fmdv",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Ovinos e caprinos: vírus da febre aftosa por PCR no soro e no swab oral",
+  "titulo": "D12 - Ovinos e caprinos: febre aftosa em soro e swab oral",
+  "natureza": "real",
+  "origem": "Gubbins et al. (2025), Veterinary Research 56:76, DOI 10.1186/s13567-025-01502-2; Additional file 13",
+  "unidade_amostral": "um par de amostras (soro e swab oral) de um ovino ou caprino em uma visita; 152 linhas são de animais amostrados em mais de uma visita",
+  "linhas": 418,
+  "colunas": 11,
+  "analises": "McNemar; Tabela 2 x 2 de pares; Concordância (kappa); Qui-quadrado de independência (para mostrar o erro de ignorar o pareamento); Preparo de dados longitudinais",
+  "analise_principal": "McNemar",
+  "palavras_chave": "febre aftosa; FMDV; ovino; caprino; PCR; swab oral; soro; pareado; diagnostico; Nigeria",
+  "verbo_clara": "",
+  "licenca": "CC0 1.0 para os dados; artigo CC BY 4.0",
+  "referencia": "Gubbins, S.; Brown, E.; Wungak, Y.; Oyekan, O. et al. (2025). Longitudinal study of foot-and-mouth disease virus in Northern Nigeria: implications for the roles of small ruminants and environmental contamination in endemic settings. Veterinary Research 56:76. DOI 10.1186/s13567-025-01502-2; conferido em 12/10/2026",
+  "situacao": "curado; 152 das 418 linhas são de animais repetidos (usar uma coleta por animal ou uma visita para independência)"
+}

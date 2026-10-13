@@ -61,7 +61,7 @@ Collate:
     'dados_pinguins.R'
     'dados_salvelino_formalina_remocao.R'
     'dados_tilapia_sensorial.R'
-    'dados_cabras_toxoplasma.R'
+    'dados_ovinos_caprinos_fmdv.R'
     'dados_artemia_fitoesterois.R'
     'dados_aquicultura_br.R'
     'dados_peixes_neotropicais_biometria.R'

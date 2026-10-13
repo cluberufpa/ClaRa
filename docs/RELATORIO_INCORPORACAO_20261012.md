@@ -15,11 +15,10 @@ anteriores foram movidas para `data-raw/substituidos/`, como histórico.
 ## Atualização posterior do D12
 
 Por decisão do professor em 12/10/2026, `bufalos_estrongilos` foi substituído por
-`erva_marinha_lesoes`, e esta, no mesmo dia, por `cabras_toxoplasma` (106 × 4, CC BY 4.0): na
-erva-marinha o "antes" era constante e a tabela de pares degenerava (`mcnemar.test()` não rodava).
-O novo conjunto reconstrói as linhas a partir das Tabelas 1 a 4 de Dahmane et al. (2025); só as
-contagens são reais. A fonte e a receita ficam em `data-raw/D12_cabras_toxoplasma/`; as anteriores,
-em `data-raw/substituidos/`.
+`erva_marinha_lesoes` (o "antes" era constante e o McNemar não rodava), esta por
+`cabras_toxoplasma` (linhas reconstruídas de tabelas publicadas) e, no mesmo dia, por
+`ovinos_caprinos_fmdv` (418 × 11, dados individuais reais de Gubbins et al. 2025, CC0). A fonte e a
+receita ficam em `data-raw/D12_ovinos_fmdv/`; as anteriores, em `data-raw/substituidos/`.
 
 ## O que foi feito diferente do combinado
 
