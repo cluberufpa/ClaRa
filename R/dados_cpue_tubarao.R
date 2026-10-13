@@ -6,16 +6,16 @@
 #' É um conjunto de dupla utilidade no ecossistema EAPA: serve de exemplo
 #' canônico para o **teste de Kruskal-Wallis** (comparar a CPUE entre os anos,
 #' com pós-teste de Dunn e letras de significância) e para **análise de série
-#' temporal** (CPUE ao longo do tempo, via a coluna `Data`). A CPUE varia
+#' temporal** (CPUE ao longo do tempo, via a coluna `data`). A CPUE varia
 #' fortemente entre os anos, com tendência de queda ao longo do período.
 #'
 #' @format A data frame with 424 observations and 5 variables:
 #' \describe{
-#'   \item{Vessel}{Embarcação (factor; *MB*, *MC*, *SB*).}
-#'   \item{Year}{Ano do registro (integer; 1995 a 2007).}
-#'   \item{Month}{Mês do registro (integer; 1 a 12).}
-#'   \item{CPUE}{Captura por unidade de esforço (numeric).}
-#'   \item{Data}{Data do registro (Date).}
+#'   \item{embarcacao}{Embarcação (factor; *MB*, *MC*, *SB*).}
+#'   \item{ano}{Ano do registro (integer; 1995 a 2007).}
+#'   \item{mes}{Mês do registro (integer; 1 a 12).}
+#'   \item{cpue}{Captura por unidade de esforço (numeric).}
+#'   \item{data}{Data do registro (Date).}
 #' }
 #'
 #' @source Dados próprios de monitoramento pesqueiro, publicados em outro formato,
@@ -28,7 +28,7 @@
 #' Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados próprios do professor, sem licença pública. A licença MIT do código da ClaRa não substitui a licença destes dados.
 #'
 #' @section Pendências para a curadoria:
-#' Procedência própria confirmada. Completar referência bibliográfica, créditos, licença específica, unidade da CPUE e independência. Manter Vessel, Year, Month, CPUE e Data nesta passada; tradução fica para a passada 2.
+#' Procedência própria confirmada. Completar referência bibliográfica, créditos, licença específica, unidade da CPUE e independência. Colunas renomeadas em 12/10/2026 (embarcacao, ano, mes, cpue, data), sem alterar valores.
 #'
 #' Preparo e fonte congelada: `data-raw/D03_tubarao_cpue/`.
 #'

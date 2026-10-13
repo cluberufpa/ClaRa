@@ -1,10 +1,9 @@
 test_that("solha_baltico_2008_t4 preserva o recorte D17 para regressão múltipla", {
   x <- carregar_dados("solha_baltico_2008_t4")
-  expect_identical(dim(x), c(179L, 9L))
+  expect_identical(dim(x), c(179L, 8L))
   expect_false(anyNA(x))
   expect_identical(sum(x$cpue_g == 0), 37L)
-  expect_identical(x$linha_fonte[1], 14L)
-  expect_identical(x$linha_fonte[nrow(x)], 9702L)
+  expect_false("linha_fonte" %in% names(x))  # rastro da planilha, removido em 12/10/2026
   expect_equal(x$log_cpue_g, log1p(x$cpue_g), tolerance = 1e-12)
 
   ajuste <- lm(log_cpue_g ~ temperatura_fundo_c + salinidade +

@@ -1,7 +1,7 @@
 test_that("anchova e larvas têm registros distintos e dados próprios", {
   a <- carregar_dados("anchova_norte_california")
   l <- carregar_dados("larvas_peixes_captura")
-  expect_identical(dim(a), c(252L, 6L))
+  expect_identical(dim(a), c(252L, 4L))
   expect_identical(dim(l), c(58L, 7L))
   expect_identical(a$data,
     seq.Date(as.Date("1971-01-01"), as.Date("1991-12-01"), by = "month"))

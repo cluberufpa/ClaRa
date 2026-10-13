@@ -14,7 +14,6 @@
 #' \describe{
 #'   \item{id_peixe}{Texto: identificador do indivíduo.}
 #'   \item{populacao}{Fator: população de origem (\code{POP06} a \code{POP10}).}
-#'   \item{rio}{Fator: rótulo didático do rio (\code{rio_pop06} a \code{rio_pop10}).}
 #'   \item{comprimento_cabeca}{Numérico: comprimento da cabeça (corrigido por SL).}
 #'   \item{comprimento_pre_anal}{Numérico: distância pré-anal.}
 #'   \item{focinho_occipital}{Numérico: focinho ao occipital.}

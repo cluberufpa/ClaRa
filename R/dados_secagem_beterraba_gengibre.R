@@ -6,7 +6,6 @@
 #' @format Um `data.frame` com 594 linhas e 8 colunas:
 #' \describe{
 #'   \item{serie}{Fator: combinação de produto, tratamento, temperatura e réplica.}
-#'   \item{id_amostra}{Texto: identificador original da observação.}
 #'   \item{produto_codigo}{Fator: código B ou G da fonte.}
 #'   \item{tratamento_codigo}{Fator: código C ou E da fonte.}
 #'   \item{temperatura_c}{Numérico: temperatura de secagem em °C.}

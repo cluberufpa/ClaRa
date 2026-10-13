@@ -8,7 +8,6 @@
 Um \code{data.frame} com 299 linhas e 39 colunas:
 \describe{
 \item{especie}{Fator: \code{Barbus petenyi}, \code{Gobio sp.}, \code{Lepomis gibbosus}.}
-\item{especie_codigo}{Fator: código da espécie (\code{barbus_petenyi}, \code{gobio_sp}, \code{lepomis_gibbosus}).}
 \item{populacao}{Fator: população de origem (\code{POP01} a \code{POP15}).}
 \item{id_individuo}{Texto: identificador do indivíduo.}
 \item{da}{Numérico: medida morfométrica (mm).}
@@ -61,7 +60,7 @@ peixes_morfometria_multivariada
 Dados provisórios da passada 1. Unidade amostral: peixe individual com 35 medidas corporais.
 }
 \details{
-Preservar as 35 medidas e especie_codigo nesta passada; sua exclusão ainda não foi aprovada. Expandir códigos anatômicos só com dicionário. Seleção e padronização alteram PCA/HCA. Conferir créditos com metadados primários, como na base do barbo.
+Preservar as 35 medidas; especie_codigo (repetia especie) foi removido em 12/10/2026. Expandir códigos anatômicos só com dicionário. Seleção e padronização alteram PCA/HCA. Conferir créditos com metadados primários, como na base do barbo.
 }
 \section{Adaptações}{
 

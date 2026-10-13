@@ -27,6 +27,6 @@ test_that("lebistes preservam sexo, infecção e as linhas da fonte", {
     expect_equal(x$peso_g, brutos$peso_g)
     expect_equal(x$contagem_parasitos, as.integer(brutos$contagem_parasitos))
     expect_equal(x$presenca_parasito, as.integer(brutos$presenca_parasito))
-    expect_identical(x$rio, brutos$rio)
+    expect_identical(as.character(x$rio), brutos$rio)
   }
 })

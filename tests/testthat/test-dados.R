@@ -25,7 +25,7 @@ test_that("o catálogo corresponde aos objetos e às páginas de ajuda", {
     dados <- carregar_dados(registro$nome)
     expect_s3_class(dados, "data.frame")
     expect_equal(dim(dados), c(registro$linhas, registro$colunas))
-    # Passada 1: preservar nomes herdados do EAPADados, inclusive CPUE/Data.
+    # Nomes em português e minúsculos (arrumação leve de 12/10/2026).
     # Nomes novos são traduzidos no preparo; pendências vão para a ficha.
     expect_true(all(nzchar(names(dados))))
     expect_false(anyDuplicated(names(dados)) > 0L)

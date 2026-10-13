@@ -10,10 +10,6 @@ Um \code{data.frame} com 252 linhas e 6 colunas:
 \item{data}{Data de referência do mês, no primeiro dia.}
 \item{ano}{Ano do desembarque.}
 \item{mes}{Mês, fator ordenado de janeiro a dezembro.}
-\item{categoria_mercado}{Categoria comercial; neste recorte, sempre
-\code{anchova-do-norte}.}
-\item{porto}{Agregação geográfica; neste recorte, sempre
-\code{todos_os_portos}.}
 \item{desembarque_lb}{Desembarque mensal em libras.}
 }
 }

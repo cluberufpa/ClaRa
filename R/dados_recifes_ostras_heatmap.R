@@ -8,8 +8,8 @@
 #'   \item{id_levantamento}{Texto: identificador do levantamento (recife x estação x ano).}
 #'   \item{sitio}{Fator: sítio (\code{OP-CR}, \code{SY-PH}, \code{SY-TP}).}
 #'   \item{numero_recife}{Inteiro: número do recife.}
-#'   \item{zona_recife}{Fator: zona (\code{Centre}, \code{Edge}, \code{Off}).}
-#'   \item{estacao}{Fator: estação (\code{Summer}, \code{Winter}).}
+#'   \item{zona_recife}{Fator: zona (\code{centro}, \code{borda}, \code{fora}).}
+#'   \item{estacao}{Fator: estação (\code{verão}, \code{inverno}).}
 #'   \item{ano}{Inteiro: ano do levantamento.}
 #'   \item{avaliador_video}{Fator: avaliador do vídeo.}
 #'   \item{duracao_video_min}{Inteiro: duração do vídeo (min).}

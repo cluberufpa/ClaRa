@@ -1,12 +1,11 @@
 test_that("pollock conserva zeros, extremos, coordenadas e o D47", {
   x <- carregar_dados("pollock_alasca")
-  expect_identical(dim(x), c(523L, 8L))
+  expect_identical(dim(x), c(523L, 6L))
   expect_type(x$id_lance, "character")
   expect_false(anyNA(x))
   expect_false(anyDuplicated(x$id_lance) > 0L)
   expect_equal(nrow(unique(x[c("latitude_graus", "longitude_graus")])), 523L)
-  expect_identical(levels(x$ano), "2023")
-  expect_identical(levels(x$especie), "Gadus chalcogrammus")
+  expect_false(any(c("ano", "especie") %in% names(x)))  # constantes, removidas em 12/10/2026
   expect_s3_class(x$estrato, "factor")
   expect_equal(nlevels(x$estrato), 54L)
   expect_equal(sum(x$cpue_kg_ha == 0), 91L)

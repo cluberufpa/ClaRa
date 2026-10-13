@@ -4,11 +4,10 @@
 #'
 #' @format Um `data.frame` com 69 linhas e 5 colunas:
 #' \describe{
-#'   \item{experiment}{Código do experimento, preservado da fonte.}
-#'   \item{sterol_id}{Código do esterol, preservado da fonte.}
-#'   \item{sterol_name}{Nome químico do esterol; grafia e espaços originais preservados.}
-#'   \item{biomass_mg}{Biomassa seca final por recipiente, em mg.}
-#'   \item{ind_weight_ug}{Massa seca média individual, em microgramas por indivíduo.}
+#'   \item{experimento}{Código do experimento, preservado da fonte.}
+#'   \item{esterol}{Nome químico do esterol; grafia e espaços originais preservados.}
+#'   \item{biomassa_mg}{Biomassa seca final por recipiente, em mg.}
+#'   \item{massa_individual_ug}{Massa seca média individual, em microgramas por indivíduo.}
 #' }
 #'
 #' @details

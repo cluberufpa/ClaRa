@@ -11,7 +11,7 @@
 #'   \item{racao_g}{Numérico: ração fornecida (g).}
 #'   \item{massa_inicial_g}{Numérico: massa inicial do peixe (g).}
 #'   \item{eficiencia_conversao}{Numérico: eficiência de conversão alimentar.}
-#'   \item{racao_fator}{Fator: nível de ração (\code{high}, \code{low}).}
+#'   \item{racao_fator}{Fator: nível de ração (\code{baixa}, \code{alta}).}
 #' }
 #'
 #' @details

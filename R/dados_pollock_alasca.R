@@ -6,8 +6,6 @@
 #' @format Um `data.frame` com 523 linhas e 8 colunas:
 #' \describe{
 #'   \item{id_lance}{Identificador original SampleID, como texto; os sinais negativos fazem parte do código.}
-#'   \item{ano}{Ano de amostragem como fator; único nível: 2023.}
-#'   \item{especie}{Nome científico como fator; único nível: Gadus chalcogrammus.}
 #'   \item{latitude_graus}{Latitude em graus decimais WGS84 (EPSG:4326).}
 #'   \item{longitude_graus}{Longitude em graus decimais WGS84; negativa a oeste.}
 #'   \item{profundidade_m}{Profundidade do lance em metros, campo Depth da fonte.}

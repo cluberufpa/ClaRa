@@ -13,7 +13,7 @@ Um \code{data.frame} com 1457 linhas e 8 colunas:
 \item{mes}{Inteiro: mês da coleta (número).}
 \item{mes_nome}{Fator com níveis em ordem da temporada; não é ordered.}
 \item{sitio}{Fator: sítio/ambiente de kelp (\code{DIAZ}, \code{SWB}) — os dois ambientes (floresta natural e área de cultivo).}
-\item{sexo}{Fator: \code{femea}, \code{macho}.}
+\item{sexo}{Fator: \code{fêmea}, \code{macho}.}
 \item{comprimento_cefalotorax_mm}{Numérico: comprimento do cefalotórax (mm).}
 }
 }

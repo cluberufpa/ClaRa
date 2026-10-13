@@ -11,7 +11,7 @@
 #'
 #' @format Um data frame com 2.641 observações e 9 variáveis:
 #' \describe{
-#'   \item{sexo}{Fator: \code{Femea} ou \code{Macho}.}
+#'   \item{sexo}{Fator: \code{fêmea} ou \code{macho}.}
 #'   \item{comprimento_mm}{Numérico: maior dimensão da concha (mm).}
 #'   \item{diametro_mm}{Numérico: largura perpendicular ao comprimento (mm).}
 #'   \item{altura_mm}{Numérico: altura do animal com a concha (mm).}

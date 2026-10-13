@@ -10,7 +10,6 @@ Um data frame com 170 linhas e 9 variaveis:
 \item{id_camarao}{Identificador unico criado a partir da base e da amostra.}
 \item{base}{Subconjunto original: DB1, DB2, DB3, DB4 ou DB5.}
 \item{origem}{Origem geral do cultivo: fazenda industrial ou viveiro academico.}
-\item{arquivo_origem}{Nome do arquivo Excel original.}
 \item{amostra}{Numero original do camarao no arquivo de origem.}
 \item{comprimento_cm}{Comprimento corporal total, em centimetros.}
 \item{cefalotorax_cm}{Comprimento do cefalotorax, em centimetros. Ausente no DB1.}

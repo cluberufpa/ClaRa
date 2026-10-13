@@ -10,8 +10,7 @@ Um \code{data.frame} com 128 linhas e 8 colunas:
 \item{id_registro}{Chave técnica REG_001 a REG_128, criada pela ordem das linhas; não é ID biológico.}
 \item{local}{Local de coleta: Brownsville ou Weslaco.}
 \item{especie}{Espécie: P. formosa ou P. latipinna.}
-\item{grupo_local_especie}{Combinação de local e espécie, com quatro níveis.}
-\item{sexo}{Fêmea (F) ou macho (M), conforme a fonte; dois NA.}
+\item{sexo}{Fator: \code{fêmea} ou \code{macho}; dois NA.}
 \item{comprimento_padrao_cm}{Comprimento padrão, da boca ao pedúnculo caudal, em cm; dez NA.}
 \item{parasitos_total_n}{Contagem inteira de trematódeos e parasitos não identificados por peixe.}
 \item{infectado_01}{Indicador derivado: 1 se parasitos_total_n > 0; 0 em caso contrário.}
@@ -48,15 +47,16 @@ efeitos de local e espécie nem estabelecer causalidade.
 }
 \section{Adaptações}{
 
-Tradução dos cinco cabeçalhos originais. Criados id_registro,
-grupo_local_especie e infectado_01. Categorias originais preservadas.
+Tradução dos cinco cabeçalhos originais. Criados id_registro
+e infectado_01; grupo_local_especie (repetia local e espécie) foi removido em
+12/10/2026. Categorias originais preservadas.
 Nenhuma linha excluída, reordenada ou simulada. Substitui escolares_ausencias
 (MASS::quine), reutilizando D50, por autorização do professor em 11/10/2026.
 }
 
 \examples{
 summary(molinesias_parasitos)
-table(molinesias_parasitos$grupo_local_especie)
+with(molinesias_parasitos, table(local, especie))
 
 }
 \keyword{datasets}

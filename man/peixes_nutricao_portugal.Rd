@@ -10,7 +10,6 @@ Um \code{data.frame} com 40 linhas e 22 colunas:
 \item{id_base}{Texto: identificador da espécie na base original.}
 \item{nome_comum}{Texto: nome comum do peixe.}
 \item{nome_cientifico}{Texto: nome científico.}
-\item{cluster_autores}{Fator: agrupamento publicado pelos autores (rótulo auxiliar).}
 \item{perfil_nutricional_autores}{Fator: \code{magros}, \code{gordos}, \code{atipicos} (rótulo dos autores).}
 \item{energia_kcal_100g}{Inteiro: energia (kcal/100 g).}
 \item{proteina_g_100g}{Numérico: proteína (g/100 g).}
@@ -44,7 +43,7 @@ peixes_nutricao_portugal
 Dados provisórios da passada 1. Unidade amostral: espécie; composição nutricional agregada.
 }
 \details{
-cluster_autores e perfil_nutricional_autores são rótulos externos; fora das entradas PCA/HCA para evitar circularidade. Traduções de siglas e atipicos ficam para passada 2. Não excluir espécies atípicas automaticamente.
+perfil_nutricional_autores é rótulo externo (cluster_autores, que o repetia, foi removido em 12/10/2026); fora das entradas PCA/HCA para evitar circularidade. Traduções de siglas e atipicos ficam para passada 2. Não excluir espécies atípicas automaticamente.
 }
 \section{Adaptações}{
 

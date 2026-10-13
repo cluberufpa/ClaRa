@@ -7,7 +7,6 @@
 \format{
 Um \code{data.frame} com 15 linhas e 32 colunas:
 \describe{
-\item{id_tanque}{Identificador do tanque (texto, minúsculas).}
 \item{tratamento_codigo}{Fator: código do tratamento/réplica (ex.: \code{CR1}, \code{N25R2}).}
 \item{tipo_microalga}{Fator: \code{controle}, \code{nannochloropsis}, \code{tetraselmis}.}
 \item{nivel_substituicao_pct}{Inteiro: nível de substituição por microalga (\%).}
@@ -16,7 +15,6 @@ Um \code{data.frame} com 15 linhas e 32 colunas:
 \item{sobrevivencia_pct}{Numérico: sobrevivência (\%).}
 \item{peso_inicial_medio_g}{Numérico: peso médio inicial (g).}
 \item{peso_final_medio_g}{Numérico: peso médio final (g).}
-\item{peixes_estocados}{Inteiro: peixes estocados no tanque.}
 \item{peixes_colhidos}{Inteiro: peixes colhidos no tanque.}
 \item{temperatura_c}{Numérico: temperatura da água (°C).}
 \item{oxigenio_dissolvido_mg_l}{Numérico: oxigênio dissolvido (mg/L).}

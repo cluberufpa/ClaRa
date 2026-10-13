@@ -7,8 +7,6 @@
 #'
 #' @format Um `data.frame` com 179 linhas e 9 colunas:
 #' \describe{
-#'   \item{linha_fonte}{Posição da observação em `Flounder.csv`; usar somente
-#'   para rastreabilidade.}
 #'   \item{cpue_g}{Captura por unidade de esforço, em gramas, preservada da fonte.}
 #'   \item{log_cpue_g}{`log1p(cpue_g)`; resposta recomendada para o modelo.}
 #'   \item{temperatura_fundo_c}{Temperatura de fundo, em graus Celsius.}

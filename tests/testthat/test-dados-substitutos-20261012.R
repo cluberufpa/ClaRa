@@ -17,7 +17,7 @@ test_that("D12 cabras reproduz as tabelas 2 x 2 publicadas", {
 })
 
 test_that("D52 secagem conserva códigos e séries", {
-  expect_identical(dim(secagem_beterraba_gengibre), c(594L, 8L))
+  expect_identical(dim(secagem_beterraba_gengibre), c(594L, 7L))
   expect_identical(levels(secagem_beterraba_gengibre$produto_codigo), c("B", "G"))
   expect_identical(levels(secagem_beterraba_gengibre$tratamento_codigo), c("C", "E"))
   expect_equal(nlevels(secagem_beterraba_gengibre$serie), 36L)

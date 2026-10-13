@@ -10,10 +10,6 @@
 #'   \item{data}{Data de referência do mês, no primeiro dia.}
 #'   \item{ano}{Ano do desembarque.}
 #'   \item{mes}{Mês, fator ordenado de janeiro a dezembro.}
-#'   \item{categoria_mercado}{Categoria comercial; neste recorte, sempre
-#'     `anchova-do-norte`.}
-#'   \item{porto}{Agregação geográfica; neste recorte, sempre
-#'     `todos_os_portos`.}
 #'   \item{desembarque_lb}{Desembarque mensal em libras.}
 #' }
 #'

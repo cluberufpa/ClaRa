@@ -15,7 +15,6 @@
 #'   \item{mes}{Mês da campanha.}
 #'   \item{campanha}{Campanha no formato textual AAAA-MM.}
 #'   \item{subamostra_surber}{Número da subamostra, sem pareamento individual entre campanhas.}
-#'   \item{area_surber_m2}{Área amostrada, em metros quadrados.}
 #'   \item{baci_elegivel}{Indica local com observações nas três fases.}
 #'   \item{riqueza_taxons}{Número de táxons com contagem positiva.}
 #'   \item{shannon}{Índice de diversidade de Shannon.}

@@ -11,7 +11,6 @@ Um \code{data.frame} com 30 linhas e 12 colunas:
 \item{presenca_anfibios}{Presença de anfíbios: sim ou não.}
 \item{secagem}{Secagem prévia: seco e reabastecido ou não seco.}
 \item{tratamento}{Código original combinado: F:DR/F:ND/FA:DR/FA:ND.}
-\item{data_inicial}{Data da medição inicial.}
 \item{comprimento_padrao_inicial_cm}{Comprimento padrão inicial, cm.}
 \item{biomassa_inicial_estimada_g}{Biomassa calculada por regressão comprimento-peso, g.}
 \item{data_final}{Data da medição final, variável entre tanques.}

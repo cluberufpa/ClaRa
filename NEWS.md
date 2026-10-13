@@ -1,5 +1,22 @@
 # clara (em desenvolvimento)
 
+- Arrumação leve de 25 conjuntos (12/10/2026), sem alterar valores nem linhas; script em
+  `data-raw/arrumacao_leve_20261012.R`, aplicado depois dos `preparar.R` (que ainda geram a versão anterior).
+  Removidas colunas constantes ou que repetiam outra: `area_surber_m2` (enobieta_baci), `arquivo_origem`
+  (camarao_vannamei_biometria), `sterol_id` (artemia_fitoesterois), `semana` (truta_acidos_graxos), `id_tanque` e
+  `peixes_estocados` (tilapia_microalgas), `data_inicial` (mesocosmos_secagem), `grupo_local_especie`
+  (molinesias_parasitos), `id_amostra` (secagem_beterraba_gengibre), `ano` e `especie` (pollock_alasca),
+  `categoria_mercado` e `porto` (anchova_norte_california), `rio` (morfometria_barbo), `especie_codigo`
+  (peixes_morfometria_multivariada), `cluster_autores` (peixes_nutricao_portugal) e `linha_fonte`
+  (solha_baltico_2008_t4). Renomeadas: cpue_tubarao (`embarcacao`, `ano`, `mes`, `cpue`, `data`),
+  `formalin` -> `formalina` (salvelino_formalina_remocao) e as quatro colunas em inglês da artemia_fitoesterois
+  (`experimento`, `esterol`, `biomassa_mg`, `massa_individual_ug`). Texto com poucas categorias virou fator
+  (enobieta_baci, camarao_vannamei_biometria, artemia_fitoesterois, cowichan_amostragem, lebistes_parasitos,
+  aquicultura_br) e `linha`, `coluna` e `operador` do trigo_quadrado_latino também, como a ANOVA do quadrado
+  latino exige. Rótulos padronizados em português com acento (fêmea/macho, março, centro/borda/fora,
+  verão/inverno, baixa/alta). Ficam de fora, de propósito, os conjuntos bagunçados de treino de preparo e os da
+  QFASA (nomes exigidos pelo pacote). Ajuda, catálogo e testes atualizados.
+
 - Licenças dos dez conjuntos que estavam sem licença resolvida (D01, D03, D14, D16, D20, D21, D22, D25, D28, D61)
   passam a "uso interno na Trilha e na ClaRa autorizado pelo professor" (12/10/2026), por decisão do professor:
   são dados de pesquisa e coleta do grupo ou de fonte pública (D14: revista Peixe-BR, de acesso livre; D25: Comex

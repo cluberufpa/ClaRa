@@ -8,7 +8,6 @@
 #' \describe{
 #'   \item{id_aquario}{Identificador original do aquário, como texto; unidade experimental.}
 #'   \item{dieta}{Fator com sete dietas; nomes e composições descritos nos detalhes.}
-#'   \item{semana}{Semana 12, final do ensaio; inteiro constante para identificar o recorte.}
 #'   \item{n_peixes}{Número de peixes analisados no aquário, de 1 a 4; subamostras, não UEs adicionais.}
 #'   \item{c12_0_pct}{Média de C12:0, em porcentagem dos ácidos graxos quantificados no corpo inteiro dos peixes.}
 #'   \item{c14_0_pct}{Média de C14:0, em porcentagem dos ácidos graxos quantificados no corpo inteiro dos peixes.}

@@ -10,7 +10,7 @@
 #' @format Um data frame com 30 observações e 7 variáveis:
 #' \describe{
 #'   \item{unidade_experimental}{Texto: identificador do compartimento/ensaio.}
-#'   \item{formalin}{Fator: aplicação de formalina (\code{sem}, \code{com}).}
+#'   \item{formalina}{Fator: aplicação de formalina (\code{sem}, \code{com}).}
 #'   \item{remocao_semanal}{Fator: remoção manual semanal (\code{sem}, \code{com}).}
 #'   \item{ovos_iniciais}{Inteiro: número de ovos no início da unidade.}
 #'   \item{ovos_eclodidos}{Inteiro: número de ovos que eclodiram.}

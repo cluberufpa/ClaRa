@@ -7,11 +7,11 @@
 \format{
 A data frame with 424 observations and 5 variables:
 \describe{
-\item{Vessel}{Embarcação (factor; \emph{MB}, \emph{MC}, \emph{SB}).}
-\item{Year}{Ano do registro (integer; 1995 a 2007).}
-\item{Month}{Mês do registro (integer; 1 a 12).}
-\item{CPUE}{Captura por unidade de esforço (numeric).}
-\item{Data}{Data do registro (Date).}
+\item{embarcacao}{Embarcação (factor; \emph{MB}, \emph{MC}, \emph{SB}).}
+\item{ano}{Ano do registro (integer; 1995 a 2007).}
+\item{mes}{Mês do registro (integer; 1 a 12).}
+\item{cpue}{Captura por unidade de esforço (numeric).}
+\item{data}{Data do registro (Date).}
 }
 }
 \source{
@@ -27,7 +27,7 @@ mês e ano, entre 1995 e 2007. \strong{Dados reais próprios}, conforme declara�
 É um conjunto de dupla utilidade no ecossistema EAPA: serve de exemplo
 canônico para o \strong{teste de Kruskal-Wallis} (comparar a CPUE entre os anos,
 com pós-teste de Dunn e letras de significância) e para \strong{análise de série
-temporal} (CPUE ao longo do tempo, via a coluna \code{Data}). A CPUE varia
+temporal} (CPUE ao longo do tempo, via a coluna \code{data}). A CPUE varia
 fortemente entre os anos, com tendência de queda ao longo do período.
 }
 \section{Migração para a ClaRa}{
@@ -42,7 +42,7 @@ Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados 
 
 \section{Pendências para a curadoria}{
 
-Procedência própria confirmada. Completar referência bibliográfica, créditos, licença específica, unidade da CPUE e independência. Manter Vessel, Year, Month, CPUE e Data nesta passada; tradução fica para a passada 2.
+Procedência própria confirmada. Completar referência bibliográfica, créditos, licença específica, unidade da CPUE e independência. Colunas renomeadas em 12/10/2026 (embarcacao, ano, mes, cpue, data), sem alterar valores.
 
 Preparo e fonte congelada: \verb{data-raw/D03_tubarao_cpue/}.
 }
