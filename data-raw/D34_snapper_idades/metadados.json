@@ -17,5 +17,6 @@
   "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Davies e Walsh (2002), tabelas 2, 3 e 5, levantamentos KAH8810/KAH0012; FSAdata::SnapperHG1",
   "situacao": "provisório",
+  "limites": "",
   "fonte_dados": "FSAdata"
 }

@@ -16,6 +16,7 @@
   "verbo_clara": "",
   "licenca": "CC0 1.0; declarada nos metadados Dryad",
   "referencia": "Dale, K.; Pilch, E.; Gomes, M.; Laszlo, N.; Mercer, A.; Mehta, R. (2025). Dryad DOI 10.7291/D1S38T; artigo DOI 10.5343/bms.2024.0135",
-  "situacao": "Pronto para exploração; usar com limite de delineamento: dependência temporal, captura extrema e primavera só em 2019",
+  "situacao": "revisado",
+  "limites": "usar com limite de delineamento: dependência temporal, captura extrema e primavera só em 2019",
   "fonte_dados": "clara"
 }

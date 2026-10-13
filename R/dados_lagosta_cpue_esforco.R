@@ -30,8 +30,8 @@
 #'
 #' @source Ivo, C. T. C.; Fonteles Filho, A. A. (1997). *Estatística pesqueira:
 #' aplicação em Engenharia de Pesca*. Fortaleza: Tom Gráfica e Editora. Exercício
-#' 11.1. Obra com direitos reservados; valores transcritos para uso didático, com
-#' autorização do professor. Cite o livro ao usar os dados. Fonte e preparo em
+#' 11.1. Uso didático com citação da obra, sem termo de consentimento
+#' (decisão do professor, 13/10/2026). Cite o livro ao usar os dados. Fonte e preparo em
 #' `data-raw/D46_lagosta_esforco/`.
 #'
 #' @examples

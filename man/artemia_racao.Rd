@@ -14,8 +14,8 @@ Um \code{data.frame} com 20 linhas e 2 colunas:
 \source{
 Ivo, C. T. C.; Fonteles Filho, A. A. (1997). \emph{Estatística pesqueira:
 aplicação em Engenharia de Pesca}. Fortaleza: Tom Gráfica e Editora. Exercício
-82. Obra com direitos reservados; valores transcritos para uso didático, com
-autorização do professor. Cite o livro ao usar os dados. Fonte e preparo em
+82. Uso didático com citação da obra, sem termo de consentimento
+(decisão do professor, 13/10/2026). Cite o livro ao usar os dados. Fonte e preparo em
 \verb{data-raw/D42_artemia_racao/}.
 }
 \usage{

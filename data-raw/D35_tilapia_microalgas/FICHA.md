@@ -1,7 +1,7 @@
 # D35 — Tilápia: dietas com microalgas
 
 - Registro: `D35_tilapia_microalgas`; objeto definitivo: `tilapia_microalgas`; nome_eapadados: `tilapia_microalgas`.
-- Dimensões: 15 × 32; unidade: tanque experimental; 15 tanques, três por dieta.
+- Dimensões: 15 × 31; unidade: aquário de 30 L; 15 aquários, três por dieta (cinco dietas: controle e Nannochloropsis ou Tetraselmis substituindo 25 % ou 50 % da farinha de peixe). Coluna `dieta` acrescentada em 13/10/2026; delineamento conferido no artigo de dados, Amira et al. (2021), Data in Brief 38:107422.
 - Natureza: real; origem: EAPADados::tilapia_microalgas.
 - Referência: Amira et al. (2021), Mendeley Data, DOI 10.17632/hv5fg5r869.1.
 - Licença: CC BY 4.0. A licença MIT do código não altera a da fonte.

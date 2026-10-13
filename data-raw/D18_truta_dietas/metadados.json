@@ -16,6 +16,7 @@
   "verbo_clara": "",
   "licenca": "CC BY 4.0; autoria e adaptação identificadas",
   "referencia": "Happel, A.; Pike, J.; Rinchard, J.; Czesny, S. (2021). Testing Fatty Acid Based Diet Estimation Models using Diets Composed of Natural Prey Items. Mendeley Data V2. DOI 10.17632/n6nmfpkpc5.2",
-  "situacao": "Pronto para exploração; usar com limite de delineamento: três aquários por dieta, sobrevivência baixa/desigual e extremo mantido",
+  "situacao": "revisado",
+  "limites": "usar com limite de delineamento: três aquários por dieta, sobrevivência baixa/desigual e extremo mantido",
   "fonte_dados": "clara"
 }

@@ -30,10 +30,10 @@ aceitáveis:
 | D42 | `artemia_racao` (novo) | Exercício 82: *Artemia salina*, ração A (farelo de arroz) × B (farelo de babaçu), 10 + 10, teste t unilateral. O antigo `EAPADados::artemia`, recusado como "fictício", é este exercício com 7 + 7 linhas. |
 | D46 | `lagosta_cpue_esforco` (novo) | Exercício 11.1: CPUE × esforço de pesca da lagosta-verde (*Panulirus laevicauda*), 14 linhas, modelo exponencial (forma de Fox). |
 
-Os três ficaram com a mesma licença: obra com direitos reservados, uso didático
-autorizado pelo professor, citação obrigatória, sem licença pública. Os termos de
-redistribuição ficam pendentes até o professor trazer o que tem sobre a obra. O
-PDF não foi guardado no repositório; só as transcrições, em `fonte/`.
+Os três ficaram com a mesma licença: uso didático com citação da obra, sem termo
+de consentimento (decisão do professor, 13/10/2026), sem licença pública. O
+professor conferiu as 20 linhas do D42 no livro impresso. O PDF não foi guardado
+no repositório; só as transcrições, em `fonte/`.
 
 O exercício 11.2 (fecundidade de *P. argus*) tem só a equação, sem dados.
 
@@ -84,7 +84,23 @@ Ficaram de fora de propósito: D38 e D40 (peixes dentro de tanques, a ClaRa
 trataria cada peixe como réplica), D13 (veja abaixo) e D35 (precisa de uma coluna
 de dieta).
 
-## 5. Pendências para o professor decidir
+## 5. Decisões do professor (13/10/2026, mesma noite)
+
+1. **D13**: entrou `esterol_rotulo`, o nome químico sem hífen; `esterol` fica como na
+   fonte. `comparar_medias()` roda dentro de cada experimento.
+2. **D35**: entrou `dieta`, conferida no artigo de dados (Amira et al. 2021, *Data
+   in Brief* 38:107422: cinco dietas, três aquários de 30 L, 18 alevinos cada, 56
+   dias). A ANOVA dá F(4, 10) = 766,8, com as cinco dietas diferentes entre si.
+3. **`situacao`**: vocabulário fixo, `provisório` (36), `revisado` (17) e `sintético
+   de treino` (3). O texto que acompanhava o termo foi para a coluna nova `limites`.
+   Passaram a `revisado` os que estavam como curado, curadoria aprovada, revisado ou
+   pronto para exploração; D36 e D37 passaram de provisório a sintético de treino.
+4. **Ivo e Fonteles Filho**: sem termo de consentimento. **Bhujel (2011)**: o professor
+   tem o livro impresso e vai procurar o autor; fica registrado em `limites` do D01.
+5. **Trilha**: o mapa de `utils_export.R` muda na troca da fonte para a ClaRa; o
+   `artemia` certo é o de 20 linhas.
+
+## 5a. Pendências originais (registro)
 
 1. **D13 `artemia_fitoesterois`**: os nomes químicos dos esteróis têm hífen
    (`23-methylbrassicasterol`), e `comparar_medias()` recusa grupos com hífen. Os

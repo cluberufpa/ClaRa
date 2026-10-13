@@ -16,5 +16,6 @@
   "verbo_clara": "",
   "licenca": "MIT + file LICENSE, EAPADados 0.1.14",
   "referencia": "Dados fictícios do ecossistema EAPA; planilha de treino e script de importação preservados",
-  "situacao": "provisório"
+  "situacao": "sintético de treino",
+  "limites": "não usar para inferência"
 }

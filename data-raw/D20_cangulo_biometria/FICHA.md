@@ -3,7 +3,7 @@
 - Registro: `D20_cangulo_biometria`; objeto: `cangulo_crescimento`; nome_eapadados: `cangulo_crescimento`.
 - Fonte identificada em 13/10/2026: **Tabela 11.2** de Ivo, C. T. C.; Fonteles Filho, A. A. (1997), *Estatística pesqueira: aplicação em Engenharia de Pesca*, Fortaleza, Tom Gráfica e Editora, vi + 193 p.: "Valores do comprimento total (cm) e peso total (g) do cangulo, *Balistes vetula*, no Estado do Ceará". Transcrição em `fonte/tabela_11_2_ivo_fonteles_1997.csv`; detalhes em `fonte/PROVENIENCIA.md`.
 - Dimensões: 16 × 7; unidade: peixe, três por classe de comprimento de 2 cm (12 a 42 cm), 48 pesos ao todo.
-- Licença: obra com direitos reservados; valores transcritos para uso didático na Trilha e na ClaRa, com autorização do professor e citação obrigatória. Sem licença pública; termos de redistribuição a confirmar.
+- Licença: uso didático na Trilha e na ClaRa com citação da obra, sem termo de consentimento (decisão do professor, 13/10/2026). Sem licença pública.
 - Situação: revisado (fonte e valores conferidos com o livro).
 
 ## Colunas (de-para em 13/10/2026)
@@ -24,6 +24,6 @@ Relação peso-comprimento: a reta `ln_peso_medio ~ ln_comprimento` dá b = 2,86
 
 ## Pendências
 
-Termos de redistribuição da obra. Ano e método de coleta não constam da tabela.
+Ano e método de coleta não constam da tabela.
 
 Reproduzir na raiz: `source("data-raw/D20_cangulo_biometria/preparar.R")`.

@@ -16,5 +16,6 @@
   "verbo_clara": "relacionar_variaveis",
   "licenca": "CC BY 4.0",
   "referencia": "Nash, Sellers, Talbot, Cawthorn e Ford (1994); UCI Abalone, DOI 10.24432/C55C7W",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "limites": ""
 }

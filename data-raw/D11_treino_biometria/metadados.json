@@ -17,5 +17,6 @@
   "verbo_clara": "",
   "licenca": "Dados fictícios do ecossistema EAPA, criados pelo professor",
   "referencia": "Planilha de treino Treino-Transformacoes.xlsx da Trilha (antes CatalyseR); copiada sem alteração em 13/10/2026",
-  "situacao": "sintético de treino; defeitos de propósito; não usar para inferência"
+  "situacao": "sintético de treino",
+  "limites": "defeitos de propósito; não usar para inferência"
 }

@@ -16,5 +16,6 @@
   "verbo_clara": "comparar_medias",
   "licenca": "CC0 1.0",
   "referencia": "Horst, Hill e Gorman (2020); Gorman, Williams e Fraser (2014); palmerpenguins, DOI 10.5281/zenodo.3960218",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "limites": ""
 }

@@ -14,7 +14,8 @@
   "analise_principal": "Relação peso-comprimento (regressão linear nos logaritmos)",
   "palavras_chave": "cangulo; Balistes vetula; peso-comprimento; potência; logaritmo; Ceará; Ivo e Fonteles Filho",
   "verbo_clara": "relacionar_variaveis",
-  "licenca": "Tabela de livro com direitos reservados (Ivo e Fonteles Filho, 1997); valores transcritos para uso didático na Trilha e na ClaRa, autorizado pelo professor; citar a obra; sem licença pública",
+  "licenca": "Tabela de livro (Ivo e Fonteles Filho, 1997); uso didático na Trilha e na ClaRa com citação da obra, sem termo de consentimento (decisão do professor, 13/10/2026); sem licença pública",
   "referencia": "Ivo, C. T. C.; Fonteles Filho, A. A. (1997). Estatística pesqueira: aplicação em Engenharia de Pesca. Fortaleza: Tom Gráfica e Editora. vi, 193 p. Tabela 11.2",
-  "situacao": "revisado em 13/10/2026: fonte identificada e conferida com o livro; termos de redistribuição da obra a confirmar"
+  "situacao": "revisado",
+  "limites": "fonte identificada e conferida com o livro"
 }

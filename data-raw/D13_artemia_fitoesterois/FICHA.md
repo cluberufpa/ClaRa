@@ -1,7 +1,7 @@
 # D13 — Artêmia: biomassa sob suplementação com fitoesteróis
 
 - Registro: `D13_artemia_fitoesterois`; objeto definitivo: `artemia_fitoesterois`; nome_eapadados: ``.
-- Dimensões: 69 × 4; unidade: recipiente experimental de 4 L, com resposta agregada por recipiente.
+- Dimensões: 69 × 5; unidade: recipiente experimental de 4 L, com resposta agregada por recipiente.
 - Natureza: real; origem: literatura: BCO-DMO, conjunto 724179.
 - Referência: Hassett e Giner (2021); BCO-DMO, versão 1 de 19/01/2018; DOI 10.26008/1912/bco-dmo.724179.1.
 - Licença: CC BY 4.0. A licença MIT do código não altera a da fonte.
@@ -21,3 +21,7 @@ ANOVA de um fator por experimento; Teste t de contraste planejado; Estatística 
 ## Pendências para a curadoria
 
 São quatro experimentos, com três recipientes por tratamento; o quarto começa suplementação em idade diferente. Não combinar experimentos como réplicas. Teste t exige escolher dois tratamentos por justificativa biológica dentro do mesmo experimento. As respostas são massa seca final, não taxa em mg/dia. Nenhuma coluna foi renomeada, conforme decisão sobre a fonte real.
+
+## Rótulo para a ClaRa (13/10/2026)
+
+Por decisão do professor, entrou `esterol_rotulo`: o nome químico com hífens, vírgulas, parênteses e espaços trocados por `_`. A ClaRa recusa grupos com hífen; `esterol` continua como na fonte. Receita em `data-raw/rotulos_d13_d35_20261013.R`.

@@ -9,5 +9,5 @@ colunas Ração A e Ração B, dez valores cada.
 13/10/2026 a partir do extrato do livro em PDF trazido pelo professor. Valores sem
 alteração; a ordem dentro de cada ração é a do livro.
 
-O livro tem direitos reservados. Uso didático com autorização do professor e citação
-da obra; o PDF não é guardado aqui.
+Uso didático com citação da obra, sem termo de consentimento (decisão do professor,
+13/10/2026); o PDF não é guardado aqui.

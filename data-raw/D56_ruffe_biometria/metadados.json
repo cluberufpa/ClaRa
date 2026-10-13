@@ -17,5 +17,6 @@
   "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "US Geological Survey, Lake Superior Biological Station, Ashland, Wisconsin, coleção pessoal; FSAdata::RuffeSLRH92",
   "situacao": "provisório",
+  "limites": "",
   "fonte_dados": "FSAdata"
 }

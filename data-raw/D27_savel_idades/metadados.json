@@ -17,5 +17,6 @@
   "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "McBride, Hendricks e Olney (2005), Fisheries 30:10–18; FSAdata::ShadCR",
   "situacao": "provisório",
+  "limites": "",
   "fonte_dados": "FSAdata"
 }

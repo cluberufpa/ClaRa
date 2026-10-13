@@ -17,5 +17,6 @@
   "licenca": "GPL-2 | GPL-3; dados lidos do pacote fornecedor",
   "referencia": "MASS::crabs; Campbell e Mahon (1974); Venables e Ripley (2002)",
   "situacao": "provisório",
+  "limites": "",
   "fonte_dados": "MASS"
 }

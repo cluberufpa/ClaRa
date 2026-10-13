@@ -16,5 +16,6 @@
   "verbo_clara": "",
   "licenca": "MIT + file LICENSE, QFASA 1.2.1",
   "referencia": "Stewart e colaboradores, QFASA 1.2.1, objeto predatorFAs; CRAN",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "limites": ""
 }

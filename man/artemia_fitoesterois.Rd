@@ -9,6 +9,7 @@ Um \code{data.frame} com 69 linhas e 5 colunas:
 \describe{
 \item{experimento}{Código do experimento, preservado da fonte.}
 \item{esterol}{Nome químico do esterol; grafia e espaços originais preservados.}
+\item{esterol_rotulo}{Fator: o mesmo nome, com hífens, vírgulas, parênteses e espaços trocados por \verb{_} (\verb{24_methylenecholesterol}); use-o como grupo na ClaRa.}
 \item{biomassa_mg}{Biomassa seca final por recipiente, em mg.}
 \item{massa_individual_ug}{Massa seca média individual, em microgramas por indivíduo.}
 }
@@ -26,15 +27,16 @@ artemia_fitoesterois
 Dados provisórios da passada 1. Unidade amostral: recipiente experimental de 4 L, com resposta agregada por recipiente.
 }
 \details{
-São quatro experimentos, com três recipientes por tratamento; o quarto começa suplementação em idade diferente. Não combinar experimentos como réplicas. Teste t exige escolher dois tratamentos por justificativa biológica dentro do mesmo experimento. As respostas são massa seca final, não taxa em mg/dia. Nenhuma coluna foi renomeada, conforme decisão sobre a fonte real.
+São quatro experimentos, com três recipientes por tratamento; o quarto começa suplementação em idade diferente. Não combinar experimentos como réplicas. Teste t exige escolher dois tratamentos por justificativa biológica dentro do mesmo experimento. As respostas são massa seca final, não taxa em mg/dia. Para comparar os esteróis de um experimento com \code{comparar_medias()}, filtre o experimento e use \code{esterol_rotulo} como grupo: a ClaRa recusa grupos com hífen.
 }
 \section{Adaptações}{
 
-Identidade: cabeçalhos e nomes químicos da fonte real preservados, conforme decisão do professor. Nenhuma transformação de massa em taxa de crescimento.
+Nomes químicos da fonte preservados em \code{esterol}. Em 13/10/2026, por decisão do professor, entrou \code{esterol_rotulo}, sem hífen, para a ClaRa. Nenhuma transformação de massa em taxa de crescimento.
 }
 
 \examples{
-summary(artemia_fitoesterois)
+exp1 <- droplevels(subset(artemia_fitoesterois, experimento == "exp_1"))
+tapply(exp1$biomassa_mg, exp1$esterol_rotulo, mean)
 
 }
 \keyword{datasets}

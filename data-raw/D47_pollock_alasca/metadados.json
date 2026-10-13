@@ -16,6 +16,7 @@
   "verbo_clara": "",
   "licenca": "CC0 1.0; NOAA InPort 69743, Access Information / Data License",
   "referencia": "NOAA/NMFS OST (2026), Survey Catch-per-unit-effort CURRENT, InPort 69743; AFSC, dados de 2023; relatório DOI 10.25923/gbb1-x748",
-  "situacao": "Pronto para exploração; usar com limite de delineamento: dependência espacial, estratos codificados e dois pontos costeiros a conferir",
+  "situacao": "revisado",
+  "limites": "usar com limite de delineamento: dependência espacial, estratos codificados e dois pontos costeiros a conferir",
   "fonte_dados": "clara"
 }

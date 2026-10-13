@@ -5,9 +5,10 @@
 \alias{tilapia_microalgas}
 \title{D35 - Tilápia: dietas com microalgas}
 \format{
-Um \code{data.frame} com 15 linhas e 32 colunas:
+Um \code{data.frame} com 15 linhas e 31 colunas:
 \describe{
 \item{tratamento_codigo}{Fator: código do tratamento/réplica (ex.: \code{CR1}, \code{N25R2}).}
+\item{dieta}{Fator: a dieta do aquário, \code{controle}, \code{nannochloropsis_25}, \code{nannochloropsis_50}, \code{tetraselmis_25} ou \code{tetraselmis_50} (microalga e porcentagem de farinha de peixe substituída).}
 \item{tipo_microalga}{Fator: \code{controle}, \code{nannochloropsis}, \code{tetraselmis}.}
 \item{nivel_substituicao_pct}{Inteiro: nível de substituição por microalga (\%).}
 \item{repeticao}{Inteiro: número da réplica.}
@@ -40,7 +41,7 @@ Um \code{data.frame} com 15 linhas e 32 colunas:
 }
 }
 \source{
-Amira et al. (2021), Mendeley Data, DOI 10.17632/hv5fg5r869.1.
+Amira et al. (2021), Mendeley Data, DOI 10.17632/hv5fg5r869.1. Artigo de dados: Amira et al. (2021), Data in Brief 38:107422, \doi{10.1016/j.dib.2021.107422}.
 Licença: CC BY 4.0.
 A licença MIT do código não substitui os termos da origem dos dados.
 Fontes e preparo: data-raw/D35_tilapia_microalgas/.
@@ -52,15 +53,15 @@ tilapia_microalgas
 Dados provisórios da passada 1. Unidade amostral: tanque experimental; 15 tanques, três por dieta.
 }
 \details{
-Há apenas 15 tanques; tratamento_codigo inclui a réplica e não define os cinco tratamentos sozinho. Não ajustar modelo múltiplo extenso com todas as respostas. Confirmar siglas e unidades no depósito primário e avaliar derivados/colinearidade. Não aplicadas exclusões e traduções ainda pendentes.
+São cinco dietas com três aquários cada (270 alevinos, 18 por aquário, 56 dias); a unidade é o aquário, não o peixe. Use \code{dieta} como grupo em \code{comparar_medias()}; \code{tratamento_codigo} tem um nível por aquário. Não ajustar modelo múltiplo extenso com todas as respostas. Confirmar siglas e unidades no depósito primário e avaliar derivados/colinearidade. Não aplicadas exclusões e traduções ainda pendentes.
 }
 \section{Adaptações}{
 
-Cabeçalhos, categorias, valores e ordem herdados preservados; nenhuma exclusão nova.
+Cabeçalhos, categorias, valores e ordem herdados preservados. Em 13/10/2026 entrou \code{dieta}, que junta \code{tipo_microalga} e \code{nivel_substituicao_pct}, conforme o delineamento do artigo de dados.
 }
 
 \examples{
-summary(tilapia_microalgas)
+tapply(tilapia_microalgas$sgr_pct_dia, tilapia_microalgas$dieta, mean)
 
 }
 \keyword{datasets}

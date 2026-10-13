@@ -4,6 +4,9 @@ registrar_catalogo <- function(arquivo) {
   novo <- as.data.frame(jsonlite::fromJSON(arquivo), stringsAsFactors = FALSE)
   # Metadados anteriores à leitura externa continuam sendo da própria ClaRa.
   if (!is.element("fonte_dados", names(novo))) novo$fonte_dados <- "clara"
+  # A coluna limites entrou em 13/10/2026; metadados sem ela ficam com texto vazio.
+  if (!is.element("limites", names(novo))) novo$limites <- ""
+  stopifnot(is.element(novo$situacao, c("provisório", "revisado", "sintético de treino")))
   novo$linhas <- as.integer(novo$linhas)
   novo$colunas <- as.integer(novo$colunas)
   for (coluna in names(novo)[vapply(novo, is.character, logical(1))]) {

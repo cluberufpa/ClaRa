@@ -13,8 +13,9 @@
   "analises": "ANOVA de um fator por experimento; Teste t de contraste planejado; Estatística descritiva",
   "analise_principal": "ANOVA por experimento",
   "palavras_chave": "artemia; fitoesterois",
-  "verbo_clara": "",
+  "verbo_clara": "comparar_medias",
   "licenca": "CC BY 4.0",
   "referencia": "Hassett e Giner (2021); BCO-DMO, versão 1 de 19/01/2018; DOI 10.26008/1912/bco-dmo.724179.1",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "limites": "quatro experimentos independentes: comparar esteróis dentro de cada um; use esterol_rotulo nos grupos da ClaRa"
 }

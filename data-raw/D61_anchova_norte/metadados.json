@@ -16,5 +16,6 @@
   "verbo_clara": "",
   "licenca": "Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; fonte original California Department of Fish and Game, distribuída pelo NOAA ERDDAP com permissão de uso e redistribuição gratuita (Creative Commons não nomeada)",
   "referencia": "California Fish Market Catch Landings, Short List, 1928–2002, Monthly. California Department of Fish and Game; NOAA Southwest Fisheries Science Center, ERDDAP. https://coastwatch.pfeg.noaa.gov/erddap/info/erdCAMarCatSM/index.html",
-  "situacao": "curado; uso interno autorizado pelo professor (12/10/2026); categoria de mercado, não estoque biológico; sem verbo temporal próprio na ClaRa"
+  "situacao": "revisado",
+  "limites": "uso interno autorizado pelo professor (12/10/2026); categoria de mercado, não estoque biológico; sem verbo temporal próprio na ClaRa"
 }

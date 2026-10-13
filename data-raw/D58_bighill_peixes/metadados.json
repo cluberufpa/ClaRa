@@ -17,5 +17,6 @@
   "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Dados obtidos diretamente de Ben Neely; Introductory Fisheries Analyses with R; FSAdata::BGHRfish",
   "situacao": "provisório",
+  "limites": "",
   "fonte_dados": "FSAdata"
 }

@@ -16,7 +16,8 @@
   "verbo_clara": "",
   "licenca": "CC0 1.0; declarada no Dryad e no espelho Zenodo",
   "referencia": "Ekström, A. (2021). Dryad DOI 10.5061/dryad.tmpg4f4z3; artigo Ekström et al., DOI 10.1242/jeb.241554",
-  "situacao": "Pronto para exploração; usar com limite de delineamento: medidas repetidas, saturação associada ao tempo e NA da resposta preservados",
+  "situacao": "revisado",
+  "limites": "usar com limite de delineamento: medidas repetidas, saturação associada ao tempo e NA da resposta preservados",
   "fonte_dados": "clara"
 }
 

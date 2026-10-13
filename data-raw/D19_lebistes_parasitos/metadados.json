@@ -16,6 +16,7 @@
   "verbo_clara": "",
   "licenca": "CC0 1.0; declarada nos metadados do Dryad",
   "referencia": "Walsman, J.; Janecka, M.; Clark, D.; Kramp, R.; Rovenolt, F. et al. (2022). Data from: Shoaling guppies evade predation but have deadlier parasites. Dryad, DOI 10.5061/dryad.k3j9kd59h; artigo DOI 10.1038/s41559-022-01772-5",
-  "situacao": "Pronto para exploração com limites: peixes agrupados em sítios (dependência), 113 NA no peso, conferência com o CSV original do Dryad pendente",
+  "situacao": "revisado",
+  "limites": "peixes agrupados em sítios (dependência), 113 NA no peso, conferência com o CSV original do Dryad pendente",
   "fonte_dados": "clara"
 }

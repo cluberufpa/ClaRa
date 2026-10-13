@@ -17,5 +17,6 @@
   "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Araujo e Martins (2007), Age, growth and mortality of white grunt (Haemulon plumierii) from the central coast of Brazil, Scientia Marina 71:793–800, figura 6; FSAdata::WhiteGrunt2",
   "situacao": "provisório",
+  "limites": "",
   "fonte_dados": "FSAdata"
 }

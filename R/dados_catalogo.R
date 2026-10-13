@@ -23,7 +23,8 @@
 #'   \item{verbo_clara}{Verbos existentes que recebem o conjunto.}
 #'   \item{licenca}{Licença localizada ou pendência de autorização.}
 #'   \item{referencia}{Referência da fonte, com ressalvas quando necessário.}
-#'   \item{situacao}{Estado da curadoria e pendências da fonte.}
+#'   \item{situacao}{Estado da curadoria, com vocabulário fixo: \code{provisório}, \code{revisado} ou \code{sintético de treino}.}
+#'   \item{limites}{Limites de delineamento e pendências da fonte; vazio quando não há.}
 #' }
 #'
 #' @details

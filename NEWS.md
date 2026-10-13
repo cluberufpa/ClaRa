@@ -1,5 +1,18 @@
 # clara (em desenvolvimento)
 
+- Decisões do professor sobre a revisão dos dados (13/10/2026):
+  - `catalogo_dados$situacao` passa a ter vocabulário fixo: `provisório` (36), `revisado` (17) ou
+    `sintético de treino` (D11, D36, D37). O que vinha escrito depois do termo foi para a coluna nova
+    `limites`, sem perda. `registrar_catalogo()` recusa outro termo.
+  - D13 `artemia_fitoesterois` ganha `esterol_rotulo`: o nome químico sem hífen, para `comparar_medias()`
+    dentro de cada experimento; `esterol` continua como na fonte.
+  - D35 `tilapia_microalgas` ganha `dieta` (controle, nannochloropsis_25, nannochloropsis_50, tetraselmis_25,
+    tetraselmis_50), conforme o artigo de dados (Amira et al. 2021, *Data in Brief* 38:107422): cinco dietas,
+    três aquários cada. A ANOVA sai direto com `comparar_medias(tilapia_microalgas, sgr_pct_dia, dieta)`.
+  - O livro de Ivo e Fonteles Filho (1997) dispensa termo de consentimento: D20, D42 e D46 ficam com uso
+    didático e citação da obra. O D42 tem 20 linhas, conferidas pelo professor no livro impresso. Os termos do
+    livro de Bhujel (2011), no D01, seguem em consulta ao autor.
+
 - Revisão dos dados com o livro de Ivo e Fonteles Filho (1997), *Estatística pesqueira: aplicação em Engenharia
   de Pesca* (13/10/2026), a partir de um extrato trazido pelo professor:
   - D20 `cangulo_crescimento` ganha fonte: é a Tabela 11.2 do livro (cangulo, *Balistes vetula*, Ceará), conferida
@@ -11,7 +24,7 @@
     20 linhas e se dizia fictício.
   - D46 passa a `lagosta_cpue_esforco` (14 x 2): exercício 11.1, CPUE e esforço de pesca da lagosta-verde
     (*Panulirus laevicauda*), para a regressão exponencial (modelo de Fox).
-  - Os três têm direitos reservados pela obra: uso didático autorizado pelo professor, com citação, sem licença
+  - Os três: uso didático com citação da obra, sem termo de consentimento (decisão do professor), sem licença
     pública.
   - D28 `lagostas_kelp_sexo` e D01 `bagre_racao_isoproteica` também diziam "dados de coleta do grupo". O D28 é
     de Malyenge (2025), Mendeley Data, DOI 10.17632/y4vc857g9y.1, CC BY 4.0; o D01 é a Tabela 7.4 de Bhujel

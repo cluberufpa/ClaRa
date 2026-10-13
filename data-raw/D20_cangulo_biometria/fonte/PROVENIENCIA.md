@@ -16,5 +16,5 @@ As outras fontes desta pasta (`cangulo_crescimento.rda`, `dados_brutos_eapadados
 `data_cangulo_crescimento.R`) são a cópia herdada do EAPADados, que não citava o livro.
 O preparo confere as duas.
 
-O livro tem direitos reservados. A tabela é usada para fins didáticos, com autorização
-do professor e citação da obra; o PDF não é guardado aqui.
+Uso didático com citação da obra, sem termo de consentimento (decisão do professor,
+13/10/2026); o PDF não é guardado aqui.

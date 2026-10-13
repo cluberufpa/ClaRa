@@ -19,8 +19,8 @@ Um \code{data.frame} com 16 linhas (uma por classe de comprimento) e 7 colunas:
 \source{
 Ivo, C. T. C.; Fonteles Filho, A. A. (1997). \emph{Estatística pesqueira:
 aplicação em Engenharia de Pesca}. Fortaleza: Tom Gráfica e Editora. Tabela
-11.2. Obra com direitos reservados; valores transcritos para uso didático, com
-autorização do professor. Cite o livro ao usar os dados. Fonte e preparo em
+11.2. Uso didático com citação da obra, sem termo de consentimento
+(decisão do professor, 13/10/2026). Cite o livro ao usar os dados. Fonte e preparo em
 \verb{data-raw/D20_cangulo_biometria/}.
 }
 \usage{

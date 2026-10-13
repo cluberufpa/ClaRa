@@ -3,9 +3,9 @@
 - Registro: `D42_artemia_racao`; objeto: `artemia_racao`; nome_eapadados: `artemia`.
 - Ocupa o D42 (antes `plantas_crescimento`, retirado em 12/10/2026), por decisão do professor em 13/10/2026.
 - Fonte: **exercício 82** de Ivo e Fonteles Filho (1997), *Estatística pesqueira*. Uma fábrica afirma que a ração de farelo de arroz (A) acelera o crescimento de *Artemia salina* mais que a de farelo de babaçu (B); o livro pede o teste t unilateral com α = 0,05. Detalhes em `fonte/PROVENIENCIA.md`.
-- Dimensões: 20 × 2 (dez por ração); colunas `racao` (A, B) e `taxa_crescimento_mg_dia`.
+- Dimensões: 20 × 2 (dez por ração, conferidas pelo professor no livro impresso); colunas `racao` (A, B) e `taxa_crescimento_mg_dia`.
 - Natureza: exercício de livro; o experimento não é descrito (número de animais, recipientes, duração). Cada valor é tratado como independente, como no exercício.
-- Licença: obra com direitos reservados; uso didático autorizado pelo professor, com citação. Sem licença pública.
+- Licença: uso didático na Trilha e na ClaRa com citação da obra, sem termo de consentimento (decisão do professor, 13/10/2026). Sem licença pública.
 - Situação: revisado.
 
 ## Relação com o antigo `EAPADados::artemia`

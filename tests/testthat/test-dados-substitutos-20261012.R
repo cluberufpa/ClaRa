@@ -119,3 +119,25 @@ test_that("catálogo traz os verbos da ClaRa que rodam em cada conjunto", {
   expect_identical(catalogo_dados$verbo_clara[catalogo_dados$codigo == "D42"],
                    "comparar_medias; comparar_medianas")
 })
+
+test_that("situacao do catálogo tem vocabulário fixo e os limites ficam à parte", {
+  expect_true(all(enc2utf8(catalogo_dados$situacao) %in%
+                    c("provisório", "revisado", "sintético de treino")))
+  expect_identical(sort(catalogo_dados$codigo[enc2utf8(catalogo_dados$situacao) == "sintético de treino"]),
+                   c("D11", "D36", "D37"))
+  expect_type(catalogo_dados$limites, "character")
+  expect_false(anyNA(catalogo_dados$limites))
+})
+
+test_that("D13 tem rótulo sem hífen e D35 tem a coluna dieta, prontos para comparar_medias()", {
+  a <- artemia_fitoesterois
+  expect_false(any(grepl("-", levels(a$esterol_rotulo))))
+  expect_identical(nrow(unique(a[c("esterol", "esterol_rotulo")])), nlevels(a$esterol_rotulo))
+  exp1 <- droplevels(subset(a, experimento == "exp_1"))
+  expect_s3_class(comparar_medias(exp1, biomassa_mg, esterol_rotulo), "clara_medias")
+  t <- tilapia_microalgas
+  expect_identical(levels(t$dieta), c("controle", "nannochloropsis_25", "nannochloropsis_50",
+                                      "tetraselmis_25", "tetraselmis_50"))
+  expect_identical(as.vector(table(t$dieta)), rep(3L, 5))
+  expect_s3_class(comparar_medias(t, sgr_pct_dia, dieta), "clara_medias")
+})

@@ -16,7 +16,8 @@
   "verbo_clara": "",
   "licenca": "CC BY 4.0; declarada nos metadados Figshare",
   "referencia": "Scherer, U.; Ehlman, S. M.; Bierbach, D.; Krause, J.; Wolf, M. (2023). Figshare DOI 10.6084/m9.figshare.23971599.v1; artigo DOI 10.1038/s41467-023-43069-6; correção DOI 10.1038/s41467-026-71983-y",
-  "situacao": "Pronto para exploração; usar com limite de delineamento: medidas repetidas por peixe e ocasiões ausentes sem imputação",
+  "situacao": "revisado",
+  "limites": "usar com limite de delineamento: medidas repetidas por peixe e ocasiões ausentes sem imputação",
   "fonte_dados": "clara"
 }
 

@@ -10,5 +10,5 @@ feita em 13/10/2026 a partir do extrato do livro em PDF trazido pelo professor. 
 colunas que o livro deixa em branco para o aluno (ln CPUE, x², y'², xy') não entram.
 O exercício seguinte, 11.2 (fecundidade de *P. argus*), traz só a equação, sem dados.
 
-O livro tem direitos reservados. Uso didático com autorização do professor e citação
-da obra; o PDF não é guardado aqui.
+Uso didático com citação da obra, sem termo de consentimento (decisão do professor,
+13/10/2026); o PDF não é guardado aqui.

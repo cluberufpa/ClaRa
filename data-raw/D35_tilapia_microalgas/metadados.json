@@ -9,12 +9,13 @@
   "origem": "EAPADados::tilapia_microalgas",
   "unidade_amostral": "tanque experimental; 15 tanques, três por dieta",
   "linhas": 15,
-  "colunas": 32,
+  "colunas": 31,
   "analises": "ANOVA de tratamentos; PCA exploratória",
   "analise_principal": "ANOVA de tratamentos",
   "palavras_chave": "tilapia; microalgas",
-  "verbo_clara": "",
+  "verbo_clara": "comparar_medias",
   "licenca": "CC BY 4.0",
   "referencia": "Amira et al. (2021), Mendeley Data, DOI 10.17632/hv5fg5r869.1",
-  "situacao": "provisório"
+  "situacao": "provisório",
+  "limites": "15 aquários, três por dieta; a unidade é o aquário, não o peixe; o controle é comum às duas microalgas"
 }

@@ -16,6 +16,7 @@
   "verbo_clara": "",
   "licenca": "CC0 1.0; Dryad",
   "referencia": "Data cod flounder. Dryad Digital Repository, DOI 10.5061/dryad.kb2f352. Artigo associado: DOI 10.1111/jbi.13510.",
-  "situacao": "Pronto para exploração didática: recorte explícito de 2008, 4º trimestre, com 179 linhas. A resposta usa log1p(CPUE); não usar o recorte para inferência sobre todo o Báltico.",
+  "situacao": "revisado",
+  "limites": "recorte explícito de 2008, 4º trimestre, com 179 linhas. A resposta usa log1p(CPUE); não usar o recorte para inferência sobre todo o Báltico.",
   "fonte_dados": "clara"
 }

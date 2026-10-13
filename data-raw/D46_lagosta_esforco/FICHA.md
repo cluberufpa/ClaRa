@@ -5,7 +5,7 @@
 - Fonte: **exercício 11.1** de Ivo e Fonteles Filho (1997), *Estatística pesqueira*: verificar se há correlação entre a CPUE (kg/covo-dia) e o esforço de pesca (10³ covos-dia) do estoque da lagosta *Panulirus laevicauda* e, se houver, ajustar y = A e^(−bx). Detalhes em `fonte/PROVENIENCIA.md`.
 - Dimensões: 14 × 2; colunas `esforco_mil_covo_dia` e `cpue_kg_covo_dia`.
 - Natureza: dados de pesca declarados no enunciado; o livro não diz os anos nem o local. A ordem das linhas é a do livro.
-- Licença: obra com direitos reservados; uso didático autorizado pelo professor, com citação. Sem licença pública.
+- Licença: uso didático na Trilha e na ClaRa com citação da obra, sem termo de consentimento (decisão do professor, 13/10/2026). Sem licença pública.
 - Situação: revisado.
 
 ## Uso didático
