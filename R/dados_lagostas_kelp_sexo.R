@@ -15,14 +15,14 @@
 #' }
 #'
 #' @details
-#' Confirmar DOI, autoria, licença e qual código DIAZ/SWB representa kelp natural ou cultivo. Não inventar nomes. Registrar filtro herdado de sexo/sítio, sem novo corte. Considerar armadilhas e eventos para independência; meses são fator com ordem de níveis sazonal, não ordered.
+#' Autoria, DOI e licença conferidos em 13/10/2026 (ver Fonte). Coleta de setembro de 2024 a abril de 2025, com seis covos por evento (três em cada sítio), iscados com carapau e deixados de 24 a 48 h; comprimento medido com paquímetro e sexo pelos poros genitais. O depósito não diz qual código, DIAZ ou SWB, é o kelp natural e qual é o cultivado. Não inventar nomes. Registrar filtro herdado de sexo/sítio, sem novo corte. Considerar armadilhas e eventos para independência; meses são fator com ordem de níveis sazonal, não ordered.
 #'
 #' @section Adaptações:
 #' Cabeçalhos, categorias, valores, linhas e ordem herdados preservados.
 #'
 #' @source
-#' Abundance, Size Structure, and Sex Ratio Variation of West Coast Rock Lobster (Jasus lalandii) in Cultivated and Natural Kelp Forests off Lüderitz, Namibia; depósito Mendeley, identificador a completar.
-#' Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados de pesquisa e coleta do grupo, sem licença pública.
+#' Malyenge, S. (2025). Abundance, Size Structure, and Sex Ratio Variation of West Coast Rock Lobster (Jasus lalandii) in Cultivated and Natural Kelp Forests off Lüderitz, Namibia. Mendeley Data, versão 1, \doi{10.17632/y4vc857g9y.1}.
+#' Licença: CC BY 4.0, conferida no depósito em 13/10/2026.
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D28_lagostas_kelp/.
 #'

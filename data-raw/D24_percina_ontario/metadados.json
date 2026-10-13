@@ -13,7 +13,7 @@
   "analises": "Mann-Whitney; Estatística descritiva",
   "analise_principal": "Mann-Whitney",
   "palavras_chave": "darter; ontario",
-  "verbo_clara": "",
+  "verbo_clara": "comparar_medianas",
   "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Reid (2004), Journal of Freshwater Ecology 19:441–444, Figura 2; FSAdata::DarterOnt",
   "situacao": "provisório",

@@ -1,23 +1,29 @@
-# D20 — Cangulo: comprimento e pesos por classe
+# D20 — Cangulo: relação peso-comprimento
 
-- Registro: `D20_cangulo_biometria`; objeto definitivo: `cangulo_crescimento`; nome_eapadados: `cangulo_crescimento`.
-- Dimensões: 16 × 7; unidade: classe de comprimento com três pesos e média; protocolo a confirmar.
-- Natureza: real declarada; fonte incompleta; origem: EAPADados::cangulo_crescimento.
-- Referência: Fonte específica não identificada na documentação herdada.
-- Licença: Não localizada; origem e autorização a confirmar. A licença MIT do código não altera a da fonte.
-- Situação: provisório; autorização e licença da fonte pendentes.
+- Registro: `D20_cangulo_biometria`; objeto: `cangulo_crescimento`; nome_eapadados: `cangulo_crescimento`.
+- Fonte identificada em 13/10/2026: **Tabela 11.2** de Ivo, C. T. C.; Fonteles Filho, A. A. (1997), *Estatística pesqueira: aplicação em Engenharia de Pesca*, Fortaleza, Tom Gráfica e Editora, vi + 193 p.: "Valores do comprimento total (cm) e peso total (g) do cangulo, *Balistes vetula*, no Estado do Ceará". Transcrição em `fonte/tabela_11_2_ivo_fonteles_1997.csv`; detalhes em `fonte/PROVENIENCIA.md`.
+- Dimensões: 16 × 7; unidade: peixe, três por classe de comprimento de 2 cm (12 a 42 cm), 48 pesos ao todo.
+- Licença: obra com direitos reservados; valores transcritos para uso didático na Trilha e na ClaRa, com autorização do professor e citação obrigatória. Sem licença pública; termos de redistribuição a confirmar.
+- Situação: revisado (fonte e valores conferidos com o livro).
 
-## Linhas e de-para
+## Colunas (de-para em 13/10/2026)
 
-Todas as linhas e sua ordem preservadas. Ausências mantidas; nenhuma imputação.
-Correção explicitada no pedido da Trilha: ln_peso recebe valores da antiga ln_comp; ln_comp recebe valores da antiga ln_peso. Demais cabeçalhos e valores preservados, sem recalcular a precisão dos logaritmos.
+| Coluna | Antes | No livro |
+|---|---|---|
+| `comprimento_cm` | `comprimento_cm` | Comprimento (x) |
+| `peso1_g`, `peso2_g`, `peso3_g` | `p1`, `p2`, `p3` | Peso (g): y1, y2, y3 |
+| `peso_medio_g` | `peso_g` | Média dos pesos (y) |
+| `ln_comprimento` | `ln_peso` na cópia herdada (nome trocado) | x' = ln x |
+| `ln_peso_medio` | `ln_comp` na cópia herdada (nome trocado) | y' = ln y |
 
-As fontes usadas no preparo estão preservadas integralmente em `fonte/`, com SHA256. A conferência compara o objeto herdado com a planilha/CSV que o originou, antes das adaptações autorizadas. Uma fonte local organizada não equivale a reextração independente de toda a publicação.
+Comprimentos e pesos idênticos ao livro. A média e os logaritmos têm todas as casas; o livro dá uma ou três e, na classe de 36 cm, trunca a média (1015,2; a conta dá 1015,27).
 
 ## Uso didático
 
-Regressão de potência; Transformação logarítmica; Estatística descritiva. Principal: Regressão de potência. Exemplo da ajuda resume os dados; não promete que a ClaRa tenha motor para todas as análises listadas.
+Relação peso-comprimento: a reta `ln_peso_medio ~ ln_comprimento` dá b = 2,86 (alometria negativa, perto de 3). O livro ajusta às 16 médias; empilhando `peso1_g` a `peso3_g` (largo para longo), a mesma reta usa os 48 peixes, e o aluno vê a diferença entre ajustar médias e indivíduos. Verbo ClaRa: `relacionar_variaveis()` nas colunas de logaritmo.
 
-## Pendências para a curadoria
+## Pendências
 
-Fonte e protocolo incompletos; natureza real declarada, ainda não confirmada. Três pesos não são medidas repetidas do mesmo peixe. Os logaritmos estavam trocados e foram realocados às colunas corretas conforme pedido da Trilha; precisão original preservada. Avaliar retirada de derivados na passada 2.
+Termos de redistribuição da obra. Ano e método de coleta não constam da tabela.
+
+Reproduzir na raiz: `source("data-raw/D20_cangulo_biometria/preparar.R")`.

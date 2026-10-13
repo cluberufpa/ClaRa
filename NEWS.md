@@ -1,5 +1,24 @@
 # clara (em desenvolvimento)
 
+- Revisão dos dados com o livro de Ivo e Fonteles Filho (1997), *Estatística pesqueira: aplicação em Engenharia
+  de Pesca* (13/10/2026), a partir de um extrato trazido pelo professor:
+  - D20 `cangulo_crescimento` ganha fonte: é a Tabela 11.2 do livro (cangulo, *Balistes vetula*, Ceará), conferida
+    valor a valor. As colunas passam a dizer o que guardam: `p1`, `p2`, `p3` viram `peso1_g`, `peso2_g`,
+    `peso3_g`; `peso_g` vira `peso_medio_g`; os logaritmos, `ln_comprimento` e `ln_peso_medio`, na ordem do
+    livro. A licença dizia "dados de coleta do grupo", o que não era verdade.
+  - D42 passa a `artemia_racao` (20 x 2): exercício 82, crescimento de *Artemia salina* com farelo de arroz (A)
+    ou de babaçu (B), para o teste t unilateral. É a fonte do antigo `EAPADados::artemia`, que tinha só 14 das
+    20 linhas e se dizia fictício.
+  - D46 passa a `lagosta_cpue_esforco` (14 x 2): exercício 11.1, CPUE e esforço de pesca da lagosta-verde
+    (*Panulirus laevicauda*), para a regressão exponencial (modelo de Fox).
+  - Os três têm direitos reservados pela obra: uso didático autorizado pelo professor, com citação, sem licença
+    pública.
+  - D28 `lagostas_kelp_sexo` e D01 `bagre_racao_isoproteica` também diziam "dados de coleta do grupo". O D28 é
+    de Malyenge (2025), Mendeley Data, DOI 10.17632/y4vc857g9y.1, CC BY 4.0; o D01 é a Tabela 7.4 de Bhujel
+    (2011), um livro. Licenças corrigidas.
+  - `verbo_clara` preenchido onde um verbo existente roda e responde a uma pergunta do conjunto: D15, D16, D20,
+    D24, D28, D42, D46, D50 e D52. Catálogo com 56 conjuntos.
+
 - D11 passa a `treino_biometria` (71 x 10, sintético de treino), por decisão do professor (13/10/2026): a aba
   `biometria` da planilha de treino da Trilha (`Treino-Transformacoes.xlsx`) entra na ClaRa como o conjunto do
   menu de preparo, com todos os defeitos de propósito (texto inconsistente, 11 ausentes, 3 duplicatas, coluna

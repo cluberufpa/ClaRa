@@ -1,0 +1,20 @@
+{
+  "codigo": "D46",
+  "registro": "D46_lagosta_esforco",
+  "nome": "lagosta_cpue_esforco",
+  "nome_eapadados": "",
+  "rotulo": "Lagosta-verde (Panulirus laevicauda): CPUE e esforço de pesca com covos",
+  "titulo": "D46 - Lagosta-verde: CPUE e esforço de pesca (Ivo e Fonteles Filho, 1997)",
+  "natureza": "real declarada em exercício de livro; período e local não informados",
+  "origem": "Ivo e Fonteles Filho (1997), Estatística pesqueira, exercício 11.1",
+  "unidade_amostral": "período de pesca do estoque (não identificado no livro), com esforço total e CPUE média",
+  "linhas": 14,
+  "colunas": 2,
+  "analises": "Correlação; regressão exponencial pela reta de ln(CPUE) contra o esforço; modelo de produção de Fox; comparação com a reta",
+  "analise_principal": "Regressão exponencial (reta de ln CPUE contra o esforço)",
+  "palavras_chave": "lagosta; Panulirus laevicauda; CPUE; esforço de pesca; covo; modelo exponencial; modelo de Fox; avaliação de estoques; Ivo e Fonteles Filho",
+  "verbo_clara": "relacionar_variaveis",
+  "licenca": "Exercício de livro com direitos reservados (Ivo e Fonteles Filho, 1997); valores transcritos para uso didático na Trilha e na ClaRa, autorizado pelo professor; citar a obra; sem licença pública",
+  "referencia": "Ivo, C. T. C.; Fonteles Filho, A. A. (1997). Estatística pesqueira: aplicação em Engenharia de Pesca. Fortaleza: Tom Gráfica e Editora. vi, 193 p. Exercício 11.1",
+  "situacao": "revisado em 13/10/2026: transcrito do livro; anos e local não informados; termos de redistribuição da obra a confirmar"
+}

@@ -27,7 +27,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo tem 54 conjuntos (45 internos, oito do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62; o D11 voltou a ter conjunto em 13/10/2026 (`treino_biometria`).
+com substituições aprovadas registradas abaixo. O catálogo tem 56 conjuntos (47 internos, oito do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62; em 13/10/2026 voltaram a ter conjunto o D11 (`treino_biometria`), o D42 (`artemia_racao`) e o D46 (`lagosta_cpue_esforco`), estes dois do livro de Ivo e Fonteles Filho (1997).
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -35,7 +35,7 @@ As prioridades abaixo são sugestões para avaliação do professor.
 | Registro e objeto | Tema atual | O que procurar na fonte substituta |
 |---|---|---|
 | D12 bacterias_tratamento | Tratamento clínico em crianças | Resolvido: `garoupa_pcr_histologia` (CC BY 3.0 Austrália, 123 linhas reconstruídas das Tabelas 32 e 34 de Bowater 2015: PCR e histologia nos mesmos peixes). Antes: `ovinos_caprinos_fmdv` (418 pares reais, Gubbins et al. 2025, CC0), trocado por não ser de pesca. Antes: `erva_marinha_lesoes` (o "antes" era constante) e `cabras_toxoplasma` (linhas reconstruídas de tabelas) |
-| D46 carros_frenagem | Frenagem de carros históricos | Duas medidas contínuas em organismos/ambiente aquático, suficientes para comparar curva linear e quadrática; replicação identificada |
+| D46 lagosta_cpue_esforco | Pesca de lagosta | Resolvido em 13/10/2026: CPUE e esforço da lagosta-verde, exercício 11.1 de Ivo e Fonteles Filho (1997). Antes: Duas medidas contínuas em organismos/ambiente aquático, suficientes para comparar curva linear e quadrática; replicação identificada |
 | D47 pollock_alasca | Pesca de pesquisa | Resolvido: NOAA CC0, 523 lances; substituição aprovada em 12/10/2026. Dois pontos costeiros a conferir |
 | D50 molinesias_parasitos | Bioecologia de peixes | Resolvido: substituição do quine aprovada em 11/10/2026, fonte Dryad CC0; curadoria fina pendente |
 | D51 seguros_sinistros | Seguros de automóveis | Contagens agregadas com denominador/esforço observado e grupos; preservar exercício de exposição/offset |
@@ -71,11 +71,11 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 |---|---|---|
 | D11 (histórico) | puromicina_reacao, retirado; desde 13/10/2026 é treino_biometria, sintético de treino da Trilha | datasets::Puromycin; fonte antiga em data-raw/retirados |
 | D12 (histórico) | bacterias_tratamento, depois bufalos_estrongilos, substituídos por erva_marinha_lesoes e, depois, por cabras_toxoplasma, ovinos_caprinos_fmdv e garoupa_pcr_histologia | MASS::bacteria, fontes antigas em data-raw/substituidos |
-| D42 (retirado) | plantas_crescimento | datasets::PlantGrowth; retirado do pacote, fonte em data-raw/retirados |
+| D42 (histórico) | plantas_crescimento, retirado; desde 13/10/2026 é artemia_racao (Ivo e Fonteles Filho, 1997, exercício 82) | datasets::PlantGrowth; retirado do pacote, fonte em data-raw/retirados |
 | D43 (retirado) | ervilhas_adubacao | datasets::npk; retirado do pacote, fonte em data-raw/retirados |
 | D44 (histórico) | plantas_absorcao_co2, substituído por percas_hipoxia | datasets::CO2, fonte antiga em data-raw/substituidos |
 | D45 (retirado) | insetos_inseticidas | datasets::InsectSprays; retirado do pacote, fonte em data-raw/retirados |
-| D46 (retirado) | carros_frenagem | datasets::cars; retirado do pacote, fonte em data-raw/retirados |
+| D46 (histórico) | carros_frenagem, retirado; desde 13/10/2026 é lagosta_cpue_esforco (Ivo e Fonteles Filho, 1997, exercício 11.1) | datasets::cars; retirado do pacote, fonte em data-raw/retirados |
 | D47 (histórico) | terremotos_fiji, substituído por pollock_alasca | datasets::quakes, fonte antiga arquivada |
 | D48 (histórico) | laranjeiras_crescimento, substituído por molinesias_crescimento | datasets::Orange, fonte antiga em data-raw/substituidos |
 | D49 (retirado) | aveia_parcelas | MASS::oats; retirado do pacote, fonte em data-raw/retirados |

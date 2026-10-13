@@ -75,3 +75,47 @@ test_that("D60 esgana-gata é um quadrado latino 4 x 4 repetido em 144 peixes", 
   expect_equal(r$Df, c(3, 3, 426))
   expect_lt(r[["Pr(>F)"]][1], 1e-5)
 })
+
+test_that("D20 cangulo confere com a Tabela 11.2 de Ivo e Fonteles Filho (1997)", {
+  x <- cangulo_crescimento
+  expect_identical(dim(x), c(16L, 7L))
+  expect_identical(names(x), c("comprimento_cm", "peso1_g", "peso2_g", "peso3_g",
+    "peso_medio_g", "ln_comprimento", "ln_peso_medio"))
+  expect_equal(x$comprimento_cm, seq(12, 42, by = 2))
+  expect_equal(x$peso_medio_g, (x$peso1_g + x$peso2_g + x$peso3_g) / 3)
+  # Somatórios impressos no livro, com três casas.
+  expect_equal(round(sum(round(x$ln_comprimento, 3)), 3), 51.684)
+  expect_equal(round(sum(round(x$ln_peso_medio, 3)), 3), 94.414, tolerance = 1e-4)
+  reta <- lm(ln_peso_medio ~ ln_comprimento, data = x)
+  expect_equal(unname(coef(reta)[2]), 2.859, tolerance = 1e-3)
+  expect_s3_class(relacionar_variaveis(x, ln_peso_medio, ln_comprimento), "clara_regressao")
+})
+
+test_that("D42 artêmia reproduz o exercício 82 e contém o antigo EAPADados::artemia", {
+  x <- artemia_racao
+  expect_identical(dim(x), c(20L, 2L))
+  expect_identical(levels(x$racao), c("A", "B"))
+  expect_equal(as.vector(tapply(x$taxa_crescimento_mg_dia, x$racao, mean)), c(4.10, 3.42))
+  t <- t.test(taxa_crescimento_mg_dia ~ racao, data = x, alternative = "greater",
+              var.equal = TRUE)
+  expect_equal(unname(t$statistic), 4.2028, tolerance = 1e-4)
+  expect_lt(t$p.value, 0.001)
+})
+
+test_that("D46 lagosta: a CPUE cai exponencialmente com o esforço", {
+  x <- lagosta_cpue_esforco
+  expect_identical(dim(x), c(14L, 2L))
+  expect_identical(names(x), c("esforco_mil_covo_dia", "cpue_kg_covo_dia"))
+  fox <- lm(log(cpue_kg_covo_dia) ~ esforco_mil_covo_dia, data = x)
+  expect_equal(unname(coef(fox)[2]), -0.05159, tolerance = 1e-3)
+  expect_gt(summary(fox)$r.squared, 0.94)
+  expect_lt(cor(x$esforco_mil_covo_dia, x$cpue_kg_covo_dia), -0.9)
+})
+
+test_that("catálogo traz os verbos da ClaRa que rodam em cada conjunto", {
+  verbos <- c("comparar_medias", "comparar_medianas", "relacionar_variaveis")
+  usados <- unlist(strsplit(catalogo_dados$verbo_clara[nzchar(catalogo_dados$verbo_clara)], "; "))
+  expect_true(all(usados %in% verbos))
+  expect_identical(catalogo_dados$verbo_clara[catalogo_dados$codigo == "D42"],
+                   "comparar_medias; comparar_medianas")
+})

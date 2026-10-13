@@ -1,7 +1,7 @@
 # D13 — Artêmia: biomassa sob suplementação com fitoesteróis
 
 - Registro: `D13_artemia_fitoesterois`; objeto definitivo: `artemia_fitoesterois`; nome_eapadados: ``.
-- Dimensões: 69 × 5; unidade: recipiente experimental de 4 L, com resposta agregada por recipiente.
+- Dimensões: 69 × 4; unidade: recipiente experimental de 4 L, com resposta agregada por recipiente.
 - Natureza: real; origem: literatura: BCO-DMO, conjunto 724179.
 - Referência: Hassett e Giner (2021); BCO-DMO, versão 1 de 19/01/2018; DOI 10.26008/1912/bco-dmo.724179.1.
 - Licença: CC BY 4.0. A licença MIT do código não altera a da fonte.

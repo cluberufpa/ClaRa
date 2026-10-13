@@ -3,9 +3,9 @@
 - Registro: `D28_lagostas_kelp`; objeto definitivo: `lagostas_kelp_sexo`; nome_eapadados: `lagostas_kelp_sexo`.
 - Dimensões: 1457 × 8; unidade: lagosta capturada em um evento e sítio.
 - Natureza: real; origem: EAPADados::lagostas_kelp_sexo.
-- Referência: Abundance, Size Structure, and Sex Ratio Variation of West Coast Rock Lobster (Jasus lalandii) in Cultivated and Natural Kelp Forests off Lüderitz, Namibia; depósito Mendeley, identificador a completar.
-- Licença: Licença específica do depósito Mendeley a confirmar. A licença MIT do código não altera a da fonte.
-- Situação: provisório; autorização e licença da fonte pendentes.
+- Referência: Malyenge, S. (2025). Abundance, Size Structure, and Sex Ratio Variation of West Coast Rock Lobster (Jasus lalandii) in Cultivated and Natural Kelp Forests off Lüderitz, Namibia. Mendeley Data, versão 1 (07/10/2025), DOI 10.17632/y4vc857g9y.1 (Universidade da Namíbia).
+- Licença: CC BY 4.0, conferida no depósito em 13/10/2026 (o catálogo dizia, por engano, "dados de coleta do grupo"). A licença MIT do código não altera a da fonte.
+- Situação: provisório; fonte e licença conferidas em 13/10/2026.
 
 ## Linhas e de-para
 
@@ -20,4 +20,4 @@ Qui-quadrado de independência; Proporções. Principal: Qui-quadrado de indepen
 
 ## Pendências para a curadoria
 
-Confirmar DOI, autoria, licença e qual código DIAZ/SWB representa kelp natural ou cultivo. Não inventar nomes. Registrar filtro herdado de sexo/sítio, sem novo corte. Considerar armadilhas e eventos para independência; meses são fator com ordem de níveis sazonal, não ordered.
+O depósito não diz qual código DIAZ/SWB representa kelp natural ou cultivo. Não inventar nomes. Registrar filtro herdado de sexo/sítio, sem novo corte. Considerar armadilhas e eventos para independência; meses são fator com ordem de níveis sazonal, não ordered.

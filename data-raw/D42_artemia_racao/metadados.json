@@ -1,0 +1,20 @@
+{
+  "codigo": "D42",
+  "registro": "D42_artemia_racao",
+  "nome": "artemia_racao",
+  "nome_eapadados": "artemia",
+  "rotulo": "Artemia salina: taxa de crescimento com ração de farelo de arroz (A) ou de babaçu (B)",
+  "titulo": "D42 - Artêmia: crescimento com duas rações (Ivo e Fonteles Filho, 1997)",
+  "natureza": "exercício de livro; origem experimental não descrita",
+  "origem": "Ivo e Fonteles Filho (1997), Estatística pesqueira, exercício 82; EAPADados::artemia tinha só as sete primeiras linhas de cada ração",
+  "unidade_amostral": "não descrita no livro; dez valores por ração, tratados como independentes no exercício",
+  "linhas": 20,
+  "colunas": 2,
+  "analises": "Teste t de duas amostras unilateral; Mann-Whitney; estatística descritiva; boxplot",
+  "analise_principal": "Teste t de duas amostras unilateral (A maior que B)",
+  "palavras_chave": "artêmia; Artemia salina; ração; farelo de arroz; farelo de babaçu; teste t unilateral; aquicultura; Ivo e Fonteles Filho",
+  "verbo_clara": "comparar_medias; comparar_medianas",
+  "licenca": "Exercício de livro com direitos reservados (Ivo e Fonteles Filho, 1997); valores transcritos para uso didático na Trilha e na ClaRa, autorizado pelo professor; citar a obra; sem licença pública",
+  "referencia": "Ivo, C. T. C.; Fonteles Filho, A. A. (1997). Estatística pesqueira: aplicação em Engenharia de Pesca. Fortaleza: Tom Gráfica e Editora. vi, 193 p. Exercício 82",
+  "situacao": "revisado em 13/10/2026: transcrito do livro; unidade experimental não descrita; termos de redistribuição da obra a confirmar"
+}

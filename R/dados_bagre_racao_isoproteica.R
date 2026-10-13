@@ -34,10 +34,11 @@
 #' rações pressupõe unidades experimentais independentes. O conjunto não
 #' permite estudar crescimento ao longo do tempo nem ganho de peso.
 #'
-#' **Licença e autorização.** Não há licença pública. O professor aprovou a
-#' curadoria em 11/10/2026 e autorizou, em 12/10/2026, o uso interno na Trilha e
-#' na ClaRa (dados de pesquisa e coleta do grupo). Isso não é uma licença
-#' pública nem indica que os dados estejam licenciados sob MIT.
+#' **Licença e autorização.** Não há licença pública: a tabela vem de um livro
+#' com direitos reservados (Bhujel, 2011), não de coleta do grupo. O professor
+#' aprovou a curadoria em 11/10/2026 e autorizou, em 12/10/2026, o uso didático
+#' na Trilha e na ClaRa, com citação do livro. Isso não é uma licença pública nem
+#' indica que os dados estejam licenciados sob MIT.
 #'
 #' A preparação reproduzível e o histórico completo estão em
 #' `data-raw/D01_bagre_racao/` no repositório da ClaRa.

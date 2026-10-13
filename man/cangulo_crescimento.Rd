@@ -3,41 +3,56 @@
 \docType{data}
 \name{cangulo_crescimento}
 \alias{cangulo_crescimento}
-\title{D20 - Cangulo: comprimento e pesos por classe}
+\title{D20 - Cangulo: relação peso-comprimento}
 \format{
-Um \code{data.frame} com 16 linhas e 7 colunas:
+Um \code{data.frame} com 16 linhas (uma por classe de comprimento) e 7 colunas:
 \describe{
-\item{comprimento_cm}{Comprimento da classe, em centímetros conforme origem.}
-\item{p1}{Primeiro peso da classe, em gramas conforme origem.}
-\item{p2}{Segundo peso da classe, em gramas conforme origem.}
-\item{p3}{Terceiro peso da classe, em gramas conforme origem.}
-\item{peso_g}{Peso médio da classe, em gramas conforme origem.}
-\item{ln_peso}{Logaritmo natural do peso médio; valores realocados da antiga ln_comp.}
-\item{ln_comp}{Logaritmo natural do comprimento; valores realocados da antiga ln_peso.}
+\item{comprimento_cm}{Comprimento total da classe, em cm.}
+\item{peso1_g}{Peso total do primeiro peixe da classe, em g.}
+\item{peso2_g}{Peso total do segundo peixe da classe, em g.}
+\item{peso3_g}{Peso total do terceiro peixe da classe, em g.}
+\item{peso_medio_g}{Média dos três pesos, em g.}
+\item{ln_comprimento}{Logaritmo natural de \code{comprimento_cm} (o \eqn{x'} do livro).}
+\item{ln_peso_medio}{Logaritmo natural de \code{peso_medio_g} (o \eqn{y'} do livro).}
 }
 }
 \source{
-Fonte específica não identificada na documentação herdada.
-Licença: Uso interno na Trilha e na ClaRa autorizado pelo professor em 12/10/2026; dados de pesquisa e coleta do grupo, sem licença pública.
-A licença MIT do código não substitui os termos da origem dos dados.
-Fontes e preparo: data-raw/D20_cangulo_biometria/.
+Ivo, C. T. C.; Fonteles Filho, A. A. (1997). \emph{Estatística pesqueira:
+aplicação em Engenharia de Pesca}. Fortaleza: Tom Gráfica e Editora. Tabela
+11.2. Obra com direitos reservados; valores transcritos para uso didático, com
+autorização do professor. Cite o livro ao usar os dados. Fonte e preparo em
+\verb{data-raw/D20_cangulo_biometria/}.
 }
 \usage{
 cangulo_crescimento
 }
 \description{
-Dados provisórios da passada 1. Unidade amostral: classe de comprimento com três pesos e média; protocolo a confirmar.
+Pesos de cangulos (\emph{Balistes vetula}) do Ceará em 16 classes de comprimento
+total, de 12 a 42 cm, com três peixes por classe. É a tabela com que Ivo e
+Fonteles Filho (1997) ensinam a relação peso-comprimento: a curva de potência
+\eqn{P = a C^b} vira uma reta nos logaritmos, \eqn{\ln P = \ln a + b \ln C}.
 }
 \details{
-Fonte e protocolo incompletos; natureza real declarada, ainda não confirmada. Três pesos não são medidas repetidas do mesmo peixe. Os logaritmos estavam trocados e foram realocados às colunas corretas conforme pedido da Trilha; precisão original preservada. Avaliar retirada de derivados na passada 2.
+A reta nos logaritmos dá \eqn{b = 2,86}, um pouco abaixo do
+crescimento isométrico (\eqn{b = 3}). O livro ajusta a reta às 16 médias; com a
+tabela no formato longo (\code{peso1_g} a \code{peso3_g} empilhados), a mesma reta usa os
+48 peixes. Os três pesos de uma classe são de peixes diferentes, não pesagens
+repetidas do mesmo peixe. As colunas de média e de logaritmo são derivadas e
+podem ser refeitas pelo aluno.
 }
 \section{Adaptações}{
 
-Correção explicitada no pedido da Trilha: ln_peso recebe valores da antiga ln_comp; ln_comp recebe valores da antiga ln_peso. Demais cabeçalhos e valores preservados, sem recalcular a precisão dos logaritmos.
+Tabela 11.2 do livro, conferida valor a valor com a cópia herdada do EAPADados
+(13/10/2026). Os nomes das colunas foram traduzidos (\code{p1} a \code{p3} viraram
+\code{peso1_g} a \code{peso3_g}, \code{peso_g} virou \code{peso_medio_g}); a média e os
+logaritmos têm todas as casas, e o livro, uma ou três (na classe de 36 cm ele
+trunca a média em 1015,2). Na cópia herdada os nomes dos dois logaritmos
+estavam trocados.
 }
 
 \examples{
-summary(cangulo_crescimento)
-
+reta <- lm(ln_peso_medio ~ ln_comprimento, data = cangulo_crescimento)
+coef(reta)
+exp(coef(reta)[[1]])   # o a da curva de potência
 }
 \keyword{datasets}
