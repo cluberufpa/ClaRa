@@ -39,7 +39,7 @@ As prioridades abaixo são sugestões para avaliação do professor.
 | D47 pollock_alasca | Pesca de pesquisa | Resolvido: NOAA CC0, 523 lances; substituição aprovada em 12/10/2026. Dois pontos costeiros a conferir |
 | D50 molinesias_parasitos | Bioecologia de peixes | Resolvido: substituição do quine aprovada em 11/10/2026, fonte Dryad CC0; curadoria fina pendente |
 | D51 seguros_sinistros | Seguros de automóveis | Contagens agregadas com denominador/esforço observado e grupos; preservar exercício de exposição/offset |
-| D52 paciente_peso | Série de peso humano | Resolvido: `secagem_beterraba_gengibre` (CC BY 4.0, 594 linhas); unidade do tempo e códigos B/G, C/E seguem pendentes |
+| D52 paciente_peso | Série de peso humano | `secagem_beterraba_gengibre` entrou e saiu (13/10/2026: vegetais, fora do pescado); vago até a busca 14 da Trilha achar curvas de secagem de pescado |
 | D53 navios_incidentes | Danos em frota sem identificação como pesqueira | Captura ou incidentes em embarcações/atividade pesqueira com esforço/exposição e fatores claros |
 
 ## Avaliar conforme o alcance de bioecologia geral
@@ -81,7 +81,7 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 | D49 (retirado) | aveia_parcelas | MASS::oats; retirado do pacote, fonte em data-raw/retirados |
 
 | D51 (retirado) | seguros_sinistros | MASS::Insurance; retirado do pacote, fonte em data-raw/retirados |
-| D52 (histórico) | paciente_peso, substituído por secagem_beterraba_gengibre | MASS::wtloss, fonte antiga em data-raw/substituidos |
+| D52 (histórico, vago) | paciente_peso, depois secagem_beterraba_gengibre (retirado em 13/10/2026) | MASS::wtloss, fonte antiga em data-raw/substituidos |
 | D53 (retirado) | navios_incidentes | MASS::ships; retirado do pacote, fonte em data-raw/retirados |
 | D54 | haemulon_crescimento | FSAdata::WhiteGrunt2 |
 | D55 | cabezon_maturidade | FSAdata::Cabezon |

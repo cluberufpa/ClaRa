@@ -1,5 +1,11 @@
 # clara (em desenvolvimento)
 
+- Sai o D52 `secagem_beterraba_gengibre` (13/10/2026), por decisão do professor: é de vegetais, e há muitos
+  estudos de secagem de pescado. O conjunto ensinava regressão não linear com curvas de secagem (razão de umidade
+  ao longo do tempo). O código D52 fica vago até a busca de um substituto com pescado
+  (`TRILHA/docs/prompts_busca/14_secagem_pescado.md`); fonte, receita, `.rda` e ajuda vão para
+  `data-raw/substituidos/D52_secagem_vegetais/`, e a arrumação leve deixa de tocar nele. Catálogo com 52 conjuntos.
+
 - D60 passa a `esgana_gata_ruido` (576 x 11, CC0), por decisão do professor (13/10/2026): o quadrado latino
   passa a ter peixes. Matchette e Herbert-Read (2021, *Animal Behaviour* 177:39-48; Dryad 10.5061/dryad.sj3tx962p):
   144 esgana-gatas focais, cada uma sob quatro ruídos visuais (estático, lento, médio, rápido) em quatro períodos;

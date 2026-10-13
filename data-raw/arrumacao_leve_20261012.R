@@ -116,10 +116,6 @@ x <- tirar(x, "grupo_local_especie")
 x$sexo <- trocar_niveis(x$sexo, c("F", "M"), c("fêmea", "macho"))
 alterar$molinesias_parasitos <- x
 
-# --- secagem_beterraba_gengibre: id_amostra repete produto + tratamento + temperatura
-x <- carregar("secagem_beterraba_gengibre")
-alterar$secagem_beterraba_gengibre <- tirar(x, "id_amostra")
-
 # --- pollock_alasca: ano e espécie são constantes
 x <- carregar("pollock_alasca")
 alterar$pollock_alasca <- tirar(x, "ano", "especie")
