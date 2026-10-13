@@ -101,7 +101,7 @@ Collate:
     'dados_ruffe_biometria.R'
     'dados_bighill_amostras.R'
     'dados_bighill_peixes.R'
-    'dados_trigo_quadrado_latino.R'
+    'dados_vacas_fistuladas.R'
     'dados_anchova_norte_california.R'
     'dados_larvas_peixes_captura.R'
 Config/roxygen2/version: 8.1.0

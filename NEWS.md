@@ -59,6 +59,15 @@
   removidos; fontes e receitas preservadas em `data-raw/retirados/`. Catálogo
   com 58 conjuntos (49 internos, oito do FSAdata e um do MASS).
 
+- D60 passa a `vacas_fistuladas` (16 x 8, CC BY 4.0), substituindo `trigo_quadrado_latino` (agridat), por decisão
+  do professor (12/10/2026): o trigo estava fora do contexto do ecossistema. Quadrado latino 4 x 4 de verdade (4 vacas
+  fistuladas em pastagem, 4 períodos, 4 dietas = oferta de forragem x suplemento), do Experimento II de Merino et al.
+  (2021, *Animals* 11:919). Os sete horários de coleta por célula viram a média (a unidade é a célula vaca x período).
+  As ANOVAs reproduzem a Tabela 4 do artigo (oferta p = 0,810, suplemento 0,856, interação 0,528 no pH) e o efeito de
+  período (F = 13,1; p = 0,005) mostra o ganho do bloqueio. Os códigos 1/2 da planilha foram resolvidos pelas médias da
+  tabela. Fonte e receita em `data-raw/D60_vacas_fistuladas/`; o trigo foi para `data-raw/substituidos/`.
+  Catálogo mantém 53 conjuntos.
+
 - D12 passa a `ovinos_caprinos_fmdv` (418 x 11, CC0 para os dados; artigo CC BY 4.0), substituindo
   `cabras_toxoplasma`, que reconstruía linhas a partir de tabelas publicadas. Dados individuais reais de
   Gubbins et al. (2025, *Veterinary Research* 56:76): 418 pares de soro e swab oral por rRT-PCR para o vírus

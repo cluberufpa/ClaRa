@@ -1,0 +1,21 @@
+{
+  "codigo": "D60",
+  "registro": "D60_vacas_fistuladas",
+  "nome": "vacas_fistuladas",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Vacas fistuladas: pH ruminal em um quadrado latino 4 x 4",
+  "titulo": "D60 - Vacas fistuladas: quadrado latino 4 x 4",
+  "natureza": "real",
+  "origem": "Merino et al. (2021), Animals 11(4):919, DOI 10.3390/ani11040919; Figshare DOI 10.6084/m9.figshare.13818920.v3",
+  "unidade_amostral": "uma vaca em um período (média de sete horários de coleta no último dia do período)",
+  "linhas": 16,
+  "colunas": 8,
+  "analises": "Quadrado latino; ANOVA com blocos em duas direções; Planejamento experimental; ANOVA fatorial 2 x 2 em quadrado latino",
+  "analise_principal": "Quadrado latino",
+  "palavras_chave": "quadrado latino; vaca; rúmen; pH ruminal; pastagem; suplemento; ensaio de cruzamento; crossover",
+  "verbo_clara": "",
+  "licenca": "CC BY 4.0",
+  "referencia": "Merino, V.; Leichtle, S.; Balocchi, O.; Lanuza, F.; Parga, J.; Delagarde, R.; Ruiz-Albarrán, M.; Rivero, M. J.; Pulido, R. (2021). Metabolic and Productive Response and Grazing Behavior of Lactating Dairy Cows Supplemented with High Moisture Maize or Cracked Wheat Grazing at Two Herbage Allowances in Spring. Animals 11(4):919. DOI 10.3390/ani11040919; dados no Figshare, DOI 10.6084/m9.figshare.13818920.v3; conferido em 12/10/2026",
+  "situacao": "curado; só 16 observações e 6 graus de liberdade no resíduo; os sete horários por célula foram resumidos em média"
+}

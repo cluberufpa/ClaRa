@@ -160,13 +160,6 @@ x$zona_recife <- trocar_niveis(x$zona_recife, c("Centre", "Edge", "Off"), c("cen
 x$estacao <- trocar_niveis(x$estacao, c("Summer", "Winter"), c("verão", "inverno"))
 alterar$recifes_ostras_heatmap <- x
 
-# --- trigo_quadrado_latino: linha, coluna e operador são fatores no delineamento
-x <- carregar("trigo_quadrado_latino")
-x$linha <- factor(x$linha)
-x$coluna <- factor(x$coluna)
-x$operador <- fator(x$operador)
-alterar$trigo_quadrado_latino <- x
-
 # --- cowichan_amostragem: categorias viram fator; ano inteiro
 x <- carregar("cowichan_amostragem")
 for (v in c("local", "sublocal", "ambiente", "sexo")) x[[v]] <- fator(x[[v]])

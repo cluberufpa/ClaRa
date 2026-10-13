@@ -89,7 +89,7 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 | D57 | bighill_amostras | FSAdata::BGHRsample |
 | D58 | bighill_peixes | FSAdata::BGHRfish |
 | D59 (retirado) | peixes_recrutamento | astsa::rec; retirado do pacote, fonte em data-raw/retirados |
-| D60 | trigo_quadrado_latino | agridat::cochran.latin |
+| D60 | trigo_quadrado_latino, substituído em 12/10/2026 por vacas_fistuladas (Merino et al. 2021, CC BY 4.0) | agridat::cochran.latin |
 
 O quadro não pretende listar todas as reexportações indiretas pelo
 EAPADados; essas têm procedência detalhada nas fichas e fontes congeladas.
