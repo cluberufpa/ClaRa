@@ -57,6 +57,7 @@ Collate:
     'dados_cpue_tubarao.R'
     'dados_lago_vitoria.R'
     'dados_enobieta_baci.R'
+    'dados_treino_biometria.R'
     'dados_morfometria_barbo.R'
     'dados_pinguins.R'
     'dados_salvelino_formalina_remocao.R'

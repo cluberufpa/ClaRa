@@ -27,7 +27,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo tem 53 conjuntos (44 internos, oito do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62.
+com substituições aprovadas registradas abaixo. O catálogo tem 54 conjuntos (45 internos, oito do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62; o D11 voltou a ter conjunto em 13/10/2026 (`treino_biometria`).
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -69,7 +69,7 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 
 | Código | Objeto | Origem |
 |---|---|---|
-| D11 (retirado) | puromicina_reacao | datasets::Puromycin; retirado do pacote, fonte em data-raw/retirados |
+| D11 (histórico) | puromicina_reacao, retirado; desde 13/10/2026 é treino_biometria, sintético de treino da Trilha | datasets::Puromycin; fonte antiga em data-raw/retirados |
 | D12 (histórico) | bacterias_tratamento, depois bufalos_estrongilos, substituídos por erva_marinha_lesoes e, depois, por cabras_toxoplasma, ovinos_caprinos_fmdv e garoupa_pcr_histologia | MASS::bacteria, fontes antigas em data-raw/substituidos |
 | D42 (retirado) | plantas_crescimento | datasets::PlantGrowth; retirado do pacote, fonte em data-raw/retirados |
 | D43 (retirado) | ervilhas_adubacao | datasets::npk; retirado do pacote, fonte em data-raw/retirados |

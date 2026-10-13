@@ -1,5 +1,12 @@
 # clara (em desenvolvimento)
 
+- D11 passa a `treino_biometria` (71 x 10, sintético de treino), por decisão do professor (13/10/2026): a aba
+  `biometria` da planilha de treino da Trilha (`Treino-Transformacoes.xlsx`) entra na ClaRa como o conjunto do
+  menu de preparo, com todos os defeitos de propósito (texto inconsistente, 11 ausentes, 3 duplicatas, coluna
+  composta, data como texto) e o guia de qual coluna exercita cada recurso na ajuda. A aba `desembarques_largo`
+  não entra, porque repete o exercício de empilhar do D37 `treino_desembarque`; o D36 `treino_coletas` fica, porque
+  o capítulo 5 do livro o usa. Catálogo com 54 conjuntos.
+
 - D52 passa a `secagem_bagre` (10 x 6, CC BY 4.0), por decisão do professor (13/10/2026): o código vago volta a
   ter uma curva de secagem, agora de pescado. Ohijeagbon et al. (2018, *Data in Brief* 18:641-647): um lote de
   bagres-africanos eviscerados num secador a gás a 80 °C, pesado de hora em hora de 0 a 540 min (8,53 -> 2,03 kg).

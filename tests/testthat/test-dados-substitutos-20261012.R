@@ -22,6 +22,19 @@ test_that("D12 garoupa reproduz as tabelas 2 x 2 publicadas de PCR e histologia"
   expect_lt(mcnemar.test(tab("2"))$p.value, 1e-4)
 })
 
+test_that("D11 treino_biometria conserva os defeitos do exercício de preparo", {
+  x <- treino_biometria
+  expect_identical(dim(x), c(71L, 10L))
+  expect_type(x$id, "character")
+  expect_identical(sum(is.na(x$comprimento_cm)), 5L)
+  expect_identical(sum(is.na(x$peso_g)), 6L)
+  expect_identical(sum(duplicated(x)), 3L)
+  expect_true(" Braganca " %in% x$local)
+  expect_true("Pescada  Amarela" %in% x$especie)
+  expect_setequal(unique(x$sexo), c("Femea", "f", "F", "m", "M", "Macho"))
+  expect_true(all(grepl("^[A-Za-z]+_(Seca|Chuvosa)$", x$amostra)))
+})
+
 test_that("D52 bagre reproduz a curva de 80 °C e o ajuste de Page", {
   x <- secagem_bagre
   expect_identical(dim(x), c(10L, 6L))

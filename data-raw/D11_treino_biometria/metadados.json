@@ -1,0 +1,21 @@
+{
+  "codigo": "D11",
+  "registro": "D11_treino_biometria",
+  "nome": "treino_biometria",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Biometria de pescado: DADOS SINTÉTICOS DE TREINO",
+  "titulo": "D11 - Biometria de pescado: DADOS SINTÉTICOS DE TREINO",
+  "natureza": "sintético de treino autorizado",
+  "origem": "Trilha, inst/app/dados/Treino-Transformacoes.xlsx, aba biometria",
+  "unidade_amostral": "registro fictício de um peixe medido numa coleta",
+  "linhas": 71,
+  "colunas": 10,
+  "analises": "Preparo: dados faltantes; remover duplicatas; padronizar texto; separar colunas; dicotomizar; padronizar; classes de tamanho; calcular e reescalar; tabela de contingência",
+  "analise_principal": "Preparo de dados",
+  "palavras_chave": "treino; preparo; biometria; pescado; dados faltantes; duplicatas; texto; Bragança",
+  "verbo_clara": "",
+  "licenca": "Dados fictícios do ecossistema EAPA, criados pelo professor",
+  "referencia": "Planilha de treino Treino-Transformacoes.xlsx da Trilha (antes CatalyseR); copiada sem alteração em 13/10/2026",
+  "situacao": "sintético de treino; defeitos de propósito; não usar para inferência"
+}
