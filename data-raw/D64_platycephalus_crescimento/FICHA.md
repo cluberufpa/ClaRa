@@ -1,7 +1,7 @@
-# D54 — Tiger flathead: idade, comprimento e sexo
+# D64 — Tiger flathead: idade, comprimento e sexo
 
-- Registro: `D54_platycephalus_crescimento`; objeto: `platycephalus_crescimento`.
-- Ocupa o D54 (antes `haemulon_crescimento`, pontos reconstruídos de uma figura; fonte e receita em `data-raw/retirados/D54_haemulon_crescimento/`), por decisão do professor em 13/10/2026, depois de uma busca de dados de idade e comprimento com otólitos, sem restrição de licença.
+- Registro: `D64_platycephalus_crescimento`; objeto: `platycephalus_crescimento`.
+- Entra como D64 em 13/10/2026, por decisão do professor, depois de uma busca de dados de idade e comprimento com otólitos, sem restrição de licença. Convive com o D54 `haemulon_crescimento` (xira-branca, do Brasil), que o professor manteve por ter uma faixa de idade maior e um L∞ mais estável; os dois formam um par para comparar curvas de crescimento, um de dados lidos de figura e outro de dados medidos.
 - Fonte: Morrongiello e Thresher (2014), Dryad, DOI 10.5061/dryad.q9h64, **CC0 1.0**. Detalhes e o que se encontrou ao conferir em `fonte/PROVENIENCIA.md`.
 - Dimensões: **402 × 6**; unidade: um peixe (*Platycephalus richardsoni*) capturado em 2000 na pesca de arrasto de fundo, área EBS, sudeste da Austrália.
 - Natureza: real, **recorte** do depósito (4.318 peixes). Idade pelos anéis do otólito, em anos inteiros; comprimento em cm, arredondado para baixo.
@@ -39,7 +39,7 @@ Saíram as colunas constantes no recorte (área EBS, aparelho de arrasto de fund
 | Machos (150) | 44,1 (EP 1,1) | 0,24 (EP 0,03) | −1,63 |
 | Todos | 44,9 | 0,34 | −0,74 |
 
-As curvas de fêmeas e machos diferem (F = 46 para três parâmetros, p < 0,001). Figura em `docs/D54_platycephalus_curva.png`.
+As curvas de fêmeas e machos diferem (F = 46 para três parâmetros, p < 0,001). Figura em `docs/D64_platycephalus_curva.png`.
 
 ## Uso didático
 
@@ -49,4 +49,4 @@ Curva de crescimento de von Bertalanffy com `nls()`, por sexo; comparação das 
 
 Recorte de uma pescaria e de um ano: vale para ela. Comprimento arredondado para baixo e idade inteira formam colunas de pontos no gráfico. Só 21 peixes passam de 10 anos, e L∞ tem erro-padrão de cerca de 1 cm. Os peixes foram coletados em seis meses de 2000, em lances diferentes: o depósito não identifica o lance.
 
-Reproduzir na raiz: `source("data-raw/D54_platycephalus_crescimento/preparar.R")`.
+Reproduzir na raiz: `source("data-raw/D64_platycephalus_crescimento/preparar.R")`.

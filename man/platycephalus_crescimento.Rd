@@ -3,7 +3,7 @@
 \docType{data}
 \name{platycephalus_crescimento}
 \alias{platycephalus_crescimento}
-\title{D54 - Tiger flathead: idade, comprimento e sexo}
+\title{D64 - Tiger flathead: idade, comprimento e sexo}
 \format{
 Um \code{data.frame} com 402 linhas (uma por peixe) e 6 colunas:
 \describe{
@@ -21,7 +21,7 @@ framework to explore ontogenetic growth variation among individuals and
 populations: a marine fish example. Dryad. \doi{10.5061/dryad.q9h64}. Licença
 CC0 1.0, conferida em 13/10/2026. Artigo: \emph{Ecological Monographs},
 \doi{10.1890/13-2355.1}. Fonte e preparo em
-\verb{data-raw/D54_platycephalus_crescimento/}.
+\verb{data-raw/D64_platycephalus_crescimento/}.
 }
 \usage{
 platycephalus_crescimento

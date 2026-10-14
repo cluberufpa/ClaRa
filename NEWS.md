@@ -1,15 +1,6 @@
 # clara (em desenvolvimento)
 
-- D54 passa a `platycephalus_crescimento` (402 x 6, CC0), por decisão do professor (13/10/2026): idade (pelos
-  otólitos), comprimento e sexo de peixes de *Platycephalus richardsoni* (tiger flathead), de Morrongiello e
-  Thresher (2014, Dryad, DOI 10.5061/dryad.q9h64). Substitui `haemulon_crescimento`, cujos 465 pontos eram
-  reconstruídos de uma figura. O depósito tem 4.318 peixes, mais do que uma curva de crescimento precisa: ficou
-  um recorte natural de uma pescaria e de um ano (área EBS, arrasto de fundo, 2000; 252 fêmeas e 150 machos),
-  porque amostras aleatórias pequenas dão curvas instáveis. O arquivo da fonte tem uma linha por anel de otólito;
-  aqui há uma por peixe. A curva de von Bertalanffy dá L∞ de 47 cm nas fêmeas e 44 cm nos machos. O defeito de
-  sexo do depósito (444 peixes com sexo contraditório, quase todos de 2009 e 2010) não alcança o recorte e fica
-  documentado.
-  Catálogo com 54 conjuntos (47 internos, seis do FSAdata e um do MASS).
+- D64 `platycephalus_crescimento` (402 x 6, CC0), por decisão do professor (13/10/2026): idade (pelos otólitos), comprimento e sexo de peixes de *Platycephalus richardsoni* (tiger flathead), de Morrongiello e Thresher (2014, Dryad, DOI 10.5061/dryad.q9h64). O depósito tem 4.318 peixes, mais do que uma curva de crescimento precisa: ficou um recorte natural de uma pescaria e de um ano (área EBS, arrasto de fundo, 2000; 252 fêmeas e 150 machos), porque amostras aleatórias pequenas dão curvas instáveis. O arquivo da fonte tem uma linha por anel de otólito; aqui há uma por peixe. A curva de von Bertalanffy dá L∞ de 47 cm nas fêmeas e 44 cm nos machos. O defeito de sexo do depósito (444 peixes com sexo contraditório, quase todos de 2009 e 2010) não alcança o recorte e fica documentado. O D54 `haemulon_crescimento` (xira-branca, pontos lidos de uma figura) fica no catálogo, por decisão do professor: faixa de idade maior, L∞ mais estável e é do Brasil. Catálogo com 55 conjuntos (47 internos, sete do FSAdata e um do MASS).
 
 - Saem D24 `darter_ontario` (54 pontos lidos de uma figura) e D31 `qfasa_predadores` (10 amostras de só 4
   animais), por decisão do professor (13/10/2026), sem substituto: o Mann-Whitney tem D42 e D50, e a PCA tem D32,

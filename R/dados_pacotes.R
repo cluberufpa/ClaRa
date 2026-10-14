@@ -40,6 +40,14 @@ receitas_dados_pacotes <- list(
                tem_idade_atribuida = rep(TRUE, sum(manter)),
                classe_comprimento = classes[manter])
   }),
+  haemulon_crescimento = list(pacote = "FSAdata", objeto = "WhiteGrunt2", traduzir = function(brutos) {
+    stopifnot(identical(names(brutos),c("age","tl","sex")))
+    x <- as.data.frame(lapply(brutos,identity),check.names=FALSE)
+    names(x) <- c("idade_anos","comprimento_total_mm","sexo")
+    stopifnot(setequal(levels(x$sexo),c("female","male")))
+    x$sexo <- factor(x$sexo,levels=c("female","male"),labels=c("femea","macho"),ordered=is.ordered(x$sexo))
+    x
+  }),
   cabezon_maturidade = list(pacote = "FSAdata", objeto = "Cabezon", traduzir = function(brutos) {
     stopifnot(identical(names(brutos),c("date","length","age","maturity","stage")))
     x <- as.data.frame(lapply(brutos,identity),check.names=FALSE)

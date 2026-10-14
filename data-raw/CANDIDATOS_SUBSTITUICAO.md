@@ -27,7 +27,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo tem 54 conjuntos (47 internos, seis do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62; em 13/10/2026 voltaram a ter conjunto o D11 (`treino_biometria`), o D42 (`artemia_racao`) e o D46 (`lagosta_cpue_esforco`), estes dois do livro de Ivo e Fonteles Filho (1997). Ainda em 13/10/2026 saíram o D24 (`darter_ontario`, pontos lidos de figura) e o D31 (`qfasa_predadores`, 10 amostras de 4 animais), sem substituto: Mann-Whitney e PCA já têm outros conjuntos. O D54 (`haemulon_crescimento`, pontos reconstruídos de figura) foi substituído por `platycephalus_crescimento` (tiger flathead, 4.318 peixes, Dryad CC0).
+com substituições aprovadas registradas abaixo. O catálogo tem 55 conjuntos (47 internos, sete do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62; em 13/10/2026 voltaram a ter conjunto o D11 (`treino_biometria`), o D42 (`artemia_racao`) e o D46 (`lagosta_cpue_esforco`), estes dois do livro de Ivo e Fonteles Filho (1997). Ainda em 13/10/2026 saíram o D24 (`darter_ontario`, pontos lidos de figura) e o D31 (`qfasa_predadores`, 10 amostras de 4 animais), sem substituto: Mann-Whitney e PCA já têm outros conjuntos. O D54 (`haemulon_crescimento`, pontos reconstruídos de figura) foi mantido por decisão do professor (faixa de idade maior, L∞ mais estável, é do Brasil), e o tiger flathead (`platycephalus_crescimento`, 402 peixes, Dryad CC0) entrou ao lado como D64.
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática
@@ -61,7 +61,7 @@ Dados de peixes distribuídos por FSAdata, QFASA e outros pacotes podem ser
 reais, bem documentados e adequados ao tema. Preferir a fonte primária quando
 acessível ajuda a esclarecer licença, delineamento, unidades e filtros;
 trocar o arquivo distribuidor sem obter novas informações não resolve isso.
-D54 foi resolvido em 13/10/2026 (o novo é `platycephalus_crescimento`). Antes merecia atenção pela reconstrução aproximada de figura, mesmo estando
+D54 foi mantido em 13/10/2026, ao lado do D64 `platycephalus_crescimento` (dados medidos). Merece atenção pela reconstrução aproximada de figura, mesmo estando
 plenamente no tema pesqueiro. D59 está no tema, mas precisa esclarecer
 espécie, área e construção do índice. Ambos preservados como provisórios.
 
@@ -83,7 +83,7 @@ Entradas cuja origem do catálogo declara diretamente um pacote R:
 | D51 (retirado) | seguros_sinistros | MASS::Insurance; retirado do pacote, fonte em data-raw/retirados |
 | D52 (histórico) | paciente_peso, depois secagem_beterraba_gengibre (retirado em 13/10/2026); hoje secagem_bagre, de artigo | MASS::wtloss, fontes antigas em data-raw/substituidos |
 | D53 (retirado) | navios_incidentes | MASS::ships; retirado do pacote, fonte em data-raw/retirados |
-| D54 (histórico) | haemulon_crescimento, retirado; desde 13/10/2026 é platycephalus_crescimento | FSAdata::WhiteGrunt2; fonte antiga em data-raw/retirados |
+| D54 | haemulon_crescimento (mantido; o D64 platycephalus_crescimento é o par com dados medidos) | FSAdata::WhiteGrunt2 |
 | D55 | cabezon_maturidade | FSAdata::Cabezon |
 | D56 | ruffe_biometria | FSAdata::RuffeSLRH92 |
 | D57 | bighill_amostras | FSAdata::BGHRsample |

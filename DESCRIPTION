@@ -97,6 +97,7 @@ Collate:
     'dados_molinesias_crescimento.R'
     'dados_molinesias_parasitos.R'
     'dados_secagem_bagre.R'
+    'dados_haemulon_crescimento.R'
     'dados_platycephalus_crescimento.R'
     'dados_cabezon_maturidade.R'
     'dados_ruffe_biometria.R'

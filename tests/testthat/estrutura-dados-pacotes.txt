@@ -31,6 +31,11 @@ list(crabs_morfometria = list(dim = c(200L, 10L), nomes = c("id_caranguejo",
         na = c(0L, 0L, 0L, 0L, 0L, 0L), categorias = list(levantamento = c("KAH0012", 
         "KAH8810"), classe_comprimento = c("comprimento_Q1", 
         "comprimento_Q2", "comprimento_Q3", "comprimento_Q4"))), 
+    haemulon_crescimento = list(dim = c(465L, 3L), nomes = c("idade_anos", 
+    "comprimento_total_mm", "sexo"), tipos = c("double", "integer", 
+    "integer"), classes = list(idade_anos = "numeric", comprimento_total_mm = "integer", 
+        sexo = "factor"), niveis = list(sexo = c("femea", "macho"
+    )), na = c(0L, 0L, 0L), categorias = structure(list(), names = character(0))), 
     cabezon_maturidade = list(dim = c(525L, 5L), nomes = c("data", 
     "comprimento_total_cm", "idade", "maturidade", "estagio_maturidade"
     ), tipos = c("double", "integer", "integer", "integer", "integer"

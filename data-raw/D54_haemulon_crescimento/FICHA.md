@@ -25,3 +25,7 @@ Crescimento; von Bertalanffy; Comparação por sexo. Principal: Crescimento. Exe
 ## Leitura na hora (12/10/2026)
 
 Fornecedor: `FSAdata::WhiteGrunt2`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("haemulon_crescimento")`; `data()` e `clara::haemulon_crescimento` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.
+
+## Mantido ao lado do D64 (13/10/2026)
+
+O professor manteve este conjunto depois de comparar com o D64 `platycephalus_crescimento` (tiger flathead, dados medidos): a faixa de idade é maior (até 28 anos), o L∞ varia menos (erro-padrão de cerca de 1% contra 2%) e o peixe é do Brasil. O custo é a origem: pontos lidos de uma figura, com idades que não são inteiras (427 das 465 têm casas decimais). Os dois formam um par didático, um de dados reconstruídos e outro de dados medidos. Figura de comparação em `docs/D54_comparacao_antigo_novo.png`. Verbo existente: `comparar_medias()` em uma idade fixa.

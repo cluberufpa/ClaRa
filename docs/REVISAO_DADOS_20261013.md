@@ -127,3 +127,7 @@ hífen no catálogo (o catálogo é Latin-1); não muda nada.
   (`racao`, `taxa_crescimento_mg_dia`) e 20 linhas em vez de 14; os testes que
   usam `EAPADados::artemia` vão dar números diferentes.
 - `lagosta_cpue_esforco` é novo e serve à regressão exponencial da tela.
+
+## 7. D54 e D64 (fim de 13/10/2026)
+
+O tiger flathead (Morrongiello e Thresher, 2014, Dryad, CC0) entrou como **D64**, num recorte de 402 peixes (área EBS, arrasto de fundo, 2000). O professor manteve o **D54** `haemulon_crescimento` (xira-branca do Brasil, pontos lidos de uma figura) pela faixa de idade maior e pelo L∞ mais estável. Os dois formam um par: dados reconstruídos de figura e dados medidos. Figura de comparação: `docs/D54_comparacao_antigo_novo.png`. Catálogo com 55 conjuntos.

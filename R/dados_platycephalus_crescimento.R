@@ -1,4 +1,4 @@
-#' D54 - Tiger flathead: idade, comprimento e sexo
+#' D64 - Tiger flathead: idade, comprimento e sexo
 #'
 #' Idade (lida nos anéis do otólito), comprimento e sexo de 402 peixes de
 #' *Platycephalus richardsoni* (tiger flathead), capturados em 2000 na pesca de
@@ -54,7 +54,7 @@
 #' populations: a marine fish example. Dryad. \doi{10.5061/dryad.q9h64}. Licença
 #' CC0 1.0, conferida em 13/10/2026. Artigo: *Ecological Monographs*,
 #' \doi{10.1890/13-2355.1}. Fonte e preparo em
-#' `data-raw/D54_platycephalus_crescimento/`.
+#' `data-raw/D64_platycephalus_crescimento/`.
 #'
 #' @examples
 #' ajuste <- nls(comprimento_cm ~ Linf * (1 - exp(-K * (idade_anos - t0))),

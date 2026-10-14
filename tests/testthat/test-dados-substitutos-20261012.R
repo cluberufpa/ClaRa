@@ -160,7 +160,7 @@ test_that("D24 e D31 saíram; os usos secundários estão no catálogo", {
   expect_s3_class(comparar_medianas(mesocosmos_secagem, crescimento_absoluto_cm, tratamento), "clara_medianas")
 })
 
-test_that("D54 tiger flathead é o recorte de 402 peixes, um por linha, com curva por sexo", {
+test_that("D64 tiger flathead é o recorte de 402 peixes, um por linha, com curva por sexo", {
   x <- platycephalus_crescimento
   expect_identical(dim(x), c(402L, 6L))
   expect_false(anyDuplicated(x$id_peixe) > 0L)
@@ -168,7 +168,8 @@ test_that("D54 tiger flathead é o recorte de 402 peixes, um por linha, com curv
   expect_identical(as.vector(table(x$sexo)), c(252L, 150L))
   expect_false(anyNA(x))
   expect_identical(range(x$idade_anos), c(2L, 16L))
-  expect_false("haemulon_crescimento" %in% catalogo_dados$nome)
+  expect_identical(catalogo_dados$codigo[catalogo_dados$nome == "platycephalus_crescimento"], "D64")
+  expect_identical(catalogo_dados$codigo[catalogo_dados$nome == "haemulon_crescimento"], "D54")
   vb <- function(d) nls(comprimento_cm ~ Linf * (1 - exp(-K * (idade_anos - t0))),
                         data = d, start = list(Linf = 50, K = 0.3, t0 = 0))
   femeas <- coef(vb(x[which(x$sexo == "femea"), ]))

@@ -1,9 +1,9 @@
 # Executar na raiz da ClaRa (precisa do digest, só aqui no preparo).
-# D54 volta a ter um conjunto em 13/10/2026, por decisão do professor: os 4.318
-# peixes de Platycephalus richardsoni de Morrongiello e Thresher (2014, Dryad, CC0)
-# (num recorte de 402, veja abaixo) ocupam o lugar de haemulon_crescimento, cujos pontos eram reconstruídos de uma
-# figura (o antigo D54 está em data-raw/retirados/).
-pasta <- "data-raw/D54_platycephalus_crescimento"
+# D64 entra em 13/10/2026, por decisão do professor: os 4.318 peixes de Platycephalus
+# richardsoni de Morrongiello e Thresher (2014, Dryad, CC0), num recorte de 402 (veja
+# abaixo). O D54 haemulon_crescimento, de pontos lidos de uma figura, fica no catálogo:
+# o professor prefere a faixa de idade maior e o L-inf mais estável dele, e é do Brasil.
+pasta <- "data-raw/D64_platycephalus_crescimento"
 fonte <- file.path(pasta, "fonte")
 for (linha in readLines(file.path(fonte, "SHA256.txt"))) {
   partes <- strsplit(linha, "  ", fixed = TRUE)[[1]]
@@ -85,10 +85,4 @@ stopifnot(
 
 usethis::use_data(platycephalus_crescimento, overwrite = TRUE, compress = "xz")
 source("data-raw/registrar_catalogo.R")
-# O D54 antigo (haemulon_crescimento) sai do catálogo: o código passa ao novo conjunto.
-e <- new.env(parent = emptyenv())
-load("data/catalogo_dados.rda", envir = e)
-catalogo_dados <- e$catalogo_dados
-catalogo_dados <- catalogo_dados[catalogo_dados$codigo != "D54", ]
-save(catalogo_dados, file = "data/catalogo_dados.rda", compress = "xz", version = 3)
 registrar_catalogo(file.path(pasta, "metadados.json"))

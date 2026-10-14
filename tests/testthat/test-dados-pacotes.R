@@ -7,12 +7,12 @@ test_that("carregar_dados aceita apenas nomes do catálogo e mantém os dados pr
   }
 })
 
-test_that("só os sete registros aprovados usam fornecedores externos", {
+test_that("só os oito registros aprovados usam fornecedores externos", {
   receitas <- getFromNamespace("receitas_dados_pacotes", "clara")
   externos <- catalogo_dados[catalogo_dados$fonte_dados != "clara", ]
-  expect_equal(nrow(externos), 7L)
+  expect_equal(nrow(externos), 8L)
   expect_setequal(externos$nome, names(receitas))
-  expect_equal(sum(externos$fonte_dados == "FSAdata"), 6L)
+  expect_equal(sum(externos$fonte_dados == "FSAdata"), 7L)
   expect_identical(externos$nome[externos$fonte_dados == "MASS"], "crabs_morfometria")
 })
 

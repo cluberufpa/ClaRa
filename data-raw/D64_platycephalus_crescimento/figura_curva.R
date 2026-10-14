@@ -4,7 +4,7 @@ d <- platycephalus_crescimento[!is.na(platycephalus_crescimento$comprimento_cm),
 vb <- function(dd) nls(comprimento_cm ~ Linf * (1 - exp(-K * (idade_anos - t0))),
                        data = dd, start = list(Linf = 50, K = 0.3, t0 = 0))
 cor_sexo <- c(femea = "#E76F51", macho = "#2E7D8F")
-png("docs/D54_platycephalus_curva.png", width = 1000, height = 650, res = 110)
+png("docs/D64_platycephalus_curva.png", width = 1000, height = 650, res = 110)
 par(mar = c(4.2, 4.2, 3, 1))
 plot(jitter(d$idade_anos, 1), jitter(d$comprimento_cm, 0.5), pch = 16, cex = 0.4,
      col = cor_sexo[as.character(d$sexo)],

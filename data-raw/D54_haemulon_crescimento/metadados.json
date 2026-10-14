@@ -13,10 +13,10 @@
   "analises": "Crescimento; von Bertalanffy; Comparação por sexo",
   "analise_principal": "Crescimento",
   "palavras_chave": "haemulon; crescimento",
-  "verbo_clara": "",
+  "verbo_clara": "comparar_medias",
   "licenca": "GPL (>= 2); dados lidos do pacote fornecedor",
   "referencia": "Araujo e Martins (2007), Age, growth and mortality of white grunt (Haemulon plumierii) from the central coast of Brazil, Scientia Marina 71:793–800, figura 6; FSAdata::WhiteGrunt2",
   "situacao": "provisório",
-  "limites": "",
+  "limites": "pontos reconstruídos aproximadamente de uma figura: as idades com casas decimais são resíduo da digitalização, não medida de otólito; não tratar como planilha dos autores",
   "fonte_dados": "FSAdata"
 }
