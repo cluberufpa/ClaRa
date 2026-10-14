@@ -1,0 +1,22 @@
+{
+  "codigo": "D54",
+  "registro": "D54_platycephalus_crescimento",
+  "nome": "platycephalus_crescimento",
+  "nome_eapadados": "",
+  "fonte_dados": "clara",
+  "rotulo": "Platycephalus richardsoni (tiger flathead): idade, comprimento e sexo",
+  "titulo": "D54 - Tiger flathead: crescimento por idade e sexo (Morrongiello e Thresher, 2014)",
+  "natureza": "real",
+  "origem": "Dryad, DOI 10.5061/dryad.q9h64; Morrongiello e Thresher (2014), arquivo de medidas de incrementos de otólitos, reduzido a uma linha por peixe",
+  "unidade_amostral": "peixe capturado na pesca comercial do sudeste da Austrália (idade pelos anéis do otólito)",
+  "linhas": 4318,
+  "colunas": 9,
+  "analises": "Curva de crescimento de von Bertalanffy (nls); comparação entre sexos; comparação entre áreas e aparelhos de pesca; distribuição do comprimento por idade; dados faltantes (sexo)",
+  "analise_principal": "Crescimento de von Bertalanffy por sexo",
+  "palavras_chave": "tiger flathead; Platycephalus richardsoni; idade; comprimento; otólito; von Bertalanffy; crescimento; sexo; pesca de arrasto; Austrália",
+  "verbo_clara": "comparar_medias",
+  "licenca": "CC0 1.0",
+  "referencia": "Morrongiello, J. R.; Thresher, R. E. (2014). Data from: A statistical framework to explore ontogenetic growth variation among individuals and populations: a marine fish example. Dryad. DOI 10.5061/dryad.q9h64. Artigo: Ecological Monographs, DOI 10.1890/13-2355.1",
+  "situacao": "revisado",
+  "limites": "sexo inconsistente na fonte em 444 peixes (quase todos de 2009 e 2010), deixado como NA; idade em anos inteiros e comprimento arredondado para baixo, em cm; 17 peixes sem comprimento; área EBS e ETAS são códigos da fonte"
+}

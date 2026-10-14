@@ -1,6 +1,6 @@
 ## Total atual — registros conciliados em 13/10/2026
 
-O catálogo consolidado de `ClaRa-dados` contém **54 conjuntos**: 46 internos, sete carregados do FSAdata e um do MASS. `catalogo_dados` é o índice e não entra nessa contagem. Os registros ativos vão de D01 a D62, com códigos intermediários retirados.
+O catálogo consolidado de `ClaRa-dados` contém **54 conjuntos**: 47 internos, seis carregados do FSAdata e um do MASS. `catalogo_dados` é o índice e não entra nessa contagem. Os registros ativos vão de D01 a D62, com códigos intermediários retirados.
 
 **D61 = `anchova_norte_california`** (252 meses de desembarques); **D62 = `larvas_peixes_captura`** (58 eventos de armadilhas com contagem e esforço). São conjuntos distintos. A colisão provisória de D61 entre os checkouts foi corrigida mantendo anchova no D61 e movendo larvas para D62, sem alterar suas observações. Ambos estão presentes nesta branch. O checkout `ClaRa` conserva D61/anchova e recebe D62 quando esta branch for integrada.
 

@@ -1,5 +1,13 @@
 # clara (em desenvolvimento)
 
+- D54 passa a `platycephalus_crescimento` (4.318 x 9, CC0), por decisão do professor (13/10/2026): idade (pelos
+  otólitos), comprimento e sexo de peixes de *Platycephalus richardsoni* (tiger flathead), de Morrongiello e
+  Thresher (2014, Dryad, DOI 10.5061/dryad.q9h64). Substitui `haemulon_crescimento`, cujos 465 pontos eram
+  reconstruídos de uma figura. O arquivo da fonte tem uma linha por anel de otólito; aqui há uma por peixe. Em
+  444 peixes o sexo da fonte muda de um anel para outro (defeito de registro, quase todo de 2009 e 2010): fica
+  `NA`, sem escolher por maioria. A curva de von Bertalanffy dá L∞ de 79 cm nas fêmeas e 61 cm nos machos.
+  Catálogo com 54 conjuntos (47 internos, seis do FSAdata e um do MASS).
+
 - Saem D24 `darter_ontario` (54 pontos lidos de uma figura) e D31 `qfasa_predadores` (10 amostras de só 4
   animais), por decisão do professor (13/10/2026), sem substituto: o Mann-Whitney tem D42 e D50, e a PCA tem D32,
   D29 e D04. Fontes e receitas em `data-raw/retirados/`. Catálogo com 54 conjuntos (46 internos, sete do FSAdata
