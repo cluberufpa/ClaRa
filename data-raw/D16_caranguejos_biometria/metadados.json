@@ -10,7 +10,7 @@
   "unidade_amostral": "registro de indivíduo; identificação da coleta a confirmar",
   "linhas": 993,
   "colunas": 5,
-  "analises": "Teste t; ANOVA de dois fatores; Estatística descritiva; Regressão linear",
+  "analises": "Teste t; ANOVA de dois fatores; Estatística descritiva; Regressão linear; ANCOVA (comprimento x largura da carapaça, por sexo ou local)",
   "analise_principal": "ANOVA de dois fatores",
   "palavras_chave": "caranguejos; biometria",
   "verbo_clara": "comparar_medias; relacionar_variaveis",

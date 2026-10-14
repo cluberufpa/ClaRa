@@ -32,7 +32,7 @@
 #' pendências explicitamente: presença no pacote não confirma licença da
 #' fonte. Textos em português usam codificação Latin-1 declarada, preservando
 #' os acentos sem strings marcadas como UTF-8 nos arquivos de dados.
-#' Os nove conjuntos externos são lidos e traduzidos por `carregar_dados()`.
+#' Os oito conjuntos externos são lidos e traduzidos por `carregar_dados()`.
 #'
 #' @examples
 #' catalogo_dados[, c("codigo", "nome", "analise_principal", "situacao")]

@@ -10,7 +10,7 @@
   "unidade_amostral": "peixe individual dissecado",
   "linhas": 128,
   "colunas": 7,
-  "analises": "Modelos de contagem; Binomial negativa; Sobredispersão; Kruskal-Wallis; Regressão logística; Prevalência",
+  "analises": "Modelos de contagem; Binomial negativa; Sobredispersão; Kruskal-Wallis; Regressão logística (infecção x comprimento); Prevalência",
   "analise_principal": "Modelos de contagem",
   "palavras_chave": "molinesias; parasitos; Poecilia; prevalencia; contagem; bioecologia",
   "verbo_clara": "comparar_medianas",

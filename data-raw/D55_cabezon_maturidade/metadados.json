@@ -10,7 +10,7 @@
   "unidade_amostral": "fêmea de Scorpaenichthys marmoratus coletada no Oregon",
   "linhas": 525,
   "colunas": 5,
-  "analises": "Maturidade; Regressão logística; Crescimento; von Bertalanffy",
+  "analises": "Maturidade; Regressão logística (maturidade x comprimento); Crescimento; von Bertalanffy",
   "analise_principal": "Maturidade",
   "palavras_chave": "cabezon; maturidade",
   "verbo_clara": "",

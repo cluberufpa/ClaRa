@@ -23,6 +23,11 @@
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D16_caranguejos_biometria/.
 #'
+#' @section Usos secundários:
+#' ANCOVA: `lm(comprimento_carapaca ~ largura_carapaca * sexo)` (ou `*
+#' local`) testa se machos e fêmeas têm a mesma relação entre as medidas da
+#' carapaça. Cada linha é um caranguejo.
+#'
 #' @examples
 #' summary(caranguejos_biometria)
 #'

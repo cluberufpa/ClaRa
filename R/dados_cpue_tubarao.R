@@ -34,6 +34,11 @@
 #'
 #' @docType data
 #' @keywords datasets
+#' @section Usos secundários:
+#' Kruskal-Wallis: `comparar_medianas(cpue_tubarao, cpue, embarcacao)`
+#' compara a CPUE das três embarcações. Os registros de uma embarcação ao
+#' longo dos anos não são independentes; leia o valor de p como aproximado.
+#'
 #' @examples
 #' summary(cpue_tubarao)
 "cpue_tubarao"

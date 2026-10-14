@@ -34,6 +34,12 @@ Unidades das medidas, autoria, licença e protocolo a confirmar. A ajuda herdada
 Decisão anterior aprovada: Local/Sexo/Estacao/LC/CC → local/sexo/estacao/largura_carapaca/comprimento_carapaca; Fêmea/Macho → fêmea/macho; Chuvosa/Seca → chuvosa/seca. Unidade pendente, sem sufixo inventado.
 }
 
+\section{Usos secundários}{
+
+ANCOVA: \code{lm(comprimento_carapaca ~ largura_carapaca * sexo)} (ou \verb{* local}) testa se machos e fêmeas têm a mesma relação entre as medidas da
+carapaça. Cada linha é um caranguejo.
+}
+
 \examples{
 summary(caranguejos_biometria)
 

@@ -37,6 +37,13 @@ As observações são lidas na hora por \code{carregar_dados("cabezon_maturidade
 Não há cópia deste conjunto em data/ da ClaRa.
 }
 
+\section{Usos secundários}{
+
+Regressão logística: crie \code{madura} (1 para madura, 0 para imatura; deixe
+de fora as três desconhecidas) e ajuste \code{glm(madura ~ comprimento_total_cm, family = binomial)}; o comprimento de primeira
+maturação (L50) é \code{-a / b}.
+}
+
 \examples{
 if (requireNamespace("FSAdata", quietly = TRUE)) {
   dados <- carregar_dados("cabezon_maturidade")

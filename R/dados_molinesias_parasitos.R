@@ -43,6 +43,11 @@
 #' Licença dos dados: CC0, com consentimento registrado no README do depósito.
 #' Fontes e preparo: data-raw/D50_molinesias_parasitos/.
 #'
+#' @section Usos secundários:
+#' Regressão logística: `glm(infectado_01 ~ comprimento_padrao_cm, family =
+#' binomial)` relaciona a chance de infecção ao tamanho do peixe; há
+#' comprimentos ausentes.
+#'
 #' @examples
 #' summary(molinesias_parasitos)
 #' with(molinesias_parasitos, table(local, especie))

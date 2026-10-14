@@ -27,7 +27,7 @@ Relatório: `docs/LEITURA_DADOS_PACOTES_20261012.md`.
 O professor informou que busca fontes para substituir parte dos dados
 de pacotes ou menos relacionados a bioecologia geral, bioecologia pesqueira,
 pesca, aquicultura e tecnologia do pescado. Esta é uma lista de trabalho,
-com substituições aprovadas registradas abaixo. O catálogo tem 56 conjuntos (47 internos, oito do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62; em 13/10/2026 voltaram a ter conjunto o D11 (`treino_biometria`), o D42 (`artemia_racao`) e o D46 (`lagosta_cpue_esforco`), estes dois do livro de Ivo e Fonteles Filho (1997).
+com substituições aprovadas registradas abaixo. O catálogo tem 54 conjuntos (46 internos, sete do FSAdata e um do MASS), depois das retiradas de 12/10/2026 (D11, D42, D43, D45, D46, D49, D51, D53 e D59), após a inclusão do D61 e do D62; em 13/10/2026 voltaram a ter conjunto o D11 (`treino_biometria`), o D42 (`artemia_racao`) e o D46 (`lagosta_cpue_esforco`), estes dois do livro de Ivo e Fonteles Filho (1997). Ainda em 13/10/2026 saíram o D24 (`darter_ontario`, pontos lidos de figura) e o D31 (`qfasa_predadores`, 10 amostras de 4 animais), sem substituto: Mann-Whitney e PCA já têm outros conjuntos.
 As prioridades abaixo são sugestões para avaliação do professor.
 
 ## Prioridade por distância temática

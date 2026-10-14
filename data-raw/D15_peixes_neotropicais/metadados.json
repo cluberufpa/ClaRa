@@ -10,7 +10,7 @@
   "unidade_amostral": "peixe amostrado",
   "linhas": 306,
   "colunas": 9,
-  "analises": "Regressão de potência; Exploração por espécie; ANCOVA com logaritmos calculados na análise",
+  "analises": "Regressão de potência; Exploração por espécie; ANCOVA (log do peso x log do comprimento, por espécie)",
   "analise_principal": "Regressão de potência",
   "palavras_chave": "peixes; neotropicais; biometria",
   "verbo_clara": "relacionar_variaveis",

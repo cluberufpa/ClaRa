@@ -27,6 +27,12 @@
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D15_peixes_neotropicais/.
 #'
+#' @section Usos secundários:
+#' ANCOVA: com `log(peso_g)` e `log(comprimento_padrao_mm)`, o modelo
+#' `lm(log_peso ~ log_comp * especie)` testa se as espécies têm a mesma
+#' inclinação (alometria) e, sem interação, o mesmo intercepto. Cada linha é
+#' um peixe.
+#'
 #' @examples
 #' summary(peixes_neotropicais_biometria)
 #'

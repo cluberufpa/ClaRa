@@ -13,3 +13,7 @@
 - Parecer: `docs/AVALIACAO_MOLINESIAS_20261011.md`. A aceitação da fonte não equivale à aprovação final de todas as colunas e categorias; situação no catálogo: provisório.
 - Fonte antiga preservada em `data-raw/substituidos/D50_escolares_ausencias/`; seus scripts são históricos e não devem ser executados para regenerar o catálogo atual.
 - Reproduzir na raiz do pacote: `source("data-raw/D50_molinesias_parasitos/preparar.R")`.
+
+## Usos secundários (13/10/2026)
+
+Regressão logística: `glm(infectado_01 ~ comprimento_padrao_cm, family = binomial)` relaciona a chance de infecção ao tamanho do peixe; há comprimentos ausentes.

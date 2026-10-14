@@ -37,6 +37,12 @@ Autoria, DOI e licença conferidos em 13/10/2026 (ver Fonte). Coleta de setembro
 Cabeçalhos, categorias, valores, linhas e ordem herdados preservados.
 }
 
+\section{Usos secundários}{
+
+Qui-quadrado de aderência: a razão sexual esperada é 1:1, e há 663 fêmeas
+e 794 machos; \code{chisq.test(table(lagostas_kelp_sexo$sexo))} dá p = 0,0006.
+}
+
 \examples{
 summary(lagostas_kelp_sexo)
 

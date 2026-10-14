@@ -16,8 +16,12 @@ As fontes usadas no preparo estão preservadas integralmente em `fonte/`, com SH
 
 ## Uso didático
 
-ANCOVA candidata; Ração e temperatura. Principal: ANCOVA candidata. Exemplo da ajuda resume os dados; não promete que a ClaRa tenha motor para todas as análises listadas.
+Pseudorreplicação: médias por tanque; fatorial 2 x 2 (temperatura x ração) no tanque. Principal: agregar os peixes por tanque. A ANCOVA saiu daqui em 13/10/2026 e passou para D15 e D16. Exemplo da ajuda resume os dados; não promete que a ClaRa tenha motor para todas as análises listadas.
 
 ## Pendências para a curadoria
 
 Preservado o subconjunto herdado de 69 peixes, já sem ração zero. Ração/temperatura são compartilhadas por tanque: não tratar os 69 indivíduos como réplicas independentes dos tratamentos. Confirmar alocação e número de tanques por combinação. eficiencia_conversao pode incorporar a própria resposta; não a usar como preditor sem revisar a fórmula. high/low preservados, tradução ainda pendente.
+
+## Unidade experimental (13/10/2026)
+
+Os 69 peixes estão em sete tanques, e temperatura e ração foram aplicadas ao tanque: a unidade experimental é o tanque. Compare as médias dos tanques, não os peixes. O fatorial 2 x 2 é desbalanceado (22 °C com ração alta tem um só tanque). A ANCOVA foi tirada daqui; para ela, use D15 ou D16.

@@ -1,5 +1,17 @@
 # clara (em desenvolvimento)
 
+- Saem D24 `darter_ontario` (54 pontos lidos de uma figura) e D31 `qfasa_predadores` (10 amostras de só 4
+  animais), por decisão do professor (13/10/2026), sem substituto: o Mann-Whitney tem D42 e D50, e a PCA tem D32,
+  D29 e D04. Fontes e receitas em `data-raw/retirados/`. Catálogo com 54 conjuntos (46 internos, sete do FSAdata
+  e um do MASS).
+- Usos secundários destacados no catálogo, nas fichas e nas ajudas (seção "Usos secundários"), para não buscar
+  dados novos: Kruskal-Wallis em D03 (CPUE por embarcação), D62 (larvas por local) e D41 (crescimento por
+  tratamento); teste t pareado em D41 (comprimento inicial e final de cada peixe); qui-quadrado de aderência em
+  D28 (razão sexual 1:1); regressão logística em D55 (maturidade x comprimento) e D50 (infecção x comprimento);
+  ANCOVA em D15 (por espécie) e D16 (por sexo ou local).
+- D38 `truta_riacho_crescimento` deixa de ser "ANCOVA candidata": os peixes dividem tanques, e a unidade
+  experimental é o tanque. A análise principal passa a ser a pseudorreplicação (médias por tanque).
+
 - Decisões do professor sobre a revisão dos dados (13/10/2026):
   - `catalogo_dados$situacao` passa a ter vocabulário fixo: `provisório` (36), `revisado` (17) ou
     `sintético de treino` (D11, D36, D37). O que vinha escrito depois do termo foi para a coluna nova

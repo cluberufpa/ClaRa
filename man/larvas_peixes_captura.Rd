@@ -58,6 +58,13 @@ no CSV (207) diverge do resumo do depósito (205); não altera a soma de
 larvas de peixes (15919), coincidente com o depósito. Fonte integral preservada.
 }
 
+\section{Usos secundários}{
+
+Kruskal-Wallis: \code{comparar_medianas(larvas_peixes_captura, numero_larvas, local)} compara os três locais. O esforço varia entre eventos: para
+comparar taxas, crie antes \code{numero_larvas / esforco_h} e compare essa
+coluna.
+}
+
 \examples{
 larvas <- carregar_dados("larvas_peixes_captura")
 with(larvas, table(local, estacao))

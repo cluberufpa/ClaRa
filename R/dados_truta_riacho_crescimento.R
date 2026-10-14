@@ -26,6 +26,13 @@
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D38_truta_crescimento/.
 #'
+#' @section Unidade experimental:
+#' Os 69 peixes estão em sete tanques, e temperatura e ração foram aplicadas
+#' ao tanque: a unidade experimental é o tanque. Compare as médias dos
+#' tanques, não os peixes. O fatorial 2 x 2 é desbalanceado (22 °C com ração
+#' alta tem um só tanque). A ANCOVA foi tirada daqui; para ela, use D15 ou
+#' D16.
+#'
 #' @examples
 #' summary(truta_riacho_crescimento)
 #'

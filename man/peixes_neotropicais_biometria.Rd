@@ -38,6 +38,14 @@ Preservar 306 indivíduos e ausências de comprimento total. Não confundir nove
 Decisão anterior aprovada: retirar log_peso_g, log_sl_mm, nadadeira_dorsal, nadadeira_caudal e sexo; no → id_registro (texto). Todas as 306 linhas preservadas. Duas diferenças de espaço final em red fin no CSV explicadas pela transformação str_squish já documentada no preparo original.
 }
 
+\section{Usos secundários}{
+
+ANCOVA: com \code{log(peso_g)} e \code{log(comprimento_padrao_mm)}, o modelo
+\code{lm(log_peso ~ log_comp * especie)} testa se as espécies têm a mesma
+inclinação (alometria) e, sem interação, o mesmo intercepto. Cada linha é
+um peixe.
+}
+
 \examples{
 summary(peixes_neotropicais_biometria)
 

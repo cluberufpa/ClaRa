@@ -20,11 +20,6 @@ receitas_dados_pacotes <- list(
         include.lowest = TRUE, labels = paste0("largura_carapaca_Q", 1:4)))
     )
   }),
-  darter_ontario = list(pacote = "FSAdata", objeto = "DarterOnt", traduzir = function(brutos) {
-    data.frame(idade_anos = as.integer(brutos$age),
-               comprimento_total_mm = as.numeric(brutos$tl),
-               rio = factor(brutos$river, levels = c("Salmon", "Trent")))
-  }),
   idades_savel_repetibilidade = list(pacote = "FSAdata", objeto = "ShadCR", traduzir = function(brutos) {
     data.frame(fish_id = as.character(brutos$fishID),
                true_age = as.integer(brutos$trueAge),

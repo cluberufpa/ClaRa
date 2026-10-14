@@ -29,6 +29,13 @@
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D41_mesocosmos_secagem/.
 #'
+#' @section Usos secundários:
+#' Kruskal-Wallis: `comparar_medianas(mesocosmos_secagem,
+#' crescimento_absoluto_cm, tratamento)` compara os quatro tratamentos. Teste
+#' t pareado: cada linha é um peixe (um por tanque) com comprimento padrão
+#' inicial e final; `t.test(comprimento_padrao_final_cm,
+#' comprimento_padrao_inicial_cm, paired = TRUE)` dá p < 0,001.
+#'
 #' @examples
 #' summary(mesocosmos_secagem)
 #'

@@ -40,6 +40,13 @@ Selecionada a tabela de crescimento de peixes para o fatorial presença de anfí
 Fish Growth, de Fish_Data_Dryad.xlsx → tabela principal. Tank/A_Pres/Drying/Treatment/Initial_Date/Initial_SL/Initial_Biomass/Final_Date/Final_SL/Final_Biomass/Abs_SLGrowth/Rel_SLGrowth → id_tanque, presenca_anfibios, secagem, tratamento, data_inicial, comprimento_padrao_inicial_cm, biomassa_inicial_estimada_g, data_final, comprimento_padrao_final_cm, biomassa_final_estimada_g, crescimento_absoluto_cm, crescimento_relativo. Y/N → sim/não; DR/ND → seco e reabastecido/não seco; datas sem horário. Todas as 30 linhas e medidas originais preservadas; nenhuma exclusão nova. Outros cinco conjuntos e scripts preservados na fonte, sem juntá-los por unidades incompatíveis.
 }
 
+\section{Usos secundários}{
+
+Kruskal-Wallis: \code{comparar_medianas(mesocosmos_secagem, crescimento_absoluto_cm, tratamento)} compara os quatro tratamentos. Teste
+t pareado: cada linha é um peixe (um por tanque) com comprimento padrão
+inicial e final; \code{t.test(comprimento_padrao_final_cm, comprimento_padrao_inicial_cm, paired = TRUE)} dá p < 0,001.
+}
+
 \examples{
 summary(mesocosmos_secagem)
 

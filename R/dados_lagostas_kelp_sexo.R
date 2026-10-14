@@ -26,6 +26,10 @@
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D28_lagostas_kelp/.
 #'
+#' @section Usos secundários:
+#' Qui-quadrado de aderência: a razão sexual esperada é 1:1, e há 663 fêmeas
+#' e 794 machos; `chisq.test(table(lagostas_kelp_sexo$sexo))` dá p = 0,0006.
+#'
 #' @examples
 #' summary(lagostas_kelp_sexo)
 #'

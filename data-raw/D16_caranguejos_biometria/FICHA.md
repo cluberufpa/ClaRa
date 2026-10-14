@@ -21,3 +21,7 @@ Teste t; ANOVA de dois fatores; Estatística descritiva; Regressão linear. Prin
 ## Pendências para a curadoria
 
 Unidades das medidas, autoria, licença e protocolo a confirmar. A ajuda herdada declara mm, mas a decisão de curadoria mantém unidade pendente, portanto nomes sem sufixo de unidade. Preservar as 551 linhas repetidas; não excluir registros sem identificação da coleta. Nome definitivo sugerido: caranguejos_biometria.
+
+## Usos secundários (13/10/2026)
+
+ANCOVA: `lm(comprimento_carapaca ~ largura_carapaca * sexo)` (ou `* local`) testa se machos e fêmeas têm a mesma relação entre as medidas da carapaça. Cada linha é um caranguejo.

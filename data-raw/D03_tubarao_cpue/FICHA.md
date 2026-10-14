@@ -40,3 +40,7 @@ Procedência própria confirmada pelo professor em 11/10/2026, com publicação 
 
 Instalação e check completo serão conferidos ao fim do bloco. Falhas do
 ambiente R não serão contornadas com mudanças nas funções da ClaRa.
+
+## Usos secundários (13/10/2026)
+
+Kruskal-Wallis: `comparar_medianas(cpue_tubarao, cpue, embarcacao)` compara a CPUE das três embarcações. Os registros de uma embarcação ao longo dos anos não são independentes; leia o valor de p como aproximado.

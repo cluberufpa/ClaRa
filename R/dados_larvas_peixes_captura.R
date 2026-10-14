@@ -47,6 +47,12 @@
 #' Artigo associado: \doi{10.5343/bms.2024.0135}.
 #' Fontes e preparo: data-raw/D62_larvas_captura/.
 #'
+#' @section Usos secundários:
+#' Kruskal-Wallis: `comparar_medianas(larvas_peixes_captura, numero_larvas,
+#' local)` compara os três locais. O esforço varia entre eventos: para
+#' comparar taxas, crie antes `numero_larvas / esforco_h` e compare essa
+#' coluna.
+#'
 #' @examples
 #' larvas <- carregar_dados("larvas_peixes_captura")
 #' with(larvas, table(local, estacao))

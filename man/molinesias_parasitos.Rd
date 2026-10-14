@@ -54,6 +54,12 @@ Nenhuma linha excluída, reordenada ou simulada. Substitui escolares_ausencias
 (MASS::quine), reutilizando D50, por autorização do professor em 11/10/2026.
 }
 
+\section{Usos secundários}{
+
+Regressão logística: \code{glm(infectado_01 ~ comprimento_padrao_cm, family = binomial)} relaciona a chance de infecção ao tamanho do peixe; há
+comprimentos ausentes.
+}
+
 \examples{
 summary(molinesias_parasitos)
 with(molinesias_parasitos, table(local, especie))

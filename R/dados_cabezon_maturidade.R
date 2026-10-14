@@ -28,6 +28,12 @@
 #' A licença MIT do código não substitui os termos da origem dos dados.
 #' Fontes e preparo: data-raw/D55_cabezon_maturidade/.
 #'
+#' @section Usos secundários:
+#' Regressão logística: crie `madura` (1 para madura, 0 para imatura; deixe
+#' de fora as três desconhecidas) e ajuste `glm(madura ~
+#' comprimento_total_cm, family = binomial)`; o comprimento de primeira
+#' maturação (L50) é `-a / b`.
+#'
 #' @examples
 #' if (requireNamespace("FSAdata", quietly = TRUE)) {
 #'   dados <- carregar_dados("cabezon_maturidade")

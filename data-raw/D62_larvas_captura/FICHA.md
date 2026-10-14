@@ -79,3 +79,7 @@ por `carregar_dados("larvas_peixes_captura")` concluídos. Objeto xz: 900 bytes;
 pasta data/: 222.660 bytes, abaixo do limite de 3 MB. Não foi executado
 R CMD check completo nesta inclusão isolada. Alterações locais na branch
 `dados`, em `ClaRa-dados/`; sem merge ou publicação no GitHub nesta sessão.
+
+## Usos secundários (13/10/2026)
+
+Kruskal-Wallis: `comparar_medianas(larvas_peixes_captura, numero_larvas, local)` compara os três locais. O esforço varia entre eventos: para comparar taxas, crie antes `numero_larvas / esforco_h` e compare essa coluna.

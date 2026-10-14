@@ -25,3 +25,7 @@ Dados declarados obtidos diretamente dos pesquisadores, relativos apenas a fême
 ## Leitura na hora (12/10/2026)
 
 Fornecedor: `FSAdata::Cabezon`, versão validada 0.4.1; licença GPL (>= 2). Autoria do pacote: Derek Ogle. Use `carregar_dados("cabezon_maturidade")`; `data()` e `clara::cabezon_maturidade` deixam de fornecer este conjunto. Receita e de-para em `R/dados_pacotes.R`. Comparação com a cópia anterior: `all.equal()` TRUE, com linhas, colunas, tipos e níveis preservados. As cópias binárias deixam de ser mantidas. Os registros anteriores desta ficha descrevem a migração histórica.
+
+## Usos secundários (13/10/2026)
+
+Regressão logística: crie `madura` (1 para madura, 0 para imatura; deixe de fora as três desconhecidas) e ajuste `glm(madura ~ comprimento_total_cm, family = binomial)`; o comprimento de primeira maturação (L50) é `-a / b`.

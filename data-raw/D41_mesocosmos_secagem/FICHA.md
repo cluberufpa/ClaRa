@@ -21,3 +21,7 @@ Planejamento fatorial; Crescimento relativo; ANOVA de dois fatores candidata. Pr
 ## Pendências para a curadoria
 
 Selecionada a tabela de crescimento de peixes para o fatorial presença de anfíbios × secagem; todas as seis tabelas e scripts originais ficam preservados. A fonte contém 30 peixes de 32 introduzidos; confirmar razão das duas ausências, sem adicionar/remover linhas. Biomassas calculadas de regressão comprimento-peso, não pesagens diretas. Crescimento relativo é razão sem dimensão, embora README atribua cm. Datas finais variam: revisar duração antes da comparação. Dois pontos por peixe não sustentam curva de Gompertz.
+
+## Usos secundários (13/10/2026)
+
+Kruskal-Wallis: `comparar_medianas(mesocosmos_secagem, crescimento_absoluto_cm, tratamento)` compara os quatro tratamentos. Teste t pareado: cada linha é um peixe (um por tanque) com comprimento padrão inicial e final; `t.test(comprimento_padrao_final_cm, comprimento_padrao_inicial_cm, paired = TRUE)` dá p < 0,001.

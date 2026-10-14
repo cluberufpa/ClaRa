@@ -21,3 +21,7 @@ Qui-quadrado de independência; Proporções. Principal: Qui-quadrado de indepen
 ## Pendências para a curadoria
 
 O depósito não diz qual código DIAZ/SWB representa kelp natural ou cultivo. Não inventar nomes. Registrar filtro herdado de sexo/sítio, sem novo corte. Considerar armadilhas e eventos para independência; meses são fator com ordem de níveis sazonal, não ordered.
+
+## Usos secundários (13/10/2026)
+
+Qui-quadrado de aderência: a razão sexual esperada é 1:1, e há 663 fêmeas e 794 machos; `chisq.test(table(lagostas_kelp_sexo$sexo))` dá p = 0,0006.

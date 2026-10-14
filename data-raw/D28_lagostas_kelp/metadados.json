@@ -10,7 +10,7 @@
   "unidade_amostral": "lagosta capturada em um evento e sítio",
   "linhas": 1457,
   "colunas": 8,
-  "analises": "Qui-quadrado de independência; Proporções",
+  "analises": "Qui-quadrado de independência; Qui-quadrado de aderência (razão sexual 1:1); Proporções; Teste t (comprimento por sexo)",
   "analise_principal": "Qui-quadrado de independência",
   "palavras_chave": "lagostas; kelp; sexo",
   "verbo_clara": "comparar_medias",

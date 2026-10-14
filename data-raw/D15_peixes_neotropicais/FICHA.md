@@ -21,3 +21,7 @@ Regressão de potência; Exploração por espécie; ANCOVA com logaritmos calcul
 ## Pendências para a curadoria
 
 Preservar 306 indivíduos e ausências de comprimento total. Não confundir nove rótulos taxonômicos com as sete espécies do título do artigo. Revisar desequilíbrio entre espécies e a identificação dos dois grupos sp. Nome definitivo sugerido nesta passada: peixes_neotropicais_biometria.
+
+## Usos secundários (13/10/2026)
+
+ANCOVA: com `log(peso_g)` e `log(comprimento_padrao_mm)`, o modelo `lm(log_peso ~ log_comp * especie)` testa se as espécies têm a mesma inclinação (alometria) e, sem interação, o mesmo intercepto. Cada linha é um peixe.
