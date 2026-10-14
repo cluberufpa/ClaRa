@@ -1,7 +1,7 @@
 # Executar na raiz da ClaRa (precisa do digest, só aqui no preparo).
 # D54 volta a ter um conjunto em 13/10/2026, por decisão do professor: os 4.318
 # peixes de Platycephalus richardsoni de Morrongiello e Thresher (2014, Dryad, CC0)
-# ocupam o lugar de haemulon_crescimento, cujos pontos eram reconstruídos de uma
+# (num recorte de 402, veja abaixo) ocupam o lugar de haemulon_crescimento, cujos pontos eram reconstruídos de uma
 # figura (o antigo D54 está em data-raw/retirados/).
 pasta <- "data-raw/D54_platycephalus_crescimento"
 fonte <- file.path(pasta, "fonte")
@@ -54,8 +54,8 @@ platycephalus_crescimento <- data.frame(
 )
 rownames(platycephalus_crescimento) <- NULL
 
-# Conferências com o depósito: 4.318 peixes, idades de 2 a 25 anos, só 17 sem
-# comprimento, 3.915 peixes em EBS e 403 em ETAS.
+# Conferências com o depósito antes do recorte: 4.318 peixes, idades de 2 a 25 anos,
+# só 17 sem comprimento, 3.915 peixes em EBS e 403 em ETAS.
 stopifnot(
   identical(dim(platycephalus_crescimento), c(4318L, 9L)),
   identical(range(platycephalus_crescimento$idade_anos), c(2L, 25L)),
@@ -63,6 +63,24 @@ stopifnot(
   identical(as.vector(table(platycephalus_crescimento$area)), c(3915L, 403L)),
   identical(sum(!is.na(platycephalus_crescimento$sexo)), 3874L),
   !anyDuplicated(platycephalus_crescimento$id_peixe)
+)
+
+# Recorte (professor, 13/10/2026): uma curva de crescimento não precisa de milhares de
+# peixes. Ficam os peixes de uma só pescaria e de um só ano: área EBS, arrasto de fundo,
+# capturados em 2000. É um recorte natural, sem sorteio, e o maior dos recortes de um só
+# aparelho e um só ano que tem as duas curvas bem definidas (as amostras aleatórias
+# pequenas dão curvas instáveis, porque os peixes velhos são raros). As colunas que ficam
+# constantes (área, aparelho, ano) saem.
+completo <- platycephalus_crescimento
+recorte <- completo$area == "EBS" & completo$aparelho == "arrasto_fundo" & completo$ano_captura == 2000
+platycephalus_crescimento <- completo[recorte, c("id_peixe", "mes_captura", "sexo", "idade_anos",
+                                                  "idade_decimal", "comprimento_cm")]
+rownames(platycephalus_crescimento) <- NULL
+stopifnot(
+  identical(dim(platycephalus_crescimento), c(402L, 6L)),
+  identical(as.vector(table(platycephalus_crescimento$sexo)), c(252L, 150L)),
+  !anyNA(platycephalus_crescimento$sexo), !anyNA(platycephalus_crescimento$comprimento_cm),
+  identical(range(platycephalus_crescimento$idade_anos), c(2L, 16L))
 )
 
 usethis::use_data(platycephalus_crescimento, overwrite = TRUE, compress = "xz")

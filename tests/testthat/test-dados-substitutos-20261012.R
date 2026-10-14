@@ -160,21 +160,21 @@ test_that("D24 e D31 saíram; os usos secundários estão no catálogo", {
   expect_s3_class(comparar_medianas(mesocosmos_secagem, crescimento_absoluto_cm, tratamento), "clara_medianas")
 })
 
-test_that("D54 tiger flathead tem um peixe por linha e o defeito do sexo está em NA", {
+test_that("D54 tiger flathead é o recorte de 402 peixes, um por linha, com curva por sexo", {
   x <- platycephalus_crescimento
-  expect_identical(dim(x), c(4318L, 9L))
+  expect_identical(dim(x), c(402L, 6L))
   expect_false(anyDuplicated(x$id_peixe) > 0L)
   expect_identical(levels(x$sexo), c("femea", "macho"))
-  expect_identical(sum(is.na(x$sexo)), 444L)
-  expect_identical(sum(is.na(x$comprimento_cm)), 17L)
-  expect_identical(range(x$idade_anos), c(2L, 25L))
+  expect_identical(as.vector(table(x$sexo)), c(252L, 150L))
+  expect_false(anyNA(x))
+  expect_identical(range(x$idade_anos), c(2L, 16L))
   expect_false("haemulon_crescimento" %in% catalogo_dados$nome)
   vb <- function(d) nls(comprimento_cm ~ Linf * (1 - exp(-K * (idade_anos - t0))),
                         data = d, start = list(Linf = 50, K = 0.3, t0 = 0))
   femeas <- coef(vb(x[which(x$sexo == "femea"), ]))
   machos <- coef(vb(x[which(x$sexo == "macho"), ]))
-  expect_equal(unname(femeas[["Linf"]]), 78.66, tolerance = 5e-3)
-  expect_equal(unname(machos[["Linf"]]), 61.29, tolerance = 5e-3)
+  expect_equal(unname(femeas[["Linf"]]), 46.98, tolerance = 5e-3)
+  expect_equal(unname(machos[["Linf"]]), 44.12, tolerance = 5e-3)
   cinco <- subset(x, idade_anos == 5)
   expect_s3_class(comparar_medias(cinco, comprimento_cm, sexo), "clara_medias")
 })

@@ -24,14 +24,18 @@ arredondado para baixo), `AdjAge` (idade ajustada, em anos inteiros), `DeciAge`
 Idades: contagem de incrementos do otólito, combinada com o tipo de borda, a data da
 captura e um aniversário nominal em 1 de janeiro (descrição do depósito).
 
+## Recorte usado na ClaRa
+
+O conjunto da ClaRa tem só os 402 peixes da área EBS, arrasto de fundo, capturados em 2000 (decisão do professor, 13/10/2026: uma análise de crescimento não precisa de milhares de peixes). O CSV desta pasta continua completo.
+
 ## O que se encontrou ao conferir (13/10/2026)
 
 - 4.318 peixes; as colunas do peixe (comprimento, idade, área, aparelho, ano e mês de
   captura) são constantes dentro de cada peixe.
 - Exceção: o **sexo** muda de um anel para outro em 444 peixes (quase todos de 2009 e
   2010; 369 e 66 em cada ano, mais 9 em 2002). Os dois sexos aparecem para o mesmo
-  peixe. Não há como saber qual é o certo; no conjunto da ClaRa o sexo desses peixes
-  é `NA`.
+  peixe. Não há como saber qual é o certo; o recorte da ClaRa (área EBS,
+  arrasto de fundo, 2000) não inclui nenhum deles.
 - 17 peixes sem comprimento; 5 sem raio do otólito.
 - Códigos de área `EBS` (3.915 peixes) e `ETAS` (403): o depósito diz que as áreas
   são do sudeste da Austrália; o significado das siglas não foi conferido no artigo.
